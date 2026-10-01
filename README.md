@@ -14,4 +14,4 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - Tienda de prueba (no se cobra nada) y botón para compartir tu resultado como portada de periódico.
 - Funciona en el móvil y en el PC, sin instalar nada. El progreso se guarda en el navegador.
 
-Prototipo en desarrollo (versión 0.9.5). Todo el arte y el sonido están hechos con código.
+Prototipo en desarrollo (versión 0.9.6). Todo el arte y el sonido están hechos con código.

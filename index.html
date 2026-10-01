@@ -552,7 +552,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
         <div class="opt-row col"><span><b>Tu progreso</b> se guarda en este navegador. Para pasarlo a otro móvil o PC, copia el código y pégalo allí.</span><div class="row"><button class="btn-ghost ol" id="btn-export">COPIAR CÓDIGO</button><button class="btn-ghost ol" id="btn-import">CARGAR CÓDIGO</button></div><textarea id="save-code" rows="3" aria-label="Código de progreso" placeholder="Aquí aparece o se pega el código"></textarea></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.5</p>
+      <p class="ver">Fans of Rumble · versión 0.9.6</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
@@ -2695,10 +2695,14 @@ function moveToward(u, tx, ty, dt) {
   let gx = tx, gy = ty;
   const inBand = u.y > RIVER.top - 2 && u.y < RIVER.bottom + 2;
   const uN = u.y < RIVER.y, tN = ty < RIVER.y;
-  if (inBand) { const bx = nearestBridge(u.x); gx = bx + clamp(u.x - bx, -8, 8); gy = tN ? RIVER.top - 18 : RIVER.bottom + 18; }
+  // puentes: cada unidad cruza por su sitio dentro del ancho del puente (antes todas iban al centro exacto
+  // y, si llegaban dos juntas, se empujaban y se quedaban atascadas en la entrada)
+  const bx = nearestBridge(u.x), lim = Math.max(4, BRIDGE_HALF - u.r * 0.6), ex = clamp(u.x, bx - lim, bx + lim);
+  if (inBand) { gx = ex; gy = tN ? RIVER.top - 18 : RIVER.bottom + 18; }
   else if (uN !== tN) {
-    const bx = nearestBridge(u.x); const ey = uN ? RIVER.top - 8 : RIVER.bottom + 8;
-    if (Math.abs(u.x - bx) > 6 || Math.abs(u.y - ey) > 30) { gx = bx; gy = ey; } else { gx = bx; gy = uN ? RIVER.bottom + 18 : RIVER.top - 18; }
+    const ey = uN ? RIVER.top - 8 : RIVER.bottom + 8;
+    const atMouth = Math.abs(u.y - ey) <= 30 && Math.abs(u.x - bx) <= BRIDGE_HALF + u.r;   // ya está en la entrada: a cruzar
+    gx = ex; gy = atMouth ? (uN ? RIVER.bottom + 18 : RIVER.top - 18) : ey;
   }
   const dx = gx - u.x, dy = gy - u.y, dl = Math.hypot(dx, dy) || 1;
   const step = Math.min(dl, u.d.speed * (u.slowT > 0 ? 0.5 : 1) * u.mSpeed * (u.abFury && u.hp < u.maxHp * 0.5 ? u.abFury : 1) * dt);
