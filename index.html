@@ -334,10 +334,10 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .card[data-rarity="leader"] .card-lvl { top: 24px; }
 #scr-end { gap: 12px; }
 /* ---------- v0.9.5: tienda, pase, misiones semanales, chat y compartir ---------- */
-.home-grid { grid-template-columns: repeat(6, 1fr); gap: 6px; max-width: 508px; }
+.home-grid { grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 508px; }
 .home-tile { padding: 7px 2px 5px; }
 .home-tile svg { width: 30px; height: 30px; }
-.home-tile span { font-size: 12.5px; }
+.home-tile span { font-size: 11.5px; }
 .shop-note { font-size: 12.5px; font-weight: 700; line-height: 1.3; margin: 0; max-width: 480px; color: var(--ink-dim); }
 .shop-note b { color: var(--gold); }
 .gift-row { width: 100%; max-width: 508px; }
@@ -402,49 +402,150 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 #chat .cl b { font-weight: 800; }
 #chat .cl.out { opacity: 0; }
 @keyframes clin { from { transform: translateY(8px); opacity: 0; } }
-/* ---------- v0.9.8: pulido visual de menús ---------- */
-.screen:not([hidden]) { animation: scrIn 0.22s ease-out; }
-.screen.modal:not([hidden]) > .modal-card { animation: popIn 0.3s cubic-bezier(0.2, 1.4, 0.4, 1); }
-@keyframes scrIn { from { opacity: 0; } }
-@keyframes popIn { from { transform: scale(0.86); opacity: 0; } }
+/* ---------- v0.9.9: menús tranquilos: sin fundidos al cambiar de pantalla ni cosas que se mueven solas ---------- */
+.btn-mode, .home-tile, .node, .tab, .btn-up, .btn-price { transition: filter 0.12s ease; }
+@media (hover: hover) {
+  .btn-mode:hover, .home-tile:hover, .node:not(:disabled):hover, .btn-big:hover { filter: brightness(1.08); }
+}
+#title-art { filter: drop-shadow(0 6px 0 rgba(20, 8, 34, 0.35)); }
+.node.next { box-shadow: 0 0 0 3px var(--gold), 0 0 14px rgba(255, 203, 61, 0.7), 0 3px 0 var(--outline); }
+.gacha-wrap { position: relative; display: grid; place-items: center; }
+.gacha-wrap::before { content: ""; position: absolute; width: 360px; height: 360px; left: 50%; top: 45%; margin: -180px 0 0 -180px; border-radius: 50%; background: repeating-conic-gradient(rgba(255, 214, 90, 0.14) 0deg 9deg, rgba(255, 214, 90, 0) 9deg 22deg); -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 68%); mask-image: radial-gradient(circle, #000 25%, transparent 68%); pointer-events: none; }
+.gacha-wrap canvas { position: relative; }
+#scr-end:has(.end-title.win)::before { content: ""; position: absolute; left: 50%; top: 26%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%; background: repeating-conic-gradient(rgba(255, 203, 61, 0.12) 0deg 10deg, rgba(255, 203, 61, 0) 10deg 24deg); -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 66%); mask-image: radial-gradient(circle, #000 20%, transparent 66%); pointer-events: none; z-index: -1; }
+.card:not(.poor) .cost { box-shadow: 0 0 9px rgba(243, 166, 255, 0.85); }
+/* ---------- v0.9.10: logo con movimiento suave (solo las letras; los cambios de pantalla siguen sin fundidos) ---------- */
 #scr-title .logo .l1 { animation: logoBob 3.2s ease-in-out infinite; }
 #scr-title .logo .l2 { animation: logoWob 3.2s ease-in-out infinite; }
 @keyframes logoBob { 50% { transform: translateY(-3px); } }
 @keyframes logoWob { 0%, 100% { transform: rotate(-4deg) scale(1); } 50% { transform: rotate(-2.5deg) scale(1.035); } }
-#title-art { animation: artBob 2.8s ease-in-out infinite; filter: drop-shadow(0 6px 0 rgba(20, 8, 34, 0.35)); }
-@keyframes artBob { 50% { transform: translateY(-4px); } }
-.btn-big { position: relative; overflow: hidden; }
-.btn-big::after { content: ""; position: absolute; top: -10%; bottom: -10%; left: -60%; width: 38%; background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0)); transform: skewX(-20deg); animation: shine 3.6s ease-in-out infinite; pointer-events: none; }
-@keyframes shine { 0%, 62% { left: -60%; } 100% { left: 135%; } }
-#btn-camp { animation: ctaPulse 2.4s ease-in-out infinite; }
-#btn-camp:active { animation: none; }
-@keyframes ctaPulse { 50% { transform: scale(1.04); } }
-.btn-mode, .home-tile, .node, .tab, .btn-up, .btn-price { transition: transform 0.12s ease, filter 0.12s ease; }
-.home-tile svg { transition: transform 0.2s cubic-bezier(0.2, 1.6, 0.4, 1); }
-@media (hover: hover) {
-  .btn-mode:hover, .home-tile:hover, .node:not(:disabled):hover, .btn-big:hover { filter: brightness(1.08); }
-  .home-tile:hover svg { transform: translateY(-3px) rotate(-6deg) scale(1.08); }
-  .world:not(.locked):hover { transform: translateY(-2px); }
-}
-.dotbadge { animation: badge 1.3s ease-in-out infinite; }
-@keyframes badge { 50% { transform: scale(1.25); } }
-.node.next { animation: nodePulse 1.5s ease-in-out infinite; }
-@keyframes nodePulse { 50% { box-shadow: 0 0 0 4px var(--gold), 0 0 16px rgba(255, 203, 61, 0.8), 0 3px 0 var(--outline); } }
-.node.boss:not(:disabled) b { display: inline-block; animation: bossShake 2.6s ease-in-out infinite; }
-@keyframes bossShake { 0%, 86%, 100% { transform: none; } 90% { transform: rotate(-6deg) scale(1.1); } 95% { transform: rotate(6deg) scale(1.1); } }
-.world { transition: transform 0.15s ease; }
-.gacha-wrap { position: relative; display: grid; place-items: center; }
-.gacha-wrap::before { content: ""; position: absolute; width: 360px; height: 360px; left: 50%; top: 45%; margin: -180px 0 0 -180px; border-radius: 50%; background: repeating-conic-gradient(rgba(255, 214, 90, 0.16) 0deg 9deg, rgba(255, 214, 90, 0) 9deg 22deg); -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 68%); mask-image: radial-gradient(circle, #000 25%, transparent 68%); animation: spin 26s linear infinite; pointer-events: none; }
-.gacha-wrap canvas { position: relative; }
-@keyframes spin { to { transform: rotate(360deg); } }
-#scr-end .end-title { animation: endIn 0.6s cubic-bezier(0.2, 1.6, 0.4, 1); }
-@keyframes endIn { from { transform: scale(0.3) rotate(-8deg); opacity: 0; } }
-#scr-end:has(.end-title.win)::before { content: ""; position: absolute; left: 50%; top: 26%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%; background: repeating-conic-gradient(rgba(255, 203, 61, 0.14) 0deg 10deg, rgba(255, 203, 61, 0) 10deg 24deg); -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 66%); mask-image: radial-gradient(circle, #000 20%, transparent 66%); animation: spin 30s linear infinite; pointer-events: none; z-index: -1; }
-.card:not(.poor) .cost { box-shadow: 0 0 9px rgba(243, 166, 255, 0.85); }
-@media (prefers-reduced-motion: reduce) {
-  .screen:not([hidden]), .screen.modal:not([hidden]) > .modal-card, #scr-title .logo .l1, #scr-title .logo .l2, #title-art, .btn-big::after, #btn-camp, .dotbadge, .node.next, .node.boss:not(:disabled) b, .gacha-wrap::before, #scr-end .end-title { animation: none; }
-}
-@media (prefers-reduced-motion: reduce) { #scr-end:has(.end-title.win)::before { animation: none; } }
+/* ---------- v0.9.10: menú principal con Gashapón y Tienda destacados ---------- */
+.home-feature { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 480px; }
+.feat { position: relative; display: grid; grid-template-columns: 52px 1fr; align-items: center; gap: 8px; min-height: 80px; padding: 8px 10px 8px 8px; border-radius: 18px; border: 4px solid var(--outline); box-shadow: 0 6px 0 var(--outline), inset 0 3px 0 rgba(255, 255, 255, 0.35); cursor: pointer; text-align: left; color: var(--ink); font: inherit; }
+.feat:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--outline), inset 0 3px 0 rgba(255, 255, 255, 0.35); }
+.feat svg { width: 52px; height: 52px; filter: drop-shadow(0 3px 0 rgba(20, 8, 34, 0.35)); }
+.feat b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 25px; line-height: 1; }
+.feat small { display: block; font-size: 12.5px; font-weight: 800; line-height: 1.15; margin-top: 4px; }
+#btn-gacha.feat { background: linear-gradient(to bottom, #ff8ad8, #b0249a); }
+#btn-shop.feat { background: linear-gradient(to bottom, #ffd84a, #e07d00); }
+.feat .dotbadge { right: 8px; top: 8px; }
+.home-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; max-width: 480px; }
+.home-tile { padding: 7px 2px 5px; }
+.home-tile span { font-size: 12.5px; }
+@media (hover: hover) { .feat:hover { filter: brightness(1.07); } }
+.wallet .wal { display: flex; align-items: center; gap: 4px; background: rgba(20, 10, 34, 0.8); border: 3px solid var(--tray-hi); border-radius: 999px; padding: 3px 3px 1px 5px; font: inherit; color: inherit; cursor: pointer; font-variant-numeric: tabular-nums; }
+.wal-plus { font-style: normal; width: 18px; height: 18px; border-radius: 50%; background: #2fbf4a; border: 2px solid var(--outline); display: grid; place-items: center; font-size: 14px; line-height: 1; padding-top: 2px; margin-left: 2px; box-sizing: border-box; }
+/* ---------- v0.9.10: tiradas x1, x10 y x50 ---------- */
+.pull-row { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 8px; width: 100%; max-width: 480px; margin-top: 6px; }
+.btn-pull { position: relative; font-family: var(--font-display); font-size: 25px; line-height: 1; padding: 12px 6px 8px; border-radius: 16px; border: 4px solid var(--outline); background: linear-gradient(to bottom, var(--player-lite), var(--player)); box-shadow: 0 6px 0 var(--outline), inset 0 3px 0 rgba(255, 255, 255, 0.4); cursor: pointer; color: var(--ink); }
+.btn-pull small { display: flex; align-items: center; justify-content: center; gap: 3px; font-size: 15px; margin-top: 5px; flex-wrap: wrap; }
+.btn-pull small svg { width: 16px; height: 16px; margin-top: -3px; }
+.btn-pull small .fr { font-style: normal; font-size: 11px; }
+.btn-pull.x10 { background: linear-gradient(to bottom, #ff8ad8, #b0249a); font-size: 29px; }
+.btn-pull.x50 { background: linear-gradient(to bottom, #ffe066, #d97706); }
+.btn-pull:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--outline); }
+.btn-pull .tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-size: 10.5px; background: var(--outline); color: var(--gold); border-radius: 7px; padding: 4px 7px 2px; white-space: nowrap; }
+.gr-card.multi { width: 500px; max-width: 94%; max-height: 74%; display: flex; flex-direction: column; padding: 12px 10px; box-sizing: border-box; }
+.gr-sum { font-size: 13px; font-weight: 800; margin: 2px 0 8px; }
+.gr-sum b { color: #fff6c2; }
+.gr-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; overflow-y: auto; min-height: 0; padding: 8px 4px 6px; touch-action: pan-y; }
+.gt { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 2px 5px; border-radius: 10px; border: 2.5px solid var(--outline); background: linear-gradient(to bottom, var(--rc), var(--rc2)); color: var(--ink); cursor: pointer; min-width: 0; font: inherit; }
+.gt-ic { width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid var(--outline); background: rgba(255, 255, 255, 0.85); display: grid; place-items: center; font-family: var(--font-display); font-size: 11px; color: var(--outline); padding-top: 2px; box-sizing: border-box; }
+.gt-ic svg { width: 20px; height: 20px; margin-top: -2px; }
+.gt-name { font-size: 10px; font-weight: 800; line-height: 1.1; text-align: center; max-width: 100%; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; min-height: 22px; }
+.gt-q { font-family: var(--font-display); font-size: 10.5px; line-height: 1; color: var(--qc); background: var(--outline); border-radius: 6px; padding: 3px 5px 1px; }
+.gt-new { position: absolute; top: -8px; right: -5px; font-family: var(--font-display); font-size: 9.5px; background: #2fbf4a; border: 2px solid var(--outline); border-radius: 6px; padding: 3px 4px 1px; }
+.gt-new.best { background: #e08a00; }
+.gr-hint { font-size: 11.5px; font-weight: 700; margin-top: 6px; }
+/* ---------- v0.9.10: nombres que caben en su carta y ficha al mantenerla pulsada ---------- */
+.card-name, .card-tag { align-self: stretch; overflow: hidden; box-sizing: border-box; text-align: center; }
+.card-name { padding-left: 3px; padding-right: 3px; }
+#card-tip { position: absolute; left: 10px; width: 520px; top: calc(var(--top) + 782px); transform: translateY(-100%); box-sizing: border-box; padding: 10px 12px 11px; border-radius: 16px; border: 3px solid var(--outline); background: rgba(24, 12, 40, 0.96); box-shadow: 0 6px 0 var(--outline); z-index: 8; pointer-events: none; text-align: left; }
+.tip-head { display: grid; grid-template-columns: 64px 1fr; gap: 10px; align-items: center; }
+.tip-head canvas { width: 64px; height: 52px; display: block; }
+.tip-head b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 1; }
+.tip-head b small { font-size: 13px; color: #9ef07a; }
+.tip-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.tip-tags i { font-style: normal; font-size: 11.5px; font-weight: 800; background: var(--tray-hi); border-radius: 7px; padding: 2px 7px 1px; }
+.tip-tags i.tcost { background: var(--chaos-deep); }
+#card-tip p { margin: 7px 0 0; font-size: 13.5px; font-weight: 700; line-height: 1.3; }
+.tip-stats { font-size: 12.5px; font-weight: 800; color: var(--ink-dim); margin-top: 5px; }
+.tip-ab { font-size: 12.5px; font-weight: 700; margin-top: 4px; line-height: 1.3; }
+.tip-ab b { color: var(--gold); }
+@media (prefers-reduced-motion: reduce) { #scr-title .logo .l1, #scr-title .logo .l2 { animation: none; } }
+/* ---------- v0.9.9: «Cómo se juega» con 7 pasos: la lista se desliza si no cabe ---------- */
+#scr-howto { justify-content: flex-start; gap: 12px; padding: 22px 24px; }
+#scr-howto .h2 { font-size: 46px; flex: none; }
+#scr-howto .steps { overflow-y: auto; min-height: 0; flex: 1 1 auto; touch-action: pan-y; gap: 9px; }
+#scr-howto .steps li { font-size: 16px; padding: 8px 12px; }
+#scr-howto .btn-big { flex: none; }
+/* ---------- v0.9.9: ranuras de equipo grandes en Colección ---------- */
+.coll-hint { margin: 0; padding: 8px 12px; border-radius: 12px; border: 2px dashed rgba(255, 246, 234, 0.45); background: rgba(20, 10, 34, 0.6); font-size: 13px; font-weight: 700; line-height: 1.3; text-align: left; flex: none; }
+.coll-hint b { color: var(--gold); }
+.slots { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 4px 0 1px; }
+.slots.one { grid-template-columns: 1fr; }
+.slot { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 80px; padding: 7px 4px 6px; border-radius: 12px; border: 3px dashed rgba(255, 246, 234, 0.6); background: rgba(20, 10, 34, 0.55); color: var(--ink); cursor: pointer; box-sizing: border-box; font: inherit; min-width: 0; }
+.slot.full { border-style: solid; border-color: var(--qc); background: linear-gradient(to bottom, var(--rc2), rgba(20, 10, 34, 0.8)); }
+.slot:disabled { opacity: 0.5; cursor: default; }
+.slot:not(:disabled):active { transform: translateY(2px); }
+.slots.one .slot { flex-direction: row; justify-content: flex-start; gap: 10px; min-height: 54px; padding: 6px 12px; }
+.sl-ic { width: 34px; height: 34px; border-radius: 50%; border: 2.5px solid var(--outline); background: rgba(255, 255, 255, 0.14); display: grid; place-items: center; font-family: var(--font-display); font-size: 12px; color: var(--outline); padding-top: 2px; box-sizing: border-box; flex: none; }
+.sl-ic svg { width: 21px; height: 21px; margin-top: -2px; }
+.sl-plus { font-family: var(--font-display); font-size: 24px; line-height: 1; color: var(--ink); }
+.sl-txt { display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 0; max-width: 100%; }
+.slots.one .sl-txt { align-items: flex-start; }
+.sl-lbl { font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.5px; line-height: 1.1; }
+.sl-name { font-size: 11px; font-weight: 800; line-height: 1.15; text-align: center; color: var(--ink-dim); max-width: 100%; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.slots.one .sl-name { text-align: left; }
+.slot.full .sl-name { color: var(--ink); }
+.sl-q { font-family: var(--font-display); font-size: 11px; line-height: 1; color: var(--qc); }
+.sl-n { position: absolute; top: -9px; right: -6px; min-width: 24px; height: 24px; border-radius: 12px; background: var(--danger); border: 2.5px solid var(--outline); font-family: var(--font-display); font-size: 14px; line-height: 1; display: grid; place-items: center; padding: 3px 5px 0; box-sizing: border-box; }
+/* ---------- v0.9.9: inventario y calidades ---------- */
+#toast { z-index: 40; }
+.qbadge { display: inline-block; font-family: var(--font-display); font-weight: 400; font-size: 12px; line-height: 1; padding: 4px 7px 2px; border-radius: 8px; background: var(--outline); color: var(--qc); white-space: nowrap; vertical-align: 2px; letter-spacing: 0.3px; }
+.qmini { font-style: normal; font-size: 10.5px; font-weight: 800; color: var(--qc); margin-left: 3px; }
+.sv { font-weight: 800; color: #fff; }
+.rg { font-size: 11px; font-weight: 700; color: var(--ink-dim); }
+.gr-q { display: inline-block; font-family: var(--font-display); font-size: 15px; line-height: 1; background: var(--outline); color: var(--qc); border-radius: 10px; padding: 6px 10px 3px; margin: -2px 0 8px; }
+.gr-desc .sv { font-size: 18px; }
+.gr-desc .rg { color: rgba(255, 246, 234, 0.8); }
+.inv-bar { display: flex; gap: 6px; align-items: center; justify-content: space-between; width: 100%; max-width: 508px; flex-wrap: wrap; }
+.inv-filters { display: flex; gap: 5px; flex-wrap: wrap; }
+.chip-btn[aria-pressed="true"] { background: var(--tray-hi); box-shadow: 0 0 0 2px var(--gold); }
+.chip-btn:disabled { opacity: 0.6; cursor: default; }
+#btn-inv-sort { color: var(--ink); }
+.inv-row { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: center; text-align: left; border: 3px solid var(--outline); border-radius: 14px; padding: 7px 10px 7px 7px; background: linear-gradient(100deg, var(--rc) 0%, var(--tray) 55%); box-shadow: 0 3px 0 var(--outline); cursor: pointer; flex: none; color: var(--ink); width: 100%; box-sizing: border-box; }
+.inv-row .ic, .item-head .ic { width: 38px; height: 38px; border-radius: 50%; border: 3px solid var(--outline); display: grid; place-items: center; font-family: var(--font-display); font-size: 13px; color: var(--outline); padding-top: 2px; box-sizing: border-box; }
+.inv-row .ic svg, .item-head .ic svg, .pick-opt .ic svg { width: 22px; height: 22px; margin-top: -2px; }
+.inv-top { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.inv-top b, .item-head b { font-family: var(--font-display); font-weight: 400; font-size: 16px; line-height: 1.1; }
+.inv-desc { display: block; font-size: 12.5px; font-weight: 700; line-height: 1.28; margin-top: 3px; }
+.inv-meta { display: flex; gap: 4px; align-items: center; font-size: 11.5px; font-weight: 800; color: var(--ink-dim); margin-top: 3px; }
+.inv-meta svg { width: 13px; height: 13px; flex: none; }
+.inv-mass { font-size: 16px; padding: 9px 14px 5px; flex: none; }
+.inv-mass:disabled { opacity: 0.5; cursor: default; }
+#scr-item .modal-card { max-height: 88%; }
+.item-body { width: 100%; text-align: left; display: flex; flex-direction: column; gap: 7px; overflow-y: auto; min-height: 0; flex: 1 1 auto; touch-action: pan-y; }
+.item-head { display: grid; grid-template-columns: 42px 1fr; gap: 10px; align-items: center; }
+.item-note { font-size: 12px; font-weight: 700; line-height: 1.3; color: var(--ink-dim); }
+.qstat { font-size: 13px; font-weight: 800; line-height: 1.3; }
+.qstat small { font-size: 11.5px; color: var(--ink-dim); }
+.qbar { position: relative; height: 12px; border-radius: 999px; background: #140a20; border: 2px solid var(--outline); overflow: hidden; margin-top: 2px; }
+.qbar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--qc); }
+.item-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; flex: none; }
+.item-actions .btn-ghost { font-size: 14px; padding: 10px 6px 6px; }
+.item-actions .btn-ghost:disabled { opacity: 0.45; cursor: default; }
+.item-actions .wide { grid-column: 1 / -1; }
+.btn-ghost.btn-ok { background: linear-gradient(to bottom, #9ef07a, #2f8a1f); }
+.pick-opt.unit { grid-template-columns: 44px 1fr; }
+.pick-opt canvas { width: 44px; height: 36px; display: block; }
+.pick-opt .wn { font-style: normal; color: var(--gold); }
+.sv { display: inline; font-family: inherit; line-height: inherit; }
+.pick-opt .sv { display: inline; font-family: inherit; font-size: inherit; line-height: inherit; font-weight: 800; }
+.pick-opt .inv-top b { display: inline; }
+.pick-opt .pk-desc { display: block; margin-top: 2px; }
+.gr-desc .rg { font-size: 12px; }
+.pick-head { font-family: var(--font-display); font-weight: 400; font-size: 15px; color: var(--ink-dim); margin: 6px 2px 0; text-align: left; flex: none; }
 @media (prefers-reduced-motion: reduce) {
   #chaos-fill::after { animation: none; }
   .tut-dot { animation-duration: 4s; }
@@ -485,6 +586,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
     <div id="banner"><div class="b-title ol"></div><div class="b-sub"></div></div>
     <div id="count" class="ol-big" aria-hidden="true"></div>
     <div id="toast" role="status" aria-live="polite"></div>
+    <div id="card-tip" hidden></div>
     <div id="chat" aria-hidden="true"></div>
     <div id="tut" hidden><div class="tut-dot"></div><div class="tut-text">Arrastra una carta a tu lado del campo</div></div>
 
@@ -504,10 +606,13 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
       <canvas id="title-art" aria-hidden="true"></canvas>
       <button class="btn-big ol" id="btn-camp">CAMPAÑA</button>
       <div class="row"><button class="btn-mode ol" id="btn-quick">PARTIDA RÁPIDA</button><button class="btn-mode ol" id="btn-bossmode">MODO JEFE</button></div>
+      <div class="home-feature">
+        <button class="feat" id="btn-gacha"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="7" fill="#bfe6ff" style="stroke: var(--outline)" stroke-width="1.8"/><circle cx="9.5" cy="9" r="2.4" fill="#ff5fa8"/><circle cx="14" cy="7.5" r="2.2" fill="#ffe14d"/><circle cx="13" cy="11.5" r="2.2" fill="#7be04a"/><rect x="6" y="15" width="12" height="7" rx="2" fill="#2e8bff" style="stroke: var(--outline)" stroke-width="1.8"/></svg><span><b class="ol">GASHAPÓN</b><small class="ol" id="feat-gacha">Tira x1, x10 o x50</small></span><i class="dotbadge" id="gacha-badge" hidden></i></button>
+        <button class="feat" id="btn-shop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-1.2 11.5a1.6 1.6 0 0 1-1.6 1.5H6.8a1.6 1.6 0 0 1-1.6-1.5z" fill="#ffcb3d" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 11V6.5a3.5 3.5 0 0 1 7 0V11" stroke="#20102c" stroke-width="1.9" fill="none" stroke-linecap="round"/><circle cx="12" cy="15.5" r="2.6" fill="#fff6c2" style="stroke: var(--outline)" stroke-width="1.4"/></svg><span><b class="ol">TIENDA</b><small class="ol" id="feat-shop">Oro, gemas y ofertas</small></span><i class="dotbadge" id="shop-badge" hidden></i></button>
+      </div>
       <div class="home-grid">
         <button class="home-tile" id="btn-coll"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="8" height="11" rx="2" fill="#63cfe0" style="stroke: var(--outline)" stroke-width="1.8"/><rect x="13" y="7" width="8" height="11" rx="2" fill="#ffb04f" style="stroke: var(--outline)" stroke-width="1.8"/><rect x="8" y="9" width="8" height="11" rx="2" fill="#d08cff" style="stroke: var(--outline)" stroke-width="1.8"/></svg><span class="ol">Colección</span><i class="dotbadge" id="coll-badge" hidden></i></button>
-        <button class="home-tile" id="btn-gacha"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="7" fill="#bfe6ff" style="stroke: var(--outline)" stroke-width="1.8"/><circle cx="9.5" cy="9" r="2.4" fill="#ff5fa8"/><circle cx="14" cy="7.5" r="2.2" fill="#ffe14d"/><circle cx="13" cy="11.5" r="2.2" fill="#7be04a"/><rect x="6" y="15" width="12" height="7" rx="2" fill="#2e8bff" style="stroke: var(--outline)" stroke-width="1.8"/></svg><span class="ol">Gashapón</span></button>
-        <button class="home-tile" id="btn-shop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-1.2 11.5a1.6 1.6 0 0 1-1.6 1.5H6.8a1.6 1.6 0 0 1-1.6-1.5z" fill="#ffcb3d" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 11V6.5a3.5 3.5 0 0 1 7 0V11" stroke="#20102c" stroke-width="1.9" fill="none" stroke-linecap="round"/><circle cx="12" cy="15.5" r="2.6" fill="#fff6c2" style="stroke: var(--outline)" stroke-width="1.4"/></svg><span class="ol">Tienda</span><i class="dotbadge" id="shop-badge" hidden></i></button>
+        <button class="home-tile" id="btn-inv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 9.5a5.5 5.5 0 0 1 11 0V19a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2z" fill="#ff9a3c" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.3 6.6a3 3 0 0 1 5.4 0" fill="none" stroke="#20102c" stroke-width="1.8" stroke-linecap="round"/><rect x="8.7" y="13" width="6.6" height="5" rx="1.3" fill="#ffcb3d" style="stroke: var(--outline)" stroke-width="1.5"/><path d="M8.7 15.3h6.6" stroke="#20102c" stroke-width="1.2"/></svg><span class="ol">Inventario</span></button>
         <button class="home-tile" id="btn-pass"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2.5a2.5 2.5 0 0 0 0 5V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0 0-5z" fill="#d08cff" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 5v14" stroke="#20102c" stroke-width="1.4" stroke-dasharray="2 2"/><path d="M9 9.2l.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z" fill="#ffe07a" style="stroke: var(--outline)" stroke-width="1"/></svg><span class="ol">Pase</span><i class="dotbadge" id="pass-badge" hidden></i></button>
         <button class="home-tile" id="btn-missions"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="#fff6ea" style="stroke: var(--outline)" stroke-width="1.8"/><path d="M8 8l1.6 1.6L12 7M8 13l1.6 1.6L12 12" stroke="#16a34a" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M14 8h3M14 13h3M8 17.5h9" stroke="#a08ab8" stroke-width="1.6" stroke-linecap="round"/></svg><span class="ol">Misiones</span><i class="dotbadge" id="mission-badge" hidden></i></button>
         <button class="home-tile" id="btn-options"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="#cdb9ea" style="stroke: var(--outline)" stroke-width="1.8"/><circle cx="12" cy="12" r="2.4" fill="#20102c"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="#20102c" stroke-width="2.4" stroke-linecap="round"/></svg><span class="ol">Opciones</span></button>
@@ -542,6 +647,19 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
       <div class="scroll-list" id="coll-list"></div>
     </section>
 
+    <section id="scr-inv" class="screen top" hidden>
+      <div class="scr-head"><button class="icon-btn back" data-back="scr-title" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 class="h2 ol">INVENTARIO</h2><div class="wallet" data-wallet></div></div>
+      <div class="tabs" role="group" aria-label="Tipo"><button class="tab ol" data-it="ab" aria-pressed="true">Habilidades</button><button class="tab ol" data-it="eq" aria-pressed="false">Equipo</button></div>
+      <div class="inv-bar"><div class="inv-filters" id="inv-filters" role="group" aria-label="Filtro"></div><button class="chip-btn" id="btn-inv-sort"></button></div>
+      <p class="deck-sub" id="inv-sub"></p>
+      <div class="scroll-list" id="inv-list"></div>
+      <button class="btn-ghost ol danger inv-mass" id="btn-mass">DESPIDO MASIVO</button>
+    </section>
+
+    <section id="scr-item" class="screen modal" hidden>
+      <div class="modal-card"><div class="item-body" id="item-body"></div><div class="item-actions" id="item-actions"></div><button class="btn-ghost ol" id="btn-item-close">CERRAR</button></div>
+    </section>
+
     <section id="scr-pick" class="screen modal" hidden>
       <div class="modal-card"><h3 class="ol" id="pick-title"></h3><div class="scroll-list" id="pick-list"></div><button class="btn-ghost ol" id="btn-pick-close">CERRAR</button></div>
     </section>
@@ -551,9 +669,9 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
       <div class="tabs" role="group" aria-label="Máquina"><button class="tab ol" data-gt="ab" aria-pressed="true">Habilidades</button><button class="tab ol" data-gt="eq" aria-pressed="false">Equipo del líder</button></div>
       <p class="deck-sub" id="gacha-sub"></p>
       <div class="gacha-wrap"><canvas id="gacha-cv" aria-hidden="true"></canvas></div>
-      <button class="btn-big ol" id="btn-pull">GIRAR</button>
+      <div class="pull-row"><button class="btn-pull ol" id="btn-pull" data-pull="1"></button><button class="btn-pull x10 ol" data-pull="10"></button><button class="btn-pull x50 ol" data-pull="50"></button></div>
       <p class="small-print" id="gacha-odds"></p>
-      <div class="gacha-result" id="gacha-result" hidden><div class="gr-card" id="gr-card"></div><button class="btn-big ol" id="btn-gr-ok">¡VALE!</button></div>
+      <div class="gacha-result" id="gacha-result" hidden><div class="gr-card" id="gr-card"></div><button class="btn-big ol" id="btn-gr-ok">¡VALE!</button><button class="btn-link" id="btn-gr-inv">Ver en el inventario</button></div>
     </section>
 
     <section id="scr-missions" class="screen top" hidden>
@@ -596,18 +714,19 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
         <div class="opt-row col"><span><b>Tu progreso</b> se guarda en este navegador. Para pasarlo a otro móvil o PC, copia el código y pégalo allí.</span><div class="row"><button class="btn-ghost ol" id="btn-export">COPIAR CÓDIGO</button><button class="btn-ghost ol" id="btn-import">CARGAR CÓDIGO</button></div><textarea id="save-code" rows="3" aria-label="Código de progreso" placeholder="Aquí aparece o se pega el código"></textarea></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.8</p>
+      <p class="ver">Fans of Rumble · versión 0.9.10</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
       <h2 class="h2 ol">CÓMO SE JUEGA</h2>
       <ol class="steps">
-        <li><span class="n ol">1</span><span><b>Arrastra una carta</b> a tu lado del campo, o tócala y luego toca el campo. Tienes 4 unidades en la mano y a tu <b>líder</b> siempre disponible; al jugar una, entra la <b>siguiente</b>.</span></li>
+        <li><span class="n ol">1</span><span><b>Arrastra una carta</b> a tu lado del campo, o tócala y luego toca el campo. Tienes 4 unidades en la mano y a tu <b>líder</b> siempre disponible; al jugar una, entra la <b>siguiente</b>. <b>Mantén pulsada</b> una carta para ver qué hace.</span></li>
         <li><span class="n ol">2</span><span>Cada carta gasta <em>CAOS</em>. Se recarga solo, 1 cada 3 segundos, y al doble en el último minuto.</span></li>
         <li><span class="n ol">3</span><span>Tus unidades <b>siguen su carril</b> y pelean solas. El puente que elijas decide el carril.</span></li>
         <li><span class="n ol">4</span><span>Cada torre derribada es una corona. <b>Tira la Sede de Microblizz</b> y ganas al instante.</span></li>
         <li><span class="n ol">5</span><span>Hay 6 facciones y cada una tiene su <b>pasiva</b>: Rabia, Renacer, Hype, Experiencia, Escudos y RNG. Toca el botón de la pasiva, arriba a la izquierda, para ver qué hace. Microblizz tiene <em>Despidos rentables</em>: cada bot que despides le devuelve algo de CAOS.</span></li>
         <li><span class="n ol">6</span><span>Cuidado: SurvivalBot <em>entierra</em> a las unidades que cruzan a su lado y, a media vida, empieza los <em>despidos masivos</em>.</span></li>
+        <li><span class="n ol">7</span><span><b>Mejora tus cartas</b> en <em>Colección</em>: súbelas de nivel con oro y toca sus <b>ranuras</b> para ponerles habilidades y objetos del <em>Gashapón</em>. En el <em>Inventario</em> ves todo lo que tienes y su calidad, de Becario a CEO.</span></li>
       </ol>
       <button class="btn-big ol" id="btn-howto-ok">¡VAMOS!</button>
     </section>
@@ -903,6 +1022,9 @@ const ECON = {
   pityEpic: 10, pityLeg: 50,                                                     // garantía: épica o mejor cada 10, legendaria a las 50
   start: { gold: 150, gems: 100 },
   mission: [50, 10],
+  scrap: { common: 25, rare: 60, epic: 150, legendary: 400 },      // oro al despedir una copia (x1 Becario, x1,5 Junior, x2 Senior, x3 Director, x5 CEO)
+  reroll: { common: 250, rare: 500, epic: 1000, legendary: 2000 }, // oro de la «evaluación de desempeño» (volver a tirar sus números)
+  pityQ: 10,                                                       // garantía: calidad Director o mejor como mucho cada 10 tiradas
 };
 const RARITY = { common: ['Común', '#63cfe0', '#2a7895'], rare: ['Rara', '#ffb04f', '#cf5a16'], epic: ['Épica', '#d08cff', '#6d28c9'], legendary: ['Legendaria', '#ffe06a', '#c47f10'] };
 // gashapón de habilidades: una por carta, de cualquier facción; rango 1-3 con las repetidas
@@ -924,24 +1046,46 @@ const ABILITIES = {
 };
 // gashapón de equipamiento: solo para el líder (arma, cabeza y accesorio)
 const SLOTS = { weapon: 'Arma', head: 'Cabeza', acc: 'Accesorio' };
-const ITEMS = {
-  espada_carton: { name: 'Espada de cartón piedra', slot: 'weapon', rar: 'common', desc: '+10 % de daño. Hecha a mano en una convención.' },
-  raton_dpi:     { name: 'Ratón de 16.000 DPI', slot: 'weapon', rar: 'rare', desc: '+20 % de alcance y +10 % de daño.' },
-  teclado_rgb:   { name: 'Teclado mecánico RGB', slot: 'weapon', rar: 'epic', desc: 'Ataca un 25 % más rápido. Clic, clic, clic.' },
-  banhammer_oro: { name: 'BanHammer de oro', slot: 'weapon', rar: 'legendary', desc: '+25 % de daño y cada golpe aparta al enemigo.' },
-  cuernos:       { name: 'Casco con cuernos', slot: 'head', rar: 'common', desc: '+15 % de vida.' },
-  corona_carton: { name: 'Corona de hamburguesería', slot: 'head', rar: 'rare', desc: '+10 % de vida y +10 % de daño.' },
-  gorro_aluminio:{ name: 'Gorro de papel de aluminio', slot: 'head', rar: 'epic', desc: 'Inmune a las habilidades del jefe y +10 % de vida.' },
-  auriculares:   { name: 'Auriculares con cancelación de ruido', slot: 'head', rar: 'legendary', desc: 'Inmune a aturdimientos y frenazos, y +15 % de vida.' },
-  taza:          { name: 'Taza del becario', slot: 'acc', rar: 'common', desc: 'Se cura un 1 % de su vida cada segundo.' },
-  pase_caducado: { name: 'Pase de batalla caducado', slot: 'acc', rar: 'common', desc: '+3 % a todo. Algo es algo.' },
-  almohada:      { name: 'Almohada de viaje', slot: 'acc', rar: 'rare', desc: 'Si cae, vuelve un 40 % antes.' },
-  silla_gamer:   { name: 'Silla gamer portátil', slot: 'acc', rar: 'epic', desc: 'Recibe un 15 % menos de daño.' },
-  cofre:         { name: 'Cofre de botín sin abrir', slot: 'acc', rar: 'legendary', desc: 'Cada partida, un efecto sorpresa (o ninguno).' },
-  diploma:       { name: 'Diploma de Becario del Mes', slot: 'acc', rar: 'rare', pass: true, desc: '+8 % de vida y daño. Enmarcado en plástico. Exclusivo del pase.' },
-  corbata_ceo:   { name: 'Corbata del CEO', slot: 'acc', rar: 'legendary', pass: true, desc: '+15 % de vida y daño, y +10 % de velocidad. Viste como el que te despide. Exclusivo del Pase Ejecutivo.' },
+const ITEMS = {   // st: valor central de cada efecto; cada copia sale entre el 50 % y el 150 % de ese valor
+  espada_carton: { name: 'Espada de cartón piedra', slot: 'weapon', rar: 'common', st: [10], desc: '+{0} % de daño. Hecha a mano en una convención.' },
+  raton_dpi:     { name: 'Ratón de 16.000 DPI', slot: 'weapon', rar: 'rare', st: [20, 10], desc: '+{0} % de alcance y +{1} % de daño.' },
+  teclado_rgb:   { name: 'Teclado mecánico RGB', slot: 'weapon', rar: 'epic', st: [25], desc: 'Ataca un {0} % más rápido. Clic, clic, clic.' },
+  banhammer_oro: { name: 'BanHammer de oro', slot: 'weapon', rar: 'legendary', st: [25], desc: '+{0} % de daño y cada golpe aparta al enemigo.' },
+  cuernos:       { name: 'Casco con cuernos', slot: 'head', rar: 'common', st: [15], desc: '+{0} % de vida.' },
+  corona_carton: { name: 'Corona de hamburguesería', slot: 'head', rar: 'rare', st: [10, 10], desc: '+{0} % de vida y +{1} % de daño.' },
+  gorro_aluminio:{ name: 'Gorro de papel de aluminio', slot: 'head', rar: 'epic', st: [10], desc: 'Inmune a las habilidades del jefe y +{0} % de vida.' },
+  auriculares:   { name: 'Auriculares con cancelación de ruido', slot: 'head', rar: 'legendary', st: [15], desc: 'Inmune a aturdimientos y frenazos, y +{0} % de vida.' },
+  taza:          { name: 'Taza del becario', slot: 'acc', rar: 'common', st: [1], desc: 'Se cura un {0} % de su vida cada segundo.' },
+  pase_caducado: { name: 'Pase de batalla caducado', slot: 'acc', rar: 'common', st: [3], desc: '+{0} % a todo. Algo es algo.' },
+  almohada:      { name: 'Almohada de viaje', slot: 'acc', rar: 'rare', st: [40], desc: 'Si cae, vuelve un {0} % antes.' },
+  silla_gamer:   { name: 'Silla gamer portátil', slot: 'acc', rar: 'epic', st: [15], desc: 'Recibe un {0} % menos de daño.' },
+  cofre:         { name: 'Cofre de botín sin abrir', slot: 'acc', rar: 'legendary', st: [100], desc: 'Cada partida, un efecto sorpresa (o ninguno) con un {0} % de potencia.' },
+  diploma:       { name: 'Diploma de Becario del Mes', slot: 'acc', rar: 'rare', pass: true, st: [8, 8], desc: '+{0} % de vida y +{1} % de daño. Enmarcado en plástico. Exclusivo del pase.' },
+  corbata_ceo:   { name: 'Corbata del CEO', slot: 'acc', rar: 'legendary', pass: true, st: [15, 15, 10], desc: '+{0} % de vida, +{1} % de daño y +{2} % de velocidad. Viste como el que te despide. Exclusivo del Pase Ejecutivo.' },
 };
-const COFRE = [['¡+30 % DE DAÑO!', u => { u.mDmg *= 1.3; }], ['¡+40 % DE VIDA!', u => { u.mHp *= 1.4; }], ['¡TURBO!', u => { u.mSpeed *= 1.3; u.mCd *= 0.8; }], ['¡REGENERACIÓN!', u => { u.regen = (u.regen || 0) + 0.02; }], ['…estaba vacío', () => {}]];
+const COFRE = [[p => `¡+${Math.round(30 * p)} % DE DAÑO!`, (u, p) => { u.mDmg *= 1 + 0.3 * p; }], [p => `¡+${Math.round(40 * p)} % DE VIDA!`, (u, p) => { u.mHp *= 1 + 0.4 * p; }], [() => '¡TURBO!', (u, p) => { u.mSpeed *= 1 + 0.3 * p; u.mCd *= 1 - 0.2 * p; }], [() => '¡REGENERACIÓN!', (u, p) => { u.regen = (u.regen || 0) + 0.02 * p; }], [() => '…estaba vacío', () => {}]];
+// v0.9.9: calidad de cada copia. Cada efecto sale entre el 50 % (calidad 0) y el 150 % (calidad 100) de su valor central.
+// Los cargos dicen lo buena que es; las probabilidades se enseñan en el gashapón.
+const QTIERS = [
+  { name: 'Becario', p: 30, lo: 0, hi: 0.4, col: '#b4bccb' },
+  { name: 'Junior', p: 40, lo: 0.4, hi: 0.7, col: '#63cfe0' },
+  { name: 'Senior', p: 20, lo: 0.7, hi: 0.88, col: '#8cf05a' },
+  { name: 'Director', p: 9, lo: 0.88, hi: 0.99, col: '#e2a8ff' },
+  { name: 'CEO', p: 1, lo: 1, hi: 1, col: '#ffcb3d' },
+];
+const PASS_Q = 0.9;   // los premios del pase salen siempre con calidad Director
+function rollQ(minTier) {
+  const pool = QTIERS.slice(minTier || 0); let x = Math.random() * pool.reduce((a, t) => a + t.p, 0);
+  for (const t of pool) { if (x < t.p) return Math.floor((t.lo + Math.random() * (t.hi - t.lo)) * 1000) / 1000; x -= t.p; }
+  return 1;
+}
+const tierOf = q => (q >= 1 ? 4 : q >= 0.88 ? 3 : q >= 0.7 ? 2 : q >= 0.4 ? 1 : 0);
+const avgQ = it => it.q.reduce((a, b) => a + b, 0) / it.q.length;
+const defOf = it => (it.k === 'ab' ? ABILITIES : ITEMS)[it.id];
+const statDec = (id, c) => (id === 'provoca' ? 0 : c < 5 ? 2 : 1);
+const statsOf = it => (it.k === 'ab' ? [ABILITIES[it.id].vals[1]] : ITEMS[it.id].st).map(c => ({ c, dec: statDec(it.id, c) }));
+const rnd = (v, dec) => { const m = Math.pow(10, dec); return Math.round(v * m) / m; };
+const valsOf = it => statsOf(it).map((st, i) => rnd(st.c * (0.5 + (it.q[i] == null ? 0.5 : it.q[i])), st.dec));
 // campaña "La Rebelión de los Fans": 7 mundos de 4 niveles (el 4.º es el jefe)
 const WORLDS = [
   { name: 'Oficinas de Microblizz', efac: 'microblizz', story: 'Todo empieza aquí: becarios, bots y reuniones que podrían haber sido un correo.', levels: [
@@ -1152,9 +1296,32 @@ const GAME_URL = 'jdanielhl1984-commits.github.io/fans-of-rumble';
 
 /* ---------- guardado (en el navegador; se puede exportar e importar) ---------- */
 const SAVE_KEY = 'for-save-1';
-function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, abil: {}, abEquip: {}, items: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0 }, daily: null, weekly: null, tickets: 0, pass: { xp: 0, prem: false, free: [], paid: [] }, giftDay: '', chatOff: false, bestBoss: 0, lastFac: 'animales' }; }
+function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, inv: [], invSeq: 0, abEquip: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0, qab: 0, qeq: 0 }, daily: null, weekly: null, tickets: 0, pass: { xp: 0, prem: false, free: [], paid: [] }, giftDay: '', chatOff: false, bestBoss: 0, lastFac: 'animales' }; }
+// v0.9.9: antes se guardaba «tengo esta habilidad (rango 1-3)» y «tengo este objeto»; ahora cada copia tiene su calidad.
+// Las partidas antiguas se convierten sin perder nada: la habilidad conserva su valor exacto y los objetos quedan como estaban.
+function migrateSave(s) {
+  if (!Array.isArray(s.inv)) s.inv = [];
+  s.invSeq = s.invSeq || s.inv.length;
+  const add = (k, id, q) => { const it = { u: 'i' + (++s.invSeq), k, id, q }; s.inv.push(it); return it.u; };
+  const has = uid => s.inv.some(it => it.u === uid);
+  if (s.abil) {
+    const map = {};
+    for (const id in s.abil) if (ABILITIES[id]) { const v = ABILITIES[id].vals, r = Math.max(1, Math.min(3, s.abil[id] || 1)); map[id] = add('ab', id, [Math.max(0, Math.min(1, Math.floor((v[r - 1] / v[1] - 0.5) * 1000) / 1000))]); }
+    for (const k in s.abEquip || {}) { const v = s.abEquip[k]; if (map[v]) s.abEquip[k] = map[v]; else if (!has(v)) delete s.abEquip[k]; }
+    delete s.abil;
+  }
+  if (s.items) {
+    const map = {};
+    for (const id in s.items) if (ITEMS[id]) map[id] = add('eq', id, ITEMS[id].st.map(() => (ITEMS[id].pass ? PASS_Q : 0.5)));
+    for (const f in s.equip || {}) for (const sl in s.equip[f]) { const v = s.equip[f][sl]; if (map[v]) s.equip[f][sl] = map[v]; else if (!has(v)) delete s.equip[f][sl]; }
+    delete s.items;
+  }
+  s.abEquip = s.abEquip || {}; s.equip = s.equip || {};
+  s.pity = Object.assign({ ab: 0, abL: 0, eq: 0, eqL: 0, qab: 0, qeq: 0 }, s.pity || {});
+  return s;
+}
 function loadSave() {
-  try { const t = localStorage.getItem(SAVE_KEY); if (t) { const o = JSON.parse(t); if (o && o.v === 1) return Object.assign(newSave(), o); } } catch (e) { /* storage blocked */ }
+  try { const t = localStorage.getItem(SAVE_KEY); if (t) { const o = JSON.parse(t); if (o && o.v === 1) return migrateSave(Object.assign(newSave(), o)); } } catch (e) { /* storage blocked */ }
   return newSave();
 }
 let SAVE = loadSave();
@@ -2598,7 +2765,7 @@ function makeStruct(team, role, x, y, lane = -1) {
   return { kind: 'struct', id: ++uid, skin, team, role, lane, x, y, r: d.r, hp: d.hp, maxHp: d.hp, dmg: d.dmg, cd: d.cd, range: d.range, atkT: 1, alive: true, hitT: 0, recoil: 0, castT: 0, smokeT: 0, hackedT: 0, cur: null, muzzleX: muzzle[0], muzzleZ: muzzle[1], corrupt: team === 'e' && G.efac !== 'microblizz' };
 }
 function resetMatch() {
-  units = []; projs = []; parts = []; nums = []; revives = [];
+  units = []; projs = []; parts = []; nums = []; revives = []; if (typeof bannerClear === 'function' && READY) bannerClear(); hideCardTip();
   S = {
     p: { chaos: CFG.chaosStart, crowns: 0, leaderCd: 0, spent: 0, deployed: 0, kills: 0, hype: 0, hypeLvl: 0, xp: 0, xpLvl: 0, plays: {}, bossDmg: 0 },
     e: { chaos: CFG.chaosStart, crowns: 0, leaderCd: 0, spent: 0, deployed: 0, kills: 0, hype: 0, hypeLvl: 0, xp: 0, xpLvl: 0, bossT: G.diffCfg.bossCd * 0.8, phase2: false, nextDespido: true },
@@ -3027,7 +3194,13 @@ function puff(x, y, n, color, spd = 40, size = 6, ground = false, z0 = 2) { for 
 function ring(x, y, r0, r1, color, dur = 0.4, lw = 4) { parts.push({ type: 'ring', x, y, z: 0, r0, r1, color, life: dur, max: dur, lw, ground: true }); }
 function sparks(x, y, z, n, color) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = rand(60, 160); parts.push({ type: 'spark', x, y, z, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.5, vz: rand(20, 140), g: 420, life: rand(0.2, 0.35), max: 0.35, color }); } }
 function chips(x, y, z, n, colors, kind = 'chip', size = 4) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = rand(30, 110); parts.push({ type: kind, x, y, z, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.5, vz: rand(90, 220), g: 520, rot: rand(0, 6), vr: rand(-12, 12), life: rand(0.7, 1.1), max: 1.1, size: rand(size * 0.7, size * 1.3), color: pick(colors) }); } }
-function addNum(x, y, z, txt, color, size = 15) { nums.push({ x, y, z, vz: 46, txt: String(txt), color, size, life: 0.85, max: 0.85 }); }
+function addNum(x, y, z, txt, color, size = 15) {
+  txt = String(txt);
+  if (/^[+-]?[0-9]/.test(txt)) { nums.push({ x, y, z, vz: 46, txt, color, size, life: 0.85, max: 0.85 }); return; }   // números (daño, curas, +CAOS): rápidos
+  // v0.9.9: los mensajes duran más, suben despacio, llevan fondo y no se pisan entre ellos
+  for (let k = 0; k < 4; k++) { const o = nums.find(n => n.tx && Math.abs(n.x - x) < 90 && Math.abs((n.y - n.z) - (y - z)) < 20); if (!o) break; z = o.z + (y - o.y) + 22; }
+  nums.push({ x, y, z, vz: 22, txt, color, size: Math.max(14, size), life: 2.1, max: 2.1, tx: true });
+}
 // v0.9.8: destello de golpe, tajo de los ataques cuerpo a cuerpo, resplandor y flash de pantalla
 function impact(x, y, z, size, color) { parts.push({ type: 'impact', x, y, z, size, color, rot: Math.random() * Math.PI, life: 0.17, max: 0.17 }); }
 function flashAt(x, y, z, size, rgb, dur = 0.3) { parts.push({ type: 'flash', x, y, z, size, rgb, life: dur, max: dur }); }
@@ -3044,6 +3217,8 @@ function canDeploy(team, key) {
   return !units.some(u => u.alive && u.team === team && u.type === key);
 }
 function validSpot(team, x, y) { const z = ZONE[team]; return x >= 16 && x <= W - 16 && y >= z.y0 && y <= z.y1; }
+// v0.9.9: si sueltas la carta en el río o en el lado enemigo, la tropa sale en el borde de tu zona (la línea límite)
+function snapSpot(team, x, y) { const z = ZONE[team]; return { x: clamp(x, 26, W - 26), y: clamp(y, z.y0, z.y1) }; }
 function spawnUnit(team, type, x, y) {
   const d = CFG.units[type];
   const u = { kind: 'unit', id: ++uid, team, type, d, x, y, z: 0, r: d.r, hp: d.hp, maxHp: d.hp, alive: true, atkT: 0.35, target: null, retarget: 0, deployT: 0.7, deployMax: 0.7, face: x < W / 2 ? 1 : -1, walk: Math.random() * 6, moving: false, lungeT: 0, lungeX: 0, lungeY: 0, hitT: 0, stunT: 0, stealthT: d.stealth || 0, jumpCd: d.jumpCd ? 2.5 : 0, jump: null, spin: 0, labelT: team === 'e' ? 2 : 0, slowT: 0,
@@ -3068,10 +3243,10 @@ function applySpawnMods(u) {
   if (f === 'ciber') u.shieldMax = u.shield = Math.round(u.maxHp * P.ciber.frac);
   if (u.abShield) u.shieldMax = u.shield = Math.max(u.shieldMax, Math.round(u.maxHp * u.abShield));
 }
-const abVal = (id, rank) => ABILITIES[id].vals[Math.min(3, rank || 1) - 1];
+const invGet = uid => (uid ? SAVE.inv.find(it => it.u === uid) : null);
 function applyAbility(u) {
-  const k = SUMMON_PARENT[u.type] || u.type, id = SAVE.abEquip[k]; if (!id || !ABILITIES[id] || !SAVE.abil[id]) return;
-  const v = abVal(id, SAVE.abil[id]); u.ab = id;
+  const k = SUMMON_PARENT[u.type] || u.type, it = invGet(SAVE.abEquip[k]); if (!it || it.k !== 'ab' || !ABILITIES[it.id]) return;
+  const id = it.id, v = valsOf(it)[0]; u.ab = id;
   switch (id) {
     case 'cafeina': u.mSpeed *= 1 + v / 100; break;
     case 'piel': u.mHp *= 1 + v / 100; break;
@@ -3092,23 +3267,24 @@ function applyAbility(u) {
 function applyEquip(u) {
   const E = SAVE.equip[facOf(u.team)] || {};
   for (const slot in SLOTS) {
-    const id = E[slot]; if (!id || !SAVE.items[id]) continue;
+    const it = invGet(E[slot]); if (!it || it.k !== 'eq' || !ITEMS[it.id]) continue;
+    const id = it.id, v = valsOf(it), pc = i => 1 + v[i] / 100;
     switch (id) {
-      case 'espada_carton': u.mDmg *= 1.1; break;
-      case 'raton_dpi': u.mRange = 1.2; u.mDmg *= 1.1; break;
-      case 'teclado_rgb': u.mCd *= 0.75; break;
-      case 'banhammer_oro': u.mDmg *= 1.25; u.abKnock = 18; break;
-      case 'cuernos': u.mHp *= 1.15; break;
-      case 'corona_carton': u.mHp *= 1.1; u.mDmg *= 1.1; break;
-      case 'gorro_aluminio': u.mHp *= 1.1; u.immuneBoss = true; break;
-      case 'auriculares': u.mHp *= 1.15; u.immuneCC = true; u.immuneBoss = true; break;
-      case 'taza': u.regen = (u.regen || 0) + 0.01; break;
-      case 'pase_caducado': u.mHp *= 1.03; u.mDmg *= 1.03; u.mSpeed *= 1.03; break;
-      case 'almohada': u.respawnM = 0.6; break;
-      case 'silla_gamer': u.abArmor = 0.15; break;
-      case 'cofre': { const c = pick(COFRE); c[1](u); u.cofreTxt = c[0]; break; }
-      case 'diploma': u.mHp *= 1.08; u.mDmg *= 1.08; break;
-      case 'corbata_ceo': u.mHp *= 1.15; u.mDmg *= 1.15; u.mSpeed *= 1.1; break;
+      case 'espada_carton': u.mDmg *= pc(0); break;
+      case 'raton_dpi': u.mRange = pc(0); u.mDmg *= pc(1); break;
+      case 'teclado_rgb': u.mCd *= 1 - v[0] / 100; break;
+      case 'banhammer_oro': u.mDmg *= pc(0); u.abKnock = 18; break;
+      case 'cuernos': u.mHp *= pc(0); break;
+      case 'corona_carton': u.mHp *= pc(0); u.mDmg *= pc(1); break;
+      case 'gorro_aluminio': u.mHp *= pc(0); u.immuneBoss = true; break;
+      case 'auriculares': u.mHp *= pc(0); u.immuneCC = true; u.immuneBoss = true; break;
+      case 'taza': u.regen = (u.regen || 0) + v[0] / 100; break;
+      case 'pase_caducado': u.mHp *= pc(0); u.mDmg *= pc(0); u.mSpeed *= pc(0); break;
+      case 'almohada': u.respawnM = 1 - v[0] / 100; break;
+      case 'silla_gamer': u.abArmor = v[0] / 100; break;
+      case 'cofre': { const c = pick(COFRE), pw = v[0] / 100; c[1](u, pw); u.cofreTxt = c[0](pw); break; }
+      case 'diploma': u.mHp *= pc(0); u.mDmg *= pc(1); break;
+      case 'corbata_ceo': u.mHp *= pc(0); u.mDmg *= pc(1); u.mSpeed *= pc(2); break;
     }
     u.equip = u.equip || {}; u.equip[slot] = id;
   }
@@ -3128,11 +3304,10 @@ function playerPlay(slot, key, x, y) {
 function tryPlayerDeploy(slot, key, x, y) {
   if (G.state !== 'play' || !key) return false;
   const card = CFG.cards[key];
-  if (y > ZONE.p.y1 && y < TRAY_Y) y = ZONE.p.y1;
+  const sp = snapSpot('p', x, y); x = sp.x; y = sp.y;
   if (isLeader(key) && !canDeploy('p', key)) { const nm = CFG.cards[key].name; toast(S.p.leaderCd > 0 ? `${nm} vuelve en ${Math.ceil(S.p.leaderCd)} s` : `${nm} ya está en el campo`); play('deny'); return false; }
   if (S.p.chaos < card.cost) { toast(`Te falta CAOS: ${Math.ceil(card.cost - S.p.chaos)} más`); play('deny'); return false; }
-  if (!validSpot('p', x, y)) { toast('Suelta la carta en tu lado del campo'); play('deny'); return false; }
-  playerPlay(slot, key, clamp(x, 26, W - 26), y);
+  playerPlay(slot, key, x, y);
   hideTut();
   return true;
 }
@@ -3335,7 +3510,7 @@ function kill(t, src) {
     }
     if (G.state === 'play' && !t.summon && G.t >= (G.quipT || 0) && Math.random() < (t.team === 'p' ? 0.12 : 0.4)) {   // frase de despedida
       const pool = t.team === 'p' ? QUIPS.player.concat(QUIPS_FAC[G.faction] || []) : facOf(t.team) === 'microblizz' ? QUIPS.microblizz : QUIPS.corrupt.concat(QUIPS_CORRUPT[facOf(t.team)] || []);
-      parts.push({ type: 'quip', x: clamp(t.x, 70, W - 70), y: t.y, z: topOf(t) + 24, vz: 9, txt: pick(pool), life: 2.3, max: 2.3 }); G.quipT = G.t + 2.4;
+      parts.push({ type: 'quip', x: clamp(t.x, 70, W - 70), y: t.y, z: topOf(t) + 24, vz: 9, txt: pick(pool), life: 3.3, max: 3.3 }); G.quipT = G.t + 3.2;
     }
     S[other(t.team)].kills++; if (G.state === 'play') passiveKill(other(t.team));
     return;
@@ -3551,7 +3726,10 @@ function healPulse(u, dt) {
   for (const a of units) {
     if (!a.alive || a.team !== u.team || a.deployT > 0 || a.jump || a.hp >= a.maxHp || dist(a, u) > u.d.healR) continue;
     const amt = Math.min(u.d.heal, a.maxHp - a.hp); a.hp += amt; any = true;
-    if (amt >= 4) addNum(a.x + rand(-5, 5), a.y, topOf(a) * 0.75 + 4, '+' + Math.round(amt), '#8cf05a', 13);
+    // v0.9.9: que se vea a quién cura: rayo verde, círculo y «+N» más grande
+    if (a !== u) parts.push({ type: 'beam', x0: u.x, y0: u.y, z0: topOf(u) * 0.6, x1: a.x, y1: a.y, z1: topOf(a) * 0.5, color: '#8cf05a', life: 0.5, max: 0.5 });
+    ring(a.x, a.y, 4, a.r * 2.2, 'rgba(140,240,90,.9)', 0.4, 3);
+    if (amt >= 1) addNum(a.x + rand(-5, 5), a.y, topOf(a) * 0.75 + 4, '+' + Math.round(amt), '#8cf05a', 16);
   }
   if (!any) return;
   ring(u.x, u.y, 10, u.d.healR, 'rgba(123,224,74,.8)', 0.5, 4);
@@ -3559,15 +3737,23 @@ function healPulse(u, dt) {
   flashAt(u.x, u.y, 12, 40, '120,255,140', 0.3);
   play('heal');
 }
+// v0.9.9: la curandera va detrás de sus aliados (primero los heridos y los cercanos, nunca delante del grupo)
+// y, si está sola, espera delante de su torre en vez de ir a por las del enemigo
 function followAlly(u, dt) {
-  let best = null, bs = -Infinity;
+  const home = u.team === 'p' ? 1 : -1; let best = null, bs = -Infinity;
   for (const a of units) {
-    if (a === u || !a.alive || a.team !== u.team || a.deployT > 0 || a.d.healer) continue;
-    const sc = (u.team === 'p' ? -a.y : a.y) - dist(a, u) * 0.5; if (sc > bs) { bs = sc; best = a; }
+    if (a === u || !a.alive || a.team !== u.team || a.deployT > 0 || a.d.healer || a.d.kamikaze || a.jump) continue;
+    const sc = (1 - a.hp / a.maxHp) * 150 - dist(a, u) * 0.5 + a.y * home * 0.2 - (a.d.buildings ? 40 : 0);
+    if (sc > bs) { bs = sc; best = a; }
   }
-  if (!best) return false;
-  const tx = best.x, ty = best.y + (u.team === 'p' ? 28 : -28);
-  if (Math.hypot(tx - u.x, ty - u.y) > 10) moveToward(u, tx, ty, dt); else u.moving = false;
+  if (best) {
+    const tx = clamp(best.x, 24, W - 24), ty = best.y + home * 36;
+    if (Math.hypot(tx - u.x, ty - u.y) > 10) moveToward(u, tx, ty, dt); else { u.moving = false; if (Math.abs(best.x - u.x) > 3) u.face = best.x > u.x ? 1 : -1; }
+    return true;
+  }
+  if (units.some(o => o.alive && o.team !== u.team && targetable(o) && dist(o, u) < u.d.sight)) return false;   // la atacan: se defiende
+  const wx = BRIDGES[u.x < W / 2 ? 0 : 1], wy = u.team === 'p' ? ZONE.p.y0 + 75 : ZONE.e.y1 - 75;
+  if (Math.hypot(wx - u.x, wy - u.y) > 12) moveToward(u, wx, wy, dt); else u.moving = false;
   return true;
 }
 function bunnyJump(u, dt) {
@@ -3866,7 +4052,7 @@ function render() {
   for (const e of list) (e.kind === 'struct' ? drawStruct(e) : drawUnit(e));
   for (const p of projs) drawProj(p);
   for (const p of parts) if (!p.ground) drawPart(p);
-  drawAmbient(rdt);
+  if (G.state !== 'title') drawAmbient(rdt); else G.flash = 0;
   for (const e of list) drawBars(e);
   for (const n of nums) drawNum(n);
   if (showZones) drawGhost();
@@ -3993,6 +4179,7 @@ function drawUnitShadow(u) {
     g.addColorStop(0, `rgba(192,132,252,${(0.25 + 0.35 * k) * pulse})`); g.addColorStop(1, 'rgba(150,80,255,0)');
     ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(u.x, u.y, u.r * (1.4 + k * 0.7), u.r * (0.6 + k * 0.3), 0, 0, Math.PI * 2); ctx.fill();
   }
+  if (u.d.healer && u.deployT <= 0) { ctx.globalAlpha = 0.28; ctx.strokeStyle = '#8cf05a'; ctx.lineWidth = 2; ctx.setLineDash([5, 6]); ctx.beginPath(); ctx.ellipse(u.x, u.y, u.d.healR, u.d.healR * 0.42, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; }
   if (u.d.aura && u.deployT <= 0) { ctx.globalAlpha = 0.35 + 0.1 * Math.sin(G.t * 3); ctx.strokeStyle = u.team === 'p' ? '#c084fc' : '#8fc2ff'; ctx.lineWidth = 2; ctx.setLineDash([6, 6]); ctx.lineDashOffset = -G.t * 12; ctx.beginPath(); ctx.ellipse(u.x, u.y, u.d.aura.r, u.d.aura.r * 0.42, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]); ctx.lineDashOffset = 0; ctx.globalAlpha = 1; }
   ctx.globalAlpha = 0.3 * sc; ctx.fillStyle = '#140a1e'; ctx.beginPath(); ctx.ellipse(u.x, u.y + 1, u.r * 1.05 * sc, u.r * 0.42 * sc, 0, 0, Math.PI * 2); ctx.fill();
   if (u.deployT <= 0 && !u.jump) { ctx.globalAlpha = u.stealthT > 0 ? 0.4 : 0.95; ctx.strokeStyle = u.team === 'p' ? '#ffa23a' : '#3d9bff'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.ellipse(u.x, u.y + 1, u.r * 0.95, u.r * 0.4, 0, 0, Math.PI * 2); ctx.stroke(); }
@@ -4241,12 +4428,12 @@ function drawPart(p) {
       ctx.fillStyle = OL; ctx.beginPath(); ctx.arc(gx - 2.2, gy - 3, 1, 0, Math.PI * 2); ctx.arc(gx + 2.2, gy - 3, 1, 0, Math.PI * 2); ctx.fill(); break; }
     case 'quip': {   // bocadillo con la frase de despedida
       const a = Math.min(1, (1 - k) * 10, k * 4); ctx.globalAlpha = a;
-      ctx.font = `800 11px "Baloo 2", "Trebuchet MS", system-ui, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      const tw = ctx.measureText(p.txt).width + 14, bx = clamp(p.x, tw / 2 + 4, W - tw / 2 - 4), by = p.y - p.z;
+      ctx.font = `800 12.5px "Baloo 2", "Trebuchet MS", system-ui, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const tw = ctx.measureText(p.txt).width + 16, bx = clamp(p.x, tw / 2 + 4, W - tw / 2 - 4), by = p.y - p.z;
       ctx.fillStyle = '#ffffff'; ctx.strokeStyle = OL; ctx.lineWidth = 2;
-      ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx - tw / 2, by - 10, tw, 20, 8); else ctx.rect(bx - tw / 2, by - 10, tw, 20);
-      ctx.moveTo(p.x - 4, by + 10); ctx.lineTo(p.x, by + 17); ctx.lineTo(p.x + 4, by + 10);
-      ctx.fill(); ctx.stroke(); ctx.fillStyle = '#ffffff'; ctx.fillRect(p.x - 3, by + 8, 6, 3);
+      ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx - tw / 2, by - 11, tw, 22, 9); else ctx.rect(bx - tw / 2, by - 11, tw, 22);
+      ctx.moveTo(p.x - 4, by + 11); ctx.lineTo(p.x, by + 18); ctx.lineTo(p.x + 4, by + 11);
+      ctx.fill(); ctx.stroke(); ctx.fillStyle = '#ffffff'; ctx.fillRect(p.x - 3, by + 9, 6, 3);
       ctx.fillStyle = OL; ctx.fillText(p.txt, bx, by + 1); ctx.globalAlpha = 1; break;
     }
     case 'stamp': { const age = 1 - k; const sc = age < 0.15 ? lerp(2.2, 1, age / 0.15) : 1; ctx.globalAlpha = Math.min(1, k * 2.5); ctx.save(); ctx.translate(p.x, p.y - p.z); ctx.rotate(-0.15); ctx.scale(sc, sc);
@@ -4299,15 +4486,20 @@ function drawPart(p) {
   ctx.globalAlpha = 1;
 }
 function drawNum(n) {
-  const k = n.life / n.max; const age = n.max - n.life; const sc = age < 0.1 ? lerp(1.6, 1, age / 0.1) : 1;
-  ctx.globalAlpha = Math.min(1, k * 3.5); ctx.save(); ctx.translate(n.x, n.y - n.z); ctx.scale(sc, sc); text(n.txt, 0, 0, n.size, n.color); ctx.restore(); ctx.globalAlpha = 1;
+  const k = n.life / n.max; const age = n.max - n.life; const sc = age < 0.1 ? lerp(n.tx ? 1.3 : 1.6, 1, age / 0.1) : 1;
+  let x = n.x, tw = 0;
+  if (n.tx) { ctx.font = `${n.size}px ${FONT_D}`; tw = ctx.measureText(n.txt).width + 16; x = clamp(x, tw / 2 + 4, W - tw / 2 - 4); }
+  ctx.globalAlpha = Math.min(1, k * (n.tx ? 5 : 3.5)); ctx.save(); ctx.translate(x, n.y - n.z); ctx.scale(sc, sc);
+  if (n.tx) { const th = n.size + 9; ctx.fillStyle = 'rgba(20,10,32,.74)'; ctx.beginPath(); rrPath(ctx, -tw / 2, -th / 2 - 1, tw, th, th / 2); ctx.fill(); }
+  text(n.txt, 0, 0, n.size, n.color); ctx.restore(); ctx.globalAlpha = 1;
 }
 function drawGhost() {
   const key = (input.dragging && input.card) || input.selected; const g = input.ghost; if (!key || !g) return;
-  const x = g.x; let y = g.y; if (y > ZONE.p.y1 && y < TRAY_Y) y = ZONE.p.y1;
-  if (y >= TRAY_Y) return;
-  const card = CFG.cards[key]; const ok = validSpot('p', x, y), rich = S.p.chaos >= card.cost, can = canDeploy('p', key); const good = ok && rich && can;
+  if ((g.fy == null ? g.y : g.fy) >= TRAY_Y - 4) return;   // con el dedo sobre las cartas se cancela
+  const sp = snapSpot('p', g.x, g.y), x = sp.x, y = sp.y;
+  const card = CFG.cards[key]; const ok = true, rich = S.p.chaos >= card.cost, can = canDeploy('p', key); const good = rich && can;
   ctx.save();
+  if (Math.hypot(g.x - x, g.y - y) > 8) { ctx.globalAlpha = 0.75; ctx.setLineDash([4, 5]); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.moveTo(g.x, g.y); ctx.lineTo(x, y); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; }
   ctx.strokeStyle = good ? '#ffffff' : '#ff4b5c'; ctx.lineWidth = 2.8; ctx.setLineDash([7, 5]); ctx.beginPath(); ctx.ellipse(x, y + 1, 36, 14, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
   ctx.globalAlpha = good ? 0.82 : 0.42;
   for (let i = 0; i < card.count; i++) { const ox = card.count > 1 ? (i - (card.count - 1) / 2) * 22 : 0, oy = card.count > 1 ? (i % 2) * 6 : 0; const s = SPR[key]; ctx.drawImage(s.c, x + ox - s.ax, y + oy - s.ay, s.wd, s.ht); }
@@ -4342,9 +4534,12 @@ function drawArt(cv, key, LW, LH) {
   else if (n === 3) { const hs = key === 'skeleton' ? 0.82 : 0.66; drawVector(x, key, LW / 2 - LW * 0.24, LH - 5, h * hs, 1); drawVector(x, key, LW / 2 + LW * 0.24, LH - 5, h * hs, -1); drawVector(x, key, LW / 2, LH - 2, h * (hs + 0.1), 1); }
   else { const f = ART_FIT[key] || [0, 0.92]; drawVector(x, key, LW / 2 + f[0] * LW, LH - 3, h * f[1], 1); }
 }
+// v0.9.10: reduce la letra hasta que el texto quepa en su recuadro
+function fitText(el, max, min) { el.style.fontSize = max + 'px'; let sz = max; while (el.scrollWidth > el.clientWidth + 0.5 && sz > min) { sz -= 0.5; el.style.fontSize = sz + 'px'; } }
 function renderCard(el, k) {
   const c = CFG.cards[k]; el.dataset.card = k; el.dataset.rarity = c.rarity;
   el.querySelector('.cost').textContent = c.cost; el.querySelector('.card-name').textContent = c.name; el.querySelector('.card-tag').textContent = c.tag;
+  fitText(el.querySelector('.card-name'), 13.5, 8); fitText(el.querySelector('.card-tag'), 10.5, 7.5);
   el.querySelector('.card-lvl').textContent = 'NV ' + uSave(k).lvl;
   el.setAttribute('aria-label', `${c.name}, ${c.rar}, cuesta ${c.cost} de CAOS`);
   drawArt(el._art, k, 86, 58);
@@ -4375,7 +4570,7 @@ const fmtV = v => String(v).replace('.', ',');
 const RANK = r => (r > 1 ? ' ' + '★'.repeat(r) : '');
 const RAR_ORDER = { legendary: 0, epic: 1, rare: 2, common: 3 };
 function updateWallets() {
-  for (const w of document.querySelectorAll('[data-wallet]')) w.innerHTML = `<span>${COIN_SVG}${fmt(SAVE.gold)}</span><span>${GEM_SVG}${fmt(SAVE.gems)}</span>`;
+  for (const w of document.querySelectorAll('[data-wallet]')) w.innerHTML = `<button class="wal" data-wal="gold" aria-label="Oro: ${fmt(SAVE.gold)}. Comprar más">${COIN_SVG}${fmt(SAVE.gold)}<i class="wal-plus ol">+</i></button><button class="wal" data-wal="gems" aria-label="Gemas: ${fmt(SAVE.gems)}. Comprar más">${GEM_SVG}${fmt(SAVE.gems)}<i class="wal-plus ol">+</i></button>`;
   updateBadges();
 }
 /* ---------- niveles ---------- */
@@ -4399,7 +4594,7 @@ function buildColl() {
   const box = $('#passive-box'); box.className = 'passive-box ' + F.kind;
   box.innerHTML = ICONS[F.icon] + `<div><b class="ol">${F.name.toUpperCase()} · ${F.passive}</b><span>${lock ? 'Bloqueada: libera su mundo en la campaña (o activa el modo pruebas en Opciones).' : F.passiveText}</span></div>`;
   const list = $('#coll-list');
-  list.innerHTML = [F.leader, ...F.units].map(k => collRow(k, lock)).join('');
+  list.innerHTML = (lock ? '' : '<p class="coll-hint">Toca las <b>ranuras</b> de cada carta para equipar: <b>habilidades</b> en todas y <b>objetos</b> (arma, cabeza y accesorio) solo en el líder. Salen en el <b>Gashapón</b>. El número rojo dice cuántas tienes sin usar.</p>') + [F.leader, ...F.units].map(k => collRow(k, lock)).join('');
   for (const cv of list.querySelectorAll('canvas[data-k]')) drawArt(cv, cv.dataset.k, 62, 54);
   list.querySelectorAll('[data-up]').forEach(b => { b.onclick = () => { if (levelUp(b.dataset.up)) { updateWallets(); buildColl(); } }; });
   list.querySelectorAll('[data-ab]').forEach(b => { b.onclick = () => openPick('ab', b.dataset.ab); });
@@ -4409,44 +4604,75 @@ function collRow(k, lock) {
   const c = CFG.cards[k], u = CFG.units[k], us = uSave(k), max = us.lvl >= ECON.maxLvl, need = needXp(us.lvl);
   const ready = !max && us.xp >= need, cost = upCost(us.lvl), pct = max ? 100 : Math.min(100, (us.xp / need) * 100), m = 1 + (us.lvl - 1) * ECON.lvlStep;
   const stats = u.healer ? `Vida ${Math.round(u.hp * m)} · Cura ${u.heal}` : `Vida ${Math.round(u.hp * m)}${c.count > 1 ? ' (x' + c.count + ')' : ''} · Daño ${Math.round(u.dmg * m)}`;
-  const abId = SAVE.abEquip[k], A = abId && ABILITIES[abId];
-  let chips = `<button class="chip-btn${A ? '' : ' empty'}" data-ab="${k}" ${lock ? 'disabled' : ''}>${A ? `<i class="rdot" style="background:${RARITY[A.rar][1]}"></i>${A.name}${RANK(SAVE.abil[abId])}` : '+ Habilidad'}</button>`;
-  if (isLeader(k)) { const E = SAVE.equip[collFac] || {}; for (const sl in SLOTS) { const it = E[sl] && ITEMS[E[sl]]; chips += `<button class="chip-btn${it ? '' : ' empty'}" data-eq="${sl}" ${lock ? 'disabled' : ''}>${it ? `<i class="rdot" style="background:${RARITY[it.rar][1]}"></i>${it.name}` : '+ ' + SLOTS[sl]}</button>`; } }
+  const worn = wornSet();
+  let slots = slotTile('ab', k, invGet(SAVE.abEquip[k]), lock, 'HABILIDAD', worn);
+  if (isLeader(k)) { const E = SAVE.equip[collFac] || {}; for (const sl in SLOTS) slots += slotTile('eq', sl, invGet(E[sl]), lock, SLOTS[sl].toUpperCase(), worn); }
   const btn = max ? '<button class="btn-up max" disabled>NV MÁX</button>' : `<button class="btn-up" data-up="${k}" ${ready && !lock ? '' : 'disabled'}>SUBIR<small>${COIN_SVG}${fmt(cost)}</small></button>`;
-  return `<div class="coll-row" data-rarity="${c.rarity}"><canvas data-k="${k}"></canvas><div><div class="coll-name ol">${c.name}<em>Nv ${us.lvl}</em></div><div class="deck-desc">${c.desc}</div><div class="xpbar"><i style="width:${pct}%"></i><span>${max ? 'NIVEL MÁXIMO' : `${fmt(us.xp)} / ${fmt(need)} XP`}</span></div><div class="deck-stats">${stats}</div><div class="chips">${chips}</div></div>${btn}</div>`;
+  return `<div class="coll-row" data-rarity="${c.rarity}"><canvas data-k="${k}"></canvas><div><div class="coll-name ol">${c.name}<em>Nv ${us.lvl}</em></div><div class="deck-desc">${c.desc}</div><div class="xpbar"><i style="width:${pct}%"></i><span>${max ? 'NIVEL MÁXIMO' : `${fmt(us.xp)} / ${fmt(need)} XP`}</span></div><div class="deck-stats">${stats}</div></div>${btn}<div class="slots${isLeader(k) ? '' : ' one'}">${slots}</div></div>`;
+}
+// v0.9.9: ranuras grandes. Vacías con borde punteado y un número rojo si tienes copias sin usar para esa ranura
+function wornSet() { const w = new Set(Object.values(SAVE.abEquip)); for (const f in SAVE.equip) for (const sl in SAVE.equip[f]) w.add(SAVE.equip[f][sl]); return w; }
+function slotTile(kind, key, it, lock, label, worn) {
+  const D = it && defOf(it), attr = kind === 'ab' ? `data-ab="${key}"` : `data-eq="${key}"`, dis = lock ? 'disabled' : '';
+  if (!D) {
+    const n = SAVE.inv.filter(x => x.k === kind && (kind === 'ab' || ITEMS[x.id].slot === key) && !worn.has(x.u)).length;
+    const ic = kind === 'ab' ? '<span class="sl-plus">+</span>' : SLOT_SVG[key];
+    return `<button class="slot" ${attr} ${dis} aria-label="${label}: vacía. Toca para equipar"><span class="sl-ic">${ic}</span><span class="sl-txt"><span class="sl-lbl ol">${label}</span><span class="sl-name">${n ? 'Toca para equipar' : 'Vacía · sale en el gashapón'}</span></span>${n && !lock ? `<span class="sl-n ol">${n}</span>` : ''}</button>`;
+  }
+  const R = RARITY[D.rar], T = QTIERS[tierOf(avgQ(it))];
+  return `<button class="slot full" ${attr} ${dis} style="--qc:${T.col};--rc2:${R[2]}" aria-label="${label}: ${D.name}, calidad ${T.name}. Toca para cambiar"><span class="sl-ic" style="background:${R[1]}">${kind === 'ab' ? D.ic : SLOT_SVG[key]}</span><span class="sl-txt"><span class="sl-lbl ol">${label}</span><span class="sl-name">${D.name}</span><span class="sl-q ol">${T.name}</span></span></button>`;
+}
+function descOf(it) {
+  const D = defOf(it), S = statsOf(it), V = valsOf(it); let t = D.desc;
+  S.forEach((st, i) => { t = t.replace(i === 0 && t.includes('{v}') ? '{v}' : '{' + i + '}', `<b class="sv">${fmtV(V[i])}</b>`); });
+  return t;
+}
+const rangeTxt = it => { const S = statsOf(it); return (S.length > 1 ? 'Rangos: ' : 'Rango: ') + S.map(st => `${fmtV(rnd(st.c * 0.5, st.dec))}–${fmtV(rnd(st.c * 1.5, st.dec))}`).join(' · '); };
+const qBadge = (it, big) => { const q = avgQ(it), T = QTIERS[tierOf(q)]; return `<span class="qbadge" style="--qc:${T.col}">${big ? 'CALIDAD ' + T.name.toUpperCase() : T.name} · ${Math.round(q * 100)} %</span>`; };
+const sortInv = (a, b) => RAR_ORDER[defOf(a).rar] - RAR_ORDER[defOf(b).rar] || defOf(a).name.localeCompare(defOf(b).name) || avgQ(b) - avgQ(a);
+function wearer(it) {   // nombre de la carta que lo lleva puesto (o null)
+  if (it.k === 'ab') { for (const k in SAVE.abEquip) if (SAVE.abEquip[k] === it.u) return CFG.cards[k] ? CFG.cards[k].name : k; return null; }
+  for (const f in SAVE.equip) for (const sl in SAVE.equip[f]) if (SAVE.equip[f][sl] === it.u) return CFG.cards[FACTIONS[f].leader].name;
+  return null;
+}
+function unequip(it) {
+  if (it.k === 'ab') { for (const k in SAVE.abEquip) if (SAVE.abEquip[k] === it.u) delete SAVE.abEquip[k]; }
+  else for (const f in SAVE.equip) for (const sl in SAVE.equip[f]) if (SAVE.equip[f][sl] === it.u) delete SAVE.equip[f][sl];
+}
+function pickRowHtml(it, sel) {
+  const D = defOf(it), R = RARITY[D.rar], w = wearer(it);
+  return `<button class="pick-opt" data-id="${it.u}" aria-pressed="${sel === it.u}" style="--rc:${R[2]}"><span class="ic" style="background:${R[1]}">${it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><span><span class="inv-top"><b class="ol">${D.name}</b>${qBadge(it)}</span><span class="pk-desc">${descOf(it)}${w ? ` <i class="wn">Lo lleva ${w}.</i>` : ''}</span></span></button>`;
+}
+// ventana con una lista para elegir (sirve para Colección y para el Inventario)
+function openList(title, html, onChoose) {
+  $('#pick-title').textContent = title; const list = $('#pick-list'); list.innerHTML = html;
+  list.querySelectorAll('.pick-opt').forEach(b => { b.onclick = () => { $('#scr-pick').hidden = true; onChoose(b.dataset.id); }; });
+  const g = list.querySelector('[data-goto]'); if (g) g.onclick = () => { $('#scr-pick').hidden = true; gachaTab = g.dataset.goto; play('select'); updateWallets(); openGacha(); };
+  for (const cv of list.querySelectorAll('canvas[data-art]')) drawArt(cv, cv.dataset.art, 44, 36);
+  $('#scr-pick').hidden = false; list.scrollTop = 0;
 }
 let pickCtx = null;
 function openPick(kind, key) {
-  pickCtx = { kind, key }; const list = $('#pick-list'); let html = '';
+  let html = '', owned, sel, title;
   if (kind === 'ab') {
-    $('#pick-title').textContent = 'Habilidad para ' + CFG.cards[key].name;
-    const owned = Object.keys(SAVE.abil).filter(id => ABILITIES[id]).sort((a, b) => RAR_ORDER[ABILITIES[a].rar] - RAR_ORDER[ABILITIES[b].rar]);
-    if (!owned.length) html = '<p class="deck-sub">Aún no tienes habilidades: consíguelas en el gashapón.</p>';
-    html += owned.map(id => {
-      const A = ABILITIES[id], r = SAVE.abil[id], on = Object.keys(SAVE.abEquip).find(k2 => SAVE.abEquip[k2] === id);
-      return `<button class="pick-opt${on && on !== key ? ' used' : ''}" data-id="${id}" aria-pressed="${SAVE.abEquip[key] === id}" style="--rc:${RARITY[A.rar][2]}"><span class="ic" style="background:${RARITY[A.rar][1]}">${A.ic}</span><span><b class="ol">${A.name}${RANK(r)}</b><span>${A.desc.replace('{v}', fmtV(abVal(id, r)))}${A.fac ? ' De los ' + FACTIONS[A.fac].name + '.' : ''}${on && on !== key ? ` Ahora la lleva ${CFG.cards[on].name}.` : ''}</span></span></button>`;
-    }).join('');
-    if (SAVE.abEquip[key]) html += '<button class="pick-opt" data-id="" style="--rc:#3e2363"><span class="ic" style="background:#cdb9ea">✕</span><span><b class="ol">Quitar habilidad</b></span></button>';
+    title = 'Habilidad para ' + CFG.cards[key].name; sel = SAVE.abEquip[key];
+    owned = SAVE.inv.filter(it => it.k === 'ab' && ABILITIES[it.id]);
   } else {
-    const leader = FACTIONS[collFac].leader; $('#pick-title').textContent = SLOTS[key] + ' para ' + CFG.cards[leader].name;
-    const owned = Object.keys(SAVE.items).filter(id => ITEMS[id] && ITEMS[id].slot === key).sort((a, b) => RAR_ORDER[ITEMS[a].rar] - RAR_ORDER[ITEMS[b].rar]);
-    if (!owned.length) html = '<p class="deck-sub">Aún no tienes objetos de este tipo: consíguelos en el gashapón de equipo.</p>';
-    const cur = (SAVE.equip[collFac] || {})[key];
-    html += owned.map(id => {
-      const I = ITEMS[id]; let on = null; for (const f in SAVE.equip) if (SAVE.equip[f][key] === id) on = f;
-      return `<button class="pick-opt${on && on !== collFac ? ' used' : ''}" data-id="${id}" aria-pressed="${cur === id}" style="--rc:${RARITY[I.rar][2]}"><span class="ic" style="background:${RARITY[I.rar][1]}">${SLOT_SVG[key]}</span><span><b class="ol">${I.name}</b><span>${I.desc}${on && on !== collFac ? ` Ahora lo lleva ${CFG.cards[FACTIONS[on].leader].name}.` : ''}</span></span></button>`;
-    }).join('');
-    if (cur) html += '<button class="pick-opt" data-id="" style="--rc:#3e2363"><span class="ic" style="background:#cdb9ea">✕</span><span><b class="ol">Quitar objeto</b></span></button>';
+    title = SLOTS[key] + ' para ' + CFG.cards[FACTIONS[collFac].leader].name; sel = (SAVE.equip[collFac] || {})[key];
+    owned = SAVE.inv.filter(it => it.k === 'eq' && ITEMS[it.id] && ITEMS[it.id].slot === key);
   }
-  list.innerHTML = html;
-  list.querySelectorAll('.pick-opt').forEach(b => { b.onclick = () => choosePick(b.dataset.id); });
-  $('#scr-pick').hidden = false;
+  if (sel) html += `<button class="pick-opt" data-id="" style="--rc:#3e2363"><span class="ic" style="background:#cdb9ea">✕</span><span><b class="ol">${kind === 'ab' ? 'Quitar habilidad' : 'Quitar objeto'}</b></span></button>`;
+  if (!owned.length) html += `<p class="deck-sub">${kind === 'ab' ? 'Aún no tienes habilidades.' : 'Aún no tienes objetos de este tipo.'} Salen en el gashapón${kind === 'ab' ? '' : ' de equipo'}: cada tirada cuesta ${ECON.pull} gemas.</p><button class="btn-ghost ol" data-goto="${kind}">IR AL GASHAPÓN</button>`;
+  html += owned.sort(sortInv).map(it => pickRowHtml(it, sel)).join('');
+  pickCtx = { kind, key };
+  openList(title, html, uid => chooseFor(kind, key, uid));
 }
-function choosePick(id) {
-  const { kind, key } = pickCtx;
-  if (kind === 'ab') { for (const k2 in SAVE.abEquip) if (SAVE.abEquip[k2] === id) delete SAVE.abEquip[k2]; if (id) SAVE.abEquip[key] = id; else delete SAVE.abEquip[key]; }
-  else { for (const f in SAVE.equip) if (SAVE.equip[f][key] === id) delete SAVE.equip[f][key]; SAVE.equip[collFac] = SAVE.equip[collFac] || {}; if (id) SAVE.equip[collFac][key] = id; else delete SAVE.equip[collFac][key]; }
-  saveGame(); play('select'); $('#scr-pick').hidden = true; buildColl();
+function chooseFor(kind, key, uid) {
+  const it = invGet(uid);
+  if (it) unequip(it);
+  if (kind === 'ab') { if (it) SAVE.abEquip[key] = uid; else delete SAVE.abEquip[key]; }
+  else { SAVE.equip[collFac] = SAVE.equip[collFac] || {}; if (it) SAVE.equip[collFac][key] = uid; else delete SAVE.equip[collFac][key]; }
+  saveGame(); play('select'); buildColl();
 }
 /* ---------- gashapón de Microblizz ---------- */
 let gachaTab = 'ab', gachaAnim = null, gachaRAF = 0;
@@ -4460,34 +4686,61 @@ function rollRarity(kind) {
   if (r === 'legendary') P[pl] = 0;
   return r;
 }
-function pull() {
-  if (gachaAnim) return;
-  if (SAVE.tickets > 0) SAVE.tickets--;
-  else if (SAVE.gems < ECON.pull) { play('deny'); confirmBox('FALTAN GEMAS', `Te faltan <b>${ECON.pull - SAVE.gems} gemas</b> para girar.<small>Las consigues con misiones, la campaña, el pase de batalla o en la tienda.</small>`, 'IR A LA TIENDA', () => openShop('gems')); return; }
-  else SAVE.gems -= ECON.pull;
-  audioInit();
-  const kind = gachaTab, rar = rollRarity(kind), DB = kind === 'ab' ? ABILITIES : ITEMS, pool = Object.keys(DB).filter(k => DB[k].rar === rar && !DB[k].pass);
-  const id = pick(pool); let tag;
-  if (kind === 'ab') { const r = SAVE.abil[id] || 0; if (!r) tag = '¡NUEVA!'; else if (r < 3) tag = `¡SUBE A RANGO ${r + 1}!`; else { SAVE.gems += ECON.dupGems; tag = `Repetida: +${ECON.dupGems} gemas`; } SAVE.abil[id] = Math.min(3, r + 1); }
-  else if (!SAVE.items[id]) { SAVE.items[id] = 1; tag = '¡NUEVO!'; } else { SAVE.gems += ECON.dupGems; tag = `Repetido: +${ECON.dupGems} gemas`; }
-  missionEvent('pull', 1); saveGame(); updateWallets(); buildGachaText();
-  const cv = $('#gacha-cv'); cv.classList.remove('shake'); void cv.offsetWidth; cv.classList.add('shake'); play('roll');
-  gachaAnim = { t: 0, col: RARITY[rar][1] };
-  setTimeout(() => { gachaAnim = null; showPull(kind, id, rar, tag); }, 1100);
+// v0.9.10: tiradas x1, x10 y x50. Primero se gastan las tiradas gratis; cada tirada cuenta para las garantías
+function onePull(kind) {
+  const rar = rollRarity(kind), DB = kind === 'ab' ? ABILITIES : ITEMS, pool = Object.keys(DB).filter(k => DB[k].rar === rar && !DB[k].pass);
+  const id = pick(pool), prev = bestCopy(kind, id), nPrev = SAVE.inv.filter(x => x.k === kind && x.id === id).length;
+  const P = SAVE.pity, qk = 'q' + kind; P[qk] = (P[qk] || 0) + 1;
+  const it = newCopy(kind, id, P[qk] >= ECON.pityQ ? 3 : 0), tq = tierOf(avgQ(it)); if (tq >= 3) P[qk] = 0;
+  const pn = prev && QTIERS[tierOf(avgQ(prev))].name, better = !!prev && avgQ(it) > avgQ(prev);
+  const tag = tq === 4 ? '¡CALIDAD CEO! Tirada perfecta' : !prev ? (kind === 'ab' ? '¡NUEVA!' : '¡NUEVO!') : better ? `¡TU MEJOR COPIA! (la anterior era ${pn})` : `Copia n.º ${nPrev + 1} · tu mejor copia sigue siendo ${pn}`;
+  return { it, tag, isNew: !prev, better };
 }
-function showPull(kind, id, rar, tag) {
-  const D = (kind === 'ab' ? ABILITIES : ITEMS)[id], R = RARITY[rar], card = $('#gr-card');
-  card.style.setProperty('--rc1', R[1]); card.style.setProperty('--rc2', R[2]);
-  const desc = kind === 'ab' ? D.desc.replace('{v}', fmtV(abVal(id, SAVE.abil[id]))) : D.desc;
-  card.innerHTML = `<div class="gr-rar ol">${R[0].toUpperCase()}${kind === 'eq' ? ' · ' + SLOTS[D.slot].toUpperCase() : ''}</div><div class="gr-ic">${kind === 'ab' ? D.ic : SLOT_SVG[D.slot]}</div><div class="gr-name ol">${D.name}${kind === 'ab' ? RANK(SAVE.abil[id]) : ''}</div><div class="gr-desc">${desc}${kind === 'ab' && D.fac ? '<br><small>Viene de los ' + FACTIONS[D.fac].name + '</small>' : ''}</div><span class="gr-tag">${tag}</span>`;
-  $('#gacha-result').hidden = false; play(rar === 'legendary' || rar === 'epic' ? 'win' : 'levelup');
+function pullCost(n) { const free = Math.min(SAVE.tickets || 0, n); return { free, gems: (n - free) * ECON.pull }; }
+function pull(n) {
+  n = n || 1; if (gachaAnim) return;
+  const c = pullCost(n);
+  if (SAVE.gems < c.gems) { play('deny'); confirmBox('FALTAN GEMAS', `Para girar x${n} te faltan <b>${fmt(c.gems - SAVE.gems)} gemas</b>.<small>Las consigues con misiones, la campaña, el pase de batalla o en la tienda.</small>`, 'IR A LA TIENDA', () => openShop('gems')); return; }
+  SAVE.tickets = (SAVE.tickets || 0) - c.free; SAVE.gems -= c.gems;
+  audioInit();
+  const kind = gachaTab, res = []; for (let i = 0; i < n; i++) res.push(onePull(kind));
+  missionEvent('pull', n); saveGame(); updateWallets(); buildGachaText();
+  const cv = $('#gacha-cv'); cv.classList.remove('shake'); void cv.offsetWidth; cv.classList.add('shake'); play('roll');
+  const top = res.reduce((a, r) => (RAR_ORDER[defOf(r.it).rar] < RAR_ORDER[defOf(a.it).rar] ? r : a));
+  gachaAnim = { t: 0, col: RARITY[defOf(top.it).rar][1] };
+  setTimeout(() => { gachaAnim = null; if (n === 1) showPull(res[0].it, res[0].tag); else showMulti(res); }, 1100);
+}
+const RAR_PL = { common: ['común', 'comunes'], rare: ['rara', 'raras'], epic: ['épica', 'épicas'], legendary: ['legendaria', 'legendarias'] };
+function showMulti(res) {
+  const card = $('#gr-card'), top = res.reduce((a, r) => (RAR_ORDER[defOf(r.it).rar] < RAR_ORDER[defOf(a.it).rar] ? r : a)), R = RARITY[defOf(top.it).rar];
+  card.classList.add('multi'); card.style.setProperty('--rc1', R[1]); card.style.setProperty('--rc2', R[2]);
+  const cnt = r => res.filter(x => defOf(x.it).rar === r).length, good = res.filter(x => tierOf(avgQ(x.it)) >= 3).length, news = res.filter(x => x.isNew).length;
+  const sum = ['legendary', 'epic', 'rare', 'common'].filter(r => cnt(r)).map(r => `${cnt(r)} ${RAR_PL[r][cnt(r) > 1 ? 1 : 0]}`).join(' · ');
+  const order = res.slice().sort((a, b) => RAR_ORDER[defOf(a.it).rar] - RAR_ORDER[defOf(b.it).rar] || avgQ(b.it) - avgQ(a.it));
+  card.innerHTML = `<div class="gr-rar ol">TIRADA x${res.length}</div><div class="gr-sum">${sum}${good ? ` · <b>${good} Director o mejor</b>` : ''}${news ? ` · ${news} ${news > 1 ? 'nuevas' : 'nueva'}` : ''}</div><div class="gr-grid">${order.map(r => {
+    const D = defOf(r.it), RR = RARITY[D.rar], T = QTIERS[tierOf(avgQ(r.it))], nw = r.it.k === 'ab' ? 'NUEVA' : 'NUEVO';
+    return `<button class="gt" data-gu="${r.it.u}" style="--rc:${RR[1]};--rc2:${RR[2]};--qc:${T.col}" aria-label="${D.name}, ${RR[0]}, calidad ${T.name}"><span class="gt-ic">${r.it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><span class="gt-name">${D.name}</span><span class="gt-q ol">${T.name}</span>${r.isNew ? `<span class="gt-new ol">${nw}</span>` : r.better ? '<span class="gt-new best ol">MEJOR</span>' : ''}</button>`;
+  }).join('')}</div><small class="gr-hint">Toca una para ver sus números. Las que no quieras, despídelas en el inventario.</small>`;
+  for (const b of card.querySelectorAll('[data-gu]')) b.onclick = () => { play('select'); openItem(b.dataset.gu); };
+  $('#gacha-result').hidden = false;
+  play(res.some(x => tierOf(avgQ(x.it)) >= 3 || defOf(x.it).rar === 'legendary' || defOf(x.it).rar === 'epic') ? 'win' : 'levelup');
+}
+function addCopy(k, id, q) { const it = { u: 'i' + (++SAVE.invSeq), k, id, q }; SAVE.inv.push(it); return it; }
+function newCopy(k, id, minTier) { const n = k === 'ab' ? 1 : ITEMS[id].st.length; return addCopy(k, id, Array.from({ length: n }, () => rollQ(minTier))); }
+function bestCopy(k, id) { let b = null; for (const it of SAVE.inv) if (it.k === k && it.id === id && (!b || avgQ(it) > avgQ(b))) b = it; return b; }
+function showPull(it, tag) {
+  const D = defOf(it), kind = it.k, R = RARITY[D.rar], T = QTIERS[tierOf(avgQ(it))], card = $('#gr-card');
+  card.classList.remove('multi'); card.style.setProperty('--rc1', R[1]); card.style.setProperty('--rc2', R[2]);
+  card.innerHTML = `<div class="gr-rar ol">${R[0].toUpperCase()}${kind === 'eq' ? ' · ' + SLOTS[D.slot].toUpperCase() : ''}</div><div class="gr-ic">${kind === 'ab' ? D.ic : SLOT_SVG[D.slot]}</div><div class="gr-name ol">${D.name}</div><div class="gr-q ol" style="--qc:${T.col}">CALIDAD ${T.name.toUpperCase()} · ${Math.round(avgQ(it) * 100)} %</div><div class="gr-desc">${descOf(it)}<br><small class="rg">${rangeTxt(it)}</small>${kind === 'ab' && D.fac ? '<br><small>Viene de los ' + FACTIONS[D.fac].name + '</small>' : ''}</div><span class="gr-tag">${tag}</span>`;
+  $('#gacha-result').hidden = false; play(tierOf(avgQ(it)) >= 3 || D.rar === 'legendary' || D.rar === 'epic' ? 'win' : 'levelup');
 }
 function buildGachaText() {
   for (const b of document.querySelectorAll('[data-gt]')) b.setAttribute('aria-pressed', String(b.dataset.gt === gachaTab));
-  $('#gacha-sub').textContent = gachaTab === 'ab' ? 'Habilidades de cualquier facción para tus cartas. Si te sale repetida, sube de rango (hasta ★★★).' : 'Equipo freak solo para los líderes: arma, cabeza y accesorio. Se ve puesto en la partida.';
-  $('#btn-pull').innerHTML = SAVE.tickets > 0 ? `GIRAR · ${TICKET_SVG} ${SAVE.tickets > 1 ? SAVE.tickets + ' tiradas gratis' : '1 tirada gratis'}` : `GIRAR · ${ECON.pull} ${GEM_SVG}`;
+  $('#gacha-sub').textContent = gachaTab === 'ab' ? 'Habilidades de cualquier facción para tus cartas. Cada copia sale con su propia calidad, de Becario a CEO: búscale la mejor.' : 'Equipo freak solo para los líderes: arma, cabeza y accesorio. Cada objeto sale con su propia calidad y se ve puesto en la partida.';
+  const lab = n => { const c = pullCost(n); return c.gems ? `${fmt(c.gems)} ${GEM_SVG}${c.free ? `<i class="fr">+${c.free} gratis</i>` : ''}` : `${TICKET_SVG} gratis`; };
+  for (const b of document.querySelectorAll('[data-pull]')) { const n = +b.dataset.pull; b.innerHTML = `${n === 10 ? '<span class="tag">FAVORITA DEL CEO</span>' : n === 50 ? '<span class="tag">MODO BALLENA</span>' : ''}x${n}<small>${lab(n)}</small>`; }
   const P = SAVE.pity, O = ECON.odds;
-  $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Garantía: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}) y legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}). Cada tirada cuesta ${ECON.pull} gemas (unos 0,50 € si compras el pack pequeño de gemas). Microblizz no se hace responsable de tu afición a las cápsulas.`;
+  $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Calidad de cada efecto (del 50 % al 150 % de su valor): ${QTIERS.map(t => t.name + ' ' + t.p + ' %').join(', ')}. Garantías: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}), legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}) y calidad Director o mejor cada ${ECON.pityQ} (llevas ${P['q' + gachaTab] || 0}). Cada tirada cuesta ${ECON.pull} gemas (unos 0,50 € si compras el pack pequeño de gemas). Microblizz no se hace responsable de tu afición a las cápsulas.`;
 }
 function drawGacha() {
   const cv = $('#gacha-cv'); if (!cv || $('#scr-gacha').hidden) { gachaRAF = 0; return; }
@@ -4517,6 +4770,95 @@ function drawGacha() {
   gachaRAF = requestAnimationFrame(drawGacha);
 }
 function openGacha() { buildGachaText(); show('scr-gacha'); $('#gacha-result').hidden = true; if (!gachaRAF) gachaRAF = requestAnimationFrame(drawGacha); }
+/* ---------- inventario (v0.9.9): todas tus copias, con su calidad ---------- */
+let invTab = 'ab', invFilter = 'all', invSort = 'q', itemCur = null;
+const INV_FILTERS = { ab: [['all', 'Todas'], ['common', 'Comunes'], ['rare', 'Raras'], ['epic', 'Épicas'], ['legendary', 'Legendarias']], eq: [['all', 'Todo'], ['weapon', 'Armas'], ['head', 'Cabeza'], ['acc', 'Accesorios']] };
+const INV_SORTS = { q: 'calidad', rar: 'rareza', name: 'nombre' };
+const LOCK_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7.5" rx="1.6" fill="#ffcb3d" stroke="#20102c" stroke-width="1.4"/><path d="M5.3 7V5.2a2.7 2.7 0 0 1 5.4 0V7" stroke="#20102c" stroke-width="1.6" fill="none"/></svg>';
+const scrapValue = it => Math.round(ECON.scrap[defOf(it).rar] * [1, 1.5, 2, 3, 5][tierOf(avgQ(it))]);
+const canScrap = it => !it.lock && !wearer(it) && !defOf(it).pass;
+// despido masivo: Becarios y Juniors que nadie lleva, sin contrato indefinido, y nunca tu mejor copia de cada una
+const massList = () => SAVE.inv.filter(it => it.k === invTab && canScrap(it) && tierOf(avgQ(it)) <= 1 && bestCopy(it.k, it.id) !== it);
+function openInv(tab) { if (tab) invTab = tab; invFilter = 'all'; updateWallets(); show('scr-inv'); buildInv(); $('#inv-list').scrollTop = 0; }
+function buildInv() {
+  for (const b of document.querySelectorAll('[data-it]')) b.setAttribute('aria-pressed', String(b.dataset.it === invTab));
+  $('#inv-filters').innerHTML = INV_FILTERS[invTab].map(([v, l]) => `<button class="chip-btn" data-if="${v}" aria-pressed="${invFilter === v}">${l}</button>`).join('');
+  for (const b of document.querySelectorAll('[data-if]')) b.onclick = () => { invFilter = b.dataset.if; play('select'); buildInv(); };
+  $('#btn-inv-sort').textContent = 'Orden: ' + INV_SORTS[invSort];
+  const all = SAVE.inv.filter(it => it.k === invTab && defOf(it));
+  const L = all.filter(it => invFilter === 'all' || (invTab === 'ab' ? defOf(it).rar : defOf(it).slot) === invFilter);
+  L.sort(invSort === 'q' ? (a, b) => avgQ(b) - avgQ(a) || sortInv(a, b) : invSort === 'name' ? (a, b) => defOf(a).name.localeCompare(defOf(b).name) || avgQ(b) - avgQ(a) : sortInv);
+  $('#inv-sub').textContent = all.length ? `${all.length} ${all.length === 1 ? 'copia' : 'copias'}${invFilter !== 'all' ? ` (${L.length} con este filtro)` : ''}. Toca una para ver sus números, equiparla, evaluarla o despedirla.` : '';
+  $('#inv-list').innerHTML = L.length ? L.map(invRow).join('') : `<p class="deck-sub">${all.length ? 'Nada con este filtro.' : invTab === 'ab' ? 'Aún no tienes habilidades: salen en el gashapón.' : 'Aún no tienes equipo: sale en el gashapón de equipo y en el pase de batalla.'}</p>${all.length ? '' : '<button class="btn-ghost ol" id="btn-inv-gacha">IR AL GASHAPÓN</button>'}`;
+  const g = $('#btn-inv-gacha'); if (g) g.onclick = () => { play('select'); gachaTab = invTab; openGacha(); };
+  for (const b of document.querySelectorAll('[data-u]')) b.onclick = () => { play('select'); openItem(b.dataset.u); };
+  const n = massList().length, mb = $('#btn-mass'); mb.textContent = n ? `DESPIDO MASIVO (${n})` : 'DESPIDO MASIVO'; mb.disabled = !n;
+}
+function invRow(it) {
+  const D = defOf(it), R = RARITY[D.rar], w = wearer(it);
+  const meta = w || it.lock ? `<span class="inv-meta">${it.lock ? LOCK_SVG + 'Contrato indefinido' : ''}${w && it.lock ? ' · ' : ''}${w ? 'Lo lleva ' + w : ''}</span>` : '';
+  return `<button class="inv-row" data-u="${it.u}" style="--rc:${R[2]}"><span class="ic" style="background:${R[1]}">${it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><span class="inv-main"><span class="inv-top"><b class="ol">${D.name}</b>${qBadge(it)}</span><span class="inv-desc">${descOf(it)}</span>${meta}</span></button>`;
+}
+function openItem(uid) {
+  const it = invGet(uid); if (!it) { $('#scr-item').hidden = true; itemCur = null; return; } itemCur = uid;
+  const D = defOf(it), R = RARITY[D.rar], S = statsOf(it), V = valsOf(it), w = wearer(it), pass = !!D.pass;
+  const bars = S.map((st, i) => { const qi = it.q[i], Ti = QTIERS[tierOf(qi)]; return `<div class="qstat">${S.length > 1 ? `Efecto ${i + 1}: ` : 'Valor: '}<b>${fmtV(V[i])}</b> <small>(de ${fmtV(rnd(st.c * 0.5, st.dec))} a ${fmtV(rnd(st.c * 1.5, st.dec))}) · ${Ti.name}</small><div class="qbar" style="--qc:${Ti.col}"><i style="width:${Math.max(2, qi * 100)}%"></i></div></div>`; }).join('');
+  const others = SAVE.inv.filter(x => x !== it && x.k === it.k && x.id === it.id).sort((a, b) => avgQ(b) - avgQ(a));
+  const oth = others.length ? `Tus otras copias: ${others.slice(0, 5).map(x => `${QTIERS[tierOf(avgQ(x))].name} ${Math.round(avgQ(x) * 100)} %`).join(' · ')}${others.length > 5 ? ` y ${others.length - 5} más` : ''}.` : 'Es tu única copia.';
+  $('#item-body').innerHTML = `<div class="item-head"><span class="ic" style="background:${R[1]}">${it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><div><b class="ol">${D.name}</b><div class="item-note">${R[0]}${it.k === 'eq' ? ' · ' + SLOTS[D.slot] + ' (solo líderes)' : ''}${it.k === 'ab' && D.fac ? ' · de los ' + FACTIONS[D.fac].name : ''}</div></div></div>
+    <div>${qBadge(it, true)}</div><div class="inv-desc">${descOf(it)}</div>${bars}
+    <div class="item-note">${w ? 'Lo lleva ' + w + '.' : 'No lo lleva nadie.'}${pass ? ' Premio del pase: contrato blindado (ni se evalúa ni se despide).' : it.lock ? ' Contrato indefinido: no se puede despedir.' : ''}</div><div class="item-note">${oth}</div>`;
+  const rc = ECON.reroll[D.rar], sv = scrapValue(it);
+  $('#item-actions').innerHTML = `<button class="btn-ghost ol btn-ok" id="ia-equip">${w ? 'CAMBIAR' : 'EQUIPAR'}</button><button class="btn-ghost ol" id="ia-unequip" ${w ? '' : 'disabled'}>QUITAR</button>
+    <button class="btn-ghost ol" id="ia-lock" ${pass ? 'disabled' : ''}>${it.lock ? 'SIN CONTRATO' : 'CONTRATO INDEFINIDO'}</button><button class="btn-ghost ol danger" id="ia-scrap" ${canScrap(it) ? '' : 'disabled'}>DESPEDIR · +${fmt(sv)} ORO</button>
+    <button class="btn-ghost ol wide" id="ia-reroll" ${pass ? 'disabled' : ''}>EVALUACIÓN DE DESEMPEÑO · ${fmt(rc)} ORO</button>`;
+  $('#ia-equip').onclick = () => equipFromInv(it);
+  $('#ia-unequip').onclick = () => { unequip(it); saveGame(); play('select'); refreshInv(); };
+  $('#ia-lock').onclick = () => { it.lock = !it.lock; saveGame(); play('select'); refreshInv(); toast(it.lock ? 'Contrato indefinido: ya no se puede despedir' : 'Contrato normal: ya se puede despedir'); };
+  $('#ia-scrap').onclick = () => scrapOne(it);
+  $('#ia-reroll').onclick = () => rerollOne(it);
+  $('#scr-item').hidden = false;
+}
+function refreshInv() { if (!$('#scr-inv').hidden) buildInv(); if (!$('#scr-coll').hidden) buildColl(); if (itemCur && !$('#scr-item').hidden) openItem(itemCur); }
+function equipFromInv(it) {
+  const D = defOf(it), facs = FACTION_ORDER.filter(isUnlocked); let html = '';
+  if (it.k === 'ab') {
+    for (const f of facs) {
+      const F = FACTIONS[f];
+      html += `<p class="pick-head ol">${F.name}</p>` + [F.leader, ...F.units].map(k => { const cur = invGet(SAVE.abEquip[k]); return `<button class="pick-opt unit" data-id="${k}" aria-pressed="${SAVE.abEquip[k] === it.u}"><canvas data-art="${k}"></canvas><span><b class="ol">${CFG.cards[k].name}</b><span>${cur ? 'Lleva ' + ABILITIES[cur.id].name + ' (' + QTIERS[tierOf(avgQ(cur))].name + ')' : 'Sin habilidad'}</span></span></button>`; }).join('');
+    }
+    openList(`¿Quién lleva ${D.name}?`, html, k => { unequip(it); SAVE.abEquip[k] = it.u; saveGame(); play('select'); toast(`${CFG.cards[k].name} lleva ahora ${D.name}`); refreshInv(); });
+  } else {
+    html = facs.map(f => { const L = FACTIONS[f].leader, cur = invGet((SAVE.equip[f] || {})[D.slot]); return `<button class="pick-opt unit" data-id="${f}" aria-pressed="${cur === it}"><canvas data-art="${L}"></canvas><span><b class="ol">${CFG.cards[L].name}</b><span>${FACTIONS[f].name} · ${cur ? 'lleva ' + ITEMS[cur.id].name + ' (' + QTIERS[tierOf(avgQ(cur))].name + ')' : SLOTS[D.slot] + ' libre'}</span></span></button>`; }).join('');
+    openList(`¿Qué líder lleva ${D.name}?`, html, f => { unequip(it); SAVE.equip[f] = SAVE.equip[f] || {}; SAVE.equip[f][D.slot] = it.u; saveGame(); play('select'); toast(`${CFG.cards[FACTIONS[f].leader].name} lleva ahora ${D.name}`); refreshInv(); });
+  }
+}
+function scrapOne(it) {
+  if (!canScrap(it)) return;
+  const D = defOf(it), sv = scrapValue(it);
+  confirmBox('DESPEDIR', `¿Despedir esta copia de <b>${D.name}</b> (${QTIERS[tierOf(avgQ(it))].name})?<span class="big">+${fmt(sv)} ${COIN_SVG}</span><small>La indemnización depende de su cargo. La copia desaparece para siempre.</small>`, 'DESPEDIR', () => {
+    SAVE.inv = SAVE.inv.filter(x => x !== it); SAVE.gold += sv; saveGame(); play('despido'); updateWallets();
+    $('#scr-item').hidden = true; itemCur = null; refreshInv(); toast(`Despedida: +${fmt(sv)} de oro de indemnización`);
+  });
+}
+function rerollOne(it) {
+  const D = defOf(it); if (D.pass) return;
+  const cost = ECON.reroll[D.rar];
+  if (SAVE.gold < cost) { toast(`Te falta oro: ${fmt(cost - SAVE.gold)} más`); play('deny'); return; }
+  confirmBox('EVALUACIÓN DE DESEMPEÑO', `Microblizz vuelve a evaluar tu <b>${D.name}</b>: todos sus números se tiran otra vez.<span class="big">${fmt(cost)} ${COIN_SVG}</span><small>Puede salir mejor… o peor. Ahora es ${QTIERS[tierOf(avgQ(it))].name} (${Math.round(avgQ(it) * 100)} %). Mismas probabilidades que el gashapón, sin garantía.</small>`, 'EVALUAR', () => {
+    const before = avgQ(it); SAVE.gold -= cost; it.q = it.q.map(() => rollQ(0)); saveGame(); updateWallets();
+    const after = avgQ(it), T = QTIERS[tierOf(after)];
+    play(after > before ? 'levelup' : 'sad'); toast(after > before ? `¡Ascenso! Ahora es ${T.name} (${Math.round(after * 100)} %)` : `Degradada a ${T.name} (${Math.round(after * 100)} %). Así son las evaluaciones`);
+    refreshInv();
+  });
+}
+function massScrap() {
+  const L = massList(); if (!L.length) return;
+  const gold = L.reduce((a, it) => a + scrapValue(it), 0);
+  confirmBox('DESPIDO MASIVO', `Vas a despedir <b>${L.length} ${L.length === 1 ? 'copia' : 'copias'}</b> de ${invTab === 'ab' ? 'habilidades' : 'equipo'} de calidad Becario y Junior que nadie lleva puestas.<span class="big">+${fmt(gold)} ${COIN_SVG}</span><small>Se salvan las que tienen contrato indefinido y tu mejor copia de cada una. Microblizz estaría orgullosa.</small>`, 'DESPEDIR A TODAS', () => {
+    const del = new Set(L); SAVE.inv = SAVE.inv.filter(x => !del.has(x)); SAVE.gold += gold; saveGame(); updateWallets(); play('despido'); buildInv(); toast(`${L.length} despedidas: +${fmt(gold)} de oro`);
+  });
+}
 /* ---------- misiones diarias y semanales ---------- */
 function todayStr() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
 function weekStr() { const d = new Date(), back = (d.getDay() + 6) % 7, m = new Date(d.getFullYear(), d.getMonth(), d.getDate() - back); return `${m.getFullYear()}-${m.getMonth() + 1}-${m.getDate()}`; }
@@ -4583,7 +4925,7 @@ function giveReward(r) {
   if (r.gold) SAVE.gold += r.gold;
   if (r.gems) SAVE.gems += r.gems;
   if (r.tickets) SAVE.tickets = (SAVE.tickets || 0) + r.tickets;
-  if (r.item) SAVE.items[r.item] = 1;
+  if (r.item) addCopy('eq', r.item, ITEMS[r.item].st.map(() => PASS_Q));
 }
 const passReady = (track, i) => i <= passLevel() && !SAVE.pass[track === 'free' ? 'free' : 'paid'].includes(i) && (track === 'free' || SAVE.pass.prem);
 function passClaimable() { let n = 0; for (let i = 1; i <= passLevel(); i++) { if (passReady('free', i)) n++; if (passReady('paid', i)) n++; } return n; }
@@ -4678,6 +5020,9 @@ function updateBadges() {
   $('#coll-badge').hidden = !FACTION_ORDER.some(f => isUnlocked(f) && [FACTIONS[f].leader, ...FACTIONS[f].units].some(k => canLevel(k) && SAVE.gold >= upCost(uSave(k).lvl)));
   $('#pass-badge').hidden = !passClaimable();
   $('#shop-badge').hidden = !giftReady();
+  const t = SAVE.tickets || 0; $('#gacha-badge').hidden = !t;
+  $('#feat-gacha').textContent = t ? `¡${t} ${t > 1 ? 'tiradas gratis' : 'tirada gratis'}!` : 'Tira x1, x10 o x50';
+  $('#feat-shop').textContent = giftReady() ? '¡Regalo diario gratis!' : 'Oro, gemas y ofertas';
 }
 /* ---------- sátira: chat falso en directo ---------- */
 const chatSt = { t: 6 };
@@ -4872,13 +5217,25 @@ function fit() {
 function toLogical(e) { const r = stage.getBoundingClientRect(); return { x: ((e.clientX - r.left) / r.width) * W, y: ((e.clientY - r.top) / r.height) * VIEW.LH - VIEW.top }; }
 
 let toastTimer = null;
-function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1500); }
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400); }
 let bannerTimer = null;
-function banner(title, sub, kind) {
-  const b = $('#banner'); b.querySelector('.b-title').textContent = title; const bs = b.querySelector('.b-sub'); bs.textContent = sub || ''; bs.hidden = !sub;
-  b.className = kind || ''; void b.offsetWidth; b.className = 'show ' + (kind || '');
-  clearTimeout(bannerTimer); bannerTimer = setTimeout(() => { b.className = kind || ''; }, 2200);
+// v0.9.9: cada cartel se queda el tiempo justo para leerlo (más si es largo) y los siguientes esperan su turno
+const bannerQ = []; let bannerOn = false;
+function banner(title, sub, kind, now) {
+  if (now) bannerClear();
+  if (bannerQ.some(q => q.title === title && q.sub === sub)) return;
+  bannerQ.push({ title, sub, kind }); if (bannerQ.length > 3) bannerQ.splice(0, bannerQ.length - 3);
+  if (!bannerOn) nextBanner();
 }
+function nextBanner() {
+  const B = bannerQ.shift(), b = $('#banner'); if (!B) { bannerOn = false; return; }
+  bannerOn = true;
+  b.querySelector('.b-title').textContent = B.title; const bs = b.querySelector('.b-sub'); bs.textContent = B.sub || ''; bs.hidden = !B.sub;
+  b.className = B.kind || ''; void b.offsetWidth; b.className = 'show ' + (B.kind || '');
+  const dur = clamp(1500 + (B.title.length + (B.sub || '').length) * 45, 2600, 4800);
+  clearTimeout(bannerTimer); bannerTimer = setTimeout(() => { b.className = B.kind || ''; bannerTimer = setTimeout(nextBanner, 300); }, dur);
+}
+function bannerClear() { bannerQ.length = 0; clearTimeout(bannerTimer); bannerOn = false; const b = $('#banner'); if (b) b.className = ''; }
 function showTut() { if (G.tutSeen || G.autoplay) return; $('#tut').hidden = false; setTimeout(hideTut, 14000); }
 function hideTut() { $('#tut').hidden = true; G.tutSeen = true; }
 
@@ -4915,6 +5272,28 @@ const hud = {
   },
 };
 
+// v0.9.10: ficha de la carta al mantenerla pulsada (dedo o ratón) sin arrastrarla
+function roleOf(k) {
+  const u = CFG.units[k], c = CFG.cards[k], r = [];
+  if (isLeader(k)) r.push('Líder');
+  if (u.healer) r.push('Curandera');
+  else if (u.kamikaze) r.push('Kamikaze: va a por las torres');
+  else if (u.buildings) r.push('Asedio: solo ataca edificios');
+  else if (!isLeader(k) && u.hp * (c.count || 1) >= 700) r.push('Tanque');
+  if (!u.healer && !u.kamikaze) r.push(u.ranged ? 'A distancia' : 'Cuerpo a cuerpo');
+  if ((c.count || 1) > 1) r.push(`Salen ${c.count}`);
+  return r;
+}
+function showCardTip(k) {
+  const c = CFG.cards[k], u = CFG.units[k], lv = uSave(k).lvl, m = 1 + (lv - 1) * ECON.lvlStep, tip = $('#card-tip');
+  const stats = u.healer ? `Vida ${fmt(u.hp * m)} · Cura ${u.heal} cada ${fmtV(u.healCd)} s a los que tiene cerca` : `Vida ${fmt(u.hp * m)}${c.count > 1 ? ' cada una' : ''} · Daño ${fmt(u.dmg * m)}${u.buildings ? ' a edificios' : ''}`;
+  const ab = invGet(SAVE.abEquip[k]);
+  let extra = ab ? `<div class="tip-ab">Habilidad del gashapón: <b>${ABILITIES[ab.id].name}</b> (${QTIERS[tierOf(avgQ(ab))].name}): ${descOf(ab)}</div>` : '';
+  if (isLeader(k)) { const E = SAVE.equip[G.faction] || {}, its = Object.keys(SLOTS).map(sl => invGet(E[sl])).filter(Boolean); if (its.length) extra += `<div class="tip-ab">Equipo: ${its.map(it => `<b>${ITEMS[it.id].name}</b> (${QTIERS[tierOf(avgQ(it))].name})`).join(', ')}.</div>`; }
+  tip.innerHTML = `<div class="tip-head"><canvas></canvas><div><b class="ol">${c.name} <small>Nv ${lv}</small></b><span class="tip-tags"><i class="tcost">${c.cost} de CAOS</i>${roleOf(k).map(t => `<i>${t}</i>`).join('')}${c.rarity === 'leader' ? '' : `<i>${c.rar}</i>`}</span></div></div><p>${c.desc}</p><div class="tip-stats">${stats}</div>${extra}`;
+  drawArt(tip.querySelector('canvas'), k, 64, 52); tip.hidden = false;
+}
+function hideCardTip() { const t = document.getElementById('card-tip'); if (t) t.hidden = true; }
 function selectCard(slot) {
   if (G.state !== 'play') return;
   if (input.selected !== null && input.selSlot === slot) { input.selected = null; input.selSlot = null; return; }
@@ -4926,20 +5305,26 @@ for (const el of elCards) {
     if (G.state !== 'play') return;
     e.preventDefault(); audioInit();
     input.card = slotKey(el._slot); input.slot = el._slot; input.pointerId = e.pointerId; input.dragging = false; input.startX = e.clientX; input.startY = e.clientY; input.touch = e.pointerType !== 'mouse';
+    clearTimeout(input.tipT); input.tipShown = false; const pid = e.pointerId;
+    input.tipT = setTimeout(() => { if (input.card && !input.dragging && input.pointerId === pid && G.state === 'play') { showCardTip(input.card); input.tipShown = true; } }, 420);
     try { el.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
   });
   el.addEventListener('click', e => { if (e.detail === 0) selectCard(el._slot); });
+  el.addEventListener('contextmenu', e => e.preventDefault());   // sin menú del sistema al mantener pulsado
 }
 window.addEventListener('pointermove', e => {
   if (input.card && e.pointerId === input.pointerId) {
-    if (!input.dragging && Math.hypot(e.clientX - input.startX, e.clientY - input.startY) > 10) { input.dragging = true; input.selected = null; input.selSlot = null; }
-    if (input.dragging) { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - (input.touch ? 40 : 0) }; }
+    if (!input.dragging && Math.hypot(e.clientX - input.startX, e.clientY - input.startY) > 10) { input.dragging = true; input.selected = null; input.selSlot = null; clearTimeout(input.tipT); if (input.tipShown) { input.tipShown = false; hideCardTip(); } }
+    if (input.dragging) { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - (input.touch ? 40 : 0), fy: p.y }; }
   }
 });
 function endPointer(e, cancelled) {
   if (!input.card || e.pointerId !== input.pointerId) return;
+  clearTimeout(input.tipT);
+  if (input.tipShown) { input.tipShown = false; hideCardTip(); input.card = null; input.slot = null; input.dragging = false; input.pointerId = null; return; }   // solo quería leer la ficha
   const k = input.card;
   if (!cancelled) {
+    if (!input.dragging && Math.hypot(e.clientX - input.startX, e.clientY - input.startY) > 10) input.dragging = true;
     if (input.dragging) { const p = toLogical(e); const y = p.y - (input.touch ? 40 : 0); if (p.y < TRAY_Y - 4) tryPlayerDeploy(input.slot, k, p.x, y); }
     else selectCard(input.slot);
   }
@@ -5025,6 +5410,12 @@ $('#btn-quick').addEventListener('click', () => { play('select'); openPrep('quic
 $('#btn-bossmode').addEventListener('click', () => { play('select'); openPrep('boss'); });
 $('#btn-coll').addEventListener('click', () => { play('select'); collFac = G.faction; updateWallets(); show('scr-coll'); buildColl(); });
 $('#btn-gacha').addEventListener('click', () => { play('select'); updateWallets(); openGacha(); });
+$('#btn-inv').addEventListener('click', () => { play('select'); openInv(); });
+for (const b of document.querySelectorAll('[data-it]')) b.addEventListener('click', () => { invTab = b.dataset.it; invFilter = 'all'; play('select'); buildInv(); $('#inv-list').scrollTop = 0; });
+$('#btn-inv-sort').addEventListener('click', () => { invSort = invSort === 'q' ? 'rar' : invSort === 'rar' ? 'name' : 'q'; play('select'); buildInv(); });
+$('#btn-mass').addEventListener('click', massScrap);
+$('#btn-item-close').addEventListener('click', () => { $('#scr-item').hidden = true; itemCur = null; });
+$('#btn-gr-inv').addEventListener('click', () => { $('#gacha-result').hidden = true; play('select'); openInv(gachaTab); });
 $('#btn-missions').addEventListener('click', () => { play('select'); updateWallets(); buildMissions(); show('scr-missions'); });
 $('#btn-options').addEventListener('click', () => { play('select'); updateWallets(); $('#opt-vol').value = SAVE.vol == null ? 100 : SAVE.vol; $('#opt-mus').value = SAVE.mus == null ? 70 : SAVE.mus; $('#btn-test').textContent = SAVE.testAll ? 'ACTIVADO' : 'ACTIVAR'; $('#btn-chat').textContent = SAVE.chatOff ? 'NO' : 'SÍ'; show('scr-options'); });
 $('#btn-shop').addEventListener('click', () => { play('select'); openShop(); });
@@ -5038,12 +5429,13 @@ for (const b of document.querySelectorAll('[data-back]')) b.addEventListener('cl
 $('#btn-prep-back').addEventListener('click', () => { if (G.prep && G.prep.mode === 'camp') openCamp(); else goHome(); });
 $('#btn-pick-close').addEventListener('click', () => { $('#scr-pick').hidden = true; });
 for (const b of document.querySelectorAll('[data-gt]')) b.addEventListener('click', () => { gachaTab = b.dataset.gt; play('select'); buildGachaText(); });
-$('#btn-pull').addEventListener('click', pull);
+for (const b of document.querySelectorAll('[data-pull]')) b.addEventListener('click', () => pull(+b.dataset.pull));
+document.addEventListener('click', e => { const w = e.target.closest && e.target.closest('[data-wal]'); if (!w) return; play('select'); openShop(w.dataset.wal); });
 $('#btn-gr-ok').addEventListener('click', () => { $('#gacha-result').hidden = true; });
 $('#btn-howto').addEventListener('click', () => show('scr-howto'));
 $('#btn-howto-ok').addEventListener('click', goHome);
 $('#btn-pause').addEventListener('click', () => (G.state === 'paused' ? resumeGame() : pauseGame()));
-$('#btn-passive').addEventListener('click', () => { const F = FACTIONS[G.faction]; banner(F.passive, F.passiveText, F.kind); });
+$('#btn-passive').addEventListener('click', () => { const F = FACTIONS[G.faction]; banner(F.passive, F.passiveText, F.kind, true); });
 $('#btn-resume').addEventListener('click', resumeGame);
 $('#btn-quit').addEventListener('click', toMenu);
 $('#btn-again').addEventListener('click', startGame);
@@ -5062,7 +5454,7 @@ $('#btn-export').addEventListener('click', () => {
 });
 $('#btn-import').addEventListener('click', () => {
   try { const o = JSON.parse(decodeURIComponent(escape(atob($('#save-code').value.trim())))); if (!o || o.v !== 1) throw new Error('bad');
-    SAVE = Object.assign(newSave(), o); saveGame(); if (!isUnlocked(G.faction)) G.faction = SAVE.unlocked[0]; setFaction(G.faction); updateWallets(); toast('Progreso cargado'); play('crown');
+    SAVE = migrateSave(Object.assign(newSave(), o)); saveGame(); if (!isUnlocked(G.faction)) G.faction = SAVE.unlocked[0]; setFaction(G.faction); updateWallets(); toast('Progreso cargado'); play('crown');
   } catch (e) { toast('Ese código no es válido'); play('deny'); }
 });
 let resetArm = 0;
@@ -5139,7 +5531,7 @@ function frame(now) {
   const steps = Math.max(1, Math.round(G.timeScale));
   for (let i = 0; i < steps; i++) {
     const dt = real * G.slowmo;
-    G.t += dt;
+    if (G.state !== 'title') G.t += dt;   // v0.9.9: en los menús el fondo no se mueve
     if (G.shake > 0) G.shake = Math.max(0, G.shake - dt * 32);
     if (G.state === 'play' || G.state === 'ending') updateGame(dt);
     updateParts(dt);
@@ -5156,7 +5548,7 @@ async function boot() {
   buildSprites(); BRIDGE_LAYER = buildBridges(); setFaction(G.faction); updateWallets(); READY = true;
   requestAnimationFrame(t => { last = t; frame(t); });
 }
-window.__FOR = { get music() { return M; }, G, get S() { return S; }, get units() { return units; }, get structs() { return structs; }, get parts() { return parts; }, get revives() { return revives; }, tryPlayerDeploy, playerPlay, spawnUnit, startMatch, setFaction, CFG, SPR, ART, BOX, TYPES, TOPS, drawVector, FACTIONS, get SAVE() { return SAVE; }, set SAVE(v) { SAVE = v; }, saveGame, setupMatch, startGame, openPrep, WORLDS, ECON, ABILITIES, ITEMS, findLevel, levelUp, pull, openCamp, buildColl, goHome, PASS, SHOP, passLevel, addPassXp, buildPass, openShop, buildMissions, makeShareImage, chatSay, missionEvent, get missionTab() { return missionTab; }, set missionTab(v) { missionTab = v; } };
+window.__FOR = { get music() { return M; }, updateWallets, pull, pullCost, showCardTip, hideCardTip, roleOf, fitText, migrateSave, newCopy, addCopy, valsOf, avgQ, tierOf, rollQ, invGet, openInv, buildInv, openItem, massList, scrapValue, snapSpot, wornSet, QTIERS, G, get S() { return S; }, get units() { return units; }, get structs() { return structs; }, get parts() { return parts; }, get revives() { return revives; }, tryPlayerDeploy, playerPlay, spawnUnit, startMatch, setFaction, CFG, SPR, ART, BOX, TYPES, TOPS, drawVector, FACTIONS, get SAVE() { return SAVE; }, set SAVE(v) { SAVE = v; }, saveGame, setupMatch, startGame, openPrep, WORLDS, ECON, ABILITIES, ITEMS, findLevel, levelUp, pull, openCamp, buildColl, goHome, PASS, SHOP, passLevel, addPassXp, buildPass, openShop, buildMissions, makeShareImage, chatSay, missionEvent, get missionTab() { return missionTab; }, set missionTab(v) { missionTab = v; } };
 boot();
 })();
 </script>
