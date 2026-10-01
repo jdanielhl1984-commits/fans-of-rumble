@@ -402,6 +402,49 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 #chat .cl b { font-weight: 800; }
 #chat .cl.out { opacity: 0; }
 @keyframes clin { from { transform: translateY(8px); opacity: 0; } }
+/* ---------- v0.9.8: pulido visual de menús ---------- */
+.screen:not([hidden]) { animation: scrIn 0.22s ease-out; }
+.screen.modal:not([hidden]) > .modal-card { animation: popIn 0.3s cubic-bezier(0.2, 1.4, 0.4, 1); }
+@keyframes scrIn { from { opacity: 0; } }
+@keyframes popIn { from { transform: scale(0.86); opacity: 0; } }
+#scr-title .logo .l1 { animation: logoBob 3.2s ease-in-out infinite; }
+#scr-title .logo .l2 { animation: logoWob 3.2s ease-in-out infinite; }
+@keyframes logoBob { 50% { transform: translateY(-3px); } }
+@keyframes logoWob { 0%, 100% { transform: rotate(-4deg) scale(1); } 50% { transform: rotate(-2.5deg) scale(1.035); } }
+#title-art { animation: artBob 2.8s ease-in-out infinite; filter: drop-shadow(0 6px 0 rgba(20, 8, 34, 0.35)); }
+@keyframes artBob { 50% { transform: translateY(-4px); } }
+.btn-big { position: relative; overflow: hidden; }
+.btn-big::after { content: ""; position: absolute; top: -10%; bottom: -10%; left: -60%; width: 38%; background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0)); transform: skewX(-20deg); animation: shine 3.6s ease-in-out infinite; pointer-events: none; }
+@keyframes shine { 0%, 62% { left: -60%; } 100% { left: 135%; } }
+#btn-camp { animation: ctaPulse 2.4s ease-in-out infinite; }
+#btn-camp:active { animation: none; }
+@keyframes ctaPulse { 50% { transform: scale(1.04); } }
+.btn-mode, .home-tile, .node, .tab, .btn-up, .btn-price { transition: transform 0.12s ease, filter 0.12s ease; }
+.home-tile svg { transition: transform 0.2s cubic-bezier(0.2, 1.6, 0.4, 1); }
+@media (hover: hover) {
+  .btn-mode:hover, .home-tile:hover, .node:not(:disabled):hover, .btn-big:hover { filter: brightness(1.08); }
+  .home-tile:hover svg { transform: translateY(-3px) rotate(-6deg) scale(1.08); }
+  .world:not(.locked):hover { transform: translateY(-2px); }
+}
+.dotbadge { animation: badge 1.3s ease-in-out infinite; }
+@keyframes badge { 50% { transform: scale(1.25); } }
+.node.next { animation: nodePulse 1.5s ease-in-out infinite; }
+@keyframes nodePulse { 50% { box-shadow: 0 0 0 4px var(--gold), 0 0 16px rgba(255, 203, 61, 0.8), 0 3px 0 var(--outline); } }
+.node.boss:not(:disabled) b { display: inline-block; animation: bossShake 2.6s ease-in-out infinite; }
+@keyframes bossShake { 0%, 86%, 100% { transform: none; } 90% { transform: rotate(-6deg) scale(1.1); } 95% { transform: rotate(6deg) scale(1.1); } }
+.world { transition: transform 0.15s ease; }
+.gacha-wrap { position: relative; display: grid; place-items: center; }
+.gacha-wrap::before { content: ""; position: absolute; width: 360px; height: 360px; left: 50%; top: 45%; margin: -180px 0 0 -180px; border-radius: 50%; background: repeating-conic-gradient(rgba(255, 214, 90, 0.16) 0deg 9deg, rgba(255, 214, 90, 0) 9deg 22deg); -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 68%); mask-image: radial-gradient(circle, #000 25%, transparent 68%); animation: spin 26s linear infinite; pointer-events: none; }
+.gacha-wrap canvas { position: relative; }
+@keyframes spin { to { transform: rotate(360deg); } }
+#scr-end .end-title { animation: endIn 0.6s cubic-bezier(0.2, 1.6, 0.4, 1); }
+@keyframes endIn { from { transform: scale(0.3) rotate(-8deg); opacity: 0; } }
+#scr-end:has(.end-title.win)::before { content: ""; position: absolute; left: 50%; top: 26%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%; background: repeating-conic-gradient(rgba(255, 203, 61, 0.14) 0deg 10deg, rgba(255, 203, 61, 0) 10deg 24deg); -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 66%); mask-image: radial-gradient(circle, #000 20%, transparent 66%); animation: spin 30s linear infinite; pointer-events: none; z-index: -1; }
+.card:not(.poor) .cost { box-shadow: 0 0 9px rgba(243, 166, 255, 0.85); }
+@media (prefers-reduced-motion: reduce) {
+  .screen:not([hidden]), .screen.modal:not([hidden]) > .modal-card, #scr-title .logo .l1, #scr-title .logo .l2, #title-art, .btn-big::after, #btn-camp, .dotbadge, .node.next, .node.boss:not(:disabled) b, .gacha-wrap::before, #scr-end .end-title { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) { #scr-end:has(.end-title.win)::before { animation: none; } }
 @media (prefers-reduced-motion: reduce) {
   #chaos-fill::after { animation: none; }
   .tut-dot { animation-duration: 4s; }
@@ -507,7 +550,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
       <div class="scr-head"><button class="icon-btn back" data-back="scr-title" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 class="h2 ol">GASHAPÓN</h2><div class="wallet" data-wallet></div></div>
       <div class="tabs" role="group" aria-label="Máquina"><button class="tab ol" data-gt="ab" aria-pressed="true">Habilidades</button><button class="tab ol" data-gt="eq" aria-pressed="false">Equipo del líder</button></div>
       <p class="deck-sub" id="gacha-sub"></p>
-      <canvas id="gacha-cv" aria-hidden="true"></canvas>
+      <div class="gacha-wrap"><canvas id="gacha-cv" aria-hidden="true"></canvas></div>
       <button class="btn-big ol" id="btn-pull">GIRAR</button>
       <p class="small-print" id="gacha-odds"></p>
       <div class="gacha-result" id="gacha-result" hidden><div class="gr-card" id="gr-card"></div><button class="btn-big ol" id="btn-gr-ok">¡VALE!</button></div>
@@ -553,7 +596,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
         <div class="opt-row col"><span><b>Tu progreso</b> se guarda en este navegador. Para pasarlo a otro móvil o PC, copia el código y pégalo allí.</span><div class="row"><button class="btn-ghost ol" id="btn-export">COPIAR CÓDIGO</button><button class="btn-ghost ol" id="btn-import">CARGAR CÓDIGO</button></div><textarea id="save-code" rows="3" aria-label="Código de progreso" placeholder="Aquí aparece o se pega el código"></textarea></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.7</p>
+      <p class="ver">Fans of Rumble · versión 0.9.8</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
@@ -1011,6 +1054,92 @@ const CHAT = {
   x2: ['¡CAOS x2! ahora sí', 'último minuto, nervios', '🍿🍿🍿'],
   win: ['GG EZ', '¡VAMOOOS!', 'Microblizz lo llamará «aprendizaje»', 'clip para TikTok', 'GG WP', 'despedidos todos jajaja'],
   lose: ['GG', 'nerf Microblizz', 'la culpa es del lag', 'en la próxima sí', 'F en el chat', 'compra el pack (es broma)'],
+};
+// v0.9.8: el chat habla de tu facción, de la facción enemiga y de cada jefe
+const CHAT_FAC = {
+  animales: {
+    idle: ['¿la ardilla tiene seguro médico?', 'el conejo da miedo, no sé si es de los buenos', 'BoomBeaver: héroe sin capa (ni futuro)', 'Rabia x5 = paz mundial', 'que alguien le quite el café a MadSquirrel', 'la MechaVaca es mi animal espiritual', 'SlyFox ha ido a por tabaco y no vuelve', '¿quién deja a un mapache tirar basura? ah, que es su trabajo', 'más zanahorias para CrazyBunny', 'Animales Locos > cualquier DLC', 'MeerCat cura mejor que mi médico de cabecera'],
+    leader: ['¡CONEJO! ¡CONEJO!', 'CrazyBunny ha puesto los ojos en espiral', 'que salte, que salte'],
+    towerP: ['¡el castor lo ha vuelto a hacer!', 'rabia nivel: torre derribada', 'esa torre era de madera de pino barato'],
+    win: ['la granja le gana al capitalismo', 'zanahorias para todos 🥕', 'el mapache se lleva la basura de Microblizz'],
+    lose: ['los animales vuelven a la madriguera 😢', 'el conejo necesita unas vacaciones'],
+  },
+  nomuertos: {
+    idle: ['los zombis del crunch tienen mejor horario que yo', '¿Renacer cuenta como horas extra?', 'NecroLord, ¿quieres una bufanda?', 'huele a cripta desde aquí', 'la Banshee necesita un micro con menos ganancia', 'esto me recuerda a cierto rey con corona de pinchos 👀', 'morir y volver: el ciclo de vida de un parche', 'StitchBrute solo quiere abrazos (y torres)', 'esqueletos piratas > esqueletos normales', 'ningún no-muerto ha leído los términos y condiciones'],
+    leader: ['¡se levanta el NecroLord!', 'ojo, que invoca', 'el rey de la cripta en directo'],
+    towerP: ['torre enviada a la cripta ⚰️', 'RIP torre', 'esa torre no tiene Renacer'],
+    win: ['ni la muerte para a estos', 'Microblizz enterrado (otra vez)', 'Renacer GOD'],
+    lose: ['vuelta a la tumba… hasta la próxima', 'ni Renacer arregla esto'],
+  },
+  streamers: {
+    idle: ['TwitchKing, ¿me saludas?', 'SUB HYPE', 'cuidado, que el moderador es el BanHammer', 'la madre del streamer cura más que mi seguro', 'ese HypeBeast va con 3 bebidas energéticas', '¡que suene el Hype Train! 🚂', 'dono 5 € si tiras la torre', 'pon la cámara, que no se ve', 'ViralBot me está grabando sin permiso', 'más viewers = más daño, es ciencia'],
+    leader: ['¡EN DIRECTO!', 'ha llegado el rey del streaming', 'TwitchKing modo hype ON'],
+    towerP: ['¡RAID A LA TORRE!', 'eso va directo a los destacados', 'clip, clip, CLIP'],
+    win: ['récord de viewers', 'clip del año', 'el chat ha ganado esta partida'],
+    lose: ['se ha caído el directo', 'el chat se va a otro canal 😢'],
+  },
+  heroes: {
+    idle: ['¿Héroes no estaba en mantenimiento?', 'el Minotauro aún busca la salida del laberinto de tickets', 'Medusa, unas gafas de sol, por favor', '¡TEAM FIGHT! ¡TEAM FIGHT!', 'los Hoplitas son el grupo de WhatsApp de la familia', 'ThunderGod lleva años pidiendo un parche', 'el querubín me ha enamorado de este juego', 'la ShieldMaiden aguanta más que mi portátil', 'héroes a nivel 5 sin pagar nada', 'esto es más épico que la última cinemática de Microblizz'],
+    leader: ['¡HA LLEGADO EL CAMPEÓN!', 'EpicChampion, el carry de la partida', 'que empiece la team fight'],
+    towerP: ['¡torre al Olimpo!', 'eso ha sido mitológico', 'XP para todos'],
+    win: ['leyendas sin parche', 'los dioses vuelven del mantenimiento', 'MVP para todos'],
+    lose: ['los héroes vuelven a mantenimiento', 'necesitamos un parche de equilibrio urgente'],
+  },
+  ciber: {
+    idle: ['los escudos son mi única defensa contra los lunes', 'HackerKid ha hackeado mi wifi', 'NeonSniper dispara desde la otra punta del mapa', 'en el Sector Neón hay más neón que gente', 'CyberNinja, teletranspórtate a mi trabajo', '¿los NanoBots pagan IVA?', 'StarCraft, ¿eres tú?', 'drones del cielo: envío urgente versión guerra', 'ese mecha tiene más RGB que mi PC', 'beep boop, GG'],
+    leader: ['¡Orbital Drop!', 'CyberMarine en el campo: todos a cubierto', 'ese casco tiene wifi'],
+    towerP: ['torre desconectada', '404: torre no encontrada', 'firewall atravesado'],
+    win: ['sistema de Microblizz hackeado ✅', 'Ctrl+Alt+Victoria', 'firewall de Microblizz 0, rebelión 1'],
+    lose: ['pantalla azul…', 'reiniciando la rebelión'],
+  },
+  memes: {
+    idle: ['¿mutación gigante? mi suerte de siempre: normal', 'el RNG manda', 'Stonks 📈', 'such wow, very rumble', 'ChonkCat se ha sentado y no hay quien lo levante', 'TrollBot va ganando sin hacer nada', 'esto es un meme y aun así juega mejor que yo', 'el GifBlaster tiene más GIFs que mi grupo de amigos', 'MemeLord ha vuelto a sacar carta al azar', 'el perrito dice wow, y tiene razón'],
+    leader: ['¡MEMELORD! ¡MEMELORD!', 'que saque carta, que saque carta', 'ha llegado el señor de los memes'],
+    towerP: ['torre memeada', 'eso merece un GIF', 'stonks ↑'],
+    win: ['GG, very victory, much wow', 'stonks para la rebelión 📈', 'Microblizz ha sido memeado'],
+    lose: ['not stonks 📉', 'el RNG nos odia'],
+  },
+};
+// lo que comenta el chat de la facción enemiga (Microblizz o las corrompidas)
+const CHAT_VS = {
+  microblizz: ['los becarios cobran en «visibilidad»', 'SurvivalBot, ¿quién te ha diseñado?', 'esos servidores gastan más luz que mi pueblo', 'Microblizz despide bots para pagar el yate del CEO', '¿la CajaBotín da algo bueno? (no)', 'el Parche Día 1 pesa 80 GB', 'SoporteBot: «¿ha probado a reiniciar?»'],
+  nomuertos: ['¡libéralos!', 'los No-Muertos corrompidos tienen contrato de por vida (literal)', 'ojos rojos = plan de negocio nuevo', 'Microblizz les cobra el alquiler de la tumba'],
+  streamers: ['¡libéralos!', 'esos streamers corrompidos solo hacen directos patrocinados', 'el TwitchKing corrupto: «usa mi código de descuento»', 'el chat de ese lado son todo bots'],
+  heroes: ['¡libéralos!', 'los dioses firmaron con Microblizz por un parche que nunca llegó', 'el Minotauro corrupto vive en el laberinto de RR. HH.', 'esa Medusa petrifica con correos de despido'],
+  ciber: ['¡libéralos!', 'los Ciberpunks corrompidos llevan el firmware de Microblizz', 'ese HackerKid ahora hace ciberseguridad corporativa', 'la NeonSniper corrupta cobra por disparo'],
+  memes: ['¡libéralos!', 'los Memes corrompidos ya no hacen gracia: son anuncios', 'el Stonks corrupto solo sube para los accionistas', 'MemeLord corrupto: «este meme tiene derechos de autor»'],
+};
+// frases para cada jefe de mundo (0 = SurvivalBot … 6 = el CEO, que también es el del Modo Jefe)
+const CHAT_BOSS = [
+  ['SurvivalBot sobrevive a todo menos a las críticas', 'congelar unidades: la única actualización de SurvivalBot en 5 años'],
+  ['el NecroLord corrupto despide a los muertos… otra vez', 'eso de congelar es muy de rey exánime'],
+  ['TwitchKing corrupto banea a todo el chat', 'ese jefe tiene 3 viewers y son bots'],
+  ['EpicChampion corrupto: «sin parche no hay gloria»', 'el campeón cobra por cada team fight'],
+  ['CyberMarine corrupto con actualización obligatoria', 'drones de Microblizz con anuncios'],
+  ['MemeLord corrupto solo publica memes de empresa', 'el meme del jefe lleva marca de agua'],
+  ['el CEO ha traído 300 diapositivas', '«sinergias», dijo el CEO antes de atacar', 'el paracaídas dorado del CEO está chetado', 'esta música me suena del ascensor…'],
+];
+// nombres del chat según tu facción (se mezclan con los de siempre)
+const CHAT_USERS_FAC = {
+  animales: [['ArdillaConCafé', '#ff9a3c'], ['ZanahoriaLover', '#ffb04f']], nomuertos: [['LichDeGuardia', '#5ef2a0'], ['Huesitos_99', '#e5e7eb']],
+  streamers: [['SubDesde2016', '#c084fc'], ['ModVoluntario', '#22d3ee']], heroes: [['HoplitaDeLunes', '#fcd34d'], ['ZeusSinParche', '#ffe14d']],
+  ciber: [['Neo_Neon', '#22e3ff'], ['Root_Admin', '#a3ff7a']], memes: [['DogeFan', '#e8a04a'], ['StonksMaster', '#4ade80']],
+};
+// despedidas propias de cada facción (las tuyas y las corrompidas)
+const QUIPS_FAC = {
+  animales: ['¡Mis bellotas!', 'Decidle a la madriguera que la quiero', 'Era un plan… de ardilla'],
+  nomuertos: ['Vuelvo enseguida (literal)', 'Otra vez a la tumba', 'Ya estaba muerto, no cuenta'],
+  streamers: ['¡Se me ha caído el directo!', 'Nos vemos en el próximo stream', 'Dadle a like antes de que me vaya'],
+  heroes: ['¡Por el Olimpo!', 'Los héroes no mueren, entran en mantenimiento', 'Esto lo arregla un parche'],
+  ciber: ['Error crítico del sistema', 'Reiniciando…', 'Batería al 0 %'],
+  memes: ['F', 'Me ha tocado la mutación mala', 'Not stonks'],
+};
+const QUIPS_CORRUPT = {
+  nomuertos: ['¡Por fin descanso en paz!', 'Microblizz no paga ni a los muertos'],
+  streamers: ['¡Por fin sin patrocinadores!', 'Fin del directo patrocinado'],
+  heroes: ['¡Libre del contrato divino!', 'Me voy a hacer mi propio parche'],
+  ciber: ['Firmware de Microblizz desinstalado', 'Sistema liberado'],
+  memes: ['Ya puedo volver a hacer gracia', 'Este meme ya es libre'],
 };
 // titulares de broma para compartir
 const HEADLINES = {
@@ -2261,6 +2390,12 @@ function buildSprites() {
     const c = document.createElement('canvas'); c.width = Math.ceil(w * RES); c.height = Math.ceil(h * RES);
     const x = c.getContext('2d'); x.scale(RES, RES); x.translate(ax, ay); x.lineJoin = 'round'; x.lineCap = 'round';
     ART[key](x);
+    if (!key.endsWith('_rubble')) {   // v0.9.8: luz suave arriba y sombra abajo para dar volumen
+      x.save(); x.setTransform(1, 0, 0, 1, 0, 0); x.globalCompositeOperation = 'source-atop';
+      const sg = x.createLinearGradient(0, 0, 0, c.height);
+      sg.addColorStop(0, 'rgba(255,248,225,.24)'); sg.addColorStop(0.4, 'rgba(255,248,225,0)'); sg.addColorStop(0.66, 'rgba(40,10,60,0)'); sg.addColorStop(1, 'rgba(40,10,60,.3)');
+      x.fillStyle = sg; x.fillRect(0, 0, c.width, c.height); x.restore();
+    }
     const wc = document.createElement('canvas'); wc.width = c.width; wc.height = c.height;
     const wx = wc.getContext('2d'); wx.drawImage(c, 0, 0); wx.globalCompositeOperation = 'source-in'; wx.fillStyle = '#fff'; wx.fillRect(0, 0, wc.width, wc.height);
     let gc = null;
@@ -2388,6 +2523,7 @@ function buildBG(fac = 'animales') {
         c.beginPath(); c.arc(px + ox - rad * 0.3, y + oy - rad * 0.3, rad * 0.45, 0, Math.PI * 2); c.fillStyle = cold ? '#77964f' : TH.hedge[1]; c.fill(); }
     }
   }
+  paintLight(c);
   return cv;
 }
 // small props scattered on your half (true = drawn)
@@ -2567,7 +2703,7 @@ function play(name, ...a) {
 /* =========================================================
    MUSIC (synthesised, no files): menu, one theme per faction, boss, last-minute rush, win / lose jingles
    ========================================================= */
-const SCALES = { maj: [0, 2, 4, 5, 7, 9, 11], min: [0, 2, 3, 5, 7, 8, 10], phr: [0, 1, 3, 5, 7, 8, 10] };
+const SCALES = { maj: [0, 2, 4, 5, 7, 9, 11], min: [0, 2, 3, 5, 7, 8, 10], phr: [0, 1, 3, 5, 7, 8, 10], hmin: [0, 2, 3, 5, 7, 8, 11], wt: [0, 2, 4, 6, 8, 10] };
 // "4 - . 2" -> [{ s: 0, v: 4, n: 2 }, { s: 3, v: 2, n: 1 }]   (s = step 0-15, n = length in steps; "-" holds, "." rests, "?" = random note)
 function mseq(str) {
   const out = [];
@@ -2670,6 +2806,86 @@ const TRACKS = (() => {
         '1 . 1 . 2 - 1 . . . 4 - 2 . 1 .',
         '0 . 0 . 1 - 0 . . . 5 - 3 . 1 .',
         '6 . 6 . 5 - 6 . . . 4 - 3 - 2 .'] } }),
+    // ---- un tema por jefe de mundo (v0.9.8) ----
+    // Mundo 1, SurvivalBot: robot corporativo con tecleo de oficina
+    boss0: mk({
+      bpm: 128, tonic: 45, scale: 'min', prog: [0, 5, 6, 4], dv: 1, crash: true,
+      pad: { wave: 'square', vol: 0.12, lp: 900, att: 0.05 },
+      bass: { wave: 'square', vol: 0.4, lp: 600, oct: 0, seq: 'r . r . r . r . r . r . o . r .' },
+      drums: { k: 'x...x...x...x...', s: '....x.......x...', h: 'xxxxxxxxxxxxxxxx' },
+      lead: { wave: 'square', vol: 0.17, gate: 0.5, lp: 3000, oct: 14, up: 0, seq: [
+        '0 . 2 . 4 . 2 . 0 . 4 . 7 . 4 .',
+        '5 . 7 . 9 . 7 . 5 . 9 . 12 . 9 .',
+        '6 . 8 . 10 . 8 . 6 . 10 . 13 . 10 .',
+        '4 . 6 . 8 . 6 . 4 . 8 . 11 . 7 -'] } }),
+    // Mundo 2, NecroLord corrupto: órgano de catedral en menor armónica
+    boss1: mk({
+      bpm: 96, tonic: 50, scale: 'hmin', prog: [0, 5, 3, 4], dv: 1, crash: true,
+      pad: { wave: 'square', vol: 0.2, lp: 1300, att: 0.04 },
+      bass: { wave: 'sawtooth', vol: 0.5, lp: 500, seq: 'r - - - r - - - r - - - o - r -' },
+      drums: { k: 'x.......x.......', t: '....x.......x.x.' },
+      lead: { wave: 'square', vol: 0.16, det: 5, lp: 2200, gate: 0.95, oct: 7, up: 0, seq: [
+        '7 - - - 6 - 7 - 9 - - - 7 - 4 -',
+        '5 - - - 7 - 9 - 12 - - - 9 - 7 -',
+        '3 - - - 5 - 7 - 10 - - - 8 - 7 -',
+        '4 - - - 6 - 8 - 11 - - - 10 - 8 -'] } }),
+    // Mundo 3, TwitchKing corrupto: EDM de directo patrocinado con fallos (notas al azar)
+    boss2: mk({
+      bpm: 128, tonic: 47, scale: 'min', prog: [0, 5, 2, 6], dv: 1, crash: true,
+      pad: { wave: 'sawtooth', vol: 0.14, lp: 1800, att: 0.02 },
+      bass: { wave: 'sawtooth', vol: 0.45, lp: 700, oct: 0, seq: '. . r . . . r . . . r . . . r r' },
+      drums: { k: 'x...x...x...x...', c: '....x.......x...', h: '......x.......x.', o: '..x.......x.....' },
+      arp: { wave: 'square', vol: 0.09, lp: 3200, oct: 7, gate: 0.4, seq: '0 2 1 3 0 2 1 3 0 2 1 3 2 1 0 1' },
+      lead: { wave: 'sawtooth', vol: 0.18, det: 14, lp: 3200, gate: 0.7, oct: 14, up: 0, seq: [
+        '0 . 0 . 2 . 4 . ? . 4 . 2 . 0 .',
+        '0 . 0 . 2 . 4 . ? . 5 . 4 . 2 .',
+        '2 . 2 . 4 . 6 . ? . 7 . 6 . 4 .',
+        '6 . 6 . 8 . 9 . ? ? ? ? 8 . 6 .'] } }),
+    // Mundo 4, EpicChampion corrupto: épica de guerra en menor, tambores y metales
+    boss3: mk({
+      bpm: 112, tonic: 50, scale: 'min', prog: [0, 5, 6, 0], dv: 1, crash: true,
+      pad: { wave: 'sawtooth', vol: 0.22, lp: 1200, att: 0.2 },
+      bass: { wave: 'triangle', vol: 0.75, seq: 'r . . r . . r . r . . r . . r .' },
+      drums: { k: 'x..x..x.x..x..x.', t: '....x.......x.xx', s: '............x...' },
+      lead: { wave: 'sawtooth', vol: 0.21, det: 8, lp: 2600, att: 0.03, gate: 0.95, oct: 7, up: 0, seq: [
+        '0 - - . 0 . 2 - 4 - - - 2 - 0 -',
+        '5 - - . 5 . 4 - 2 - - - 4 - 5 -',
+        '6 - - . 6 . 8 - 9 - - - 8 - 6 -',
+        '7 - - - 4 - 7 - 9 - 7 - 4 - - -'] } }),
+    // Mundo 5, CyberMarine corrupto: darksynth industrial
+    boss4: mk({
+      bpm: 118, tonic: 45, scale: 'phr', prog: [0, 0, 1, 6], dv: 1, crash: true,
+      pad: { wave: 'sawtooth', vol: 0.15, lp: 900, att: 0.1 },
+      bass: { wave: 'sawtooth', vol: 0.5, lp: 600, oct: 0, seq: 'r r r r r r r r r r r r o o r r' },
+      drums: { k: 'x...x...x...x...', s: '....x.......x...', c: '....x.......x...', h: 'x.x.x.x.x.x.x.x.' },
+      arp: { wave: 'square', vol: 0.08, lp: 2400, oct: 7, gate: 0.35, seq: '0 1 2 3 2 1 0 1 0 1 2 3 2 1 0 3' },
+      lead: { wave: 'sawtooth', vol: 0.17, det: 12, lp: 2000, gate: 0.95, oct: 14, up: 0, seq: [
+        '0 - - - . . 1 - 0 - - - . . . .',
+        '0 - - - . . 3 - 1 - - - . . . .',
+        '1 - - - . . 3 - 4 - - - 3 - 1 -',
+        '6 - - - 5 - 4 - 3 - 1 - 0 - - -'] } }),
+    // Mundo 6, MemeLord corrupto: caos en escala de tonos enteros, con notas al azar
+    boss5: mk({
+      bpm: 156, tonic: 52, scale: 'wt', prog: [0, 1, 0, 2], swing: 0.12, dv: 1, crash: true,
+      pad: { wave: 'square', vol: 0.12, lp: 1400, att: 0.05 },
+      bass: { wave: 'square', vol: 0.4, lp: 800, seq: 'r . o . r . o . r o . r . o r .' },
+      drums: { k: 'x..x..x.x..x.x..', s: '....x..x....x...', h: 'x.x.x.x.x.x.x.x.' },
+      lead: { wave: 'square', vol: 0.18, lp: 3600, gate: 0.6, oct: 6, up: 6, seq: [
+        '0 . 2 . 4 . ? . 6 . ? . 4 . 2 .',
+        '1 . 3 . 5 . ? . 7 . ? . 5 . 3 .',
+        '0 . 2 . 4 . ? ? ? ? 8 . 6 . 4 .',
+        '2 . 4 . 6 . 8 - - . ? . ? . ? .'] } }),
+    // Mundo 7 y Modo Jefe, el CEO: la música de espera del menú… en versión malvada
+    boss6: mk({
+      bpm: 138, tonic: 53, scale: 'hmin', prog: [0, 5, 1, 4], seven: true, dv: 1, crash: true,
+      pad: { wave: 'sawtooth', vol: 0.2, lp: 1100, att: 0.08 },
+      bass: { wave: 'sawtooth', vol: 0.5, lp: 650, seq: 'r . r r . r r . r . r r . r o .' },
+      drums: { k: 'x.x.x.x.x.xxx.x.', s: '....x.......x...', h: 'x.x.x.x.x.x.x.x.' },
+      lead: { wave: 'sawtooth', vol: 0.21, det: 10, lp: 2600, gate: 0.9, oct: 7, up: 7, seq: [
+        '4 . . . 2 . 4 . 6 . . . 4 . . .',
+        '5 . . . 4 . 2 . 4 . . . 2 . . .',
+        '3 . . . 4 . 5 . 4 . 3 . 1 . . .',
+        '4 . . . 6 . 5 . 3 . . . 4 . . .'] } }),
     // jingles de final de partida (suenan una vez y vuelve el menú)
     win: mk({
       bpm: 132, tonic: 48, scale: 'maj', prog: [0, 3, 0], dv: 1, once: true, next: 'menu',
@@ -2737,14 +2953,14 @@ const MDRUM = {
 };
 function musicStep(T, out, step, bar, loop, t, sd) {
   const bi = bar % T.prog.length, d = T.prog[bi], odd = loop % 2 === 1;
-  const tones = [d, d + 2, d + 4, d + 7];
+  const n7 = T.sc.length, tones = [d, d + 2, d + 4, d + n7];
   if (step === 0) {
     if (T.pad) { const vs = T.seven ? [d, d + 2, d + 4, d + 6] : [d, d + 2, d + 4]; vs.forEach(x => mnote(out, midiHz(degMidi(T, x)), t, sd * 16 * 0.98, T.pad.wave, T.pad.vol / vs.length * 1.6, { att: T.pad.att, rel: 0.3, lp: T.pad.lp, det: 6 })); }
     if (T.crash && bi === 0) MDRUM.X(out, t, 1);
   }
   // bajo
   for (const ev of T.B) if (ev.s === step) {
-    const sh = T.bass.oct == null ? -7 : T.bass.oct, deg = ev.v === 'r' ? d + sh : ev.v === 'f' ? d + 4 + sh : ev.v === 'o' ? d + sh + 7 : d + sh - 7;
+    const sh = T.bass.oct == null ? -n7 : T.bass.oct, deg = ev.v === 'r' ? d + sh : ev.v === 'f' ? d + 4 + sh : ev.v === 'o' ? d + sh + n7 : d + sh - n7;
     mnote(out, midiHz(degMidi(T, deg)), t, ev.n * sd * 0.92, T.bass.wave, T.bass.vol, { att: 0.012, rel: 0.06, lp: T.bass.lp });
   }
   // batería
@@ -2794,7 +3010,7 @@ function musicUpdate() {
   const st = G.state, boss = G.mode === 'boss' || (G.mode === 'camp' && G.level && G.level.boss);
   let want;
   if (st === 'title') want = 'menu';
-  else if (st === 'play' || st === 'paused') want = boss ? 'boss' : G.faction;
+  else if (st === 'play' || st === 'paused') { want = !boss ? G.faction : G.mode === 'boss' ? 'boss6' : 'boss' + G.level.wi; if (!TRACKS[want]) want = boss ? 'boss' : 'menu'; }
   else if (st === 'end') want = G.winner === 'p' ? 'win' : G.winner === 'e' ? 'lose' : 'menu';
   else want = null;                                  // cuenta atrás y final de la partida: silencio
   if (want !== M.want) { M.want = want; musicSet(want); }
@@ -2812,6 +3028,11 @@ function ring(x, y, r0, r1, color, dur = 0.4, lw = 4) { parts.push({ type: 'ring
 function sparks(x, y, z, n, color) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = rand(60, 160); parts.push({ type: 'spark', x, y, z, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.5, vz: rand(20, 140), g: 420, life: rand(0.2, 0.35), max: 0.35, color }); } }
 function chips(x, y, z, n, colors, kind = 'chip', size = 4) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = rand(30, 110); parts.push({ type: kind, x, y, z, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.5, vz: rand(90, 220), g: 520, rot: rand(0, 6), vr: rand(-12, 12), life: rand(0.7, 1.1), max: 1.1, size: rand(size * 0.7, size * 1.3), color: pick(colors) }); } }
 function addNum(x, y, z, txt, color, size = 15) { nums.push({ x, y, z, vz: 46, txt: String(txt), color, size, life: 0.85, max: 0.85 }); }
+// v0.9.8: destello de golpe, tajo de los ataques cuerpo a cuerpo, resplandor y flash de pantalla
+function impact(x, y, z, size, color) { parts.push({ type: 'impact', x, y, z, size, color, rot: Math.random() * Math.PI, life: 0.17, max: 0.17 }); }
+function flashAt(x, y, z, size, rgb, dur = 0.3) { parts.push({ type: 'flash', x, y, z, size, rgb, life: dur, max: dur }); }
+function slashFx(u, t) { const d = dist(u, t) || 1; parts.push({ type: 'slash', x: u.x, y: u.y, z: topOf(u) * 0.45, ang: Math.atan2((t.y - u.y) * 1.6, t.x - u.x), size: clamp(d * 0.95, 14, 46), color: u.team === 'p' ? '#ffd28a' : '#a9d8ff', life: 0.2, max: 0.2 }); }
+function screenFlash(a) { if (!REDUCED) G.flash = Math.max(G.flash || 0, a); }
 
 /* =========================================================
    GAME LOGIC
@@ -2959,7 +3180,7 @@ function explodeBeaver(u, t) {
   for (const o of units) if (o.alive && o.team !== u.team && Math.hypot(o.x - u.x, o.y - u.y) - o.r <= u.d.splash) hurt(o, u.d.splashDmg * m, u, 'aoe');
   ring(u.x, u.y, 8, u.d.splash * 1.6, 'rgba(255,170,60,.95)', 0.5, 7);
   puff(u.x, u.y, 14, '#ffb347', 90, 10, false, 10); puff(u.x, u.y, 8, '#8a8f9c', 60, 9, false, 16);
-  chips(u.x, u.y, 12, 10, ['#e2463b', '#8a5a33', '#ffcb3d'], 'chip', 4); sparks(u.x, u.y, 14, 10, '#ffd34d');
+  chips(u.x, u.y, 12, 10, ['#e2463b', '#8a5a33', '#ffcb3d'], 'chip', 4); sparks(u.x, u.y, 14, 10, '#ffd34d'); flashAt(u.x, u.y, 14, 80, '255,160,60', 0.35); screenFlash(0.12);
   addNum(u.x, u.y, 62, '¡BUM!', '#ffb347', 22);
   parts.push({ type: 'ghost', x: u.x, y: u.y, z: 26, vz: 30, life: 1.4, max: 1.4 });
   shake(8); play('boom');
@@ -2987,6 +3208,7 @@ function attack(u, t) {
   }
   const sl = u.d.slow || u.abSlow;
   if (sl && t.kind === 'unit' && t.alive && !t.immuneCC) { t.slowT = sl.t; chips(t.x, t.y, topOf(t) * 0.5, 3, ['#9fe3ff', '#ffffff'], 'chip', 2.5); }
+  slashFx(u, t);
   hurt(t, dmg, u, crit ? 'crit' : st);
   if (u.abChain) chainOne(u, t, dmg * u.abChain);
   if (u.d.cleave) {   // BanHammer: el martillazo también da a los de alrededor
@@ -3072,6 +3294,7 @@ function hurt(t, amount, src, style = 'hit') {
   const col = style === 'crit' ? '#ffd23f' : style === 'aoe' ? '#f3a6ff' : style === 'boss' ? '#ff6b7a' : style === 'rage' ? '#ff8a3d' : '#ffffff';
   addNum(t.x + rand(-7, 7), t.y, topOf(t) * 0.75 + 6, amount, col, style === 'crit' ? 22 : style === 'rage' ? 16 : t.kind === 'struct' ? 14 : 15);
   sparks(t.x, t.y, topOf(t) * 0.45, style === 'hit' ? 3 : 6, t.team === 'e' ? '#bfe9ff' : '#ffe7a8');
+  if (!t.fxT || G.t - t.fxT > 0.07) { t.fxT = G.t; const big = style === 'crit'; impact(t.x + rand(-4, 4), t.y, topOf(t) * 0.5 + rand(-4, 4), big ? 17 : style === 'aoe' ? 12 : t.kind === 'struct' ? 13 : 10, big ? '#ffd23f' : t.team === 'e' ? '#d8f1ff' : '#fff0c2'); if (big) flashAt(t.x, t.y, topOf(t) * 0.5, 36, '255,210,63', 0.25); }
   play(t.kind === 'unit' && t.team === 'e' ? 'clank' : 'hit');
   if (t.kind === 'struct') shake(style === 'aoe' ? 5 : 1.2);
   if (t.hp <= 0) kill(t, src);
@@ -3091,7 +3314,7 @@ function kill(t, src) {
       const B = t.d.deathBlast;
       for (const o of units) if (o.alive && o.team !== t.team && Math.hypot(o.x - t.x, o.y - t.y) - o.r <= B.r) hurt(o, B.dmg, null, 'aoe');
       ring(t.x, t.y, 10, B.r * 1.3, 'rgba(123,224,74,.9)', 0.55, 7); puff(t.x, t.y, 16, '#7be04a', 80, 10, false, 14); puff(t.x, t.y, 8, '#c6a4c9', 50, 8, false, 20);
-      addNum(t.x, t.y, 64, '¡NUBE TÓXICA!', '#9cf06a', 16); shake(6); play('trash');
+      addNum(t.x, t.y, 64, '¡NUBE TÓXICA!', '#9cf06a', 16); flashAt(t.x, t.y, 14, 90, '123,224,74', 0.4); shake(6); play('trash');
     }
     if (isLeader(t.type) && !willRevive) { const sec = Math.round(CFG.cards[t.type].respawn * (t.respawnM || 1)); S[t.team].leaderCd = sec; if (t.team === 'p') toast(`${CFG.cards[t.type].name} ha caído. Vuelve en ${sec} s`); }
     if (t.abClone && !t.isClone && (G.state === 'play' || G.state === 'ending')) {   // Clon viral
@@ -3111,7 +3334,7 @@ function kill(t, src) {
       addNum(t.x, t.y, 70, t.d.ejectTxt || '¡EYECCIÓN!', '#ff8fc8', 18); play('eject');
     }
     if (G.state === 'play' && !t.summon && G.t >= (G.quipT || 0) && Math.random() < (t.team === 'p' ? 0.12 : 0.4)) {   // frase de despedida
-      const pool = t.team === 'p' ? QUIPS.player : facOf(t.team) === 'microblizz' ? QUIPS.microblizz : QUIPS.corrupt;
+      const pool = t.team === 'p' ? QUIPS.player.concat(QUIPS_FAC[G.faction] || []) : facOf(t.team) === 'microblizz' ? QUIPS.microblizz : QUIPS.corrupt.concat(QUIPS_CORRUPT[facOf(t.team)] || []);
       parts.push({ type: 'quip', x: clamp(t.x, 70, W - 70), y: t.y, z: topOf(t) + 24, vz: 9, txt: pick(pool), life: 2.3, max: 2.3 }); G.quipT = G.t + 2.4;
     }
     S[other(t.team)].kills++; if (G.state === 'play') passiveKill(other(t.team));
@@ -3333,6 +3556,7 @@ function healPulse(u, dt) {
   if (!any) return;
   ring(u.x, u.y, 10, u.d.healR, 'rgba(123,224,74,.8)', 0.5, 4);
   for (let i = 0; i < 4; i++) parts.push({ type: 'plus', x: u.x + rand(-22, 22), y: u.y + rand(-6, 6), z: rand(10, 30), vx: 0, vy: 0, vz: 26, g: 0, life: 0.8, max: 0.8 });
+  flashAt(u.x, u.y, 12, 40, '120,255,140', 0.3);
   play('heal');
 }
 function followAlly(u, dt) {
@@ -3357,7 +3581,7 @@ function bunnyJump(u, dt) {
       for (const s of structs) if (s.alive && s.team !== u.team && Math.hypot(s.x - u.x, s.y - u.y) - s.r <= u.d.jumpR) hurt(s, jd, u, 'aoe');
       ring(u.x, u.y, 10, u.d.jumpR * 1.15, 'rgba(212,60,255,.95)', 0.45, 7); ring(u.x, u.y, 6, u.d.jumpR * 0.7, 'rgba(255,255,255,.9)', 0.3, 4);
       puff(u.x, u.y, 18, '#e9dcc0', 90, 9, true); chips(u.x, u.y, 4, 10, ['#6eb646', '#8b5530', '#d9b77e'], 'chip', 4);
-      addNum(u.x, u.y, 90, '¡CHAOS JUMP!', '#f3a6ff', 20);
+      addNum(u.x, u.y, 90, '¡CHAOS JUMP!', '#f3a6ff', 20); flashAt(u.x, u.y, 10, 95, '212,60,255', 0.35); screenFlash(0.1);
       shake(9); play('slam');
     }
     return true;
@@ -3583,13 +3807,13 @@ function deathFx(u, src) {
   const top = topOf(u);
   if (facOf(u.team) !== 'microblizz') {
     if (u.team === 'e') parts.push({ type: 'stamp', x: u.x, y: u.y, z: top + 12, txt: src && src.type === 'banhammer' ? 'BANEADO' : 'LIBERADO', color: '#7c3aed', life: 0.9, max: 0.9 });
-    puff(u.x, u.y, 10, '#ffffff', 60, 8, false, top * 0.4);
+    puff(u.x, u.y, 10, '#ffffff', 60, 8, false, top * 0.4); flashAt(u.x, u.y, top * 0.5, BIG.includes(u.type) ? 64 : 34, '255,255,255', 0.28);
     const fur = FUR[u.type] || ['#ffffff'];
     chips(u.x, u.y, top * 0.5, BIG.includes(u.type) ? 14 : 6, fur, 'chip', BIG.includes(u.type) ? 5 : 3.5);
     parts.push({ type: 'ghost', x: u.x, y: u.y, z: top * 0.6, vz: 30, life: 1.4, max: 1.4 });
     play('poof');
   } else {
-    sparks(u.x, u.y, top * 0.5, 10, '#ffd34d');
+    sparks(u.x, u.y, top * 0.5, 10, '#ffd34d'); flashAt(u.x, u.y, top * 0.5, u.type === 'fallen' || u.type === 'parchebot' ? 60 : 34, '255,200,80', 0.28);
     chips(u.x, u.y, top * 0.5, u.type === 'fallen' ? 8 : 4, ['#9aa5ba'], 'gear', 4);
     puff(u.x, u.y, 8, '#9aa3b2', 50, 7, false, top * 0.4);
     parts.push({ type: 'stamp', x: u.x, y: u.y, z: top + 12, txt: src && src.type === 'banhammer' ? 'BANEADO' : 'DESPEDIDO', color: '#ff3348', life: 0.9, max: 0.9 });
@@ -3602,6 +3826,7 @@ function structDeathFx(s) {
   ring(s.x, s.y, 20, s.r * 4, 'rgba(255,190,80,.9)', 0.6, 8);
   chips(s.x, s.y, top * 0.5, 22, SKINS[s.skin].chips, 'chip', 7);
   sparks(s.x, s.y, top * 0.5, 16, '#ffd34d');
+  flashAt(s.x, s.y, top * 0.5, s.role === 'base' ? 190 : 140, '255,190,80', 0.5); screenFlash(s.role === 'base' ? 0.5 : 0.3); s.smokeUntil = G.t + 8;
   shake(14); play('boom');
 }
 
@@ -3614,6 +3839,7 @@ const VIEW = { k: 1, top: 0, bot: 0, LH: H };
 const CLOUDS = [{ x: 80, y: 220, r: 130, s: 9 }, { x: 420, y: 600, r: 160, s: 7 }, { x: 250, y: 870, r: 120, s: 11 }];
 function render() {
   if (!READY) return;
+  const rdt = Math.min(0.05, Math.max(0, G.t - (render.lt == null ? G.t : render.lt))); render.lt = G.t;
   ctx.setTransform(VIEW.k, 0, 0, VIEW.k, 0, 0);
   ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   ctx.fillStyle = '#24133a'; ctx.fillRect(0, 0, W, VIEW.LH);
@@ -3629,19 +3855,95 @@ function render() {
   for (const p of parts) if (p.ground) drawPart(p);
   for (const s of structs) { if (s.hidden) continue; ctx.globalAlpha = 0.3; ctx.fillStyle = '#140a1e'; ctx.beginPath(); ctx.ellipse(s.x + 3, s.y + 3, s.r * 1.15, s.r * 0.45, 0, 0, Math.PI * 2); ctx.fill(); }
   ctx.globalAlpha = 1;
-  for (const u of units) drawUnitShadow(u);
+  for (const u of units) {
+    drawUnitShadow(u);
+    if (G.state === 'play' && u.moving && u.deployT <= 0 && u.r >= 17 && !TYPES[u.type].hover && Math.random() < 0.1)   // polvo al andar (unidades grandes)
+      parts.push({ type: 'dust', x: u.x - u.face * u.r * 0.6 + rand(-3, 3), y: u.y + rand(-2, 2), z: 1, vx: -u.face * 10, vy: 0, vz: 8, g: 0, life: 0.45, max: 0.45, size: 3.2, color: 'rgba(225,205,165,.8)', ground: true });
+  }
+  if (G.state !== 'title') for (const st of structs) if (!st.alive && st.smokeUntil > G.t && Math.random() < 0.2)   // humo de las torres caídas
+    parts.push({ type: 'smoke', x: st.x + rand(-12, 12), y: st.y, z: rand(4, 14), vx: rand(-6, 6), vy: 0, vz: rand(18, 30), g: 0, life: rand(1.2, 1.9), max: 1.9, size: rand(6, 10) });
   const list = structs.concat(units).sort((a, b) => a.y - b.y);
   for (const e of list) (e.kind === 'struct' ? drawStruct(e) : drawUnit(e));
   for (const p of projs) drawProj(p);
   for (const p of parts) if (!p.ground) drawPart(p);
+  drawAmbient(rdt);
   for (const e of list) drawBars(e);
   for (const n of nums) drawNum(n);
   if (showZones) drawGhost();
+  if (G.flash > 0.01) { ctx.setTransform(VIEW.k, 0, 0, VIEW.k, 0, 0); ctx.globalAlpha = 1; ctx.fillStyle = `rgba(255,246,225,${Math.min(0.6, G.flash)})`; ctx.fillRect(0, 0, W, VIEW.LH); G.flash *= Math.pow(0.02, rdt); }
+}
+// v0.9.8: luz suave desde arriba a la izquierda y bordes algo más oscuros (se pinta una sola vez, dentro del fondo)
+function paintLight(x) {
+  const v = x.createRadialGradient(W / 2, H * 0.47, H * 0.3, W / 2, H * 0.47, H * 0.7); v.addColorStop(0, 'rgba(20,6,36,0)'); v.addColorStop(1, 'rgba(20,6,36,.32)');
+  x.fillStyle = v; x.fillRect(0, 0, W, H);
+  const sl = x.createRadialGradient(70, 120, 0, 70, 120, 440); sl.addColorStop(0, 'rgba(255,238,200,.13)'); sl.addColorStop(1, 'rgba(255,238,200,0)');
+  x.fillStyle = sl; x.fillRect(0, 0, W, H);
+}
+// v0.9.8: ambiente animado en cada mitad del campo según la facción
+const AMB = { list: [], key: '' };
+const AMB_KIND = { animales: 'butterfly', nomuertos: 'wisp', streamers: 'heart', heroes: 'mote', ciber: 'bit', memes: 'confetti' };
+const AMB_COL = { butterfly: ['#ffd84d', '#ff8fb1', '#b98cff', '#ffffff', '#7dd3fc'], wisp: ['#5ef2a0', '#a7ffd6'], heart: ['#ff5fa8', '#c084fc', '#f472b6'], mote: ['#ffe28a', '#fff3c4'],
+  bit: ['#22e3ff', '#ff3df0', '#a3ff7a'], confetti: ['#ff3df0', '#22e3ff', '#ffe14d', '#7be04a', '#ff8a1f'], memo: ['#ffffff', '#e9eef7'], ember: ['#ff3348', '#ff7a5c', '#ffb36b'] };
+function ambNew(kind, top, init) {
+  const y0 = top ? 80 : RIVER.bottom + 20, y1 = top ? RIVER.top - 25 : 785;
+  const a = { kind, top, x: rand(24, W - 24), y: rand(y0, y1), y0, y1, ph: Math.random() * 6.28, life: rand(5, 10), col: pick(AMB_COL[kind]), dir: Math.random() < 0.5 ? -1 : 1 };
+  a.max = a.life; if (init) a.life = rand(0.8, a.max);
+  return a;
+}
+function drawAmbient(dt) {
+  if (REDUCED) return;
+  const ek = G.efac === 'microblizz' ? 'memo' : 'ember', pk = AMB_KIND[G.faction] || 'butterfly', key = pk + ek;
+  if (AMB.key !== key) { AMB.key = key; AMB.list = []; for (let i = 0; i < 12; i++) AMB.list.push(ambNew(pk, false, true)); for (let i = 0; i < 7; i++) AMB.list.push(ambNew(ek, true, true)); }
+  for (let i = 0; i < AMB.list.length; i++) {
+    let a = AMB.list[i]; a.life -= dt;
+    if (a.life <= 0 || a.y < a.y0 - 30 || a.y > a.y1 + 30 || a.x < -20 || a.x > W + 20) a = AMB.list[i] = ambNew(a.kind, a.top, false);
+    const age = a.max - a.life, fade = Math.max(0, Math.min(1, age / 0.8, a.life / 0.8)); a.ph += dt;
+    ctx.globalAlpha = fade;
+    switch (a.kind) {
+      case 'butterfly': {
+        a.x += (Math.sin(a.ph * 0.7) * 20 + a.dir * 9) * dt; a.y += Math.cos(a.ph * 0.9) * 12 * dt;
+        const fl = Math.abs(Math.sin(a.ph * 13)), y = a.y - 16 - Math.sin(a.ph * 2) * 4;
+        ctx.save(); ctx.translate(a.x, y); ctx.fillStyle = a.col; ctx.strokeStyle = OL; ctx.lineWidth = 0.8;
+        for (const sd of [-1, 1]) { ctx.beginPath(); ctx.ellipse(sd * 2.6 * (0.35 + 0.65 * fl), -0.6, 2.8 * (0.3 + 0.7 * fl), 2.4, sd * 0.4, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+        ctx.fillStyle = OL; ctx.fillRect(-0.6, -2.4, 1.2, 4.4); ctx.restore(); break; }
+      case 'wisp': {
+        a.y -= 10 * dt; a.x += Math.sin(a.ph * 1.3) * 8 * dt; const f = 0.7 + 0.3 * Math.sin(a.ph * 9);
+        ctx.globalAlpha = fade * 0.28 * f; ctx.fillStyle = a.col; ctx.beginPath(); ctx.arc(a.x, a.y - 14, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = fade * f; ctx.beginPath(); ctx.arc(a.x, a.y - 14, 1.9, 0, Math.PI * 2); ctx.fill(); break; }
+      case 'heart': {
+        a.y -= 12 * dt; a.x += Math.sin(a.ph * 2) * 6 * dt;
+        ctx.globalAlpha = fade * 0.75; ctx.fillStyle = a.col; ctx.beginPath(); heartPath(ctx, a.x, a.y - 14, 3.2); ctx.fill(); break; }
+      case 'mote': {
+        a.y -= 7 * dt; a.x += Math.sin(a.ph) * 4 * dt; const r = 1.2 + 1.6 * Math.abs(Math.sin(a.ph * 3));
+        ctx.fillStyle = a.col; ctx.beginPath(); starPath(ctx, a.x, a.y - 14, r * 1.6, r * 0.45, 4); ctx.fill(); break; }
+      case 'bit': {
+        a.y -= 9 * dt; ctx.globalAlpha = fade * (Math.sin(a.ph * 6) > -0.3 ? 0.9 : 0.25); ctx.fillStyle = a.col; ctx.fillRect(a.x - 1.6, a.y - 15.6, 3.2, 3.2); break; }
+      case 'confetti': {
+        a.y += 16 * dt; a.x += Math.sin(a.ph * 1.5) * 12 * dt;
+        ctx.save(); ctx.translate(a.x, a.y - 14); ctx.rotate(a.ph * 3); ctx.scale(Math.cos(a.ph * 5), 1); ctx.fillStyle = a.col; ctx.fillRect(-2.6, -1.5, 5.2, 3); ctx.restore(); break; }
+      case 'memo': {   // memorandos de Microblizz volando
+        a.y += 8 * dt; a.x += (Math.sin(a.ph * 0.8) * 16 + a.dir * 4) * dt;
+        ctx.save(); ctx.translate(a.x, a.y - 14); ctx.rotate(Math.sin(a.ph * 1.6) * 0.6); ctx.globalAlpha = fade * 0.85;
+        ctx.fillStyle = a.col; ctx.strokeStyle = OL; ctx.lineWidth = 0.8; ctx.fillRect(-3, -4, 6, 8); ctx.strokeRect(-3, -4, 6, 8);
+        ctx.fillStyle = '#9aa3b2'; ctx.fillRect(-2, -2.4, 4, 0.8); ctx.fillRect(-2, -0.6, 4, 0.8); ctx.fillRect(-2, 1.2, 2.6, 0.8); ctx.restore(); break; }
+      case 'ember': {
+        a.y -= 14 * dt; a.x += Math.sin(a.ph * 2) * 5 * dt; ctx.globalAlpha = fade * (0.6 + 0.4 * Math.sin(a.ph * 11));
+        ctx.fillStyle = a.col; ctx.beginPath(); ctx.arc(a.x, a.y - 14, 1.7, 0, Math.PI * 2); ctx.fill(); break; }
+    }
+  }
+  ctx.globalAlpha = 1;
 }
 function drawWater() {
   ctx.save(); ctx.beginPath(); ctx.rect(0, RIVER.top, W, RIVER.bottom - RIVER.top); ctx.clip();
   ctx.strokeStyle = 'rgba(225,255,255,1)'; ctx.lineWidth = 1.6; ctx.lineCap = 'round';
   for (let i = 0; i < 18; i++) { const y = RIVER.top + 6 + (i % 4) * 8.5; const x = ((i * 71 + G.t * (16 + (i % 3) * 7)) % (W + 80)) - 40; ctx.globalAlpha = 0.3 + 0.22 * Math.sin(G.t * 2 + i); ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + 8, y - 2, x + 16, y); ctx.stroke(); }
+  const t = G.t, T0 = RIVER.top, B0 = RIVER.bottom;
+  ctx.strokeStyle = '#effcff'; ctx.lineWidth = 2.2; ctx.globalAlpha = 0.6;
+  for (const [yy, dir] of [[T0 + 2, 1], [B0 - 2, -1]]) { ctx.beginPath(); for (let x = 0; x <= W; x += 9) { const y = yy + dir * (1.4 + Math.sin(x * 0.08 + t * 2.4 * dir) * 1.4); x ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke(); }
+  ctx.fillStyle = '#ffffff';
+  for (let i = 0; i < 12; i++) { const c = t * 0.55 + i * 0.29, ph = c % 1, a = Math.sin(ph * Math.PI); if (a < 0.1) continue; const x = (i * 97 + 31 + Math.floor(c) * 53) % W, y = T0 + 9 + ((i * 7) % 21); ctx.globalAlpha = a; ctx.beginPath(); starPath(ctx, x, y, 1 + a * 2.6, 0.5 + a * 0.5, 4); ctx.fill(); }
+  ctx.lineWidth = 1.5; ctx.strokeStyle = '#e8fbff';
+  for (const bx of BRIDGES) for (const side of [-1, 1]) for (const o of [0, 0.5]) { const k = (t * 0.6 + o + (side > 0 ? 0.25 : 0)) % 1; ctx.globalAlpha = (1 - k) * 0.55; ctx.beginPath(); ctx.ellipse(bx + side * 36, RIVER.y, 3 + k * 16, 2 + k * 7, 0, 0, Math.PI * 2); ctx.stroke(); }
   ctx.restore(); ctx.globalAlpha = 1;
 }
 function drawClouds() {
@@ -3694,6 +3996,7 @@ function drawUnitShadow(u) {
   if (u.d.aura && u.deployT <= 0) { ctx.globalAlpha = 0.35 + 0.1 * Math.sin(G.t * 3); ctx.strokeStyle = u.team === 'p' ? '#c084fc' : '#8fc2ff'; ctx.lineWidth = 2; ctx.setLineDash([6, 6]); ctx.lineDashOffset = -G.t * 12; ctx.beginPath(); ctx.ellipse(u.x, u.y, u.d.aura.r, u.d.aura.r * 0.42, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]); ctx.lineDashOffset = 0; ctx.globalAlpha = 1; }
   ctx.globalAlpha = 0.3 * sc; ctx.fillStyle = '#140a1e'; ctx.beginPath(); ctx.ellipse(u.x, u.y + 1, u.r * 1.05 * sc, u.r * 0.42 * sc, 0, 0, Math.PI * 2); ctx.fill();
   if (u.deployT <= 0 && !u.jump) { ctx.globalAlpha = u.stealthT > 0 ? 0.4 : 0.95; ctx.strokeStyle = u.team === 'p' ? '#ffa23a' : '#3d9bff'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.ellipse(u.x, u.y + 1, u.r * 0.95, u.r * 0.4, 0, 0, Math.PI * 2); ctx.stroke(); }
+  if (isLeader(u.type) && u.deployT <= 0 && !u.jump) { ctx.globalAlpha = u.stealthT > 0 ? 0.35 : 0.9; ctx.strokeStyle = '#ffcb3d'; ctx.lineWidth = 2; ctx.setLineDash([5, 4]); ctx.lineDashOffset = -G.t * 16; ctx.beginPath(); ctx.ellipse(u.x, u.y + 1, u.r * 1.3, u.r * 0.55, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]); ctx.lineDashOffset = 0; }
   ctx.globalAlpha = 1;
 }
 function drawFoot(fx, fy, r, col) { ctx.beginPath(); ctx.ellipse(fx, fy - 1, r * 0.3, r * 0.19, 0, 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 1.6; ctx.strokeStyle = OL; ctx.stroke(); }
@@ -3979,6 +4282,15 @@ function drawPart(p) {
         else { const sp = SPR.suchdog; ctx.drawImage(sp.c, -sp.ax * 0.42, -sp.ay * 0.42 + 9, sp.wd * 0.42, sp.ht * 0.42); }
       }
       ctx.restore(); break; }
+    case 'impact': { const a = 1 - k, r = p.size * (0.45 + a * 0.85); ctx.globalAlpha = Math.min(1, k * 1.6); ctx.save(); ctx.translate(p.x, p.y - p.z); ctx.rotate(p.rot);
+      ctx.beginPath(); starPath(ctx, 0, 0, r, r * 0.34, 4); ctx.fillStyle = p.color; ctx.fill();
+      ctx.beginPath(); ctx.arc(0, 0, r * 0.3, 0, Math.PI * 2); ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.restore(); break; }
+    case 'flash': { const r = p.size * (0.55 + (1 - k) * 0.6), fy = p.y - p.z, g = ctx.createRadialGradient(p.x, fy, 0, p.x, fy, r);
+      g.addColorStop(0, `rgba(255,255,245,${0.8 * k})`); g.addColorStop(0.35, `rgba(${p.rgb},${0.5 * k})`); g.addColorStop(1, `rgba(${p.rgb},0)`);
+      ctx.globalAlpha = 1; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, fy, r, 0, Math.PI * 2); ctx.fill(); break; }
+    case 'slash': { const a = 1 - k, a0 = p.ang - 0.95, a1 = a0 + 1.9 * Math.min(1, a * 2.2); ctx.save(); ctx.translate(p.x, p.y - p.z); ctx.scale(1, 0.62); ctx.lineCap = 'round'; ctx.globalAlpha = Math.min(1, k * 2);
+      ctx.beginPath(); ctx.arc(0, 0, p.size, Math.max(a0, a1 - 1.3), a1);
+      ctx.strokeStyle = 'rgba(32,16,44,.55)'; ctx.lineWidth = 6 * k + 2; ctx.stroke(); ctx.strokeStyle = p.color; ctx.lineWidth = 4 * k + 1; ctx.stroke(); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.6 * k + 0.5; ctx.stroke(); ctx.restore(); break; }
     case 'conf': ctx.globalAlpha = 1; ctx.save(); ctx.translate(p.x, p.y - p.z); ctx.rotate(p.rot); ctx.fillStyle = p.color; ctx.fillRect(-3.5, -2, 7, 4); ctx.restore(); break;
     case 'env': { if (p.t < 0) break; ctx.globalAlpha = 1; ctx.save(); ctx.translate(p.x, p.y - p.z); ctx.rotate(p.rot + Math.sin(G.t * 10) * 0.15);
       ctx.fillStyle = '#ffffff'; ctx.strokeStyle = OL; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.rect(-8, -5.5, 16, 11); ctx.fill(); ctx.stroke();
@@ -4373,8 +4685,12 @@ function chatSay(kind, extra) {
   if (SAVE.chatOff) return;
   const box = $('#chat'); if (!box) return;
   const lines = CHAT[kind]; if (!lines) return;
-  let txt = pick(lines); if (extra) txt = txt.replace('{X}', extra);
-  const [nm, col] = pick(CHAT_USERS);
+  const own = (CHAT_FAC[G.faction] || {})[kind], r = Math.random();
+  const vs = kind === 'idle' ? CHAT_VS[G.efac] : null;
+  const bossI = G.mode === 'boss' ? 6 : G.level && G.level.boss ? G.level.wi : -1, bl = bossI >= 0 && (kind === 'idle' || kind === 'boss' || kind === 'start') ? CHAT_BOSS[bossI] : null;
+  let txt = bl && r < 0.3 ? pick(bl) : own && r < 0.62 ? pick(own) : vs && r < 0.8 ? pick(vs) : pick(lines);
+  if (extra) txt = txt.replace('{X}', extra);
+  const fu = CHAT_USERS_FAC[G.faction], [nm, col] = fu && Math.random() < 0.3 ? pick(fu) : pick(CHAT_USERS);
   const d = document.createElement('div'); d.className = 'cl';
   d.innerHTML = `<b style="color:${col}">${nm}</b>: ${txt}`;
   box.appendChild(d);
