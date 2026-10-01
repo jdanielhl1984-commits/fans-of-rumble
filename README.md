@@ -12,6 +12,7 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - Gashapón de habilidades para las unidades y de equipo para el líder.
 - Modo Jefe contra el CEO de Microblizz, misiones diarias y semanales, y pase de batalla.
 - Tienda de prueba (no se cobra nada) y botón para compartir tu resultado como portada de periódico.
+- Música propia para el menú, cada facción, los jefes y el final de partida (se ajusta o se quita en Opciones).
 - Funciona en el móvil y en el PC, sin instalar nada. El progreso se guarda en el navegador.
 
-Prototipo en desarrollo (versión 0.9.6). Todo el arte y el sonido están hechos con código.
+Prototipo en desarrollo (versión 0.9.7). Todo el arte, el sonido y la música están hechos con código.
