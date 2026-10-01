@@ -315,6 +315,8 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .mission b { font-size: 16px; font-weight: 800; }
 .mission .xpbar i { background: linear-gradient(to bottom, #ffe06a, #c47f10); }
 .mission.done { opacity: 0.6; }
+.mission { flex: none; }
+.mission .btn-up small { flex-wrap: wrap; max-width: 92px; }
 .opt-list { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 480px; }
 .opt-row { display: flex; gap: 12px; align-items: center; justify-content: space-between; border: 3px solid var(--outline); border-radius: 14px; background: rgba(38, 20, 60, 0.9); padding: 10px 12px; text-align: left; font-size: 14px; font-weight: 700; line-height: 1.3; }
 .opt-row.col { flex-direction: column; align-items: stretch; }
@@ -331,6 +333,75 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .card-lvl { position: absolute; right: 4px; top: 6px; font-family: var(--font-display); font-size: 10px; padding: 3px 4px 1px; border-radius: 6px; background: var(--outline); color: #9ef07a; z-index: 2; }
 .card[data-rarity="leader"] .card-lvl { top: 24px; }
 #scr-end { gap: 12px; }
+/* ---------- v0.9.5: tienda, pase, misiones semanales, chat y compartir ---------- */
+.home-grid { grid-template-columns: repeat(6, 1fr); gap: 6px; max-width: 508px; }
+.home-tile { padding: 7px 2px 5px; }
+.home-tile svg { width: 30px; height: 30px; }
+.home-tile span { font-size: 12.5px; }
+.shop-note { font-size: 12.5px; font-weight: 700; line-height: 1.3; margin: 0; max-width: 480px; color: var(--ink-dim); }
+.shop-note b { color: var(--gold); }
+.gift-row { width: 100%; max-width: 508px; }
+.pack { position: relative; display: grid; grid-template-columns: 60px 1fr auto; gap: 10px; align-items: center; border: 3px solid var(--outline); border-radius: 14px; background: linear-gradient(100deg, var(--pc, #7a5310) 0%, var(--tray) 58%); padding: 8px 10px 8px 6px; box-shadow: 0 3px 0 var(--outline); text-align: left; flex: none; }
+.pack.gem { --pc: #8a1f6e; }
+.pack.gift { --pc: #1f7a3a; }
+.pack.joke { --pc: #b0213a; overflow: hidden; }
+.pack.vip { --pc: #6d28c9; }
+.pk-ic svg { width: 60px; height: 50px; display: block; }
+.pk-name { font-family: var(--font-display); font-size: 17px; line-height: 1.05; }
+.pk-amt { font-family: var(--font-display); font-size: 23px; line-height: 1.1; color: var(--gold); display: flex; align-items: center; gap: 5px; }
+.pack.gem .pk-amt { color: #ff9be6; }
+.pk-amt svg { width: 20px; height: 20px; margin-top: -4px; }
+.pk-note { font-size: 11.5px; font-weight: 700; line-height: 1.25; color: var(--ink-dim); }
+.pk-bonus { display: inline-block; font-size: 11px; font-weight: 800; background: var(--outline); color: #9ef07a; border-radius: 7px; padding: 2px 6px 1px; margin-left: 4px; vertical-align: 2px; font-family: var(--font-ui); }
+.btn-price { font-family: var(--font-display); font-size: 18px; line-height: 1; padding: 11px 10px 7px; border-radius: 12px; border: 3px solid var(--outline); background: linear-gradient(to bottom, #9ef07a, #2f8a1f); box-shadow: 0 3px 0 var(--outline); cursor: pointer; min-width: 88px; text-align: center; }
+.btn-price small { display: block; font-size: 11px; text-decoration: line-through; color: #ffd6dc; margin-bottom: 2px; }
+.btn-price:disabled { background: #3a2b52; color: var(--ink-dim); cursor: default; }
+.btn-price:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 var(--outline); }
+.joke-flag { position: absolute; left: -32px; top: 9px; transform: rotate(-35deg); background: var(--gold); color: var(--outline); font-family: var(--font-display); font-size: 11px; padding: 3px 32px 1px; }
+.joke .pk-amt { color: #fff; }
+.countdown { font-family: var(--font-display); font-size: 13px; color: #ffd6dc; }
+.cf-body { font-size: 15px; font-weight: 700; line-height: 1.35; text-align: center; }
+.cf-body .big { font-family: var(--font-display); font-size: 26px; font-weight: 400; color: var(--gold); display: block; margin: 4px 0; }
+.cf-body .big svg { width: 24px; height: 24px; vertical-align: -3px; }
+.cf-body small { display: block; font-size: 12px; color: var(--ink-dim); margin-top: 6px; }
+#scr-confirm .btn-ghost { font-size: 19px; padding: 11px 18px 7px; }
+#scr-confirm .btn-ok { background: linear-gradient(to bottom, #9ef07a, #2f8a1f); }
+.pass-top { width: 100%; max-width: 508px; display: grid; grid-template-columns: 62px 1fr; gap: 4px 10px; align-items: center; border: 3px solid var(--outline); border-radius: 16px; background: linear-gradient(110deg, #6d28c9 0%, var(--tray) 75%); padding: 10px 12px; box-sizing: border-box; text-align: left; box-shadow: 0 3px 0 var(--outline); }
+.pass-lvl { grid-row: span 2; width: 58px; height: 58px; border-radius: 50%; border: 4px solid var(--outline); background: radial-gradient(circle at 35% 30%, #ffe9a0, #f0b429 60%, #b07a0a); display: grid; place-items: center; font-family: var(--font-display); font-size: 26px; padding-top: 4px; box-sizing: border-box; color: var(--outline); }
+.pass-name { font-family: var(--font-display); font-size: 17px; line-height: 1.1; }
+.pass-name small { display: block; font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; color: var(--ink-dim); }
+.pass-top .xpbar { margin: 2px 0 0; }
+.pass-top .xpbar i { background: linear-gradient(to bottom, #e6b8ff, #8b3dff); }
+.pass-actions { grid-column: 1 / -1; display: flex; gap: 8px; margin-top: 6px; }
+.pass-actions button { flex: 1; font-size: 15px; padding: 9px 8px 5px; }
+.btn-vip { font-family: var(--font-display); line-height: 1.05; border-radius: 12px; border: 3px solid var(--outline); background: linear-gradient(to bottom, #ffe06a, #c47f10); box-shadow: 0 3px 0 var(--outline); cursor: pointer; }
+.btn-vip:disabled { background: #3a2b52; color: #9ef07a; cursor: default; }
+.pass-cols, .pass-row { display: grid; grid-template-columns: 46px 1fr 1fr; gap: 6px; width: 100%; max-width: 508px; align-items: stretch; }
+.pass-cols span { font-family: var(--font-display); font-size: 13px; text-align: center; }
+.pass-cols span:last-child { color: var(--gold); }
+.pass-row { flex: none; }
+.pr-n { display: grid; place-items: center; font-family: var(--font-display); font-size: 17px; border-radius: 12px; border: 3px solid var(--outline); background: var(--tray); padding-top: 3px; }
+.pass-row.reached .pr-n { background: linear-gradient(to bottom, #e6b8ff, #8b3dff); }
+.pr-cell { display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; border-radius: 12px; border: 3px solid var(--outline); background: rgba(38, 20, 60, 0.9); font-family: var(--font-display); font-size: 15px; line-height: 1.05; padding: 4px 6px 2px; text-align: center; cursor: default; color: var(--ink); }
+.pr-cell svg { width: 18px; height: 18px; flex: none; margin-top: -3px; }
+.pr-cell.prem { background: linear-gradient(to bottom, rgba(255, 224, 106, 0.18), rgba(38, 20, 60, 0.9)); }
+.pr-cell.ready { cursor: pointer; background: linear-gradient(to bottom, #9ef07a, #2f8a1f); box-shadow: 0 0 0 2px var(--gold); animation: prpulse 1.2s ease-in-out infinite; }
+.pr-cell.done { opacity: 0.45; }
+.pr-cell.locked { filter: grayscale(0.7) brightness(0.7); }
+.pr-cell .lk { font-size: 12px; }
+.pr-cell .itm { font-size: 12px; font-family: var(--font-ui); font-weight: 800; }
+@keyframes prpulse { 50% { box-shadow: 0 0 0 4px var(--gold); } }
+.end-extra { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; max-width: 470px; }
+.end-pass { font-size: 13px; font-weight: 800; color: #e6b8ff; }
+.btn-share { font-family: var(--font-display); font-size: 17px; line-height: 1; padding: 10px 16px 6px; border-radius: 14px; border: 3px solid var(--outline); background: linear-gradient(to bottom, #ff8fd8, #c026d3); box-shadow: 0 4px 0 var(--outline); cursor: pointer; }
+#share-img { width: 100%; max-width: 300px; border-radius: 12px; border: 3px solid var(--outline); display: block; }
+#share-dl { text-decoration: none; color: var(--ink); font-size: 19px; padding: 11px 18px 7px; }
+#scr-share .btn-ghost { font-size: 19px; padding: 11px 18px 7px; }
+#chat { position: absolute; left: 6px; top: calc(var(--top) + 688px); width: 192px; height: 98px; display: flex; flex-direction: column; justify-content: flex-end; gap: 3px; pointer-events: none; z-index: 4; overflow: hidden; }
+#chat .cl { font-size: 11px; font-weight: 700; line-height: 1.18; background: rgba(16, 8, 28, 0.62); border-radius: 8px; padding: 3px 7px 2px; color: #f3eaff; text-align: left; animation: clin 0.25s ease-out; transition: opacity 0.6s; flex: none; }
+#chat .cl b { font-weight: 800; }
+#chat .cl.out { opacity: 0; }
+@keyframes clin { from { transform: translateY(8px); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   #chaos-fill::after { animation: none; }
   .tut-dot { animation-duration: 4s; }
@@ -371,6 +442,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
     <div id="banner"><div class="b-title ol"></div><div class="b-sub"></div></div>
     <div id="count" class="ol-big" aria-hidden="true"></div>
     <div id="toast" role="status" aria-live="polite"></div>
+    <div id="chat" aria-hidden="true"></div>
     <div id="tut" hidden><div class="tut-dot"></div><div class="tut-text">Arrastra una carta a tu lado del campo</div></div>
 
     <footer id="tray">
@@ -392,6 +464,8 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
       <div class="home-grid">
         <button class="home-tile" id="btn-coll"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="8" height="11" rx="2" fill="#63cfe0" style="stroke: var(--outline)" stroke-width="1.8"/><rect x="13" y="7" width="8" height="11" rx="2" fill="#ffb04f" style="stroke: var(--outline)" stroke-width="1.8"/><rect x="8" y="9" width="8" height="11" rx="2" fill="#d08cff" style="stroke: var(--outline)" stroke-width="1.8"/></svg><span class="ol">Colección</span><i class="dotbadge" id="coll-badge" hidden></i></button>
         <button class="home-tile" id="btn-gacha"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="7" fill="#bfe6ff" style="stroke: var(--outline)" stroke-width="1.8"/><circle cx="9.5" cy="9" r="2.4" fill="#ff5fa8"/><circle cx="14" cy="7.5" r="2.2" fill="#ffe14d"/><circle cx="13" cy="11.5" r="2.2" fill="#7be04a"/><rect x="6" y="15" width="12" height="7" rx="2" fill="#2e8bff" style="stroke: var(--outline)" stroke-width="1.8"/></svg><span class="ol">Gashapón</span></button>
+        <button class="home-tile" id="btn-shop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-1.2 11.5a1.6 1.6 0 0 1-1.6 1.5H6.8a1.6 1.6 0 0 1-1.6-1.5z" fill="#ffcb3d" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 11V6.5a3.5 3.5 0 0 1 7 0V11" stroke="#20102c" stroke-width="1.9" fill="none" stroke-linecap="round"/><circle cx="12" cy="15.5" r="2.6" fill="#fff6c2" style="stroke: var(--outline)" stroke-width="1.4"/></svg><span class="ol">Tienda</span><i class="dotbadge" id="shop-badge" hidden></i></button>
+        <button class="home-tile" id="btn-pass"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2.5a2.5 2.5 0 0 0 0 5V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0 0-5z" fill="#d08cff" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 5v14" stroke="#20102c" stroke-width="1.4" stroke-dasharray="2 2"/><path d="M9 9.2l.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.3z" fill="#ffe07a" style="stroke: var(--outline)" stroke-width="1"/></svg><span class="ol">Pase</span><i class="dotbadge" id="pass-badge" hidden></i></button>
         <button class="home-tile" id="btn-missions"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="#fff6ea" style="stroke: var(--outline)" stroke-width="1.8"/><path d="M8 8l1.6 1.6L12 7M8 13l1.6 1.6L12 12" stroke="#16a34a" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M14 8h3M14 13h3M8 17.5h9" stroke="#a08ab8" stroke-width="1.6" stroke-linecap="round"/></svg><span class="ol">Misiones</span><i class="dotbadge" id="mission-badge" hidden></i></button>
         <button class="home-tile" id="btn-options"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="#cdb9ea" style="stroke: var(--outline)" stroke-width="1.8"/><circle cx="12" cy="12" r="2.4" fill="#20102c"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="#20102c" stroke-width="2.4" stroke-linecap="round"/></svg><span class="ol">Opciones</span></button>
       </div>
@@ -441,19 +515,44 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
     <section id="scr-missions" class="screen top" hidden>
       <div class="scr-head"><button class="icon-btn back" data-back="scr-title" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 class="h2 ol">MISIONES</h2><div class="wallet" data-wallet></div></div>
-      <p class="deck-sub">Tres misiones nuevas cada día. Cada una da 50 de oro y 10 gemas.</p>
-      <div class="mission-list" id="mission-list"></div>
+      <div class="tabs" role="group" aria-label="Tipo de misión"><button class="tab ol" data-mt="d" aria-pressed="true">Diarias</button><button class="tab ol" data-mt="w" aria-pressed="false">Semanales</button></div>
+      <p class="deck-sub" id="mission-sub"></p>
+      <div class="scroll-list mission-list" id="mission-list"></div>
+    </section>
+
+    <section id="scr-shop" class="screen top" hidden>
+      <div class="scr-head"><button class="icon-btn back" data-back="scr-title" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 class="h2 ol">TIENDA</h2><div class="wallet" data-wallet></div></div>
+      <p class="shop-note"><b>Tienda de Microblizz</b> · Versión de prueba: aquí no se cobra nada. Lo que «compres» te llega gratis.</p>
+      <div class="gift-row" id="gift-row"></div>
+      <div class="tabs" role="group" aria-label="Sección"><button class="tab ol" data-st="gold" aria-pressed="true">Oro</button><button class="tab ol" data-st="gems" aria-pressed="false">Gemas</button></div>
+      <div class="scroll-list" id="shop-list"></div>
+    </section>
+
+    <section id="scr-pass" class="screen top" hidden>
+      <div class="scr-head"><button class="icon-btn back" data-back="scr-title" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 class="h2 ol">PASE</h2><div class="wallet" data-wallet></div></div>
+      <div class="pass-top" id="pass-top"></div>
+      <div class="pass-cols"><span></span><span class="ol">GRATIS</span><span class="ol">EJECUTIVO</span></div>
+      <div class="scroll-list" id="pass-list"></div>
+    </section>
+
+    <section id="scr-confirm" class="screen modal" hidden>
+      <div class="modal-card"><h3 class="ol" id="cf-title"></h3><div class="cf-body" id="cf-body"></div><div class="row" id="cf-btns"></div></div>
+    </section>
+
+    <section id="scr-share" class="screen modal" hidden>
+      <div class="modal-card"><h3 class="ol">COMPARTIR</h3><img id="share-img" alt="Imagen de tu resultado para compartir"><p class="small-print" id="share-hint">Mantén pulsada la imagen (o clic derecho) para guardarla y compártela donde quieras.</p><div class="row"><a class="btn-ghost ol" id="share-dl" download="fans-of-rumble.png">DESCARGAR</a><button class="btn-ghost ol" id="btn-share-close">CERRAR</button></div></div>
     </section>
 
     <section id="scr-options" class="screen top" hidden>
       <div class="scr-head"><button class="icon-btn back" data-back="scr-title" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 class="h2 ol">OPCIONES</h2><div class="wallet" data-wallet></div></div>
       <div class="opt-list">
         <label class="opt-row"><span>Volumen</span><input type="range" id="opt-vol" min="0" max="100" step="5"></label>
+        <div class="opt-row"><span><b>Chat en directo</b><br>Los comentarios falsos durante la partida.</span><button class="btn-ghost ol" id="btn-chat">SÍ</button></div>
         <div class="opt-row"><span><b>Modo pruebas</b><br>Desbloquea todas las facciones y mundos, y da 50.000 de oro y 5.000 gemas.</span><button class="btn-ghost ol" id="btn-test">ACTIVAR</button></div>
         <div class="opt-row col"><span><b>Tu progreso</b> se guarda en este navegador. Para pasarlo a otro móvil o PC, copia el código y pégalo allí.</span><div class="row"><button class="btn-ghost ol" id="btn-export">COPIAR CÓDIGO</button><button class="btn-ghost ol" id="btn-import">CARGAR CÓDIGO</button></div><textarea id="save-code" rows="3" aria-label="Código de progreso" placeholder="Aquí aparece o se pega el código"></textarea></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9</p>
+      <p class="ver">Fans of Rumble · versión 0.9.5</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
@@ -489,6 +588,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
         <div class="stat"><b class="ol" id="st-kills">0</b><span>enemigos despedidos</span></div>
         <div class="stat"><b class="ol" id="st-chaos">0</b><span>CAOS gastado</span></div>
       </div>
+      <div class="end-extra"><div class="end-pass" id="end-pass"></div><button class="btn-share ol" id="btn-share">COMPARTIR</button></div>
       <div class="row">
         <button class="btn-big ol" id="btn-next" hidden>SIGUIENTE</button>
         <button class="btn-big ol" id="btn-again">REVANCHA</button>
@@ -794,6 +894,8 @@ const ITEMS = {
   almohada:      { name: 'Almohada de viaje', slot: 'acc', rar: 'rare', desc: 'Si cae, vuelve un 40 % antes.' },
   silla_gamer:   { name: 'Silla gamer portátil', slot: 'acc', rar: 'epic', desc: 'Recibe un 15 % menos de daño.' },
   cofre:         { name: 'Cofre de botín sin abrir', slot: 'acc', rar: 'legendary', desc: 'Cada partida, un efecto sorpresa (o ninguno).' },
+  diploma:       { name: 'Diploma de Becario del Mes', slot: 'acc', rar: 'rare', pass: true, desc: '+8 % de vida y daño. Enmarcado en plástico. Exclusivo del pase.' },
+  corbata_ceo:   { name: 'Corbata del CEO', slot: 'acc', rar: 'legendary', pass: true, desc: '+15 % de vida y daño, y +10 % de velocidad. Viste como el que te despide. Exclusivo del Pase Ejecutivo.' },
 };
 const COFRE = [['¡+30 % DE DAÑO!', u => { u.mDmg *= 1.3; }], ['¡+40 % DE VIDA!', u => { u.mHp *= 1.4; }], ['¡TURBO!', u => { u.mSpeed *= 1.3; u.mCd *= 0.8; }], ['¡REGENERACIÓN!', u => { u.regen = (u.regen || 0) + 0.02; }], ['…estaba vacío', () => {}]];
 // campaña "La Rebelión de los Fans": 7 mundos de 4 niveles (el 4.º es el jefe)
@@ -827,13 +929,100 @@ const MISSIONS = [
   { id: 'boss1', txt: 'Juega una partida del Modo Jefe', goal: 1, ev: 'boss' },
   { id: 'pull1', txt: 'Gira una vez el gashapón', goal: 1, ev: 'pull' },
   { id: 'lvl1', txt: 'Sube de nivel una unidad', goal: 1, ev: 'lvlup' },
+  { id: 'play3', txt: 'Juega 3 partidas', goal: 3, ev: 'play' },
+  { id: 'leader5', txt: 'Saca a tu líder 5 veces', goal: 5, ev: 'leader' },
+  { id: 'flawless', txt: 'Gana sin perder ninguna torre', goal: 1, ev: 'flawless' },
+  { id: 'camp2', txt: 'Juega 2 partidas de la campaña', goal: 2, ev: 'camp' },
+  { id: 'quick2', txt: 'Juega 2 partidas rápidas', goal: 2, ev: 'quick' },
+  { id: 'caos120', txt: 'Gasta 120 de CAOS', goal: 120, ev: 'caos' },
+  { id: 'base1', txt: 'Tira una base enemiga', goal: 1, ev: 'base' },
+  { id: 'facwin', txt: 'Gana una partida con {F}', goal: 1, ev: 'facwin' },
+  { id: 'gift', txt: 'Recoge el regalo diario de la tienda', goal: 1, ev: 'gift' },
 ];
+const DAILY_N = 4;
+// misiones semanales: se renuevan cada lunes
+const WEEKLY = [
+  { id: 'wwin', txt: 'Gana 15 partidas', goal: 15, ev: 'win' },
+  { id: 'wkill', txt: 'Despide a 400 enemigos', goal: 400, ev: 'kill' },
+  { id: 'wtower', txt: 'Derriba 20 torres', goal: 20, ev: 'tower' },
+  { id: 'wstar', txt: 'Consigue 12 estrellas en la campaña', goal: 12, ev: 'star' },
+  { id: 'wcard', txt: 'Juega 200 cartas', goal: 200, ev: 'card' },
+  { id: 'wboss', txt: 'Juega 3 partidas del Modo Jefe', goal: 3, ev: 'boss' },
+  { id: 'wlvl', txt: 'Sube 5 niveles de unidades', goal: 5, ev: 'lvlup' },
+  { id: 'wpull', txt: 'Gira 5 veces el gashapón', goal: 5, ev: 'pull' },
+  { id: 'wdaily', txt: 'Completa 12 misiones diarias', goal: 12, ev: 'dailydone' },
+  { id: 'wflaw', txt: 'Gana 5 partidas sin perder torres', goal: 5, ev: 'flawless' },
+];
+const WEEKLY_N = 4;
 // Modo Jefe: el CEO de Microblizz, sin torres, 3 minutos para hacerle todo el daño posible
 const BOSS_MODE = { name: 'El CEO de Microblizz', hp: 12000, time: 180, income: 0.95, tiers: [[1500, 10], [4000, 25], [8000, 50]] };
 
+/* ---------- v0.9.5: tienda, pase de batalla y sátira ---------- */
+// Tienda de prueba: nada se cobra. Precios orientativos para la 1.0 (decisión de Daniel: el oro se vende)
+const SHOP = {
+  gold: [
+    { id: 'g1', name: 'Puñado de oro', amt: 1000, eur: 0.99, note: 'Para ir tirando.' },
+    { id: 'g2', name: 'Saco de oro', amt: 6000, eur: 4.99, note: 'El CEO te lo agradece personalmente (no).' },
+    { id: 'g3', name: 'Cofre de oro', amt: 13000, eur: 9.99, note: 'Huele a beneficios trimestrales.' },
+    { id: 'g4', name: 'Cámara acorazada', amt: 28000, eur: 19.99, note: 'Incluye la llave. La puerta no.' },
+    { id: 'g5', name: 'Bóveda del CEO', amt: 75000, eur: 49.99, note: 'Para subir cartas al 10 sin mirar el precio.' },
+  ],
+  gems: [
+    { id: 'e1', name: 'Bolsita de gemas', amt: 100, eur: 0.99, note: 'Dos tiradas del gashapón.' },
+    { id: 'e2', name: 'Puñado de gemas', amt: 550, eur: 4.99, note: 'Brillan más que el futuro de Microblizz.' },
+    { id: 'e3', name: 'Saco de gemas', amt: 1200, eur: 9.99, note: '' },
+    { id: 'e4', name: 'Cofre de gemas', amt: 2600, eur: 19.99, note: '' },
+    { id: 'e5', name: 'Caja fuerte de gemas', amt: 7000, eur: 49.99, note: 'Ni el becario sabe la combinación.' },
+  ],
+  joke: { name: 'Paquete Accionista', amt: 1000000, was: 500, eur: 100 },
+  gift: { gold: 100, gems: 5 },
+};
+// Pase de batalla: 30 niveles, pista gratis y pista Ejecutiva (de pago simulado)
+const PASS = { name: 'Temporada 1: Reestructuración', sub: 'Dura hasta que Microblizz diga lo contrario', levels: 30, xpPer: 400, eur: 4.99, xpWin: 100, xpLose: 40, xpDaily: 60, xpWeekly: 250 };
+function passReward(track, i) {
+  if (track === 'free') {
+    if (i === PASS.levels) return { item: 'diploma' };
+    if (i % 10 === 0) return { tickets: 1 };
+    if (i % 3 === 0) return { gems: 15 };
+    return { gold: 150 };
+  }
+  if (i === PASS.levels) return { item: 'corbata_ceo' };
+  if (i % 5 === 0) return { tickets: 2 };
+  if (i % 2 === 0) return { gems: 30 };
+  return { gold: 400 };
+}
+// frases de despedida al caer (humor)
+const QUIPS = {
+  microblizz: ['¿Hay indemnización?', 'Me llevo la grapadora', 'Esto lo hablo con RR. HH.', '¿Me puedo quedar la taza?', 'Ya he actualizado mi LinkedIn', 'Firmé un NDA, no puedo quejarme', 'Me faltaban 2 años para ser fijo', '¿Esto cuenta como teletrabajo?', 'Error 404: empleo no encontrado', 'Mi jefe dijo que éramos una familia', 'Dejo el proyecto al 90 %', 'Ojalá un despido sin reunión'],
+  corrupt: ['¡Por fin libre!', 'Microblizz me prometió visibilidad', 'Mi contrato tenía letra pequeña', 'Gracias, necesitaba vacaciones', 'Dile a Microblizz que dimito', 'Volveré… en el DLC', '¿Dónde firmo el finiquito?'],
+  player: ['¡Ha sido el lag!', 'Nerfeadme esto', 'GG', 'Me han reportado', 'Vuelvo en 5 minutos', 'Era un plan', 'Respawn, por favor'],
+};
+// chat falso en directo
+const CHAT_USERS = [['ConejoFan_88', '#ffb04f'], ['LagLord', '#63cfe0'], ['ExDeMicroblizz', '#7da8ff'], ['TioDelPase', '#ffe14d'], ['SoyDeRRHH', '#ff6b7a'], ['NerfEsto', '#d08cff'], ['GemaPerdida', '#ff8fd8'], ['Ardilla_Rabiosa', '#ff9a3c'], ['ClipItPls', '#9ef07a'], ['MamaDelStreamer', '#fda4af'], ['Becario_42', '#a3e635'], ['ElCEO_Real', '#60a5fa'], ['ZorroSigiloso', '#fb923c'], ['ParcheDia1', '#c4b5fd'], ['CAOSenjoyer', '#e879f9'], ['ModCansado', '#5ef2c0']];
+const CHAT = {
+  start: ['¡Empieza! A ver si hoy gana alguien que no sea Microblizz', 'primer', 'hola desde el trabajo 👀', 'llego tarde, ¿qué me he perdido?', '¡vamos rebelión!'],
+  idle: ['nerf conejo', '¿esto es pay to win?', '¿cuándo sale para móvil?', 'mi primo trabaja en Microblizz y dice que todo va bien', 'mod, banéalo', 'primera vez aquí, ¿de qué va esto?', 'LOL', '¿quién va ganando?', 'jajaja el becario', 'pon música', '¿se puede jugar con mando?', 'el CEO es mi tío, no digáis nada', 'hype hype hype', '¿alguien ha leído los términos y condiciones?', 'esto es mejor que lo de Microblizz', 'Microblizz ha vuelto a subir el precio de las gemas', '¿el pase de batalla merece la pena?', 'Kappa', 'ese carril está solo', 'más ardillas, menos reuniones'],
+  towerP: ['¡TORRE! 🔥', 'Microblizz: «era una torre heredada»', 'F por la torre', 'clip it!!', 'eso ha dolido en bolsa', 'ajuste de plantilla jajaja'],
+  towerE: ['uff', 'skill issue', 'eso pasa por no comprar el pack', 'F', 'defiende ese carril!!', 'Microblizz lo celebra con una reunión'],
+  leader: ['¡que salga el jefe!', 'ya viene el bueno', '¡LÍDER EN PISTA!', 'ahora sí'],
+  boss: ['¿otra vez despidos?', 'RR. HH. ataca de nuevo', 'eso es pay to win', 'el jefe está chetado', 'nerf jefe ya'],
+  phase2: ['FASE 2 😱', 'se viene lo gordo', 'se ha enfadado el jefe'],
+  x2: ['¡CAOS x2! ahora sí', 'último minuto, nervios', '🍿🍿🍿'],
+  win: ['GG EZ', '¡VAMOOOS!', 'Microblizz lo llamará «aprendizaje»', 'clip para TikTok', 'GG WP', 'despedidos todos jajaja'],
+  lose: ['GG', 'nerf Microblizz', 'la culpa es del lag', 'en la próxima sí', 'F en el chat', 'compra el pack (es broma)'],
+};
+// titulares de broma para compartir
+const HEADLINES = {
+  win: ['Microblizz pierde {c} torres: sus acciones caen un 0,0001 %', '{L} humilla a Microblizz; la empresa anuncia despidos para compensar', 'Microblizz confirma que la derrota «estaba en el plan estratégico»', 'Un jugador gana a Microblizz sin comprar ningún pack. Investigación abierta', 'Microblizz convoca una reunión de crisis que podría haber sido un correo'],
+  lose: ['Microblizz gana una partida y lo celebra subiendo el precio del pase', '{F} cae ante Microblizz: «el problema es que no compraste el pack»', 'Microblizz despide a sus bots tras ganar, por si acaso', 'Victoria de Microblizz. Los accionistas aplauden desde su yate'],
+  unlock: ['Los {U} se libran de Microblizz y piden el finiquito', 'Fuga de talento en Microblizz: los {U} se pasan a la rebelión'],
+  boss: ['El CEO de Microblizz recibe {S} de daño y lo llama «feedback constructivo»', 'El CEO de Microblizz sobrevive a {S} de daño gracias a su paracaídas dorado'],
+};
+const GAME_URL = 'jdanielhl1984-commits.github.io/fans-of-rumble';
+
 /* ---------- guardado (en el navegador; se puede exportar e importar) ---------- */
 const SAVE_KEY = 'for-save-1';
-function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, abil: {}, abEquip: {}, items: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0 }, daily: null, bestBoss: 0, lastFac: 'animales' }; }
+function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, abil: {}, abEquip: {}, items: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0 }, daily: null, weekly: null, tickets: 0, pass: { xp: 0, prem: false, free: [], paid: [] }, giftDay: '', chatOff: false, bestBoss: 0, lastFac: 'animales' }; }
 function loadSave() {
   try { const t = localStorage.getItem(SAVE_KEY); if (t) { const o = JSON.parse(t); if (o && o.v === 1) return Object.assign(newSave(), o); } } catch (e) { /* storage blocked */ }
   return newSave();
@@ -2456,6 +2645,8 @@ function applyEquip(u) {
       case 'almohada': u.respawnM = 0.6; break;
       case 'silla_gamer': u.abArmor = 0.15; break;
       case 'cofre': { const c = pick(COFRE); c[1](u); u.cofreTxt = c[0]; break; }
+      case 'diploma': u.mHp *= 1.08; u.mDmg *= 1.08; break;
+      case 'corbata_ceo': u.mHp *= 1.15; u.mDmg *= 1.15; u.mSpeed *= 1.1; break;
     }
     u.equip = u.equip || {}; u.equip[slot] = id;
   }
@@ -2463,6 +2654,7 @@ function applyEquip(u) {
 function doDeploy(team, key, x, y) {
   const def = cardDef(key);
   S[team].chaos -= def.cost; S[team].spent += def.cost; S[team].deployed++;
+  if (team === 'p' && isLeader(key) && Math.random() < 0.6) chatSay('leader');
   const n = def.count;
   for (let i = 0; i < n; i++) { const ox = n > 1 ? (i - (n - 1) / 2) * 22 : 0, oy = n > 1 ? (i % 2) * 6 : 0; spawnUnit(team, key, clamp(x + ox, 24, W - 24), y + oy); }
   play('deploy', team === 'p' ? 1 : 0.5);
@@ -2673,6 +2865,10 @@ function kill(t, src) {
       for (let i = 0; i < n; i++) { const v = spawnUnit(t.team, t.d.eject, clamp(t.x + (n > 1 ? (i - (n - 1) / 2) * 18 : 0), 24, W - 24), t.y); v.deployT = v.deployMax = 0.35; v.face = t.face; v.labelT = 0; v.summon = true; }
       addNum(t.x, t.y, 70, t.d.ejectTxt || '¡EYECCIÓN!', '#ff8fc8', 18); play('eject');
     }
+    if (G.state === 'play' && !t.summon && G.t >= (G.quipT || 0) && Math.random() < (t.team === 'p' ? 0.12 : 0.4)) {   // frase de despedida
+      const pool = t.team === 'p' ? QUIPS.player : facOf(t.team) === 'microblizz' ? QUIPS.microblizz : QUIPS.corrupt;
+      parts.push({ type: 'quip', x: clamp(t.x, 70, W - 70), y: t.y, z: topOf(t) + 24, vz: 9, txt: pick(pool), life: 2.3, max: 2.3 }); G.quipT = G.t + 2.4;
+    }
     S[other(t.team)].kills++; if (G.state === 'play') passiveKill(other(t.team));
     return;
   }
@@ -2681,9 +2877,10 @@ function kill(t, src) {
   const winner = other(t.team);
   if (t.role === 'base') { S[winner].crowns = 3; endMatch(winner, 'base'); return; }
   S[winner].crowns++;
-  if (winner === 'p') { if (facOf('e') === 'streamers') { S.e.hype = 0; S.e.hypeLvl = 0; } banner('¡TORRE DERRIBADA!', 'Microblizz lo llama «ajuste de plantilla»', 'player'); play('crown'); }
+  if (winner === 'p') { if (facOf('e') === 'streamers') { S.e.hype = 0; S.e.hypeLvl = 0; } banner('¡TORRE DERRIBADA!', 'Microblizz lo llama «ajuste de plantilla»', 'player'); play('crown'); chatBurst('towerP', 2); }
   else {
     const lostHype = facOf('p') === 'streamers' && S.p.hype > 0; if (lostHype) { S.p.hype = 0; S.p.hypeLvl = 0; }
+    chatBurst('towerE', 2);
     banner('TE HAN TIRADO UNA TORRE', lostHype ? 'El chat se va: tu HYPE vuelve a 0' : 'Protege ese carril con más unidades', 'enemy'); play('sad');
   }
 }
@@ -2952,7 +3149,7 @@ function updateStruct(s, dt) {
 function updateBoss(dt) {
   const b = bases.e; if (!b.alive || !G.bossOn) return;
   const D = G.diffCfg, nm = G.bossName;
-  if (!S.e.phase2 && b.hp < b.maxHp * 0.5) { S.e.phase2 = true; S.e.bossT = Math.min(S.e.bossT, 3); banner('FASE 2: DESPIDOS MASIVOS', `${nm} está a media vida y se ha enfadado`, 'enemy'); play('womp'); }
+  if (!S.e.phase2 && b.hp < b.maxHp * 0.5) { S.e.phase2 = true; S.e.bossT = Math.min(S.e.bossT, 3); banner('FASE 2: DESPIDOS MASIVOS', `${nm} está a media vida y se ha enfadado`, 'enemy'); play('womp'); chatBurst('phase2', 2); }
   if (b.hackedT > 0) return;   // hackeado: tampoco lanza habilidades
   S.e.bossT -= dt; if (S.e.bossT > 0) return;
   const near = units.filter(u => u.alive && u.team === 'p' && u.y < RIVER.y + 30 && !u.jump && u.deployT <= 0 && !u.immuneBoss);
@@ -2962,7 +3159,7 @@ function updateBoss(dt) {
   else if (near.length) cast = 'entierro';
   else if (S.e.phase2 && all.length) cast = 'despido';
   if (!cast) { S.e.bossT = 1; return; }
-  b.castT = 0.9; ring(b.x, b.y, 20, 260, 'rgba(255,51,72,.8)', 0.7, 6);
+  b.castT = 0.9; ring(b.x, b.y, 20, 260, 'rgba(255,51,72,.8)', 0.7, 6); if (Math.random() < 0.6) chatSay('boss');
   if (cast === 'entierro') {
     for (const u of near) { u.stunT = D.stun; u.stunKind = 'ip'; puff(u.x, u.y, 6, '#9fb3d6', 30, 5); }
     banner(G.efac === 'microblizz' ? 'ENTIERRO DE IP' : 'ORDEN DE MICROBLIZZ', `${nm} ha congelado a tus unidades de su lado`, 'enemy'); play('womp');
@@ -3081,11 +3278,13 @@ function endMatch(w, reason) {
   input.card = null; input.dragging = false; input.selected = null; input.ghost = null; hideTut();
   if (w === 'p') { play('win'); for (let i = 0; i < 140; i++) parts.push({ type: 'conf', x: rand(0, W), y: rand(80, 780), z: rand(250, 700), vx: rand(-20, 20), vy: 0, vz: -rand(90, 160), g: 0, rot: rand(0, 6), vr: rand(-8, 8), life: 6, max: 6, color: pick(['#ff7a1a', '#ffcb3d', '#d43cff', '#63cfe0', '#ffffff', '#7be04a']) }); }
   else if (w === 'e') play('lose'); else play('tick');
+  chatBurst(w === 'e' ? 'lose' : 'win', 3);
 }
 function updateGame(dt) {
   if (G.state === 'play') {
     G.time -= dt;
-    if (!G.double && G.time <= CFG.doubleAt) { G.double = true; $('#x2').hidden = false; banner('¡CAOS x2!', 'Último minuto: el CAOS se recarga el doble de rápido', 'chaos'); play('go'); }
+    if (!G.double && G.time <= CFG.doubleAt) { G.double = true; $('#x2').hidden = false; banner('¡CAOS x2!', 'Último minuto: el CAOS se recarga el doble de rápido', 'chaos'); play('go'); chatSay('x2'); }
+    chatTick(dt);
     const rate = (G.double ? 2 : 1) / CFG.chaosEvery;
     S.p.chaos = Math.min(CFG.chaosMax, S.p.chaos + dt * rate);
     S.e.chaos = Math.min(CFG.chaosMax, S.e.chaos + dt * rate * G.diffCfg.aiIncome);
@@ -3317,6 +3516,8 @@ function drawEquip(u, T) {
     case 'almohada': c.beginPath(); c.arc(0, hy + 18, 7, 0.1, Math.PI - 0.1); c.strokeStyle = OL; c.lineWidth = 6; c.stroke(); c.strokeStyle = '#7dd3fc'; c.lineWidth = 4; c.stroke(); break;
     case 'silla_gamer': shape(c, rr(ax - 6, ay - 12, 7, 16, 2), '#e63946', 1.3); line(c, [ax - 5, ay - 8, ax - 1, ay - 8], '#1f2937', 1.4); break;
     case 'cofre': shape(c, rr(ax - 5, ay - 3, 10, 7, 1.4), '#a16207', 1.3); line(c, [ax - 5, ay, ax + 5, ay], '#ffcb3d', 1.4); dot(c, ax, ay + 1, 1, '#ffcb3d'); break;
+    case 'diploma': c.save(); c.translate(ax, ay - 2); c.rotate(-0.15); shape(c, rr(-6, -4.5, 12, 9, 1), '#8a5a33', 1.2); shape(c, rr(-4.4, -3, 8.8, 6, 0.6), '#fff6ea', 0.8); line(c, [-3, -1, 3, -1], '#a08ab8', 0.8); line(c, [-3, 1, 1.5, 1], '#a08ab8', 0.8); dot(c, 2.6, 1.6, 1.1, '#e63946'); c.restore(); break;
+    case 'corbata_ceo': { const ty = hy + 13; shape(c, poly(-2.4, ty, 2.4, ty, 1.6, ty + 3, -1.6, ty + 3), '#b0213a', 1.1); shape(c, poly(-1.6, ty + 3, 1.6, ty + 3, 3, ty + 12, 0, ty + 15, -3, ty + 12), '#e63946', 1.1); line(c, [-1.6, ty + 7, 2, ty + 5.5], '#ffcb3d', 0.9); line(c, [-2.4, ty + 11, 2.6, ty + 9], '#ffcb3d', 0.9); break; }
   }
   c.restore();
 }
@@ -3490,6 +3691,16 @@ function drawPart(p) {
       ctx.beginPath(); ctx.moveTo(gx - 6, gy + 6); ctx.lineTo(gx - 6, gy - 3); ctx.arc(gx, gy - 3, 6, Math.PI, 0); ctx.lineTo(gx + 6, gy + 6); ctx.lineTo(gx + 3, gy + 3.5); ctx.lineTo(gx, gy + 6); ctx.lineTo(gx - 3, gy + 3.5); ctx.closePath();
       ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.lineWidth = 1.4; ctx.strokeStyle = OL; ctx.stroke();
       ctx.fillStyle = OL; ctx.beginPath(); ctx.arc(gx - 2.2, gy - 3, 1, 0, Math.PI * 2); ctx.arc(gx + 2.2, gy - 3, 1, 0, Math.PI * 2); ctx.fill(); break; }
+    case 'quip': {   // bocadillo con la frase de despedida
+      const a = Math.min(1, (1 - k) * 10, k * 4); ctx.globalAlpha = a;
+      ctx.font = `800 11px "Baloo 2", "Trebuchet MS", system-ui, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const tw = ctx.measureText(p.txt).width + 14, bx = clamp(p.x, tw / 2 + 4, W - tw / 2 - 4), by = p.y - p.z;
+      ctx.fillStyle = '#ffffff'; ctx.strokeStyle = OL; ctx.lineWidth = 2;
+      ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx - tw / 2, by - 10, tw, 20, 8); else ctx.rect(bx - tw / 2, by - 10, tw, 20);
+      ctx.moveTo(p.x - 4, by + 10); ctx.lineTo(p.x, by + 17); ctx.lineTo(p.x + 4, by + 10);
+      ctx.fill(); ctx.stroke(); ctx.fillStyle = '#ffffff'; ctx.fillRect(p.x - 3, by + 8, 6, 3);
+      ctx.fillStyle = OL; ctx.fillText(p.txt, bx, by + 1); ctx.globalAlpha = 1; break;
+    }
     case 'stamp': { const age = 1 - k; const sc = age < 0.15 ? lerp(2.2, 1, age / 0.15) : 1; ctx.globalAlpha = Math.min(1, k * 2.5); ctx.save(); ctx.translate(p.x, p.y - p.z); ctx.rotate(-0.15); ctx.scale(sc, sc);
       ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillRect(-36, -9, 72, 18); ctx.strokeStyle = p.color; ctx.lineWidth = 2.2; ctx.strokeRect(-36, -9, 72, 18);
       ctx.fillStyle = p.color; ctx.font = '13px ' + FONT_D; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(p.txt, 0, 1.5); ctx.restore(); break; }
@@ -3694,9 +3905,11 @@ function rollRarity(kind) {
 }
 function pull() {
   if (gachaAnim) return;
-  if (SAVE.gems < ECON.pull) { toast(`Te faltan ${ECON.pull - SAVE.gems} gemas`); play('deny'); return; }
-  audioInit(); SAVE.gems -= ECON.pull;
-  const kind = gachaTab, rar = rollRarity(kind), pool = Object.keys(kind === 'ab' ? ABILITIES : ITEMS).filter(k => (kind === 'ab' ? ABILITIES : ITEMS)[k].rar === rar);
+  if (SAVE.tickets > 0) SAVE.tickets--;
+  else if (SAVE.gems < ECON.pull) { play('deny'); confirmBox('FALTAN GEMAS', `Te faltan <b>${ECON.pull - SAVE.gems} gemas</b> para girar.<small>Las consigues con misiones, la campaña, el pase de batalla o en la tienda.</small>`, 'IR A LA TIENDA', () => openShop('gems')); return; }
+  else SAVE.gems -= ECON.pull;
+  audioInit();
+  const kind = gachaTab, rar = rollRarity(kind), DB = kind === 'ab' ? ABILITIES : ITEMS, pool = Object.keys(DB).filter(k => DB[k].rar === rar && !DB[k].pass);
   const id = pick(pool); let tag;
   if (kind === 'ab') { const r = SAVE.abil[id] || 0; if (!r) tag = '¡NUEVA!'; else if (r < 3) tag = `¡SUBE A RANGO ${r + 1}!`; else { SAVE.gems += ECON.dupGems; tag = `Repetida: +${ECON.dupGems} gemas`; } SAVE.abil[id] = Math.min(3, r + 1); }
   else if (!SAVE.items[id]) { SAVE.items[id] = 1; tag = '¡NUEVO!'; } else { SAVE.gems += ECON.dupGems; tag = `Repetido: +${ECON.dupGems} gemas`; }
@@ -3715,9 +3928,9 @@ function showPull(kind, id, rar, tag) {
 function buildGachaText() {
   for (const b of document.querySelectorAll('[data-gt]')) b.setAttribute('aria-pressed', String(b.dataset.gt === gachaTab));
   $('#gacha-sub').textContent = gachaTab === 'ab' ? 'Habilidades de cualquier facción para tus cartas. Si te sale repetida, sube de rango (hasta ★★★).' : 'Equipo freak solo para los líderes: arma, cabeza y accesorio. Se ve puesto en la partida.';
-  $('#btn-pull').innerHTML = `GIRAR · ${ECON.pull} ${GEM_SVG}`;
+  $('#btn-pull').innerHTML = SAVE.tickets > 0 ? `GIRAR · ${TICKET_SVG} ${SAVE.tickets > 1 ? SAVE.tickets + ' tiradas gratis' : '1 tirada gratis'}` : `GIRAR · ${ECON.pull} ${GEM_SVG}`;
   const P = SAVE.pity, O = ECON.odds;
-  $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Garantía: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}) y legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}). Microblizz no se hace responsable de tu afición a las cápsulas.`;
+  $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Garantía: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}) y legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}). Cada tirada cuesta ${ECON.pull} gemas (unos 0,50 € si compras el pack pequeño de gemas). Microblizz no se hace responsable de tu afición a las cápsulas.`;
 }
 function drawGacha() {
   const cv = $('#gacha-cv'); if (!cv || $('#scr-gacha').hidden) { gachaRAF = 0; return; }
@@ -3747,34 +3960,237 @@ function drawGacha() {
   gachaRAF = requestAnimationFrame(drawGacha);
 }
 function openGacha() { buildGachaText(); show('scr-gacha'); $('#gacha-result').hidden = true; if (!gachaRAF) gachaRAF = requestAnimationFrame(drawGacha); }
-/* ---------- misiones diarias ---------- */
+/* ---------- misiones diarias y semanales ---------- */
 function todayStr() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
+function weekStr() { const d = new Date(), back = (d.getDay() + 6) % 7, m = new Date(d.getFullYear(), d.getMonth(), d.getDate() - back); return `${m.getFullYear()}-${m.getMonth() + 1}-${m.getDate()}`; }
+const seedOf = str => { let h = 7; for (const ch of str) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
+const mDef = (m, weekly) => (weekly ? WEEKLY : MISSIONS).find(x => x.id === m.id);
+const mText = (m, M) => M.txt.replace('{F}', m.fac ? FACTIONS[m.fac].name : '');
 function ensureDaily() {
-  const day = todayStr(); if (SAVE.daily && SAVE.daily.day === day) return;
-  let h = 7; for (const ch of day) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  const R = mulberry32(h), pool = MISSIONS.slice(), list = [];
-  while (list.length < 3) list.push(pool.splice(Math.floor(R() * pool.length), 1)[0]);
-  SAVE.daily = { day, list: list.map(m => ({ id: m.id, prog: 0, claimed: false })) }; saveGame();
+  const day = todayStr(); if (SAVE.daily && SAVE.daily.day === day && SAVE.daily.list.length === DAILY_N) return;
+  const R = mulberry32(seedOf(day)), pool = MISSIONS.slice(), list = [];
+  while (list.length < DAILY_N) list.push(pool.splice(Math.floor(R() * pool.length), 1)[0]);
+  const facs = FACTION_ORDER.filter(isUnlocked);
+  SAVE.daily = { day, list: list.map(m => ({ id: m.id, prog: 0, claimed: false, fac: m.ev === 'facwin' ? facs[Math.floor(R() * facs.length)] : undefined })) }; saveGame();
 }
-function missionEvent(ev, n) {
-  ensureDaily();
-  for (const m of SAVE.daily.list) { const M = MISSIONS.find(x => x.id === m.id); if (M && M.ev === ev && !m.claimed) m.prog = Math.min(M.goal, m.prog + n); }
+function ensureWeekly() {
+  const wk = weekStr(); if (SAVE.weekly && SAVE.weekly.week === wk) return;
+  const R = mulberry32(seedOf('w' + wk)), pool = WEEKLY.slice(), list = [];
+  while (list.length < WEEKLY_N) list.push(pool.splice(Math.floor(R() * pool.length), 1)[0]);
+  SAVE.weekly = { week: wk, list: list.map(m => ({ id: m.id, prog: 0, claimed: false })) }; saveGame();
+}
+function missionEvent(ev, n, fac) {
+  if (!n) return;
+  ensureDaily(); ensureWeekly();
+  for (const m of SAVE.daily.list) { const M = mDef(m); if (M && M.ev === ev && !m.claimed && (!m.fac || m.fac === fac)) m.prog = Math.min(M.goal, m.prog + n); }
+  for (const m of SAVE.weekly.list) { const M = mDef(m, true); if (M && M.ev === ev && !m.claimed) m.prog = Math.min(M.goal, m.prog + n); }
+}
+const ECON_W = { gold: 300, gems: 40 };
+let missionTab = 'd';
+function untilStr(weekly) {
+  const now = new Date(), d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (weekly ? 7 - (now.getDay() + 6) % 7 : 1));
+  const h = Math.max(1, Math.ceil((d - now) / 3600000));
+  return h >= 48 ? `${Math.floor(h / 24)} días` : h >= 24 ? '1 día y ' + (h - 24) + ' h' : h + ' h';
 }
 function buildMissions() {
-  ensureDaily();
-  $('#mission-list').innerHTML = SAVE.daily.list.map((m, i) => {
-    const M = MISSIONS.find(x => x.id === m.id), done = m.prog >= M.goal;
-    return `<div class="mission${m.claimed ? ' done' : ''}"><div><b>${M.txt}</b><div class="xpbar"><i style="width:${(m.prog / M.goal) * 100}%"></i><span>${m.prog} / ${M.goal}</span></div></div><button class="btn-up" data-claim="${i}" ${done && !m.claimed ? '' : 'disabled'}>${m.claimed ? 'HECHA' : 'COBRAR'}<small>${COIN_SVG}${ECON.mission[0]} ${GEM_SVG}${ECON.mission[1]}</small></button></div>`;
+  ensureDaily(); ensureWeekly();
+  const W = missionTab === 'w', L = W ? SAVE.weekly.list : SAVE.daily.list;
+  for (const b of document.querySelectorAll('[data-mt]')) b.setAttribute('aria-pressed', String(b.dataset.mt === missionTab));
+  $('#mission-sub').textContent = W ? `${WEEKLY_N} misiones grandes cada semana. Cada una da ${ECON_W.gold} de oro, ${ECON_W.gems} gemas y ${PASS.xpWeekly} puntos de pase. Se renuevan en ${untilStr(true)}.` : `${DAILY_N} misiones nuevas cada día. Cada una da ${ECON.mission[0]} de oro, ${ECON.mission[1]} gemas y ${PASS.xpDaily} puntos de pase. Se renuevan en ${untilStr(false)}.`;
+  const rw = W ? [ECON_W.gold, ECON_W.gems, PASS.xpWeekly] : [ECON.mission[0], ECON.mission[1], PASS.xpDaily];
+  $('#mission-list').innerHTML = L.map((m, i) => {
+    const M = mDef(m, W), done = m.prog >= M.goal;
+    return `<div class="mission${m.claimed ? ' done' : ''}"><div><b>${mText(m, M)}</b><div class="xpbar"><i style="width:${(m.prog / M.goal) * 100}%"></i><span>${fmt(m.prog)} / ${fmt(M.goal)}</span></div></div><button class="btn-up" data-claim="${i}" ${done && !m.claimed ? '' : 'disabled'}>${m.claimed ? 'HECHA' : 'COBRAR'}<small>${COIN_SVG}${rw[0]} ${GEM_SVG}${rw[1]}</small><small>+${rw[2]} pase</small></button></div>`;
   }).join('');
   for (const b of document.querySelectorAll('[data-claim]')) b.onclick = () => {
-    const m = SAVE.daily.list[+b.dataset.claim]; if (m.claimed) return;
-    m.claimed = true; SAVE.gold += ECON.mission[0]; SAVE.gems += ECON.mission[1]; saveGame(); play('crown'); updateWallets(); buildMissions();
+    const m = L[+b.dataset.claim]; if (m.claimed || m.prog < mDef(m, W).goal) return;
+    m.claimed = true; SAVE.gold += rw[0]; SAVE.gems += rw[1];
+    const up = addPassXp(rw[2]); if (!W) missionEvent('dailydone', 1);
+    saveGame(); play('crown'); updateWallets(); buildMissions();
+    toast(up ? `¡Pase de batalla: nivel ${passLevel()}!` : `+${rw[2]} puntos de pase`);
   };
 }
+/* ---------- pase de batalla ---------- */
+const passLevel = () => Math.min(PASS.levels, Math.floor(SAVE.pass.xp / PASS.xpPer));
+function addPassXp(n) { const before = passLevel(); SAVE.pass.xp = Math.min(PASS.levels * PASS.xpPer, SAVE.pass.xp + n); return passLevel() - before; }
+const TICKET_SVG = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 18 6v2a2 2 0 0 0 0 4v2a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 14v-2a2 2 0 0 0 0-4z" fill="#7df3ff" style="stroke: var(--outline)" stroke-width="1.5" stroke-linejoin="round"/><path d="M13 4.5v11" stroke="#20102c" stroke-width="1.2" stroke-dasharray="1.6 1.6"/></svg>';
+function rewardHtml(r) {
+  if (r.gold) return `${COIN_SVG}${fmt(r.gold)}`;
+  if (r.gems) return `${GEM_SVG}${fmt(r.gems)}`;
+  if (r.tickets) return `${TICKET_SVG}${r.tickets} ${r.tickets > 1 ? 'tiradas' : 'tirada'}`;
+  if (r.item) return `<span class="itm">${ITEMS[r.item].name}</span>`;
+  return '';
+}
+const rewardTxt = r => r.gold ? `${fmt(r.gold)} de oro` : r.gems ? `${fmt(r.gems)} gemas` : r.tickets ? `${r.tickets} ${r.tickets > 1 ? 'tiradas gratis' : 'tirada gratis'} del gashapón` : r.item ? ITEMS[r.item].name : '';
+function giveReward(r) {
+  if (r.gold) SAVE.gold += r.gold;
+  if (r.gems) SAVE.gems += r.gems;
+  if (r.tickets) SAVE.tickets = (SAVE.tickets || 0) + r.tickets;
+  if (r.item) SAVE.items[r.item] = 1;
+}
+const passReady = (track, i) => i <= passLevel() && !SAVE.pass[track === 'free' ? 'free' : 'paid'].includes(i) && (track === 'free' || SAVE.pass.prem);
+function passClaimable() { let n = 0; for (let i = 1; i <= passLevel(); i++) { if (passReady('free', i)) n++; if (passReady('paid', i)) n++; } return n; }
+function claimPass(track, i) {
+  if (!passReady(track, i)) return false;
+  const r = passReward(track, i); giveReward(r); SAVE.pass[track === 'free' ? 'free' : 'paid'].push(i); return r;
+}
+function buildPass() {
+  const lv = passLevel(), into = SAVE.pass.xp - lv * PASS.xpPer, maxed = lv >= PASS.levels, P = SAVE.pass, nClaim = passClaimable();
+  $('#pass-top').innerHTML = `<div class="pass-lvl">${lv}</div><div class="pass-name ol">${PASS.name}<small>${PASS.sub}. ${P.prem ? 'Tienes el Pase Ejecutivo.' : 'Pista gratis para todos; la Ejecutiva es de pago (de prueba).'}</small></div>
+    <div><div class="xpbar"><i style="width:${maxed ? 100 : (into / PASS.xpPer) * 100}%"></i><span>${maxed ? '¡PASE COMPLETADO!' : `${into} / ${PASS.xpPer} puntos para el nivel ${lv + 1}`}</span></div></div>
+    <div class="pass-actions"><button class="btn-vip ol" id="btn-buy-pass" ${P.prem ? 'disabled' : ''}>${P.prem ? 'EJECUTIVO ✓' : 'PASE EJECUTIVO · ' + eur(PASS.eur)}</button><button class="btn-up" id="btn-claim-all" ${nClaim ? '' : 'disabled'}>COBRAR TODO${nClaim ? ` (${nClaim})` : ''}</button></div>`;
+  let rows = '';
+  for (let i = 1; i <= PASS.levels; i++) {
+    const cell = track => {
+      const r = passReward(track, i), got = SAVE.pass[track === 'free' ? 'free' : 'paid'].includes(i), ready = passReady(track, i);
+      const cls = 'pr-cell' + (track === 'paid' ? ' prem' : '') + (got ? ' done' : ready ? ' ready' : i > lv || (track === 'paid' && !P.prem) ? ' locked' : '');
+      const lock = track === 'paid' && !P.prem ? '<span class="lk">🔒</span>' : '';
+      return `<button class="${cls}" data-pc="${track}:${i}" ${ready ? '' : 'tabindex="-1"'}>${lock}${rewardHtml(r)}${got ? ' ✓' : ''}</button>`;
+    };
+    rows += `<div class="pass-row${i <= lv ? ' reached' : ''}" data-row="${i}"><div class="pr-n ol">${i}</div>${cell('free')}${cell('paid')}</div>`;
+  }
+  const list = $('#pass-list'); list.innerHTML = rows;
+  list.querySelectorAll('[data-pc]').forEach(b => { b.onclick = () => {
+    const [tr, i] = b.dataset.pc.split(':'); const r = claimPass(tr, +i);
+    if (!r) { if (tr === 'paid' && !SAVE.pass.prem) buyPass(); return; }
+    saveGame(); play('crown'); updateWallets(); buildPass(); toast('Has cobrado: ' + rewardTxt(r));
+  }; });
+  $('#btn-buy-pass').onclick = buyPass;
+  $('#btn-claim-all').onclick = () => {
+    let n = 0; for (let i = 1; i <= passLevel(); i++) { if (claimPass('free', i)) n++; if (claimPass('paid', i)) n++; }
+    if (n) { saveGame(); play('win'); updateWallets(); buildPass(); toast(`¡${n} recompensas cobradas!`); }
+  };
+  const cur = list.querySelector(`[data-row="${Math.max(1, Math.min(PASS.levels, lv))}"]`); if (cur) list.scrollTop = Math.max(0, cur.offsetTop - list.offsetTop - 60);
+}
+function buyPass() {
+  if (SAVE.pass.prem) return;
+  confirmBox('PASE EJECUTIVO', `Desbloquea la pista Ejecutiva de la ${PASS.name}: más oro, gemas, tiradas gratis y la <b>Corbata del CEO</b>, exclusiva.<span class="big">${eur(PASS.eur)}</span><small>Versión de prueba: no se cobra nada.</small>`, 'COMPRAR', () => {
+    SAVE.pass.prem = true; saveGame(); play('win'); updateWallets(); buildPass(); toast('¡Ya eres Ejecutivo! (sin cobrar nada)');
+  });
+}
+/* ---------- tienda (de prueba, sin cobros) ---------- */
+const eur = v => v.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: Number.isInteger(v) ? 0 : 2 });
+let shopTab = 'gold', jokeT = 0;
+const PILE = (n, gem) => { // dibujo de un montón de monedas o gemas, más alto cuanto más grande el pack
+  let o = ''; const k = Math.min(6, n), POS = [[30, 38], [17, 38], [43, 38], [23.5, 28], [36.5, 28], [30, 18]];
+  for (let i = 0; i < k; i++) { const [x, y] = POS[i];
+    o += gem ? `<path transform="translate(${x - 9} ${y - 9}) scale(.9)" d="M5 3h10l4 5-9 10L1 8z" fill="#ff5fd2" stroke="#20102c" stroke-width="1.6" stroke-linejoin="round"/>` : `<ellipse cx="${x}" cy="${y}" rx="9" ry="5" fill="#ffcb3d" stroke="#20102c" stroke-width="1.6"/><ellipse cx="${x}" cy="${y - 1}" rx="5" ry="2.4" fill="none" stroke="#c48a10" stroke-width="1.2"/>`; }
+  return `<svg viewBox="0 0 60 48" aria-hidden="true">${o}</svg>`;
+};
+function bonusPct(list, p) { const base = list[0].amt / list[0].eur, r = p.amt / p.eur; const b = Math.floor((r / base - 1) * 100); return b > 0 ? b : 0; }
+function giftReady() { return SAVE.giftDay !== todayStr(); }
+function jokeClock() { const now = new Date(), end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1); const s = Math.floor((end - now) / 1000); return [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map(v => String(v).padStart(2, '0')).join(':'); }
+function buildShop() {
+  for (const b of document.querySelectorAll('[data-st]')) b.setAttribute('aria-pressed', String(b.dataset.st === shopTab));
+  const g = SHOP.gift, ready = giftReady();
+  $('#gift-row').innerHTML = `<div class="pack gift"><div class="pk-ic">${PILE(2)}</div><div><div class="pk-name ol">Regalo del becario</div><div class="pk-note">Gratis una vez al día: ${g.gold} de oro y ${g.gems} gemas. Se lo ha «encontrado» en la oficina.</div></div><button class="btn-price ol" id="btn-gift" ${ready ? '' : 'disabled'}>${ready ? 'GRATIS' : 'MAÑANA'}</button></div>`;
+  $('#btn-gift').onclick = () => {
+    if (!giftReady()) return;
+    SAVE.giftDay = todayStr(); SAVE.gold += g.gold; SAVE.gems += g.gems; missionEvent('gift', 1); saveGame(); play('crown'); updateWallets(); buildShop(); toast(`+${g.gold} de oro y +${g.gems} gemas`);
+  };
+  const L = SHOP[shopTab], gem = shopTab === 'gems';
+  let h = '';
+  if (!gem) { const J = SHOP.joke; h += `<div class="pack joke"><span class="joke-flag">¡OFERTA!</span><div class="pk-ic">${PILE(6)}</div><div><div class="pk-name ol">${J.name}</div><div class="pk-amt ol">${COIN_SVG}${fmt(J.amt)}</div><div class="pk-note">¡Oferta irrepetible! (se repite cada día) · Termina en <span class="countdown" id="joke-clock">${jokeClock()}</span></div></div><button class="btn-price ol" id="btn-joke"><small>${eur(J.was)}</small>${eur(J.eur)}</button></div>`; }
+  h += L.map(p => { const b = bonusPct(L, p); return `<div class="pack${gem ? ' gem' : ''}"><div class="pk-ic">${PILE(1 + L.indexOf(p) + (L.indexOf(p) > 2 ? 1 : 0), gem)}</div><div><div class="pk-name ol">${p.name}${b ? `<span class="pk-bonus">+${b} % extra</span>` : ''}</div><div class="pk-amt ol">${gem ? GEM_SVG : COIN_SVG}${fmt(p.amt)}</div>${p.note ? `<div class="pk-note">${p.note}</div>` : ''}</div><button class="btn-price ol" data-buy="${p.id}">${eur(p.eur)}</button></div>`; }).join('');
+  h += `<p class="small-print">${gem ? 'Las gemas sirven para el gashapón (50 gemas por tirada: unos 0,50 € con el pack pequeño) y, más adelante, para aspectos.' : 'El oro sirve para subir de nivel tus cartas. La experiencia no se vende: siempre hay que jugar.'} Los «% extra» se comparan con el pack más pequeño. Precios de prueba: en esta versión no se cobra nada.</p>`;
+  const list = $('#shop-list'); list.innerHTML = h;
+  list.querySelectorAll('[data-buy]').forEach(b => { b.onclick = () => {
+    const p = L.find(x => x.id === b.dataset.buy); play('select');
+    confirmBox('¿COMPRAR?', `${p.name}<span class="big">${gem ? GEM_SVG : COIN_SVG} ${fmt(p.amt)}</span>por <b>${eur(p.eur)}</b><small>Versión de prueba: no se cobra nada y te lo llevas gratis.</small>`, 'COMPRAR', () => {
+      if (gem) SAVE.gems += p.amt; else SAVE.gold += p.amt;
+      saveGame(); play('win'); updateWallets(); toast(`+${fmt(p.amt)} ${gem ? 'gemas' : 'de oro'} · Microblizz te da las gracias`);
+    });
+  }; });
+  const jb = $('#btn-joke'); if (jb) jb.onclick = () => { play('deny'); confirmBox('AGOTADO', `Lo ha comprado el CEO con el dinero de tu bonus.<small>El precio tachado nunca existió. Así lo hacen ellos. Aquí, no.</small>`, null); };
+  clearInterval(jokeT); jokeT = setInterval(() => { const c = $('#joke-clock'); if (!c || $('#scr-shop').hidden) { clearInterval(jokeT); return; } c.textContent = jokeClock(); }, 1000);
+}
+function openShop(tab) { if (tab) shopTab = tab; updateWallets(); show('scr-shop'); buildShop(); }
+/* ---------- ventana de confirmación ---------- */
+function confirmBox(title, html, okTxt, onOk) {
+  $('#cf-title').textContent = title; $('#cf-body').innerHTML = html;
+  $('#cf-btns').innerHTML = okTxt ? `<button class="btn-ghost ol btn-ok" id="cf-ok">${okTxt}</button><button class="btn-ghost ol" id="cf-no">MEJOR NO</button>` : '<button class="btn-ghost ol" id="cf-no">VAYA</button>';
+  $('#scr-confirm').hidden = false;
+  const close = () => { $('#scr-confirm').hidden = true; };
+  $('#cf-no').onclick = () => { play('select'); close(); };
+  if (okTxt) $('#cf-ok').onclick = () => { close(); onOk(); };
+}
 function updateBadges() {
-  ensureDaily();
-  $('#mission-badge').hidden = !SAVE.daily.list.some(m => !m.claimed && m.prog >= MISSIONS.find(x => x.id === m.id).goal);
+  ensureDaily(); ensureWeekly();
+  const ready = (L, W) => L.some(m => !m.claimed && m.prog >= mDef(m, W).goal);
+  $('#mission-badge').hidden = !(ready(SAVE.daily.list, false) || ready(SAVE.weekly.list, true));
   $('#coll-badge').hidden = !FACTION_ORDER.some(f => isUnlocked(f) && [FACTIONS[f].leader, ...FACTIONS[f].units].some(k => canLevel(k) && SAVE.gold >= upCost(uSave(k).lvl)));
+  $('#pass-badge').hidden = !passClaimable();
+  $('#shop-badge').hidden = !giftReady();
+}
+/* ---------- sátira: chat falso en directo ---------- */
+const chatSt = { t: 6 };
+function chatSay(kind, extra) {
+  if (SAVE.chatOff) return;
+  const box = $('#chat'); if (!box) return;
+  const lines = CHAT[kind]; if (!lines) return;
+  let txt = pick(lines); if (extra) txt = txt.replace('{X}', extra);
+  const [nm, col] = pick(CHAT_USERS);
+  const d = document.createElement('div'); d.className = 'cl';
+  d.innerHTML = `<b style="color:${col}">${nm}</b>: ${txt}`;
+  box.appendChild(d);
+  while (box.children.length > 3) box.removeChild(box.firstChild);
+  setTimeout(() => { d.classList.add('out'); setTimeout(() => d.remove(), 650); }, 6500);
+}
+function chatBurst(kind, n) { chatSay(kind); for (let i = 1; i < n; i++) setTimeout(() => { if (G.state === 'play' || G.state === 'ending') chatSay(kind); }, 500 + i * 650 + Math.random() * 400); }
+function chatTick(dt) { chatSt.t -= dt; if (chatSt.t <= 0) { chatSay('idle'); chatSt.t = rand(5, 10); } }
+function chatClear() { const b = $('#chat'); if (b) b.innerHTML = ''; chatSt.t = 6; }
+/* ---------- sátira: imagen para compartir ---------- */
+function shareHeadline() {
+  const R = G.rewards || {}, w = G.winner;
+  let key = G.mode === 'boss' ? 'boss' : R.unlock ? 'unlock' : w === 'p' ? 'win' : 'lose';
+  return pick(HEADLINES[key]).replace('{c}', S.p.crowns).replace('{L}', CFG.cards[FACTIONS[G.faction].leader].name).replace('{F}', FACTIONS[G.faction].name).replace('{U}', R.unlock ? FACTIONS[R.unlock].name : '').replace('{S}', fmt(R.score || 0));
+}
+function wrapLines(c, str, maxW) {
+  const words = str.split(' '), out = []; let cur = '';
+  for (const wd of words) { const t = cur ? cur + ' ' + wd : wd; if (c.measureText(t).width > maxW && cur) { out.push(cur); cur = wd; } else cur = t; }
+  if (cur) out.push(cur); return out;
+}
+function makeShareImage() {
+  const Wd = 720, Hd = 900, cv2 = document.createElement('canvas'); cv2.width = Wd; cv2.height = Hd;
+  const c = cv2.getContext('2d'), w = G.winner, R = G.rewards || {};
+  const g = c.createLinearGradient(0, 0, 0, Hd); g.addColorStop(0, '#3b1d63'); g.addColorStop(1, '#140a20'); c.fillStyle = g; c.fillRect(0, 0, Wd, Hd);
+  c.globalAlpha = 0.07; c.fillStyle = '#ffffff'; for (let i = 0; i < 40; i++) { c.beginPath(); c.arc((i * 137) % Wd, (i * 251) % Hd, 18 + (i % 5) * 9, 0, Math.PI * 2); c.fill(); } c.globalAlpha = 1;
+  const T = (str, x, y, size, col, font = FONT_D, align = 'center') => { c.font = `${size}px ${font}`; c.textAlign = align; c.textBaseline = 'middle'; c.lineJoin = 'round'; c.lineWidth = Math.max(4, size * 0.22); c.strokeStyle = OL; c.strokeText(str, x, y); c.fillStyle = col; c.fillText(str, x, y); };
+  T('FANS OF', Wd / 2, 58, 34, '#ffffff'); T('RUMBLE', Wd / 2, 108, 70, '#ff8a1f');
+  // periódico
+  c.save(); c.translate(Wd / 2, 300); c.rotate(-0.025);
+  c.fillStyle = '#f5efe1'; c.strokeStyle = OL; c.lineWidth = 6; c.beginPath(); if (c.roundRect) c.roundRect(-300, -130, 600, 260, 14); else c.rect(-300, -130, 600, 260); c.fill(); c.stroke();
+  c.fillStyle = '#20102c'; c.font = `26px ${FONT_D}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('EL DIARIO DEL GAMER · ÚLTIMA HORA', 0, -100);
+  c.fillRect(-270, -80, 540, 3);
+  c.font = `bold 30px "Trebuchet MS", system-ui, sans-serif`; const lines = wrapLines(c, shareHeadline(), 520).slice(0, 4);
+  lines.forEach((ln, i) => c.fillText(ln, 0, -40 + i * 38 - (lines.length - 3) * 14));
+  c.restore();
+  // líder
+  const lk = FACTIONS[G.faction].leader, sp = SPR[lk];
+  if (sp) { const hh = 290, ww = sp.wd * hh / sp.ht; c.save(); c.globalAlpha = 0.35; c.fillStyle = '#000'; c.beginPath(); c.ellipse(175, 745, 95, 22, 0, 0, Math.PI * 2); c.fill(); c.restore(); c.drawImage(sp.c, 175 - ww / 2, 745 - hh * 0.97, ww, hh); }
+  const title = G.mode === 'boss' ? (w === 'e' ? 'DERROTA' : 'DAÑO AL CEO') : w === 'p' ? '¡VICTORIA!' : w === 'e' ? 'DERROTA' : 'EMPATE';
+  T(title, Wd / 2 + 120, 520, title.length > 10 ? 52 : 62, w === 'e' ? '#ff6b7a' : '#ffe14d');
+  const sub = G.mode === 'boss' ? fmt(R.score || 0) + ' de daño' : G.mode === 'camp' && w === 'p' ? '★'.repeat(R.stars || 0) + ' · ' + G.level.name : `${S.p.crowns} - ${S.e.crowns} coronas`;
+  T(sub, Wd / 2 + 120, 590, 32, '#ffffff');
+  T(`${FACTIONS[G.faction].name} contra ${G.efac === 'microblizz' ? 'Microblizz' : FACTIONS[G.efac].name + ' corruptos'}`, Wd / 2 + 120, 640, 22, '#cdb9ea', `"Trebuchet MS", system-ui, sans-serif`);
+  T(`${S.p.kills} enemigos despedidos · ${S.p.deployed} cartas`, Wd / 2 + 120, 680, 22, '#cdb9ea', `"Trebuchet MS", system-ui, sans-serif`);
+  c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(0, Hd - 120, Wd, 120);
+  T('¿Te atreves con Microblizz?', Wd / 2, Hd - 84, 30, '#ffffff');
+  T(GAME_URL, Wd / 2, Hd - 46, 22, '#9ef07a', `"Trebuchet MS", system-ui, sans-serif`);
+  c.font = `14px system-ui, sans-serif`; c.fillStyle = 'rgba(255,255,255,.55)'; c.textAlign = 'center'; c.fillText('Juego de humor. Microblizz no existe (por suerte).', Wd / 2, Hd - 16);
+  return cv2;
+}
+async function shareResult() {
+  play('select');
+  const cv2 = makeShareImage(), url = cv2.toDataURL('image/png'), text = `${shareHeadline()} · Juega a Fans of Rumble: https://${GAME_URL}/`;
+  try {
+    const blob = await new Promise(r => cv2.toBlob(r, 'image/png'));
+    const file = new File([blob], 'fans-of-rumble.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], text, title: 'Fans of Rumble' }); return; }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  let framed = true; try { framed = window.self !== window.top; } catch (e) { /* iframe de otro dominio */ }
+  $('#share-img').src = url; $('#share-dl').href = url; $('#share-dl').hidden = framed;   // dentro de un marco la descarga no funciona: se guarda la imagen a mano
+  $('#scr-share').hidden = false;
 }
 /* ---------- campaña ---------- */
 const lvlStars = id => SAVE.camp[id] || 0;
@@ -3866,6 +4282,12 @@ function grantRewards() {
     missionEvent('boss', 1);
   }
   if (win) missionEvent('win', 1);
+  missionEvent('play', 1); if (G.mode === 'camp' || G.mode === 'quick') missionEvent(G.mode, 1);
+  missionEvent('caos', Math.round(S.p.spent)); missionEvent('leader', S.p.plays[FACTIONS[G.faction].leader] || 0);
+  if (win && S.e.crowns === 0) missionEvent('flawless', 1);
+  if (win && G.endReason === 'base') missionEvent('base', 1);
+  if (win) missionEvent('facwin', 1, G.faction);
+  R.passXp = win ? PASS.xpWin : PASS.xpLose; R.passUp = addPassXp(R.passXp);
   missionEvent('card', S.p.deployed); missionEvent('kill', S.p.kills); missionEvent('tower', Math.min(S.p.crowns, 2 + (G.endReason === 'base' ? 1 : 0)));
   SAVE.gold += R.gold; SAVE.gems += R.gems; saveGame(); return R;
 }
@@ -3980,7 +4402,7 @@ window.addEventListener('keydown', e => {
 function show(id) { for (const s of document.querySelectorAll('.screen')) s.hidden = s.id !== id; }
 function hideScreens() { for (const s of document.querySelectorAll('.screen')) s.hidden = true; }
 function startMatch() {
-  audioInit(); hideScreens(); resetMatch(); G.state = 'countdown';
+  audioInit(); hideScreens(); resetMatch(); chatClear(); G.state = 'countdown';
   const F = FACTIONS[G.faction];
   banner('PASIVA: ' + F.passive, F.banner, F.kind);
   const L = G.level;
@@ -3994,14 +4416,14 @@ function startMatch() {
     if (G.state !== 'countdown') return;
     el.textContent = seq[i]; el.className = 'ol-big' + (i === 3 ? ' go' : ''); void el.offsetWidth; el.classList.add('pop');
     play(i < 3 ? 'tick' : 'go'); i++;
-    if (i < seq.length) setTimeout(tick, 800); else setTimeout(() => { if (G.state === 'countdown') { G.state = 'play'; if (!G.tutSeen) showTut(); } }, 500);
+    if (i < seq.length) setTimeout(tick, 800); else setTimeout(() => { if (G.state === 'countdown') { G.state = 'play'; if (!G.tutSeen) showTut(); chatBurst('start', 2); } }, 500);
   };
   setTimeout(tick, 900);
 }
 function pauseGame() { if (G.state !== 'play') return; G.state = 'paused'; input.card = null; input.dragging = false; show('scr-pause'); }
 function resumeGame() { if (G.state !== 'paused') return; hideScreens(); G.state = 'play'; }
-function goHome() { G.state = 'title'; resetMatch(); hud.update(); drawTitleArt(); updateWallets(); show('scr-title'); }
-function toMenu() { if (G.mode === 'camp') { G.state = 'title'; resetMatch(); hud.update(); openCamp(); } else goHome(); }
+function goHome() { G.state = 'title'; chatClear(); resetMatch(); hud.update(); drawTitleArt(); updateWallets(); show('scr-title'); }
+function toMenu() { chatClear(); if (G.mode === 'camp') { G.state = 'title'; resetMatch(); hud.update(); openCamp(); } else goHome(); }
 const CROWN_SVG = '<svg viewBox="0 0 24 20"><path d="M2 17 L3 5 L8.5 10 L12 2 L15.5 10 L21 5 L22 17 Z" fill="currentColor" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 const STAR_SVG = '<svg viewBox="0 0 24 22"><path d="M12 1.5l3.1 6.4 7 1-5.1 4.9 1.2 7L12 17.5l-6.2 3.3 1.2-7L1.9 8.9l7-1z" fill="currentColor" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 const QUOTES = {
@@ -4010,6 +4432,7 @@ const QUOTES = {
   d: ['Empate. Microblizz lo llamará «resultados en línea con lo esperado».'],
 };
 function showEnd() {
+  chatClear();
   const w = G.winner, R = G.rewards = grantRewards(), t = $('#end-title');
   if (G.mode === 'boss') { t.textContent = w === 'e' ? 'DERROTA' : bases.e.alive ? '¡FIN DEL TURNO!' : '¡CEO DESPEDIDO!'; t.className = 'end-title ol-big ' + (w === 'e' ? 'lose' : 'win'); }
   else { t.textContent = w === 'p' ? '¡VICTORIA!' : w === 'e' ? 'DERROTA' : 'EMPATE'; t.className = 'end-title ol-big ' + (w === 'p' ? 'win' : w === 'e' ? 'lose' : ''); }
@@ -4026,6 +4449,7 @@ function showEnd() {
   if (R.xp.length) rw += `<div class="rw-xp">Experiencia: ${R.xp.map(([k, x]) => `${CFG.cards[k].name} +${x}`).join(' · ')}</div>`;
   if (R.ready.length) rw += `<div class="rw-xp" style="color:#9ef07a">¡Listas para subir de nivel en la Colección: ${R.ready.map(k => CFG.cards[k].name).join(', ')}!</div>`;
   $('#end-rewards').innerHTML = rw;
+  $('#end-pass').innerHTML = passLevel() >= PASS.levels && !R.passUp ? 'Pase de batalla completado' : `Pase de batalla: +${R.passXp} puntos${R.passUp ? ` · <b style="color:#ffe14d">¡NIVEL ${passLevel()}!</b>` : ` · ${SAVE.pass.xp - passLevel() * PASS.xpPer}/${PASS.xpPer} para el nivel ${passLevel() + 1}`}`;
   $('#end-quote').textContent = R.unlock ? `Los ${FACTIONS[R.unlock].name} se libran de Microblizz y se unen a la rebelión.` : pick(QUOTES[w || 'd']);
   $('#st-cards').textContent = S.p.deployed; $('#st-kills').textContent = S.p.kills; $('#st-chaos').textContent = Math.round(S.p.spent);
   const nx = G.mode === 'camp' && w === 'p' ? nextLevel(G.level) : null;
@@ -4041,7 +4465,14 @@ $('#btn-bossmode').addEventListener('click', () => { play('select'); openPrep('b
 $('#btn-coll').addEventListener('click', () => { play('select'); collFac = G.faction; updateWallets(); show('scr-coll'); buildColl(); });
 $('#btn-gacha').addEventListener('click', () => { play('select'); updateWallets(); openGacha(); });
 $('#btn-missions').addEventListener('click', () => { play('select'); updateWallets(); buildMissions(); show('scr-missions'); });
-$('#btn-options').addEventListener('click', () => { play('select'); updateWallets(); $('#opt-vol').value = SAVE.vol == null ? 100 : SAVE.vol; $('#btn-test').textContent = SAVE.testAll ? 'ACTIVADO' : 'ACTIVAR'; show('scr-options'); });
+$('#btn-options').addEventListener('click', () => { play('select'); updateWallets(); $('#opt-vol').value = SAVE.vol == null ? 100 : SAVE.vol; $('#btn-test').textContent = SAVE.testAll ? 'ACTIVADO' : 'ACTIVAR'; $('#btn-chat').textContent = SAVE.chatOff ? 'NO' : 'SÍ'; show('scr-options'); });
+$('#btn-shop').addEventListener('click', () => { play('select'); openShop(); });
+$('#btn-pass').addEventListener('click', () => { play('select'); updateWallets(); show('scr-pass'); buildPass(); });
+for (const b of document.querySelectorAll('[data-st]')) b.addEventListener('click', () => { shopTab = b.dataset.st; play('select'); buildShop(); });
+for (const b of document.querySelectorAll('[data-mt]')) b.addEventListener('click', () => { missionTab = b.dataset.mt; play('select'); buildMissions(); });
+$('#btn-share').addEventListener('click', shareResult);
+$('#btn-share-close').addEventListener('click', () => { $('#scr-share').hidden = true; });
+$('#btn-chat').addEventListener('click', () => { SAVE.chatOff = !SAVE.chatOff; saveGame(); $('#btn-chat').textContent = SAVE.chatOff ? 'NO' : 'SÍ'; play('select'); });
 for (const b of document.querySelectorAll('[data-back]')) b.addEventListener('click', () => { play('select'); goHome(); });
 $('#btn-prep-back').addEventListener('click', () => { if (G.prep && G.prep.mode === 'camp') openCamp(); else goHome(); });
 $('#btn-pick-close').addEventListener('click', () => { $('#scr-pick').hidden = true; });
@@ -4157,7 +4588,7 @@ async function boot() {
   buildSprites(); BRIDGE_LAYER = buildBridges(); setFaction(G.faction); updateWallets(); READY = true;
   requestAnimationFrame(t => { last = t; frame(t); });
 }
-window.__FOR = { G, get S() { return S; }, get units() { return units; }, get structs() { return structs; }, get revives() { return revives; }, tryPlayerDeploy, playerPlay, spawnUnit, startMatch, setFaction, CFG, SPR, ART, BOX, TYPES, TOPS, drawVector, FACTIONS, get SAVE() { return SAVE; }, set SAVE(v) { SAVE = v; }, saveGame, setupMatch, startGame, openPrep, WORLDS, ECON, ABILITIES, ITEMS, findLevel, levelUp, pull, openCamp, buildColl, goHome };
+window.__FOR = { G, get S() { return S; }, get units() { return units; }, get structs() { return structs; }, get parts() { return parts; }, get revives() { return revives; }, tryPlayerDeploy, playerPlay, spawnUnit, startMatch, setFaction, CFG, SPR, ART, BOX, TYPES, TOPS, drawVector, FACTIONS, get SAVE() { return SAVE; }, set SAVE(v) { SAVE = v; }, saveGame, setupMatch, startGame, openPrep, WORLDS, ECON, ABILITIES, ITEMS, findLevel, levelUp, pull, openCamp, buildColl, goHome, PASS, SHOP, passLevel, addPassXp, buildPass, openShop, buildMissions, makeShareImage, chatSay, missionEvent, get missionTab() { return missionTab; }, set missionTab(v) { missionTab = v; } };
 boot();
 })();
 </script>

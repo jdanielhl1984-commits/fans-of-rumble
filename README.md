@@ -10,7 +10,8 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - 6 facciones: Animales Locos, No-Muertos, Streamers, Héroes, Ciberpunks y Memes, cada una con su líder, 6 cartas y una pasiva propia.
 - Las unidades suben de nivel (del 1 al 10) con experiencia y oro.
 - Gashapón de habilidades para las unidades y de equipo para el líder.
-- Modo Jefe contra el CEO de Microblizz y misiones diarias.
+- Modo Jefe contra el CEO de Microblizz, misiones diarias y semanales, y pase de batalla.
+- Tienda de prueba (no se cobra nada) y botón para compartir tu resultado como portada de periódico.
 - Funciona en el móvil y en el PC, sin instalar nada. El progreso se guarda en el navegador.
 
-Prototipo en desarrollo (versión 0.9). Todo el arte y el sonido están hechos con código.
+Prototipo en desarrollo (versión 0.9.5). Todo el arte y el sonido están hechos con código.
