@@ -423,8 +423,8 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 #scr-end:has(.end-title.win)::before { content: ""; position: absolute; left: 50%; top: 26%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%; background: repeating-conic-gradient(rgba(255, 203, 61, 0.12) 0deg 10deg, rgba(255, 203, 61, 0) 10deg 24deg); -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 66%); mask-image: radial-gradient(circle, #000 20%, transparent 66%); pointer-events: none; z-index: -1; }
 .card:not(.poor) .cost { box-shadow: 0 0 9px rgba(243, 166, 255, 0.85); }
 /* ---------- v0.9.11: chat más grande, cartera sin solaparse y títulos que caben ---------- */
-#chat { top: calc(var(--top) + 600px); width: 236px; height: 186px; gap: 4px; }
-#chat .cl { font-size: 15px; line-height: 1.2; padding: 4px 9px 3px; background: rgba(16, 8, 28, 0.55); border-radius: 9px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.9); }   /* más transparente: se ven las tropas de detrás */
+#chat { top: calc(var(--top) + 616px); width: 216px; height: 170px; gap: 4px; }   /* v0.9.12: un pelín más pequeño */
+#chat .cl { font-size: 13.5px; line-height: 1.2; padding: 4px 9px 3px; background: rgba(16, 8, 28, 0.55); border-radius: 9px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.9); }   /* más transparente: se ven las tropas de detrás */
 .scr-head { grid-template-columns: 46px minmax(0, 1fr) auto; }
 .scr-head .h2 { white-space: nowrap; overflow: hidden; min-width: 0; padding: 4px 2px 2px; }
 .wallet { flex-wrap: nowrap; flex: none; }
@@ -622,6 +622,48 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 #scr-options .opt-list { overflow-y: auto; min-height: 0; flex: 0 1 auto; padding-bottom: 4px; }
 #scr-options .opt-row .row { gap: 8px; }
 @media (prefers-reduced-motion: reduce) { .coach-glow { animation: none; } }
+
+/* v0.9.12: Difícil y Mítica, ruleta semanal y equipo del rival */
+.camp-tabs .tab.cd-h[aria-pressed="true"] { box-shadow: 0 0 0 3px #ff6b7a, 0 3px 0 var(--outline); }
+.camp-tabs .tab.cd-m[aria-pressed="true"] { box-shadow: 0 0 0 3px #d08cff, 0 3px 0 var(--outline); }
+.camp-tabs .tab.cd-h { background: linear-gradient(to bottom, #8a2b3a, var(--tray)); }
+.camp-tabs .tab.cd-m { background: linear-gradient(to bottom, #6d28c9, var(--tray)); }
+.camp-tabs .tab.dim { opacity: 0.6; }
+.node.cd-h { background: linear-gradient(to bottom, #8a2b3a, #4a1626); }
+.node.cd-m { background: linear-gradient(to bottom, #6d36b3, #2b1446); }
+.node.cd-h.boss, .node.cd-m.boss { background: linear-gradient(to bottom, #ff6b7a, #9b1d3a); }
+.world.cd-m { box-shadow: 0 0 0 2px #d08cff, 0 3px 0 var(--outline); }
+#camp-mod:empty { display: none; }
+.mod-box { width: 100%; max-width: 508px; box-sizing: border-box; border: 3px solid var(--outline); border-radius: 14px; background: linear-gradient(110deg, #4a1f6e 0%, var(--tray) 78%); padding: 8px 12px 9px; text-align: left; display: flex; flex-direction: column; gap: 5px; flex: none; box-shadow: 0 3px 0 var(--outline); }
+.mod-head { font-family: var(--font-display); font-size: 16px; line-height: 1.1; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.mod-head small { font-family: var(--font-ui); font-size: 12px; font-weight: 800; color: var(--ink-dim); white-space: nowrap; }
+.mod-row { font-size: 13px; font-weight: 700; line-height: 1.3; text-align: left; }
+.mod-row b { font-family: var(--font-display); font-weight: 400; font-size: 13px; letter-spacing: 0.5px; margin-right: 5px; }
+.mod-row.bad b { color: #ff8a8a; }
+.mod-row.good b { color: #8fc2ff; }
+.mod-box .chip-btn { align-self: flex-start; font-size: 12.5px; padding: 4px 9px 2px; }
+.prep-info .mod-row { margin-top: 4px; }
+.cd-badge { display: inline-block; font-family: var(--font-display); font-size: 13px; line-height: 1; padding: 4px 8px 2px; border-radius: 8px; border: 2px solid var(--outline); margin: 0 6px 4px 0; vertical-align: 2px; }
+.cd-badge.h { background: #b0213a; }
+.cd-badge.m { background: linear-gradient(to bottom, #d08cff, #6d28c9); }
+.gear-list { display: flex; flex-direction: column; gap: 4px; margin: 6px 0 2px; }
+.gear-who { font-size: 12.5px; font-weight: 800; color: var(--gold); }
+.gear-row { display: grid; grid-template-columns: 26px 1fr; gap: 7px; align-items: center; font-size: 12.5px; font-weight: 700; line-height: 1.25; }
+.gear-row .gi { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--outline); background: var(--qc); display: grid; place-items: center; box-sizing: border-box; }
+.gear-row .gi svg { width: 15px; height: 15px; }
+.gear-row b.ol { font-family: var(--font-display); font-weight: 400; font-size: 13.5px; }
+.gear-row .gq { font-style: normal; font-weight: 800; font-size: 11.5px; }
+.prep-info .gear-row .sv { font-family: inherit; font-size: inherit; font-weight: 800; display: inline; color: var(--gold); }
+#prep-title { white-space: nowrap; max-width: 100%; overflow: hidden; }
+#chat { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 26px); mask-image: linear-gradient(to bottom, transparent 0, #000 26px); }   /* el mensaje de arriba se difumina, como en los directos */
+.roulette-card { max-width: 440px; }
+.rl-sub { margin: 0; font-size: 14px; font-weight: 700; line-height: 1.35; color: var(--ink-dim); text-wrap: balance; }
+#rl-cv { width: 300px; height: 300px; display: block; max-width: 100%; }
+.rl-res { min-height: 60px; font-size: 15px; font-weight: 800; line-height: 1.3; text-align: center; text-wrap: balance; }
+.rl-res b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 23px; line-height: 1.1; margin-bottom: 3px; }
+.rl-res.bad b { color: #ff8a8a; }
+.rl-res.good b { color: #8fc2ff; }
+#btn-rl:disabled { filter: grayscale(0.6) brightness(0.8); cursor: default; }
 </style>
 
 </head>
@@ -710,7 +752,9 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
     <section id="scr-camp" class="screen top" hidden>
       <div class="scr-head"><button class="icon-btn back" data-back="scr-title" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 class="h2 ol">CAMPAÑA</h2><div class="wallet" data-wallet></div></div>
-      <p class="deck-sub">La Rebelión de los Fans: libera cada mundo corrompido por Microblizz y su facción se unirá a ti.</p>
+      <div class="tabs camp-tabs" role="group" aria-label="Dificultad"><button class="tab ol" data-cd="n" aria-pressed="true">Normal</button><button class="tab ol cd-h" data-cd="h" aria-pressed="false">Difícil</button><button class="tab ol cd-m" data-cd="m" aria-pressed="false">Mítica</button></div>
+      <p class="deck-sub" id="camp-sub">La Rebelión de los Fans: libera cada mundo corrompido por Microblizz y su facción se unirá a ti.</p>
+      <div id="camp-mod"></div>
       <div class="scroll-list" id="world-list"></div>
     </section>
 
@@ -778,6 +822,10 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
       <div class="modal-card login-card"><h3 class="ol">PREMIO DIARIO</h3><p class="login-sub" id="login-sub"></p><div class="login-grid" id="login-grid"></div><button class="btn-big ol" id="btn-login">¡COBRAR!</button></div>
     </section>
 
+    <section id="scr-roulette" class="screen modal" hidden>
+      <div class="modal-card roulette-card"><h3 class="ol" id="rl-title">RULETA DE LA SEMANA</h3><p class="rl-sub" id="rl-sub"></p><canvas id="rl-cv" aria-hidden="true"></canvas><div class="rl-res" id="rl-res" role="status" aria-live="polite"></div><button class="btn-big ol" id="btn-rl">¡GIRAR!</button><button class="btn-link" id="btn-rl-skip">Saltar la animación</button></div>
+    </section>
+
     <section id="scr-news" class="screen modal" hidden>
       <div class="modal-card news-card"><h3 class="ol" id="news-title">NOVEDADES</h3><div class="news-body" id="news-body"></div><button class="btn-big ol" id="btn-news-ok">¡GENIAL!</button></div>
     </section>
@@ -798,7 +846,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
         <div class="opt-row"><span><b>Instalar en el móvil</b><br>Ábrelo como una app: a pantalla completa y sin la barra del navegador.</span><button class="btn-ghost ol" id="btn-install">INSTALAR</button></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.11</p>
+      <p class="ver">Fans of Rumble · versión 0.9.12</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
@@ -810,7 +858,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
         <li><span class="n ol">4</span><span>Cada torre derribada es una corona. <b>Tira la Sede de Microblizz</b> y ganas al instante.</span></li>
         <li><span class="n ol">5</span><span>Hay 6 facciones y cada una tiene su <b>pasiva</b>: Rabia, Renacer, Hype, Experiencia, Escudos y RNG. Toca el botón de la pasiva, arriba a la izquierda, para ver qué hace. Microblizz tiene <em>Despidos rentables</em>: cada bot que despides le devuelve algo de CAOS.</span></li>
         <li><span class="n ol">6</span><span>Cuidado: SurvivalBot <em>congela</em> a las unidades que cruzan a su lado y, a media vida, empieza los <em>despidos masivos</em>.</span></li>
-        <li><span class="n ol">7</span><span><b>Mejora tus cartas</b> en <em>Colección</em>: súbelas de nivel con oro y toca sus <b>ranuras</b> para ponerles habilidades y objetos del <em>Gashapón</em>. En el <em>Inventario</em> ves todo lo que tienes y su calidad, de Básica a Perfecta.</span></li>
+        <li><span class="n ol">7</span><span><b>Mejora tus cartas</b> en <em>Colección</em>: súbelas de nivel con oro y toca sus <b>ranuras</b> para ponerles habilidades y objetos del <em>Gashapón</em>. En el <em>Inventario</em> ves todo lo que tienes y su calidad, de Básica a Perfecta. Al pasarte un mundo, se abre en <b>Difícil</b> y después en <b>Mítica</b>, con una ruleta que cambia cada semana.</span></li>
       </ol>
       <button class="btn-big ol" id="btn-howto-ok">¡VAMOS!</button>
     </section>
@@ -1129,6 +1177,15 @@ const ABILITIES = {
   grito:    { name: 'Grito', rar: 'epic', fac: 'nomuertos', ic: 'GR', desc: 'Cada 9 s aturde {v} s a los enemigos cercanos.', vals: [0.8, 1, 1.2] },
   clon:     { name: 'Clon viral', rar: 'legendary', fac: 'memes', ic: 'CV', desc: 'Al morir se divide en 2 copias pequeñas con el {v} % de su vida.', vals: [30, 40, 50] },
   furia:    { name: 'Furia legendaria', rar: 'legendary', ic: 'FL', desc: 'Con menos de la mitad de vida: +{v} % de daño y velocidad.', vals: [30, 40, 50] },
+  // v0.9.12: habilidades con efectos nuevos
+  speedrun:   { name: 'Speedrun', rar: 'common', ic: 'SR', desc: 'Los primeros {v} s va al triple de velocidad.', vals: [2, 3, 4] },
+  hitbox:     { name: 'Hitbox dudosa', rar: 'rare', ic: 'HB', desc: 'Esquiva el {v} % de los golpes. Nadie sabe cómo.', vals: [10, 15, 20] },
+  microtrans: { name: 'Microtransacción', rar: 'rare', ic: 'MT', desc: 'Al entrar en el campo le roba {v} de CAOS al rival.', vals: [0.5, 0.8, 1.1] },
+  ragequit:   { name: 'Rage quit', rar: 'rare', ic: 'RQ', desc: 'Al caer se enfada y explota: {v} de daño alrededor.', vals: [60, 90, 120] },
+  modofoto:   { name: 'Modo foto', rar: 'epic', ic: 'MF', desc: 'Al entrar congela {v} s a los enemigos de alrededor. ¡Sonreíd!', vals: [0.8, 1.2, 1.6] },
+  dlc:        { name: 'DLC gratis', rar: 'epic', ic: 'DL', desc: 'Al caer te devuelve {v} de CAOS.', vals: [1, 1.5, 2] },
+  gigante:    { name: 'Modo gigante', rar: 'legendary', ic: 'MG', desc: 'Se hace enorme: +{v} % de vida y de daño, pero va más lento.', vals: [30, 40, 50] },
+  iman:       { name: 'Imán de CAOS', rar: 'legendary', ic: 'IC', desc: 'Cada enemigo que derrota te da {v} de CAOS.', vals: [0.3, 0.45, 0.6] },
 };
 // gashapón de equipamiento: solo para el líder (arma, cabeza y accesorio)
 const SLOTS = { weapon: 'Arma', head: 'Cabeza', acc: 'Accesorio' };
@@ -1148,6 +1205,17 @@ const ITEMS = {   // st: valor central de cada efecto; cada copia sale entre el 
   cofre:         { name: 'Cofre de botín sin abrir', slot: 'acc', rar: 'legendary', st: [100], desc: 'Cada partida, un efecto sorpresa (o ninguno) con un {0} % de potencia.' },
   diploma:       { name: 'Diploma de Becario del Mes', slot: 'acc', rar: 'rare', pass: true, st: [8, 8], desc: '+{0} % de vida y +{1} % de daño. Enmarcado en plástico. Exclusivo del pase.' },
   corbata_ceo:   { name: 'Corbata del CEO', slot: 'acc', rar: 'legendary', pass: true, st: [15, 15, 10], desc: '+{0} % de vida, +{1} % de daño y +{2} % de velocidad. Viste como el que te despide. Exclusivo del Pase Ejecutivo.' },
+  // v0.9.12: objetos con efectos nuevos
+  mando_cable:  { name: 'Mando con cable de 3 metros', slot: 'weapon', rar: 'common', st: [25], desc: '+{0} % de alcance. El cable llega a todas partes.' },
+  baguette:     { name: 'Baguette de ayer', slot: 'weapon', rar: 'rare', st: [20], desc: 'El {0} % de sus golpes son críticos y hacen el triple. Está durísima.' },
+  lanzaconfeti: { name: 'Lanzaconfeti', slot: 'weapon', rar: 'epic', st: [40], desc: 'Cada golpe salpica el {0} % del daño a los enemigos de alrededor.' },
+  gorra_reves:  { name: 'Gorra del revés', slot: 'head', rar: 'common', st: [12], desc: '+{0} % de velocidad. Más estilo, más rápido.' },
+  casco_vr:     { name: 'Casco de realidad virtual', slot: 'head', rar: 'rare', st: [25], desc: 'No ve el peligro: +{0} % de daño, pero un 10 % menos de vida.' },
+  orejas_gato:  { name: 'Diadema de orejas de gato', slot: 'head', rar: 'epic', st: [20], desc: 'Los enemigos de alrededor pegan un {0} % menos. Es que es muy mono.' },
+  bebida_xxl:   { name: 'Bebida energética XXL', slot: 'acc', rar: 'common', st: [30], desc: 'Los primeros 10 s: +{0} % de daño y de velocidad.' },
+  disco_fisico: { name: 'Disco físico de coleccionista', slot: 'acc', rar: 'rare', st: [18], desc: '+{0} % de vida. Es suyo para siempre: nadie se lo puede quitar.' },
+  alfombrilla:  { name: 'Alfombrilla XXL', slot: 'acc', rar: 'epic', st: [2], desc: 'Los aliados de alrededor se curan un {0} % de su vida cada segundo.' },
+  boton_pausa:  { name: 'Botón de pausa', slot: 'acc', rar: 'legendary', st: [3], desc: 'Una vez por vida, cuando va a caer, se pausa y es invulnerable {0} s.' },
 };
 const COFRE = [[p => `¡+${Math.round(30 * p)} % DE DAÑO!`, (u, p) => { u.mDmg *= 1 + 0.3 * p; }], [p => `¡+${Math.round(40 * p)} % DE VIDA!`, (u, p) => { u.mHp *= 1 + 0.4 * p; }], [() => '¡TURBO!', (u, p) => { u.mSpeed *= 1 + 0.3 * p; u.mCd *= 1 - 0.2 * p; }], [() => '¡REGENERACIÓN!', (u, p) => { u.regen = (u.regen || 0) + 0.02 * p; }], [() => '…estaba vacío', () => {}]];
 // v0.9.9: calidad de cada copia. Cada efecto sale entre el 50 % (calidad 0) y el 150 % (calidad 100) de su valor central.
@@ -1276,15 +1344,35 @@ const QUIPS = {
 const CHAT_USERS = [['ConejoFan_88', '#ffb04f'], ['LagLord', '#63cfe0'], ['ExDeMicroblizz', '#7da8ff'], ['TioDelPase', '#ffe14d'], ['DespedidoUnLunes', '#ff6b7a'], ['NerfEsto', '#d08cff'], ['GemaPerdida', '#ff8fd8'], ['Ardilla_Rabiosa', '#ff9a3c'], ['ClipItPls', '#9ef07a'], ['MamaDelStreamer', '#fda4af'], ['Becario_42', '#a3e635'], ['ElCEO_Real', '#60a5fa'], ['ZorroSigiloso', '#fb923c'], ['ParcheDia1', '#c4b5fd'], ['CAOSenjoyer', '#e879f9'], ['ModCansado', '#5ef2c0']];
 const CHAT = {
   start: ['¡Empieza! A ver si hoy gana alguien que no sea Microblizz', 'primer', 'hola desde el trabajo 👀', 'llego tarde, ¿qué me he perdido?', '¡vamos rebelión!'],
-  idle: ['nerf conejo', '¿esto es pay to win?', '¿cuándo sale para móvil?', 'mi primo trabaja en Microblizz y dice que todo va bien', 'mod, banéalo', 'primera vez aquí, ¿de qué va esto?', 'LOL', '¿quién va ganando?', 'jajaja el becario', 'pon música', '¿se puede jugar con mando?', 'el CEO es mi tío, no digáis nada', 'hype hype hype', '¿alguien ha leído los términos y condiciones?', 'esto es mejor que lo de Microblizz', 'Microblizz ha vuelto a subir el precio de las gemas', '¿el pase de batalla merece la pena?', 'Kappa', 'ese carril está solo', 'más ardillas, menos anuncios', 'Microblizz ha cerrado otro juego hoy', 'Microblizz compró mi juego favorito y lo cerró 😭', '¿cuántos juegos ha cerrado ya Microblizz?'],
-  towerP: ['¡TORRE! 🔥', 'Microblizz: «esa torre nos sobraba»', 'F por la torre', 'clip it!!', 'eso le ha dolido al CEO en la cartera', 'otra torre cerrada, como sus juegos jajaja'],
-  towerE: ['uff', 'skill issue', 'eso pasa por no comprar el pack', 'F', '¡defiende ese carril!', 'Microblizz lo celebra subiendo los precios'],
+  idle: ['mi abuela juega mejor (y tiene 90 años)', 'POV: eres un becario de Microblizz', 'el chat está más vivo que los servidores de Microblizz', 'yo solo vengo por la música', 'apuesto 100 gemas a que gana', '¿dónde se compra el CAOS?', 'el CEO de Microblizz no sabe jugar a su propio juego', 'esto es mejor que la tele', 'nunca había visto tanto caos junto', 'nerf conejo', '¿esto es pay to win?', '¿cuándo sale para móvil?', 'mi primo trabaja en Microblizz y dice que todo va bien', 'mod, banéalo', 'primera vez aquí, ¿de qué va esto?', 'LOL', '¿quién va ganando?', 'jajaja el becario', 'pon música', '¿se puede jugar con mando?', 'el CEO es mi tío, no digáis nada', 'hype hype hype', '¿alguien ha leído los términos y condiciones?', 'esto es mejor que lo de Microblizz', 'Microblizz ha vuelto a subir el precio de las gemas', '¿el pase de batalla merece la pena?', 'Kappa', 'ese carril está solo', 'más ardillas, menos anuncios', 'Microblizz ha cerrado otro juego hoy', 'Microblizz compró mi juego favorito y lo cerró 😭', '¿cuántos juegos ha cerrado ya Microblizz?'],
+  towerP: ['¡a por la siguiente!', 'una torre menos, un despido más para Microblizz', '¡TORRE! 🔥', 'Microblizz: «esa torre nos sobraba»', 'F por la torre', 'clip it!!', 'eso le ha dolido al CEO en la cartera', 'otra torre cerrada, como sus juegos jajaja'],
+  towerE: ['eso ha dolido', 'bueno… quedan más torres', 'uff', 'skill issue', 'eso pasa por no comprar el pack', 'F', '¡defiende ese carril!', 'Microblizz lo celebra subiendo los precios'],
   leader: ['¡que salga el jefe!', 'ya viene el bueno', '¡LÍDER EN PISTA!', 'ahora sí'],
   boss: ['¿otra vez despidos?', 'el jefe despide a todo el mundo', 'eso es pay to win', 'el jefe está chetado', 'nerf jefe ya'],
   phase2: ['FASE 2 😱', 'se viene lo gordo', 'se ha enfadado el jefe'],
   x2: ['¡CAOS x2! ahora sí', 'último minuto, nervios', '🍿🍿🍿'],
-  win: ['GG EZ', '¡VAMOOOS!', 'Microblizz dirá que lo tenía planeado', 'clip para TikTok', 'GG WP', '¡fuera robots!'],
-  lose: ['GG', 'nerf Microblizz', 'la culpa es del lag', 'en la próxima sí', 'F en el chat', 'compra el pack (es broma)'],
+  win: ['Microblizz va a cerrar este juego por envidia', 'el CEO ha tirado el café al ver esto', 'GG EZ', '¡VAMOOOS!', 'Microblizz dirá que lo tenía planeado', 'clip para TikTok', 'GG WP', '¡fuera robots!'],
+  // v0.9.12: el chat comenta lo que pasa en la partida
+  deploy: ['¡{X} al campo!', '{X} entra con ganas', 'me encanta {X}', '¿{X}? buena elección', 'con {X} esto se pone interesante', 'allá va {X}'],
+  enemyBig: ['¡cuidado, que viene {X}!', 'ojo con ese {X}', 'Microblizz saca a {X}, se viene lo gordo', '{X} en camino, ¡defiende!'],
+  multikill: ['¡MULTIKILL! 🔥', '¡triple despido!', 'eso ha sido un recorte de plantilla, pero al revés', 'clip it, clip it', '¡qué limpieza!'],
+  leaderDown: ['F por {X} 😢', '{X} vuelve enseguida, tranquilos', 'nooo, {X}', 'se ha caído {X}, ¡aguantad!'],
+  eLeaderDown: ['¡adiós, {X}!', '{X}, a la calle', '¡{X} despedido!', 'jajaja {X} fuera'],
+  kamikaze: ['¡BOOM! 💥', 'el castor ha cobrado su finiquito', 'eso le ha dolido a la torre', 'boom boom boom'],
+  stun: ['¡los ha congelado a todos! 🥶', 'eso es un recorte de movimiento', 'Microblizz: «aquí no se mueve nadie»', 'congelados como el sueldo'],
+  full: ['¡gasta el CAOS!', '10 de CAOS y quieto 😴', 'tienes el CAOS a tope, ¡saca algo!', 'ese CAOS no se gasta solo'],
+  afk: ['¿AFK?', '¿se ha dormido?', 'hola?? ¿hay alguien jugando?', 'se ha ido a por un café'],
+  baseLowE: ['¡que se cae la sede! 🔥', '¡último empujón!', 'la sede está temblando', 'Microblizz ya prepara el comunicado'],
+  baseLowP: ['¡defiende la base!', 'esto se pone feo', 'pon algo delante, ¡rápido!', 'que no entren, que no entren'],
+  comeback: ['¡REMONTADA! 🔥', '¡empate! ¡qué partida!', 'nunca dudé (mentira)', 'esto no se acaba hasta que se acaba'],
+  close: ['esto se decide al final 😬', 'nervios', 'empate y casi sin tiempo', 'que alguien tire una torre ya'],
+  heal: ['¡la curandera está en todo!', 'curas gratis, no como en Microblizz', 'menos mal que hay enfermera', 'esa curación ha salvado la partida'],
+  stealth: ['¿de dónde ha salido ese?', '¡SORPRESA!', 'nadie lo ha visto venir', 'golpe por la espalda, clásico'],
+  revive: ['¡se levanta! 🧟', 'ni muerto se rinde', 'Renacer: el mejor seguro de vida', 'vuelve del más allá'],
+  ability: ['eso es una habilidad del gashapón 😮', '¿qué ha sido eso?', 'menuda suerte en las cápsulas', 'esa habilidad está rotísima'],
+  hard: ['en Difícil hasta los becarios pegan fuerte', '¿Difícil? a ver cuánto aguanta', 'su líder va equipado hasta los dientes', 'aquí sin subir cartas no se gana'],
+  mythic: ['¿Mítica? valiente 😱', 'modo mítico: aquí no gana nadie', 'la ruleta de esta semana es cruel', 'esto es para los que no duermen'],
+  lose: ['mañana más', 'Microblizz: «esto lo arreglamos en el próximo parche»', 'GG', 'nerf Microblizz', 'la culpa es del lag', 'en la próxima sí', 'F en el chat', 'compra el pack (es broma)'],
 };
 // v0.9.8: el chat habla de tu facción, de la facción enemiga y de cada jefe
 const CHAT_FAC = {
@@ -1350,6 +1438,45 @@ const CHAT_BOSS = [
   ['MemeLord corrupto solo publica memes de empresa', 'el meme del jefe lleva marca de agua'],
   ['el CEO ha venido a cerrar otro juego', 'el CEO cobra más que todo el estudio junto', 'el CEO se ha comprado otro yate con tus gemas', 'esta música me suena del ascensor…'],
 ];
+// v0.9.12: frases sobre cada carta cuando la juegas
+const CHAT_UNIT = {
+  squirrel: ['¡ardillas con café!', 'dos ardillas, cero paciencia', 'esas ardillas van más rápido que mi wifi'],
+  beaver: ['el castor va directo a la torre 💣', 'ese castor no tiene seguro de vida', 'dinamita y ningún plan B'],
+  fox: ['el zorro ya ha desaparecido 👀', '¿dónde está el zorro? ¿alguien lo ve?', 'ojo, que el zorro pega x3'],
+  meercat: ['llega la enfermera 🩹', 'MeerCat cura gratis, no como el seguro de Microblizz', 'la suricata trae tiritas para todos'],
+  junkcoon: ['el mapache ha traído su contenedor', 'reciclaje ofensivo', 'JunkCoon tira basura… a Microblizz'],
+  mechavaca: ['¡MECHAVACA! 🐄🤖', 'muuuuu-robot', 'la MechaVaca no frena ni en las curvas'],
+  skeleton: ['cuatro esqueletos y ningún contrato', 'huesos baratos, mucho daño', 'esqueletos en fila, como en la oficina'],
+  zombie: ['zombis lentos pero cobran horas extra', 'CrunchZombie: el crunch hecho persona', 'tres zombis = un lunes por la mañana'],
+  ghostmage: ['un fantasma con varita, lo normal', 'dispara desde lejos, como los jefes por correo'],
+  banshee: ['que grite la Banshee 😱', 'Banshee: el despertador de Microblizz'],
+  skullknight: ['ese caballero frena a cualquiera', 'caballero sin cabeza (pero con calavera)'],
+  stitchbrute: ['StitchBrute viene a dar abrazos tóxicos', 'cosido a mano y con mal olor'],
+  subswarm: ['¡llegan los subs!', 'tres subs y un sueño'],
+  hypebeast: ['HypeBeast va a toda pastilla', 'ese va con tres bebidas energéticas'],
+  viralbot: ['ViralBot va a hacerse viral (aturdiendo)', 'cuidado, que lo graba todo'],
+  snackmom: ['SnackMom trae bocatas para todos 🥪', 'la madre del streamer cura mejor que nadie'],
+  hypetrain: ['¡CHU CHUUU! a la torre 🚂', 'ese tren no para en ninguna estación'],
+  banhammer: ['¡BANEO MASIVO!', 'BanHammer: el moderador que todos temen'],
+  cupidarcher: ['flechas de amor (y de daño) 💘', 'Cupido ha venido con mala leche'],
+  hoplite: ['hoplitas en formación', 'tres lanzas, cero miedo'],
+  shieldmaiden: ['ese escudo es más duro que un lunes', 'ShieldMaiden aguanta lo que le echen'],
+  thundergod: ['¡rayo en cadena! ⚡', 'ThunderGod ha venido sin paraguas'],
+  medusa: ['no la miréis a los ojos 🐍', 'Medusa: la jefa de personal de los dioses'],
+  minotaur: ['el Minotauro viene embistiendo', 'ese toro no entiende de laberintos'],
+  nanobot: ['cuatro NanoBots, mil problemas', 'bichitos de metal en camino'],
+  cyberninja: ['el ninja se teletransporta; el wifi, no', 'ninja con lag cero'],
+  techdroid: ['llega el técnico, y sin cita previa', 'TechDroid lo arregla todo menos mi vida'],
+  hackerkid: ['HackerKid va a hackear las torres 💻', 'ese niño ha borrado el servidor de Microblizz'],
+  neonsniper: ['francotiradora fluorescente', 'NeonSniper apunta desde casa'],
+  siegemech: ['¡artillería pesada! 💥', 'SiegeMech viene a demoler'],
+  suchdog: ['such dog, very rápido, wow 🐕', 'dos perritos con ganas'],
+  gifblaster: ['ráfaga de gifs en camino', 'GifBlaster dispara en bucle'],
+  synthcat: ['gato con sintetizador, lo que faltaba 🎹', 'SynthCat pincha música y daño'],
+  trollbot: ['TrollBot va a provocar a todos 😈', 'no le hagáis caso al TrollBot (imposible)'],
+  stonks: ['STONKS 📈', 'cuanto más pega, más sube'],
+  chonkcat: ['ChonkCat se va a sentar encima de alguien', 'gato gordo, problemas gordos'],
+};
 // nombres del chat según tu facción (se mezclan con los de siempre)
 const CHAT_USERS_FAC = {
   animales: [['ArdillaConCafé', '#ff9a3c'], ['ZanahoriaLover', '#ffb04f']], nomuertos: [['LichDeGuardia', '#5ef2a0'], ['Huesitos_99', '#e5e7eb']],
@@ -1383,8 +1510,8 @@ const GAME_URL = 'jdanielhl1984-commits.github.io/fans-of-rumble';
 
 /* ---------- guardado (en el navegador; se puede exportar e importar) ---------- */
 const SAVE_KEY = 'for-save-1';
-const VERSION = '0.9.11';
-function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, inv: [], invSeq: 0, abEquip: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0, qab: 0, qeq: 0 }, daily: null, weekly: null, tickets: 0, pass: { xp: 0, prem: false, free: [], paid: [] }, giftDay: '', chatOff: false, bestBoss: 0, lastFac: 'animales', tut: { done: false, step: 0 }, tutGift: {}, login: { last: '', day: 0, best: 0 }, stats: {}, achDone: [], achSeen: [], starter: false, speed2: false, seenVer: '' }; }
+const VERSION = '0.9.12';
+function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, inv: [], invSeq: 0, abEquip: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0, qab: 0, qeq: 0 }, daily: null, weekly: null, tickets: 0, pass: { xp: 0, prem: false, free: [], paid: [] }, giftDay: '', chatOff: false, bestBoss: 0, lastFac: 'animales', tut: { done: false, step: 0 }, tutGift: {}, login: { last: '', day: 0, best: 0 }, stats: {}, achDone: [], achSeen: [], starter: false, speed2: false, seenVer: '', campH: {}, campM: {}, rlWeek: '', mythPrize: {} }; }
 // v0.9.9: antes se guardaba «tengo esta habilidad (rango 1-3)» y «tengo este objeto»; ahora cada copia tiene su calidad.
 // Las partidas antiguas se convierten sin perder nada: la habilidad conserva su valor exacto y los objetos quedan como estaban.
 function migrateSave(s, raw) {
@@ -1419,6 +1546,7 @@ function migrateSave(s, raw) {
     }
   }
   s.tut = Object.assign({ done: false, step: 0 }, s.tut || {});
+  s.campH = s.campH || {}; s.campM = s.campM || {}; s.mythPrize = s.mythPrize || {};   // v0.9.12: Difícil y Mítica
   return s;
 }
 function loadSave() {
@@ -3339,6 +3467,10 @@ function applySpawnMods(u) {
   u.corrupt = team === 'e' && G.efac !== 'microblizz';
   if (f === 'memes') { const m = pick(P.memes.muts); u.mut = m.id; u.mHp = m.hp; u.mDmg = m.dmg; u.mSpeed = m.speed; u.mCd = m.cd; u.mScale = m.scale; u.r = u.d.r * m.scale; u.mutTxt = m.txt; u.mutCol = m.color; }
   if (team === 'p') { applyAbility(u); if (isLeader(u.type)) applyEquip(u); }
+  else if (G.egear && (isLeader(u.type) || G.egearOn.includes(u.type))) applyEnemyGear(u);
+  const M = G.mod;   // v0.9.12: ruleta de la Mítica
+  if (M && team === 'p') { if (M.deb.id === 'lag') u.mSpeed *= 0.85; if (M.deb.id === 'parche') u.mHp *= 0.85; if (M.deb.id === 'becarios') u.mDmg *= 0.88; }
+  else if (M) { if (M.buf.id === 'horas') u.mCd *= 0.8; if (M.buf.id === 'robots') u.mHp *= 1.15; if (M.buf.id === 'bonus') u.mDmg *= 1.15; if (M.buf.id === 'turbo') u.mSpeed *= 1.15; }
   u.hpBase = u.d.hp * u.mHp * u.mLvl;
   u.maxHp = Math.round(u.hpBase * (f === 'heroes' ? 1 + S[team].xpLvl * P.heroes.step : 1)); u.hp = u.maxHp;
   if (f === 'ciber') u.shieldMax = u.shield = Math.round(u.maxHp * P.ciber.frac);
@@ -3363,12 +3495,23 @@ function applyAbility(u) {
     case 'grito': u.abPulse = { cd: 9, r: 70, stun: v, kind: 'daze', text: '¡GRITO!', color: 'rgba(230,220,255,.9)', tc: '#e6dcff', sfx: 'wail' }; break;
     case 'clon': if (!isLeader(u.type)) u.abClone = v / 100; break;
     case 'furia': u.abFury = 1 + v / 100; break;
+    case 'speedrun': u.abRun = v; break;
+    case 'hitbox': u.abDodge = v / 100; break;
+    case 'microtrans': u.abSteal = v; break;
+    case 'ragequit': u.abRage = v; break;
+    case 'modofoto': u.abPhoto = v; break;
+    case 'dlc': u.abDlc = v; break;
+    case 'gigante': { const k = 1 + v / 100; u.mHp *= k; u.mDmg *= k; u.mSpeed *= 0.82; u.mScale *= 1.28; u.r *= 1.28; u.abGiant = true; break; }
+    case 'iman': u.abMagnet = v; break;
   }
 }
 function applyEquip(u) {
   const E = SAVE.equip[facOf(u.team)] || {};
-  for (const slot in SLOTS) {
-    const it = invGet(E[slot]); if (!it || it.k !== 'eq' || !ITEMS[it.id]) continue;
+  for (const slot in SLOTS) { const it = invGet(E[slot]); if (it && it.k === 'eq' && ITEMS[it.id]) applyItem(u, it); }
+}
+// v0.9.12: efecto de un objeto. Sirve para tu líder y para el equipo del rival en Difícil y Mítica
+function applyItem(u, it) {
+  {
     const id = it.id, v = valsOf(it), pc = i => 1 + v[i] / 100;
     switch (id) {
       case 'espada_carton': u.mDmg *= pc(0); break;
@@ -3386,16 +3529,30 @@ function applyEquip(u) {
       case 'cofre': { const c = pick(COFRE), pw = v[0] / 100; c[1](u, pw); u.cofreTxt = c[0](pw); break; }
       case 'diploma': u.mHp *= pc(0); u.mDmg *= pc(1); break;
       case 'corbata_ceo': u.mHp *= pc(0); u.mDmg *= pc(1); u.mSpeed *= pc(2); break;
+      case 'mando_cable': u.mRange = (u.mRange || 1) * pc(0); break;
+      case 'baguette': u.abCrit = v[0] / 100; break;
+      case 'lanzaconfeti': u.abSplash = v[0] / 100; break;
+      case 'gorra_reves': u.mSpeed *= pc(0); break;
+      case 'casco_vr': u.mDmg *= pc(0); u.mHp *= 0.9; break;
+      case 'orejas_gato': u.abCute = v[0] / 100; break;
+      case 'bebida_xxl': u.abDrink = v[0] / 100; break;
+      case 'disco_fisico': u.mHp *= pc(0); break;
+      case 'alfombrilla': u.abAura = v[0] / 100; break;
+      case 'boton_pausa': u.abPause = v[0]; break;
     }
-    u.equip = u.equip || {}; u.equip[slot] = id;
+    u.equip = u.equip || {}; u.equip[ITEMS[id].slot] = id;
   }
 }
+function applyEnemyGear(u) { for (const id of G.egear) applyItem(u, { k: 'eq', id, q: ITEMS[id].st.map(() => G.egearQ) }); u.geared = true; }
 function doDeploy(team, key, x, y) {
   const def = cardDef(key);
   S[team].chaos -= def.cost; S[team].spent += def.cost; S[team].deployed++;
+  if (team === 'p') chatSt.lastDep = G.t;
   if (team === 'p' && isLeader(key) && Math.random() < 0.6) chatSay('leader');
+  else if (team === 'p') chatEv('deploy', def.name, key, 0.35, 5);
+  else if (def.cost >= 5 || isLeader(key)) chatEv('enemyBig', def.name, null, 0.6, 8);
   const n = def.count;
-  for (let i = 0; i < n; i++) { const ox = n > 1 ? (i - (n - 1) / 2) * 22 : 0, oy = n > 1 ? (i % 2) * 6 : 0; spawnUnit(team, key, clamp(x + ox, 24, W - 24), y + oy); }
+  for (let i = 0; i < n; i++) { const ox = n > 1 ? (i - (n - 1) / 2) * 22 : 0, oy = n > 1 ? (i % 2) * 6 : 0, v = spawnUnit(team, key, clamp(x + ox, 24, W - 24), y + oy); if (team === 'p' && G.pDeployAdd) { v.deployT += G.pDeployAdd; v.deployMax = v.deployT; } }
   play('deploy', team === 'p' ? 1 : 0.5);
 }
 function playerPlay(slot, key, x, y) {
@@ -3444,7 +3601,7 @@ function moveToward(u, tx, ty, dt) {
     gx = ex; gy = atMouth ? (uN ? RIVER.bottom + 18 : RIVER.top - 18) : ey;
   }
   const dx = gx - u.x, dy = gy - u.y, dl = Math.hypot(dx, dy) || 1;
-  const step = Math.min(dl, u.d.speed * (u.slowT > 0 ? 0.5 : 1) * u.mSpeed * (u.abFury && u.hp < u.maxHp * 0.5 ? u.abFury : 1) * dt);
+  const step = Math.min(dl, u.d.speed * (u.slowT > 0 ? 0.5 : 1) * u.mSpeed * (u.abFury && u.hp < u.maxHp * 0.5 ? u.abFury : 1) * (u.runT > 0 ? 3 : 1) * (u.drinkT > 0 ? 1 + u.abDrink : 1) * dt);
   u.x += (dx / dl) * step; u.y += (dy / dl) * step; u.runDist += step;
   if (Math.abs(dx) > 3) u.face = dx > 0 ? 1 : -1;
   u.moving = true; u.walk += dt * u.d.speed * u.mSpeed * 0.2;
@@ -3458,7 +3615,7 @@ function explodeBeaver(u, t) {
   ring(u.x, u.y, 8, u.d.splash * 1.6, 'rgba(255,170,60,.95)', 0.5, 7);
   puff(u.x, u.y, 14, '#ffb347', 90, 10, false, 10); puff(u.x, u.y, 8, '#8a8f9c', 60, 9, false, 16);
   chips(u.x, u.y, 12, 10, ['#e2463b', '#8a5a33', '#ffcb3d'], 'chip', 4); sparks(u.x, u.y, 14, 10, '#ffd34d'); flashAt(u.x, u.y, 14, 80, '255,160,60', 0.35); screenFlash(0.12);
-  addNum(u.x, u.y, 62, '¡BUM!', '#ffb347', 22);
+  addNum(u.x, u.y, 62, '¡BUM!', '#ffb347', 22); if (u.team === 'p') chatEv('kamikaze', null, null, 0.5, 8);
   parts.push({ type: 'ghost', x: u.x, y: u.y, z: 26, vz: 30, life: 1.4, max: 1.4 });
   shake(8); play('boom');
 }
@@ -3467,12 +3624,13 @@ function attack(u, t) {
   const surpriseM = u.stealthT > 0 ? u.d.surprise || u.abSurprise || 0 : 0, surprise = surpriseM > 0;
   u.stealthT = 0;
   let mult = dmgMult(u); const st = u.rage > 0 ? 'rage' : 'hit';
+  const critHit = !!u.abCrit && Math.random() < u.abCrit; if (critHit) { mult *= 3; addNum(t.x, t.y, topOf(t) + 30, '¡CRÍTICO!', '#ffd23f', 14); }
   const tf = u.tfBoost; if (tf) { mult *= 1.5; u.tfBoost = false; }
   if (u.d.chain) { zapChain(u, t, u.d.dmg * mult); u.lungeT = 0.12; const d = dist(u, t) || 1; u.lungeX = -(t.x - u.x) / d * 0.5; u.lungeY = -(t.y - u.y) / d * 0.5; return; }
-  if (u.d.ranged) { shoot(u, t, u.d.ranged, u.d.dmg * mult, tf ? 'crit' : st); u.lungeT = 0.12; const d = dist(u, t) || 1; u.lungeX = -(t.x - u.x) / d * 0.5; u.lungeY = -(t.y - u.y) / d * 0.5; return; }
+  if (u.d.ranged) { shoot(u, t, u.d.ranged, u.d.dmg * mult, tf || critHit ? 'crit' : st); u.lungeT = 0.12; const d = dist(u, t) || 1; u.lungeX = -(t.x - u.x) / d * 0.5; u.lungeY = -(t.y - u.y) / d * 0.5; return; }
   u.lungeT = 0.18; const d = dist(u, t) || 1; u.lungeX = (t.x - u.x) / d; u.lungeY = (t.y - u.y) / d;
-  let dmg = u.d.dmg * mult, crit = surprise || tf;
-  if (surprise) { dmg *= surpriseM; addNum(t.x, t.y, topOf(t) + 22, '¡SORPRESA!', '#e6a8ff', 15); }
+  let dmg = u.d.dmg * mult, crit = surprise || tf || critHit;
+  if (surprise) { dmg *= surpriseM; addNum(t.x, t.y, topOf(t) + 22, '¡SORPRESA!', '#e6a8ff', 15); if (u.team === 'p') chatEv('stealth', null, null, 0.5, 12); }
   if (u.d.charge && u.runDist >= u.d.charge.dist) {   // Minotaur: embestida si llega corriendo
     const C = u.d.charge; dmg *= C.mult; crit = true;
     if (t.kind === 'unit') { t.stunT = Math.max(t.stunT, C.stun); t.stunKind = 'daze'; }
@@ -3487,6 +3645,7 @@ function attack(u, t) {
   if (sl && t.kind === 'unit' && t.alive && !t.immuneCC) { t.slowT = sl.t; chips(t.x, t.y, topOf(t) * 0.5, 3, ['#9fe3ff', '#ffffff'], 'chip', 2.5); }
   slashFx(u, t);
   hurt(t, dmg, u, crit ? 'crit' : st);
+  if (u.abSplash) confetti(u, t, dmg * u.abSplash);
   if (u.abChain) chainOne(u, t, dmg * u.abChain);
   if (u.d.cleave) {   // BanHammer: el martillazo también da a los de alrededor
     for (const o of units) if (o !== t && o.alive && o.team !== u.team && targetable(o) && dist(o, t) - o.r <= u.d.cleave.r) { hurt(o, dmg * u.d.cleave.f, u, 'aoe'); knockBack(u, o); }
@@ -3545,6 +3704,7 @@ function dmgMult(u) {
   }
   if (u.aura) m *= u.aura;
   if (u.abFury && u.hp < u.maxHp * 0.5) m *= u.abFury;
+  if (u.drinkT > 0) m *= 1 + u.abDrink;
   return m;
 }
 // Hype (Streamers), Turbo (Memes) y equipo/habilidades aceleran los ataques
@@ -3552,8 +3712,11 @@ const cdMult = u => (u.mCd || 1) / (S && facOf(u.team) === 'streamers' ? 1 + S[u
 function topOf(e) { return e.kind === 'unit' ? TYPES[e.type].top * (e.mScale || 1) : TOPS[e.skin + '_' + e.role]; }
 function hurt(t, amount, src, style = 'hit') {
   if (!t || !t.alive) return;
+  if (src && src.kind === 'unit') for (const c of units) if (c.abCute && c.alive && c.team !== src.team && dist(c, src) <= 75) { amount *= 1 - c.abCute; break; }   // orejas de gato
   if (t.kind === 'unit') {
     if (t.jump) return;
+    if (t.invulnT > 0) { if (Math.random() < 0.25) addNum(t.x, t.y, topOf(t) + 12, 'PAUSA', '#7df3ff', 12); return; }
+    if (t.abDodge && src && Math.random() < t.abDodge) { addNum(t.x + rand(-6, 6), t.y, topOf(t) + 12, '¡ESQUIVA!', '#7df3ff', 13); return; }
     if (t.d.armor) amount *= 1 - t.d.armor;
     if (t.abArmor) amount *= 1 - t.abArmor;
     t.shT = 0;
@@ -3563,6 +3726,11 @@ function hurt(t, amount, src, style = 'hit') {
       if (t.shield <= 0.01) { t.shield = 0; ring(t.x, t.y, 6, t.r * 2.4, 'rgba(34,227,255,.95)', 0.3, 4); sparks(t.x, t.y, topOf(t) * 0.5, 6, '#7df3ff'); play('shield'); }
       if (amount < 0.5) { sparks(t.x, t.y, topOf(t) * 0.45, 2, '#7df3ff'); return; }
     }
+  }
+  if (t.kind === 'unit' && t.abPause && !t.pauseUsed && t.hp - amount <= t.maxHp * 0.2) {   // Botón de pausa
+    t.pauseUsed = true; t.invulnT = t.abPause; addNum(t.x, t.y, topOf(t) + 24, '¡PAUSA!', '#7df3ff', 16); ring(t.x, t.y, 6, t.r * 3, 'rgba(125,243,255,.95)', 0.4, 5); play('shield');
+    if (t.team === 'p') chatEv('ability', null, null, 0.5, 15);
+    return;
   }
   amount = Math.round(amount);
   if (G.mode === 'boss' && t === bases.e) S.p.bossDmg += Math.min(amount, Math.max(0, t.hp));
@@ -3574,6 +3742,7 @@ function hurt(t, amount, src, style = 'hit') {
   if (!t.fxT || G.t - t.fxT > 0.07) { t.fxT = G.t; const big = style === 'crit'; impact(t.x + rand(-4, 4), t.y, topOf(t) * 0.5 + rand(-4, 4), big ? 17 : style === 'aoe' ? 12 : t.kind === 'struct' ? 13 : 10, big ? '#ffd23f' : t.team === 'e' ? '#d8f1ff' : '#fff0c2'); if (big) flashAt(t.x, t.y, topOf(t) * 0.5, 36, '255,210,63', 0.25); }
   play(t.kind === 'unit' && t.team === 'e' ? 'clank' : 'hit');
   if (t.kind === 'struct') shake(style === 'aoe' ? 5 : 1.2);
+  if (t.kind === 'struct' && t.role === 'base' && !t.lowSaid && t.hp > 0 && t.hp < t.maxHp * 0.35) { t.lowSaid = true; chatEv(t.team === 'e' ? 'baseLowE' : 'baseLowP', null, null, 1, 0); }
   if (t.hp <= 0) kill(t, src);
 }
 function kill(t, src) {
@@ -3587,13 +3756,14 @@ function kill(t, src) {
       revives.push({ team: t.team, type: t.type, x: t.x, y: t.y, face: t.face, t: CFG.passives.nomuertos.delay, frac: nm ? CFG.passives.nomuertos.hpFrac : t.abRevive });
       parts.push({ type: 'grave', x: t.x, y: t.y, z: 0, life: CFG.passives.nomuertos.delay + 0.3, max: CFG.passives.nomuertos.delay + 0.3 });
     }
+    deathExtras(t, src);
     if (t.d.deathBlast) {
       const B = t.d.deathBlast;
       for (const o of units) if (o.alive && o.team !== t.team && Math.hypot(o.x - t.x, o.y - t.y) - o.r <= B.r) hurt(o, B.dmg, null, 'aoe');
       ring(t.x, t.y, 10, B.r * 1.3, 'rgba(123,224,74,.9)', 0.55, 7); puff(t.x, t.y, 16, '#7be04a', 80, 10, false, 14); puff(t.x, t.y, 8, '#c6a4c9', 50, 8, false, 20);
       addNum(t.x, t.y, 64, '¡NUBE TÓXICA!', '#9cf06a', 16); flashAt(t.x, t.y, 14, 90, '123,224,74', 0.4); shake(6); play('trash');
     }
-    if (isLeader(t.type) && !willRevive) { const sec = Math.round(CFG.cards[t.type].respawn * (t.respawnM || 1)); S[t.team].leaderCd = sec; if (t.team === 'p') toast(`${CFG.cards[t.type].name} ha caído. Vuelve en ${sec} s`); }
+    if (isLeader(t.type) && !willRevive) { const sec = Math.round(CFG.cards[t.type].respawn * (t.respawnM || 1) * (t.team === 'p' ? G.pRespawnM || 1 : 1)); S[t.team].leaderCd = sec; if (t.team === 'p') toast(`${CFG.cards[t.type].name} ha caído. Vuelve en ${sec} s`); }
     if (t.abClone && !t.isClone && (G.state === 'play' || G.state === 'ending')) {   // Clon viral
       for (const ox of [-12, 12]) { const c = spawnUnit(t.team, t.type, clamp(t.x + ox, 24, W - 24), t.y); c.isClone = true; c.summon = true; c.abClone = 0; c.labelT = 0; c.mScale *= 0.7; c.r *= 0.7; c.maxHp = Math.max(1, Math.round(c.maxHp * t.abClone)); c.hp = c.maxHp; c.deployT = c.deployMax = 0.3; c.rising = true; }
       addNum(t.x, t.y, topOf(t) + 20, '¡CLON VIRAL!', '#ffe14d', 15); play('pop');
@@ -3615,6 +3785,8 @@ function kill(t, src) {
       parts.push({ type: 'quip', x: clamp(t.x, 70, W - 70), y: t.y, z: topOf(t) + 24, vz: 9, txt: pick(pool), life: 3.3, max: 3.3 }); G.quipT = G.t + 3.2;
     }
     S[other(t.team)].kills++; if (G.state === 'play') passiveKill(other(t.team));
+    if (t.team === 'e' && G.state === 'play') { chatSt.kq = (chatSt.kq || []).filter(x => G.t - x < 2.5); chatSt.kq.push(G.t); if (chatSt.kq.length >= 3) { chatSt.kq = []; chatEv('multikill', null, null, 1, 10); } }
+    if (isLeader(t.type) && !willRevive) chatEv(t.team === 'p' ? 'leaderDown' : 'eLeaderDown', CFG.cards[t.type].name, null, 0.85, 8);
     return;
   }
   structDeathFx(t);
@@ -3622,7 +3794,7 @@ function kill(t, src) {
   const winner = other(t.team);
   if (t.role === 'base') { S[winner].crowns = 3; endMatch(winner, 'base'); return; }
   S[winner].crowns++;
-  if (winner === 'p') { if (facOf('e') === 'streamers') { S.e.hype = 0; S.e.hypeLvl = 0; } banner('¡TORRE DERRIBADA!', 'Microblizz dice que esa torre le sobraba', 'player'); play('crown'); chatBurst('towerP', 2); }
+  if (winner === 'p') { if (facOf('e') === 'streamers') { S.e.hype = 0; S.e.hypeLvl = 0; } banner('¡TORRE DERRIBADA!', 'Microblizz dice que esa torre le sobraba', 'player'); play('crown'); chatBurst(S.p.crowns === S.e.crowns && S.e.crowns > 0 ? 'comeback' : 'towerP', 2); }
   else {
     const lostHype = facOf('p') === 'streamers' && S.p.hype > 0; if (lostHype) { S.p.hype = 0; S.p.hypeLvl = 0; }
     chatBurst('towerE', 2);
@@ -3687,6 +3859,7 @@ function updateProjs(dt) {
         if (p.src.d.stunOnHit) { p.tgt.stunT = Math.max(p.tgt.stunT, p.src.d.stunOnHit); p.tgt.stunKind = 'daze'; }
       }
       if (p.tgt.alive) { hurt(p.tgt, p.dmg, p.src, p.style); if (p.src && p.src.abChain && p.src.kind === 'unit') chainOne(p.src, p.tgt, p.dmg * p.src.abChain); }
+      if (p.src && p.src.abSplash && p.src.kind === 'unit') confetti(p.src, p.tgt, p.dmg * p.src.abSplash);
       if (p.kind === 'acorn' || p.kind === 'carrot') chips(p.x, p.y, p.z, 3, p.kind === 'acorn' ? ['#9a6a33', '#5b3a1c'] : ['#ff8a1f', '#5cc23a'], 'chip', 3);
       else sparks(p.x, p.y, p.z, 4, P.spark || '#ff3348');
     }
@@ -3702,9 +3875,11 @@ function updateUnit(u, dt) {
       if (u.type === 'bunny' || u.mut === 'giant') shake(5);
       if (u.mutTxt) { addNum(u.x, u.y, topOf(u) + 18, u.mutTxt, u.mutCol, 14); play('roll'); }
       if (u.cofreTxt) addNum(u.x, u.y, topOf(u) + 32, 'COFRE: ' + u.cofreTxt, '#ffe06a', 13);
+      onLand(u);
     }
     return;
   }
+  tickExtras(u, dt);
   if (u.immuneCC) { u.stunT = 0; u.slowT = 0; }
   if (u.regen && u.hp < u.maxHp) u.hp = Math.min(u.maxHp, u.hp + u.maxHp * u.regen * dt);
   if (u.shieldMax) {   // Escudos de plasma: se recargan tras unos segundos sin daño
@@ -3834,6 +4009,7 @@ function healPulse(u, dt) {
     if (amt >= 1) addNum(a.x + rand(-5, 5), a.y, topOf(a) * 0.75 + 4, '+' + Math.round(amt), '#8cf05a', 16);
   }
   if (!any) return;
+  if (u.team === 'p') chatEv('heal', null, null, 0.18, 15);
   ring(u.x, u.y, 10, u.d.healR, 'rgba(123,224,74,.8)', 0.5, 4);
   for (let i = 0; i < 4; i++) parts.push({ type: 'plus', x: u.x + rand(-22, 22), y: u.y + rand(-6, 6), z: rand(10, 30), vx: 0, vy: 0, vz: 26, g: 0, life: 0.8, max: 0.8 });
   flashAt(u.x, u.y, 12, 40, '120,255,140', 0.3);
@@ -3916,7 +4092,7 @@ function updateBoss(dt) {
   else if (near.length) cast = 'entierro';
   else if (S.e.phase2 && all.length) cast = 'despido';
   if (!cast) { S.e.bossT = 1; return; }
-  b.castT = 0.9; ring(b.x, b.y, 20, 260, 'rgba(255,51,72,.8)', 0.7, 6); if (Math.random() < 0.6) chatSay('boss');
+  b.castT = 0.9; ring(b.x, b.y, 20, 260, 'rgba(255,51,72,.8)', 0.7, 6); if (cast === 'entierro') chatEv('stun', null, null, 0.75, 6); else if (Math.random() < 0.6) chatSay('boss');
   if (cast === 'entierro') {
     for (const u of near) { u.stunT = D.stun; u.stunKind = 'ip'; puff(u.x, u.y, 6, '#9fb3d6', 30, 5); }
     banner(G.efac === 'microblizz' ? '¡JUEGO CERRADO!' : 'ORDEN DE MICROBLIZZ', `${nm} ha congelado a tus unidades de su lado`, 'enemy'); play('womp');
@@ -4041,9 +4217,9 @@ function updateGame(dt) {
   if (G.state === 'play') {
     G.time -= dt;
     if (!G.double && G.time <= CFG.doubleAt) { G.double = true; $('#x2').hidden = false; banner('¡CAOS x2!', 'Último minuto: el CAOS se recarga el doble de rápido', 'chaos'); play('go'); chatSay('x2'); }
-    chatTick(dt);
+    chatTick(dt); chatWatch(dt);
     const rate = (G.double ? 2 : 1) / CFG.chaosEvery;
-    S.p.chaos = Math.min(CFG.chaosMax, S.p.chaos + dt * rate);
+    S.p.chaos = Math.min(CFG.chaosMax, S.p.chaos + dt * rate * (G.pInc || 1));
     S.e.chaos = Math.min(CFG.chaosMax, S.e.chaos + dt * rate * G.diffCfg.aiIncome);
     for (const t of ['p', 'e']) if (S[t].leaderCd > 0) S[t].leaderCd = Math.max(0, S[t].leaderCd - dt);
     if (G.classicAI) aiUpdate('e', dt); else aiGeneric('e', dt);
@@ -4056,7 +4232,7 @@ function updateGame(dt) {
     const v = spawnUnit(r.team, r.type, r.x, r.y);
     v.hp = Math.round(v.maxHp * (r.frac || CFG.passives.nomuertos.hpFrac)); v.revived = true; v.rising = true; v.deployT = v.deployMax = 0.5; v.face = r.face; v.labelT = 0;
     ring(r.x, r.y, 8, 46, 'rgba(94,242,160,.9)', 0.5, 5); puff(r.x, r.y, 10, '#7dffb8', 40, 6, true);
-    addNum(r.x, r.y, TYPES[r.type].top + 16, '¡RENACE!', '#7dffb8', 15); play('revive'); r.done = true;
+    addNum(r.x, r.y, TYPES[r.type].top + 16, '¡RENACE!', '#7dffb8', 15); play('revive'); r.done = true; if (r.team === 'p') chatEv('revive', null, null, 0.5, 12);
   }
   if (revives.length) revives = revives.filter(r => !r.done);
   updatePassives();
@@ -4340,12 +4516,18 @@ function drawEquip(u, T) {
     case 'corona_carton': shape(c, poly(-8, hy + 2, -9, hy - 7, -4.5, hy - 3, 0, hy - 9, 4.5, hy - 3, 9, hy - 7, 8, hy + 2), '#ffd166', 1.5); line(c, [-7.5, hy - 0.5, 7.5, hy - 0.5], '#e63946', 1.4); break;
     case 'gorro_aluminio': shape(c, poly(-9, hy + 2, 0, hy - 15, 9, hy + 2), '#d9dde3', 1.6); line(c, [-4, hy - 4, 2, hy - 7], '#9aa3b2', 1); line(c, [-2, hy - 1, 5, hy - 3], '#9aa3b2', 1); break;
     case 'auriculares': c.beginPath(); c.arc(0, hy + 6, 10.5, Math.PI * 1.08, Math.PI * 1.92); c.strokeStyle = OL; c.lineWidth = 4; c.stroke(); c.strokeStyle = '#ff3348'; c.lineWidth = 2.2; c.stroke(); shape(c, rr(-13, hy + 2, 5, 8, 2), '#1f2937', 1.4); shape(c, rr(8, hy + 2, 5, 8, 2), '#1f2937', 1.4); break;
+    case 'gorra_reves': shape(c, c2 => { c2.arc(0, hy + 4, 9, Math.PI, 0); c2.closePath(); }, '#e63946', 1.5); shape(c, rr(-15, hy + 1.6, 8, 3.4, 1.6), '#b0213a', 1.3); dot(c, 0, hy - 4.6, 1.3, '#fff6ea'); break;
+    case 'casco_vr': line(c, [-10, hy + 9, -12, hy + 3], OL, 1.6); line(c, [10, hy + 9, 12, hy + 3], OL, 1.6); shape(c, rr(-10, hy + 7, 20, 8, 2.6), '#2b2d42', 1.5); line(c, [-8, hy + 10.5, 8, hy + 10.5], '#22e3ff', 1.1); dot(c, 6.5, hy + 12.6, 1.1, '#ff3df0'); break;
+    case 'orejas_gato': shape(c, poly(-10, hy + 4, -7, hy - 8, -2.5, hy + 1.5), '#2b2d42', 1.4); shape(c, poly(10, hy + 4, 7, hy - 8, 2.5, hy + 1.5), '#2b2d42', 1.4); shape(c, poly(-8, hy + 2.6, -6.6, hy - 4, -4.4, hy + 1.4), '#ff8fd0', 0.8); shape(c, poly(8, hy + 2.6, 6.6, hy - 4, 4.4, hy + 1.4), '#ff8fd0', 0.8); break;
   }
   switch (E.weapon) {
     case 'espada_carton': line(c, [hx, hdy, hx + 4, hdy - 16], OL, 4.4); line(c, [hx, hdy, hx + 4, hdy - 16], '#c8a27a', 2.6); line(c, [hx - 3, hdy - 2, hx + 3, hdy], OL, 2.4); break;
     case 'raton_dpi': shape(c, el(hx + 3, hdy - 2, 4, 5.4), '#1f2937', 1.4); line(c, [hx + 3, hdy - 7, hx + 3, hdy - 4], '#22e3ff', 1); dot(c, hx + 3, hdy, 1.2, '#ff3df0'); break;
     case 'teclado_rgb': c.save(); c.translate(hx + 2, hdy - 2); c.rotate(-0.5); shape(c, rr(-8, -3, 16, 6, 1.4), '#1f2937', 1.3); ['#ff3348', '#ffcb3d', '#7be04a', '#22e3ff', '#a855f7'].forEach((col, i) => { c.fillStyle = col; c.fillRect(-6.6 + i * 2.8, -1.4, 2, 2.6); }); c.restore(); break;
     case 'banhammer_oro': line(c, [hx, hdy, hx + 3, hdy - 14], OL, 3.6); line(c, [hx, hdy, hx + 3, hdy - 14], '#8a5a33', 2); c.save(); c.translate(hx + 3, hdy - 16); c.rotate(0.3); shape(c, rr(-7, -4, 14, 8, 2), '#ffcb3d', 1.4); c.restore(); break;
+    case 'mando_cable': c.beginPath(); c.moveTo(hx, hdy - 4); c.quadraticCurveTo(hx - 14, hdy - 16, hx - 6, hdy - 28); c.strokeStyle = OL; c.lineWidth = 1.4; c.stroke(); shape(c, rr(hx - 7, hdy - 7, 14, 8, 3.4), '#2b2d42', 1.3); dot(c, hx - 3.5, hdy - 3, 1.2, '#ff3348'); dot(c, hx + 3.5, hdy - 3, 1.2, '#22e3ff'); break;
+    case 'baguette': c.save(); c.translate(hx + 2, hdy - 9); c.rotate(0.5); shape(c, rr(-3.2, -15, 6.4, 28, 3.2), '#d9a35f', 1.4); for (const yy of [-9, -3, 3, 9]) line(c, [-1.8, yy, 1.8, yy - 2], '#a86b2d', 1); c.restore(); break;
+    case 'lanzaconfeti': shape(c, poly(hx - 2.5, hdy, hx + 2.5, hdy, hx + 7, hdy - 15, hx - 7, hdy - 15), '#ffcb3d', 1.4); line(c, [hx - 5, hdy - 9, hx + 5, hdy - 9], '#ff3df0', 1.2); dot(c, hx - 5, hdy - 19, 1.5, '#ff5fa8'); dot(c, hx + 1, hdy - 21, 1.5, '#7be04a'); dot(c, hx + 6, hdy - 18, 1.5, '#63cfe0'); break;
   }
   switch (E.acc) {
     case 'taza': shape(c, rr(ax - 3.5, ay - 4, 7, 8, 1.4), '#fff', 1.3); c.beginPath(); c.arc(ax + 4, ay, 2, -1.2, 1.2); c.strokeStyle = OL; c.lineWidth = 1.2; c.stroke(); c.fillStyle = '#2e8bff'; c.fillRect(ax - 3, ay - 1, 6, 1.4); break;
@@ -4355,6 +4537,10 @@ function drawEquip(u, T) {
     case 'cofre': shape(c, rr(ax - 5, ay - 3, 10, 7, 1.4), '#a16207', 1.3); line(c, [ax - 5, ay, ax + 5, ay], '#ffcb3d', 1.4); dot(c, ax, ay + 1, 1, '#ffcb3d'); break;
     case 'diploma': c.save(); c.translate(ax, ay - 2); c.rotate(-0.15); shape(c, rr(-6, -4.5, 12, 9, 1), '#8a5a33', 1.2); shape(c, rr(-4.4, -3, 8.8, 6, 0.6), '#fff6ea', 0.8); line(c, [-3, -1, 3, -1], '#a08ab8', 0.8); line(c, [-3, 1, 1.5, 1], '#a08ab8', 0.8); dot(c, 2.6, 1.6, 1.1, '#e63946'); c.restore(); break;
     case 'corbata_ceo': { const ty = hy + 13; shape(c, poly(-2.4, ty, 2.4, ty, 1.6, ty + 3, -1.6, ty + 3), '#b0213a', 1.1); shape(c, poly(-1.6, ty + 3, 1.6, ty + 3, 3, ty + 12, 0, ty + 15, -3, ty + 12), '#e63946', 1.1); line(c, [-1.6, ty + 7, 2, ty + 5.5], '#ffcb3d', 0.9); line(c, [-2.4, ty + 11, 2.6, ty + 9], '#ffcb3d', 0.9); break; }
+    case 'bebida_xxl': shape(c, rr(ax - 3.6, ay - 7, 7.2, 12, 1.8), '#7be04a', 1.3); line(c, [ax - 3.6, ay - 4, ax + 3.6, ay - 4], OL, 1); shape(c, poly(ax - 1.5, ay - 1, ax + 1.5, ay - 2, ax - 0.5, ay + 3), '#ffcb3d', 0.6); break;
+    case 'disco_fisico': shape(c, el(ax, ay, 6.4, 6.4), '#e5e7eb', 1.3); c.beginPath(); c.arc(ax, ay, 4.2, -0.6, 0.9); c.strokeStyle = '#ff8fd0'; c.lineWidth = 1.2; c.stroke(); dot(c, ax, ay, 1.6, OL); break;
+    case 'alfombrilla': shape(c, rr(ax - 8, ay + 1, 16, 5, 1.6), '#2b2d42', 1.2); line(c, [ax - 6, ay + 3.5, ax + 6, ay + 3.5], '#a855f7', 1.1); break;
+    case 'boton_pausa': shape(c, el(ax, ay, 5.8, 5.8), '#ff3348', 1.3); c.fillStyle = '#fff6ea'; c.fillRect(ax - 2.6, ay - 2.6, 1.8, 5.2); c.fillRect(ax + 0.8, ay - 2.6, 1.8, 5.2); break;
   }
   c.restore();
 }
@@ -5145,7 +5331,7 @@ function updateBadges() {
 }
 /* ---------- sátira: chat falso en directo ---------- */
 const chatSt = { t: 6 };
-function chatSay(kind, extra) {
+function chatSay(kind, extra, key) {
   if (SAVE.chatOff) return;
   const box = $('#chat'); if (!box) return;
   const lines = CHAT[kind]; if (!lines) return;
@@ -5153,17 +5339,32 @@ function chatSay(kind, extra) {
   const vs = kind === 'idle' ? CHAT_VS[G.efac] : null;
   const bossI = G.mode === 'boss' ? 6 : G.level && G.level.boss ? G.level.wi : -1, bl = bossI >= 0 && (kind === 'idle' || kind === 'boss' || kind === 'start') ? CHAT_BOSS[bossI] : null;
   let txt = bl && r < 0.3 ? pick(bl) : own && r < 0.62 ? pick(own) : vs && r < 0.8 ? pick(vs) : pick(lines);
+  if (key && CHAT_UNIT[key] && Math.random() < 0.65) txt = pick(CHAT_UNIT[key]);
   if (extra) txt = txt.replace('{X}', extra);
   const fu = CHAT_USERS_FAC[G.faction], [nm, col] = fu && Math.random() < 0.3 ? pick(fu) : pick(CHAT_USERS);
   const d = document.createElement('div'); d.className = 'cl';
   d.innerHTML = `<b style="color:${col}">${nm}</b>: ${txt}`;
   box.appendChild(d);
-  while (box.children.length > 3) box.removeChild(box.firstChild);
+  while (box.children.length > 4) box.removeChild(box.firstChild);
   setTimeout(() => { d.classList.add('out'); setTimeout(() => d.remove(), 650); }, 6500);
 }
 function chatBurst(kind, n) { chatSay(kind); for (let i = 1; i < n; i++) setTimeout(() => { if (G.state === 'play' || G.state === 'ending') chatSay(kind); }, 500 + i * 650 + Math.random() * 400); }
 function chatTick(dt) { chatSt.t -= dt; if (chatSt.t <= 0) { chatSay('idle'); chatSt.t = rand(5, 10); } }
-function chatClear() { const b = $('#chat'); if (b) b.innerHTML = ''; chatSt.t = 6; }
+function chatClear() { const b = $('#chat'); if (b) b.innerHTML = ''; chatSt.t = 6; chatSt.lastDep = null; chatSt.fullT = 0; chatSt.kq = []; chatSt.closeSaid = false; for (const k in chatCd) delete chatCd[k]; }
+// v0.9.12: comentarios de lo que pasa. Cada tipo tiene su probabilidad y su pausa, y nunca dos seguidos en menos de 1,2 s
+const chatCd = {};
+function chatEv(kind, extra, key, prob = 1, cd = 5) {
+  if (SAVE.chatOff || G.state !== 'play' || Math.random() > prob) return;
+  if (chatCd[kind] != null && G.t - chatCd[kind] < cd) return;
+  if (chatCd._any != null && G.t - chatCd._any < 1.2) return;
+  chatCd[kind] = chatCd._any = G.t; chatSt.t = Math.max(chatSt.t, 3.5); chatSay(kind, extra, key);
+}
+function chatWatch(dt) {   // CAOS a tope sin gastar, nadie juega cartas, final igualado
+  if (chatSt.lastDep == null) chatSt.lastDep = G.t;
+  if (S.p.chaos >= CFG.chaosMax - 0.01) { chatSt.fullT = (chatSt.fullT || 0) + dt; if (chatSt.fullT > 6) { chatSt.fullT = 0; chatEv('full', null, null, 1, 25); } } else chatSt.fullT = 0;
+  if (G.t - chatSt.lastDep > 18) chatEv('afk', null, null, 1, 30);
+  if (!chatSt.closeSaid && G.mode !== 'boss' && G.time < 20 && S.p.crowns === S.e.crowns) { chatSt.closeSaid = true; chatEv('close', null, null, 1, 0); }
+}
 /* ---------- sátira: imagen para compartir ---------- */
 function shareHeadline() {
   const R = G.rewards || {}, w = G.winner;
@@ -5225,13 +5426,19 @@ const findLevel = id => { const [w, l] = id.split('-').map(Number); return WORLD
 function nextLevel(L) { const Wd = WORLDS[L.wi]; if (L.li < Wd.levels.length - 1) return Wd.levels[L.li + 1]; return WORLDS[L.wi + 1] ? WORLDS[L.wi + 1].levels[0] : null; }
 const enemyLabel = f => (f === 'microblizz' ? 'Microblizz' : FACTIONS[f].name + ' corrompidos');
 function buildCamp() {
-  const list = $('#world-list'); let cur = 0;
+  const d = campDiff, list = $('#world-list'); let cur = 0;
+  for (const b of document.querySelectorAll('[data-cd]')) { b.setAttribute('aria-pressed', String(b.dataset.cd === d)); b.classList.toggle('dim', b.dataset.cd !== 'n' && !WORLDS.some((w, wi) => worldOpenD(wi, b.dataset.cd))); }
+  $('#camp-sub').textContent = CAMP_SUB[d];
+  $('#camp-mod').innerHTML = d === 'm' ? modBoxHtml() : '';
+  const rb = $('#btn-rl-again'); if (rb) rb.onclick = () => { play('select'); openRoulette(); };
   list.innerHTML = WORLDS.map((w, wi) => {
-    const open = worldOpen(wi), stars = w.levels.reduce((a, l) => a + lvlStars(l.id), 0); if (open) cur = wi;
-    const nodes = w.levels.map(l => { const st = lvlStars(l.id), ok = levelOpen(l); return `<button class="node${l.boss ? ' boss' : ''}${ok && !st ? ' next' : ''}" data-lv="${l.id}" ${ok ? '' : 'disabled'}><b class="ol">${l.boss ? 'JEFE' : wi + 1 + '-' + (l.li + 1)}</b><small>${l.name}</small><span class="st">${'★'.repeat(st)}<i>${'★'.repeat(3 - st)}</i></span></button>`; }).join('');
-    const reward = w.unlock ? `Premio: se unen los ${FACTIONS[w.unlock].name}` : wi === WORLDS.length - 1 ? 'El final de la rebelión' : 'Premio: abre el mundo 2';
+    const open = worldOpenD(wi, d), stars = w.levels.reduce((a, l) => a + starsD(l.id, d), 0); if (open) cur = wi;
+    const nodes = w.levels.map(l => { const st = starsD(l.id, d), ok = levelOpenD(l, d); return `<button class="node${d !== 'n' ? ' cd-' + d : ''}${l.boss ? ' boss' : ''}${ok && !st ? ' next' : ''}" data-lv="${l.id}" ${ok ? '' : 'disabled'}><b class="ol">${l.boss ? 'JEFE' : wi + 1 + '-' + (l.li + 1)}</b><small>${l.name}</small><span class="st">${'★'.repeat(st)}<i>${'★'.repeat(3 - st)}</i></span></button>`; }).join('');
+    const lv = d === 'n' ? '' : `Nivel ${CDIFF[d].lvl(w.levels[0])}${CDIFF[d].lvl(w.levels[0]) !== CDIFF[d].lvl(w.levels[3]) ? '-' + CDIFF[d].lvl(w.levels[3]) : ''} · `;
+    const reward = d === 'h' ? lv + 'premios dobles' : d === 'm' ? lv + (SAVE.mythPrize[wi] ? 'legendario conseguido' : 'su jefe da un legendario') : w.unlock ? `Premio: se unen los ${FACTIONS[w.unlock].name}` : wi === WORLDS.length - 1 ? 'El final de la rebelión' : 'Premio: abre el mundo 2';
+    const lockTxt = d === 'h' ? 'Pásate este mundo en Normal para jugarlo en Difícil.' : d === 'm' ? 'Pásate este mundo en Difícil para jugarlo en Mítica.' : 'Bloqueado: gana al jefe del mundo anterior.';
     const port = w.efac === 'microblizz' ? (wi ? 'parchebot' : 'becario') : FACTIONS[w.efac].leader;
-    return `<div class="world${open ? '' : ' locked'}" data-wi="${wi}" style="--wc:${w.efac === 'microblizz' ? '#1d3f8a' : FAC_COLOR[w.efac] + '77'}"><div class="world-head"><canvas data-k="${port}"></canvas><div class="world-name ol">${wi + 1}. ${w.name}<small>${enemyLabel(w.efac)} · ${reward}</small></div><div class="world-stars ol">★ ${stars}/12</div></div><p class="world-story">${open ? w.story : 'Bloqueado: gana al jefe del mundo anterior.'}</p><div class="nodes">${nodes}</div></div>`;
+    return `<div class="world${open ? '' : ' locked'}${d === 'm' && open ? ' cd-m' : ''}" data-wi="${wi}" style="--wc:${d === 'h' ? '#8a2b3a' : d === 'm' ? '#5b2a8f' : w.efac === 'microblizz' ? '#1d3f8a' : FAC_COLOR[w.efac] + '77'}"><div class="world-head"><canvas data-k="${port}"></canvas><div class="world-name ol">${wi + 1}. ${w.name}<small>${enemyLabel(w.efac)} · ${reward}</small></div><div class="world-stars ol">★ ${stars}/12</div></div><p class="world-story">${open ? w.story : lockTxt}</p><div class="nodes">${nodes}</div></div>`;
   }).join('');
   for (const cv of list.querySelectorAll('canvas[data-k]')) drawArt(cv, cv.dataset.k, 52, 46);
   list.querySelectorAll('[data-lv]').forEach(b => { b.onclick = () => { play('select'); openPrep('camp', findLevel(b.dataset.lv)); }; });
@@ -5240,12 +5447,19 @@ function buildCamp() {
 function openCamp() { updateWallets(); show('scr-camp'); buildCamp(); }
 /* ---------- antes de jugar: elegir facción ---------- */
 function openPrep(mode, lvl) {
-  G.prep = { mode, lvl: lvl || null };
+  G.prep = { mode, lvl: lvl || null, cd: mode === 'camp' ? campDiff : 'n' };
   const info = $('#prep-info');
   if (mode === 'camp') {
-    const Wd = WORLDS[lvl.wi], st = lvlStars(lvl.id), fr = lvl.boss ? ECON.camp.boss : ECON.camp.first;
+    const cd = campDiff, C = CDIFF[cd], pay = C.pay || 1, Wd = WORLDS[lvl.wi], st = starsD(lvl.id, cd), fr = lvl.boss ? ECON.camp.boss : ECON.camp.first;
     $('#prep-title').textContent = lvl.boss ? `JEFE DEL MUNDO ${lvl.wi + 1}` : `NIVEL ${lvl.wi + 1}-${lvl.li + 1}`;
-    info.innerHTML = `<b class="ol">${lvl.name}</b><br>Mundo ${lvl.wi + 1}: ${Wd.name}. Rival: ${enemyLabel(Wd.efac)}, nivel ${lvl.elvl}${lvl.boss ? ', con jefe y sus habilidades' : ''}.<br><span class="stars">${'★'.repeat(st)}<span style="color:#4a3866">${'★'.repeat(3 - st)}</span></span> Estrellas: ganar · sin perder ninguna torre · tirando su base.<br><span class="rw">${st ? `Recompensa: ${ECON.camp.replay} de oro` : `Primera vez: ${fr[0]} de oro y ${fr[1]} gemas`}${st < 3 ? ` · 3 estrellas: +${ECON.camp.stars3[0]} de oro y ${ECON.camp.stars3[1]} gemas` : ''}</span>`;
+    let extra = '';
+    if (cd !== 'n') {
+      const who = Wd.efac === 'microblizz' ? 'Sus FallenHero y Parche Día 1 llevan' : `${CFG.cards[FACTIONS[Wd.efac].leader].name} lleva`;
+      extra += `<div class="gear-list"><span class="gear-who">${who}:</span>${ENEMY_GEAR[cd][lvl.wi].map(id => gearRow(id, C.q)).join('')}</div>`;
+      if (cd === 'm') { const M = mythicWeek(); extra += `<div class="mod-row bad"><b>TU CASTIGO</b>${M.deb.name}: ${M.deb.desc}</div><div class="mod-row good"><b>VENTAJA DE LA CPU</b>${M.buf.name}: ${M.buf.desc}</div>`; }
+    }
+    const prize = cd === 'm' && lvl.boss && !SAVE.mythPrize[lvl.wi] ? ' · Al ganar por primera vez: ¡un objeto o habilidad legendario!' : '';
+    info.innerHTML = `${cd !== 'n' ? `<span class="cd-badge ${cd} ol">${C.name.toUpperCase()}</span>` : ''}<b class="ol">${lvl.name}</b><br>Mundo ${lvl.wi + 1}: ${Wd.name}. Rival: ${enemyLabel(Wd.efac)}, nivel ${cd === 'n' ? lvl.elvl : C.lvl(lvl)}${lvl.boss ? ', con jefe y sus habilidades' : ''}.${extra}<br><span class="stars">${'★'.repeat(st)}<span style="color:#4a3866">${'★'.repeat(3 - st)}</span></span> Estrellas: ganar · sin perder ninguna torre · tirando su base.<br><span class="rw">${st ? `Recompensa: ${ECON.camp.replay * pay} de oro` : `Primera vez: ${fr[0] * pay} de oro y ${fr[1] * pay} gemas`}${st < 3 ? ` · 3 estrellas: +${ECON.camp.stars3[0] * pay} de oro y ${ECON.camp.stars3[1] * pay} gemas` : ''}${prize}</span>`;
   } else if (mode === 'boss') {
     $('#prep-title').textContent = 'MODO JEFE';
     info.innerHTML = `<b class="ol">${BOSS_MODE.name}</b><br>Sin torres: solo su sede, con ${fmt(BOSS_MODE.hp)} de vida. Tienes 3 minutos para hacerle todo el daño posible mientras lanza oleadas de bots y despidos.<br>Tu récord: <b>${fmt(SAVE.bestBoss)}</b><br><span class="rw">Recompensa: oro según el daño y gemas la primera vez que pases de 1.500, 4.000 y 8.000.</span>`;
@@ -5255,10 +5469,10 @@ function openPrep(mode, lvl) {
   }
   $('#diff-label').hidden = $('#diff-row').hidden = mode !== 'quick';
   if (!isUnlocked(G.faction)) setFaction(SAVE.unlocked[0]);
-  syncMenu(); updateWallets(); show('scr-prep');
+  syncMenu(); updateWallets(); show('scr-prep'); fitText($('#prep-title'), 52, 26);
 }
-function setupMatch(mode, lvl) {
-  G.mode = mode; G.level = lvl || null;
+function setupMatch(mode, lvl, cd) {
+  G.mode = mode; G.level = lvl || null; G.cdiff = mode === 'camp' ? cd || 'n' : 'n'; resetMods();
   if (mode === 'camp') {
     const Wd = WORLDS[lvl.wi]; G.efac = Wd.efac; G.elvl = lvl.elvl; G.bossOn = !!lvl.boss; G.bossName = lvl.boss || 'SurvivalBot';
     G.diffCfg = Object.assign({}, CFG.diff.normal, { aiIncome: lvl.income, think: [0.6, 1.2], bossCd: 18, stun: 2, despido: 20 + lvl.elvl * 2 });
@@ -5272,11 +5486,12 @@ function setupMatch(mode, lvl) {
   const deck = G.level && G.level.deck ? G.level.deck : G.efac === 'microblizz' && mode === 'quick' ? ['becario', 'starbot', 'fallen'] : null;
   G.classicAI = G.efac === 'microblizz' && !!deck && deck.every(k => ['becario', 'starbot', 'fallen'].includes(k));
   G.edeck = deck;
+  if (G.cdiff !== 'n') setupHardMode(lvl);
 }
 function startGame() {
   const P = G.prep || { mode: 'quick' };
   if (!isUnlocked(G.faction)) { toast('Esa facción todavía está bloqueada'); play('deny'); return; }
-  setupMatch(P.mode, P.lvl); startMatch();
+  setupMatch(P.mode, P.lvl, P.cd); startMatch();
 }
 /* ---------- recompensas al terminar ---------- */
 function grantRewards() {
@@ -5287,12 +5502,12 @@ function grantRewards() {
   }
   if (G.mode === 'quick') R.gold = win ? ECON.quick[G.diff] : ECON.quick.lose;
   else if (G.mode === 'camp') {
-    const L = G.level, prev = lvlStars(L.id);
+    const L = G.level, cd = G.cdiff || 'n', pay = CDIFF[cd].pay || 1, prev = starsD(L.id, cd);
     if (win) {
       R.stars = 1 + (S.e.crowns === 0 ? 1 : 0) + (G.endReason === 'base' ? 1 : 0);
-      if (!prev) { const fr = L.boss ? ECON.camp.boss : ECON.camp.first; R.gold += fr[0]; R.gems += fr[1]; } else R.gold += ECON.camp.replay;
-      if (R.stars === 3 && prev < 3) { R.gold += ECON.camp.stars3[0]; R.gems += ECON.camp.stars3[1]; }
-      SAVE.camp[L.id] = Math.max(prev, R.stars);
+      if (!prev) { const fr = L.boss ? ECON.camp.boss : ECON.camp.first; R.gold += fr[0] * pay; R.gems += fr[1] * pay; } else R.gold += ECON.camp.replay * pay;
+      if (R.stars === 3 && prev < 3) { R.gold += ECON.camp.stars3[0] * pay; R.gems += ECON.camp.stars3[1] * pay; }
+      campOf(cd)[L.id] = Math.max(prev, R.stars);
       const Wd = WORLDS[L.wi];
       if (L.boss && Wd.unlock && !isUnlocked(Wd.unlock)) {   // la facción liberada llega con algo de nivel para no empezar de cero
         SAVE.unlocked.push(Wd.unlock); R.unlock = Wd.unlock; stat('unlock', 1);
@@ -5300,7 +5515,9 @@ function grantRewards() {
       }
       missionEvent('star', R.stars);
       if (L.boss && L.wi === WORLDS.length - 1) stat('ceo', 1);
-    } else R.gold += ECON.camp.lose;
+      if (L.boss && cd !== 'n') stat(cd === 'h' ? 'hardboss' : 'mythboss', 1);
+      if (L.boss && cd === 'm' && !SAVE.mythPrize[L.wi]) { SAVE.mythPrize[L.wi] = 1; R.prize = legendaryPrize(); }
+    } else R.gold += ECON.camp.lose * pay;
   } else if (G.mode === 'boss') {
     const sc = Math.round(S.p.bossDmg); R.score = sc; R.gold = Math.floor(sc / 40);
     BOSS_MODE.tiers.forEach(([th, gm], i) => { if (sc >= th && (SAVE.bossTier || 0) <= i) { R.gems += gm; SAVE.bossTier = i + 1; } });
@@ -5471,7 +5688,7 @@ function show(id) { for (const s of document.querySelectorAll('.screen')) s.hidd
 function hideScreens() { for (const s of document.querySelectorAll('.screen')) s.hidden = true; }
 function startMatch() {
   audioInit(); hideScreens(); resetMatch(); chatClear(); G.state = 'countdown';
-  G.tutMatch = !G.autoplay && !SAVE.tut.done && SAVE.tut.step === 0; tutBattleStart(); applySpeed();
+  G.tutMatch = !G.autoplay && !SAVE.tut.done && SAVE.tut.step === 0; tutBattleStart(); applySpeed(); applyMatchMods();
   const F = FACTIONS[G.faction];
   banner('PASIVA: ' + F.passive, F.banner, F.kind);
   const L = G.level;
@@ -5479,13 +5696,13 @@ function startMatch() {
     : L && L.boss ? [L.boss, G.efac === 'microblizz' ? (L.wi ? '«Os he comprado. Ahora os cierro.»' : '«Hemos comprado vuestro juego… y lo vamos a cerrar.»') : '«Microblizz me ha ascendido. Ahora despido yo.»']
     : L ? [L.name, G.efac === 'microblizz' ? `Mundo ${L.wi + 1}: ${WORLDS[L.wi].name}` : `${FACTIONS[G.efac].name} corrompidos por Microblizz`]
     : ['SurvivalBot', '«Hemos comprado vuestro juego… y lo vamos a cerrar.»'];
-  setTimeout(() => { if (G.state === 'countdown' || G.state === 'play') banner(intro[0], intro[1], 'enemy'); }, 2400);
+  setTimeout(() => { if (G.state === 'countdown' || G.state === 'play') { banner(intro[0], intro[1], 'enemy'); if (G.cdiff !== 'n') hardBanner(); } }, 2400);
   const seq = ['3', '2', '1', '¡CAOS!']; let i = 0; const el = $('#count');
   const tick = () => {
     if (G.state !== 'countdown') return;
     el.textContent = seq[i]; el.className = 'ol-big' + (i === 3 ? ' go' : ''); void el.offsetWidth; el.classList.add('pop');
     play(i < 3 ? 'tick' : 'go'); i++;
-    if (i < seq.length) setTimeout(tick, 800); else setTimeout(() => { if (G.state === 'countdown') { G.state = 'play'; if (G.tutMatch) showTut(true); else if (!(SAVE.stats.card > 0)) showTut(); chatBurst('start', 2); } }, 500);
+    if (i < seq.length) setTimeout(tick, 800); else setTimeout(() => { if (G.state === 'countdown') { G.state = 'play'; if (G.tutMatch) showTut(true); else if (!(SAVE.stats.card > 0)) showTut(); chatBurst('start', 2); if (G.cdiff !== 'n') setTimeout(() => { if (G.state === 'play') chatSay(G.cdiff === 'h' ? 'hard' : 'mythic'); }, 2600); } }, 500);
   };
   setTimeout(tick, 900);
 }
@@ -5508,11 +5725,12 @@ function showEnd() {
   $('#end-crowns').innerHTML = G.mode === 'camp' && w === 'p' ? [0, 1, 2].map(i => `<span class="${i < R.stars ? 'on' : 'off'}">${STAR_SVG}</span>`).join('') : G.mode === 'boss' ? '' : [0, 1, 2].map(i => `<span class="${i < S.p.crowns ? 'on' : 'off'}">${CROWN_SVG}</span>`).join('');
   let sub;
   if (G.mode === 'boss') sub = `Daño al CEO: ${fmt(R.score)}${R.record ? ' · ¡NUEVO RÉCORD!' : ' · Récord: ' + fmt(SAVE.bestBoss)}`;
-  else if (G.mode === 'camp' && w === 'p') sub = `${G.level.name}: ${R.stars === 3 ? '¡3 estrellas!' : R.stars + (R.stars === 1 ? ' estrella' : ' estrellas') + (S.e.crowns ? ' (perdiste una torre)' : ' (te faltó tirar su base)')}`;
+  else if (G.mode === 'camp' && w === 'p') sub = `${G.level.name}${G.cdiff && G.cdiff !== 'n' ? ' (' + CDIFF[G.cdiff].name + ')' : ''}: ${R.stars === 3 ? '¡3 estrellas!' : R.stars + (R.stars === 1 ? ' estrella' : ' estrellas') + (S.e.crowns ? ' (perdiste una torre)' : ' (te faltó tirar su base)')}`;
   else sub = { base: w === 'p' ? `Has tirado ${G.efac === 'microblizz' ? 'la Sede de Microblizz' : 'su base'}.` : `Han tirado ${FACTIONS[G.faction].end}.`, crowns: `Tiempo: ${S.p.crowns} coronas contra ${S.e.crowns}.`, hp: 'Empate a coronas: gana quien conserva más vida en sus torres.', draw: 'Mismas coronas y misma vida.' }[G.endReason] || '';
   $('#end-sub').textContent = sub;
   let rw = '';
   if (R.unlock) rw += `<span class="rw-chip big ol">¡NUEVA FACCIÓN: ${FACTIONS[R.unlock].name.toUpperCase()}!</span>`;
+  if (R.prize) rw += `<span class="rw-chip big ol">¡LEGENDARIO: ${defOf(R.prize).name.toUpperCase()}!</span>`;
   if (R.gold) rw += `<span class="rw-chip ol">${COIN_SVG}+${fmt(R.gold)}</span>`;
   if (R.gems) rw += `<span class="rw-chip ol">${GEM_SVG}+${fmt(R.gems)}</span>`;
   if (R.xp.length) rw += `<div class="rw-xp">Experiencia: ${R.xp.map(([k, x]) => `${CFG.cards[k].name} +${x}`).join(' · ')}</div>`;
@@ -5521,11 +5739,199 @@ function showEnd() {
   $('#end-pass').innerHTML = passLevel() >= PASS.levels && !R.passUp ? 'Pase de batalla completado' : `Pase de batalla: +${R.passXp} puntos${R.passUp ? ` · <b style="color:#ffe14d">¡NIVEL ${passLevel()}!</b>` : ` · ${SAVE.pass.xp - passLevel() * PASS.xpPer}/${PASS.xpPer} para el nivel ${passLevel() + 1}`}`;
   $('#end-quote').textContent = R.unlock ? `Los ${FACTIONS[R.unlock].name} se libran de Microblizz y se unen a la rebelión.` : pick(QUOTES[w || 'd']);
   $('#st-cards').textContent = S.p.deployed; $('#st-kills').textContent = S.p.kills; $('#st-chaos').textContent = Math.round(S.p.spent);
-  const nx = G.mode === 'camp' && w === 'p' ? nextLevel(G.level) : null;
+  let nx = G.mode === 'camp' && w === 'p' ? nextLevel(G.level) : null; if (nx && !levelOpenD(nx, G.cdiff || 'n')) nx = null;
   $('#btn-next').hidden = !nx; $('#btn-next').textContent = nx && nx.wi !== G.level.wi ? 'MUNDO ' + (nx.wi + 1) : 'SIGUIENTE';
   $('#btn-again').textContent = G.mode === 'quick' ? 'REVANCHA' : 'REPETIR';
   $('#btn-again').className = nx ? 'btn-ghost ol' : 'btn-big ol';
   updateWallets(); show('scr-end');
+}
+/* =========================================================
+   v0.9.12: Difícil y Mítica (mundo a mundo), equipo del rival, ruleta semanal y efectos nuevos
+   ========================================================= */
+const CDIFF = {
+  n: { name: 'Normal' },
+  h: { name: 'Difícil', lvl: l => Math.min(10, l.elvl + 5), inc: 1.15, think: [0.45, 0.95], bossCd: 15, stun: 2.4, hp: 1.2, dmg: 1.15, pay: 2, q: 0.6 },
+  m: { name: 'Mítica', lvl: l => Math.min(12, Math.max(9, l.elvl + 7)), inc: 1.2, think: [0.35, 0.8], bossCd: 13, stun: 2.6, hp: 1.3, dmg: 1.2, pay: 3, q: 1 },
+};
+const CAMP_SUB = {
+  n: 'La Rebelión de los Fans: libera cada mundo corrompido por Microblizz y su facción se unirá a ti.',
+  h: 'Difícil: rivales de nivel 6 a 10 y líderes equipados. Te hará falta subir tus cartas y equiparlas bien. Premios dobles.',
+  m: 'Mítica, el verdadero desafío: rivales de nivel 9 a 12, equipo perfecto y la ruleta de la semana. Premios triples y un legendario por cada jefe.',
+};
+// equipo del rival en cada mundo: lo lleva su líder (en los mundos de Microblizz, sus FallenHero y Parche Día 1)
+const ENEMY_GEAR = {
+  h: [['espada_carton', 'cuernos', 'taza'], ['raton_dpi', 'corona_carton', 'almohada'], ['baguette', 'gorra_reves', 'bebida_xxl'], ['mando_cable', 'casco_vr', 'disco_fisico'], ['teclado_rgb', 'gorro_aluminio', 'silla_gamer'], ['lanzaconfeti', 'orejas_gato', 'cofre'], ['banhammer_oro', 'auriculares', 'alfombrilla']],
+  m: [['baguette', 'casco_vr', 'bebida_xxl'], ['lanzaconfeti', 'gorro_aluminio', 'almohada'], ['banhammer_oro', 'orejas_gato', 'silla_gamer'], ['teclado_rgb', 'auriculares', 'boton_pausa'], ['lanzaconfeti', 'auriculares', 'alfombrilla'], ['banhammer_oro', 'orejas_gato', 'boton_pausa'], ['banhammer_oro', 'auriculares', 'boton_pausa']],
+};
+const MB_GEAR_ON = ['fallen', 'parchebot'];
+let campDiff = 'n';
+const campOf = d => (d === 'h' ? SAVE.campH || (SAVE.campH = {}) : d === 'm' ? SAVE.campM || (SAVE.campM = {}) : SAVE.camp);
+const starsD = (id, d) => campOf(d || 'n')[id] || 0;
+function worldOpenD(wi, d) {
+  if (SAVE.testAll) return true;
+  if (d === 'h') return starsD(`${wi + 1}-4`, 'n') > 0;
+  if (d === 'm') return starsD(`${wi + 1}-4`, 'h') > 0;
+  return wi === 0 || starsD(`${wi}-4`, 'n') > 0;
+}
+const levelOpenD = (l, d) => worldOpenD(l.wi, d) && (SAVE.testAll || l.li === 0 || starsD(`${l.wi + 1}-${l.li}`, d) > 0);
+for (const b of document.querySelectorAll('[data-cd]')) b.addEventListener('click', () => { campDiff = b.dataset.cd; play('select'); buildCamp(); if (campDiff === 'm' && SAVE.rlWeek !== weekStr()) openRoulette(); });
+function gearRow(id, q) { const D = ITEMS[id], T = QTIERS[tierOf(q)]; return `<div class="gear-row"><span class="gi" style="--qc:${T.col}">${SLOT_SVG[D.slot]}</span><span><b class="ol">${D.name}</b> <i class="gq" style="color:${T.col}">${T.name}</i><br>${descOf({ k: 'eq', id, q: D.st.map(() => q) })}</span></div>`; }
+function resetMods() { G.mod = null; G.pInc = 1; G.pDeployAdd = 0; G.pRespawnM = 1; G.eKillChaos = 0; G.egear = null; G.egearQ = 0.5; G.egearOn = []; }
+function setupHardMode(lvl) {
+  const cd = G.cdiff, C = CDIFF[cd];
+  G.elvl = C.lvl(lvl);
+  G.diffCfg = Object.assign({}, G.diffCfg, { aiIncome: lvl.income * C.inc, think: C.think.slice(), bossCd: C.bossCd, stun: C.stun, despido: 20 + G.elvl * 2 });
+  if (G.efac === 'microblizz') { G.edeck = FACTIONS.microblizz.units.slice(); G.classicAI = false; G.egearOn = MB_GEAR_ON; }
+  G.egear = ENEMY_GEAR[cd][lvl.wi]; G.egearQ = C.q;
+  if (cd === 'm') {
+    const M = G.mod = mythicWeek();
+    if (M.deb.id === 'recorte') G.pInc = 0.8;
+    if (M.deb.id === 'carga') G.pDeployAdd = 1;
+    if (M.deb.id === 'vacaciones') G.pRespawnM = 2;
+    if (M.buf.id === 'inversion') G.diffCfg.aiIncome *= 1.2;
+    if (M.buf.id === 'despidos') G.eKillChaos = 0.5;
+  }
+}
+function applyMatchMods() {   // al empezar: torres, sede y CAOS inicial según la dificultad y la ruleta
+  if (G.mode !== 'camp' || !G.cdiff || G.cdiff === 'n') return;
+  const C = CDIFF[G.cdiff], M = G.mod;
+  for (const st of structs) {
+    if (st.team === 'e') { st.hp = st.maxHp = Math.round(st.maxHp * C.hp * (M && M.buf.id === 'blindaje' ? 1.3 : 1)); st.dmg = Math.round(st.dmg * C.dmg); if (M && M.buf.id === 'torretas') st.cd *= 0.7; }
+    else if (M && M.deb.id === 'carton') st.hp = st.maxHp = Math.round(st.maxHp * 0.75);
+  }
+  if (M && M.deb.id === 'sincaos') S.p.chaos = 1;
+}
+function hardBanner() {
+  if (G.cdiff === 'm' && G.mod) banner('MÍTICA', `Tu castigo: ${G.mod.deb.name} · CPU: ${G.mod.buf.name}`, 'chaos');
+  else banner('DIFÍCIL', G.efac === 'microblizz' ? 'Sus robots grandes van equipados' : `${CFG.cards[FACTIONS[G.efac].leader].name} va equipado hasta los dientes`, 'enemy');
+}
+function legendaryPrize() {
+  const k = Math.random() < 0.5 ? 'ab' : 'eq', DB = k === 'ab' ? ABILITIES : ITEMS, pool = Object.keys(DB).filter(id => DB[id].rar === 'legendary' && !DB[id].pass);
+  return newCopy(k, pick(pool), 3);
+}
+// ---- ruleta semanal de la Mítica: un castigo para ti y una ventaja para la CPU (igual para todo el mundo esa semana)
+const MYTH_DEB = [
+  { id: 'recorte', short: 'Recorte', name: 'Recorte de presupuesto', desc: 'tu CAOS se recarga un 20 % más lento.' },
+  { id: 'lag', short: 'Lag', name: 'Lag', desc: 'tus unidades van un 15 % más lentas.' },
+  { id: 'parche', short: 'Parche', name: 'Parche sorpresa', desc: 'tus unidades tienen un 15 % menos de vida.' },
+  { id: 'carga', short: 'Carga', name: 'Pantalla de carga', desc: 'tus cartas tardan 1 segundo más en entrar.' },
+  { id: 'vacaciones', short: 'Sin líder', name: 'Líder de vacaciones', desc: 'tu líder tarda el doble en volver.' },
+  { id: 'carton', short: 'Cartón', name: 'Torres de cartón', desc: 'tus torres y tu base tienen un 25 % menos de vida.' },
+  { id: 'sincaos', short: 'Sin CAOS', name: 'Sin presupuesto', desc: 'empiezas cada partida con 1 de CAOS.' },
+  { id: 'becarios', short: 'Becarios', name: 'Becarios en prácticas', desc: 'tus unidades hacen un 12 % menos de daño.' },
+];
+const MYTH_BUF = [
+  { id: 'horas', short: 'Horas extra', name: 'Horas extra', desc: 'sus unidades atacan un 20 % más rápido.' },
+  { id: 'inversion', short: 'Inversión', name: 'Inversión millonaria', desc: 'la CPU gana CAOS un 20 % más rápido.' },
+  { id: 'blindaje', short: 'Blindaje', name: 'Torres blindadas', desc: 'sus torres y su sede tienen un 30 % más de vida.' },
+  { id: 'robots', short: 'Robots', name: 'Robots nuevos', desc: 'sus unidades tienen un 15 % más de vida.' },
+  { id: 'torretas', short: 'Torretas', name: 'Torretas turbo', desc: 'sus torres disparan un 30 % más rápido.' },
+  { id: 'bonus', short: 'Bonus', name: 'Bonus de productividad', desc: 'sus unidades hacen un 15 % más de daño.' },
+  { id: 'despidos', short: 'Despidos', name: 'Despidos rentables', desc: 'cada unidad tuya que cae le da medio punto de CAOS.' },
+  { id: 'turbo', short: 'Turbo', name: 'Turbo', desc: 'sus unidades van un 15 % más rápido.' },
+];
+function mythicWeek() { const sd = seedOf('mitica-' + weekStr()); return { deb: MYTH_DEB[sd % MYTH_DEB.length], buf: MYTH_BUF[Math.floor(sd / 8) % MYTH_BUF.length] }; }
+function modBoxHtml() {
+  const M = mythicWeek();
+  return `<div class="mod-box"><div class="mod-head ol">ESTA SEMANA EN MÍTICA<small>cambia en ${untilStr(true)}</small></div><div class="mod-row bad"><b>TU CASTIGO</b>${M.deb.name}: ${M.deb.desc}</div><div class="mod-row good"><b>VENTAJA DE LA CPU</b>${M.buf.name}: ${M.buf.desc}</div><button class="chip-btn" id="btn-rl-again">VER LA RULETA</button></div>`;
+}
+const RL = { phase: 'p', ang: 0, spin: null, wk: null };
+function openRoulette() { RL.wk = mythicWeek(); RL.phase = 'p'; RL.ang = 0; RL.spin = null; rlPhaseUi(false); $('#scr-roulette').hidden = false; drawRoulette(); }
+function rlPhaseUi(done) {
+  const p = RL.phase === 'p', r = $('#rl-res');
+  $('#rl-title').textContent = p ? 'TU CASTIGO DE LA SEMANA' : 'LA VENTAJA DE LA CPU';
+  $('#rl-sub').textContent = p ? 'La ruleta de Microblizz decide cómo te complica la Mítica esta semana. Cambia cada lunes.' : 'Y ahora, el regalo de Microblizz para la CPU.';
+  r.className = 'rl-res ' + (p ? 'bad' : 'good');
+  if (done) { const x = p ? RL.wk.deb : RL.wk.buf; r.innerHTML = `<b class="ol">${x.name}</b>${x.desc.charAt(0).toUpperCase() + x.desc.slice(1)}`; } else r.innerHTML = '';
+  $('#btn-rl').textContent = !done ? '¡GIRAR!' : p ? 'SIGUIENTE' : '¡A JUGAR!';
+  $('#btn-rl').disabled = false; $('#btn-rl-skip').hidden = !!done && !p;
+}
+function rlClose() { RL.spin = null; $('#scr-roulette').hidden = true; if (SAVE.rlWeek !== weekStr()) { SAVE.rlWeek = weekStr(); saveGame(); } play('select'); if (!$('#scr-camp').hidden) buildCamp(); }
+$('#btn-rl').addEventListener('click', () => {
+  if (RL.spin) return;
+  if (!$('#rl-res').innerHTML) { rlSpin(); return; }
+  if (RL.phase === 'p') { RL.phase = 'c'; RL.ang = 0; rlPhaseUi(false); drawRoulette(); play('select'); return; }
+  rlClose();
+});
+$('#btn-rl-skip').addEventListener('click', rlClose);
+function rlSpin() {
+  const list = RL.phase === 'p' ? MYTH_DEB : MYTH_BUF, TAU = Math.PI * 2, seg = TAU / list.length;
+  const idx = list.indexOf(RL.phase === 'p' ? RL.wk.deb : RL.wk.buf), want = -(idx * seg + seg / 2);
+  const from = RL.ang, to = from + ((((want - from) % TAU) + TAU) % TAU) + TAU * (REDUCED ? 1 : 5);
+  RL.spin = { from, to, t0: performance.now(), dur: REDUCED ? 900 : 3800, last: Math.floor(from / seg) };
+  $('#btn-rl').disabled = true; audioInit(); play('roll');
+  requestAnimationFrame(rlFrame);
+}
+function rlFrame(now) {
+  const sp = RL.spin; if (!sp || $('#scr-roulette').hidden) { RL.spin = null; return; }
+  const k = Math.min(1, (now - sp.t0) / sp.dur), e = 1 - Math.pow(1 - k, 3), seg = Math.PI * 2 / (RL.phase === 'p' ? MYTH_DEB : MYTH_BUF).length;
+  RL.ang = sp.from + (sp.to - sp.from) * e;
+  const cur = Math.floor(RL.ang / seg); if (cur !== sp.last) { sp.last = cur; play('tick'); }
+  drawRoulette();
+  if (k < 1) { requestAnimationFrame(rlFrame); return; }
+  RL.spin = null; rlPhaseUi(true); play(RL.phase === 'p' ? 'sad' : 'womp');
+}
+function drawRoulette() {
+  const cv = $('#rl-cv'), R2 = 2, SZ = 300; if (cv.width !== SZ * R2) { cv.width = SZ * R2; cv.height = SZ * R2; }
+  const c = cv.getContext('2d'); c.setTransform(R2, 0, 0, R2, 0, 0); c.clearRect(0, 0, SZ, SZ);
+  const p = RL.phase === 'p', list = p ? MYTH_DEB : MYTH_BUF, n = list.length, seg = Math.PI * 2 / n, cx = 150, cy = 158, r = 124;
+  const cols = p ? ['#ff6b6b', '#b0213a'] : ['#4f8dff', '#1d3f8a'];
+  c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.arc(cx, cy + 6, r + 10, 0, Math.PI * 2); c.fill();
+  c.fillStyle = OL; c.beginPath(); c.arc(cx, cy, r + 10, 0, Math.PI * 2); c.fill();
+  c.fillStyle = p ? '#ffcb3d' : '#9fd0ff'; c.beginPath(); c.arc(cx, cy, r + 6, 0, Math.PI * 2); c.fill();
+  for (let i = 0; i < n; i++) {
+    const a0 = -Math.PI / 2 + RL.ang + i * seg;
+    c.beginPath(); c.moveTo(cx, cy); c.arc(cx, cy, r, a0, a0 + seg); c.closePath(); c.fillStyle = cols[i % 2]; c.fill(); c.lineWidth = 2.5; c.strokeStyle = OL; c.stroke();
+    c.save(); c.translate(cx, cy); c.rotate(a0 + seg / 2); c.textAlign = 'right'; c.textBaseline = 'middle';
+    let fs = 16; c.font = `${fs}px ${FONT_D}`; while (c.measureText(list[i].short).width > r - 44 && fs > 9) { fs -= 1; c.font = `${fs}px ${FONT_D}`; }
+    c.lineJoin = 'round'; c.lineWidth = 4; c.strokeStyle = OL; c.strokeText(list[i].short, r - 10, 1); c.fillStyle = '#fff6ea'; c.fillText(list[i].short, r - 10, 1); c.restore();
+  }
+  for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8, on = RL.spin ? (Math.floor(performance.now() / 120) + i) % 2 === 0 : i % 2 === 0; c.beginPath(); c.arc(cx + Math.cos(a) * (r + 6), cy + Math.sin(a) * (r + 6), 3, 0, Math.PI * 2); c.fillStyle = on ? '#fff6ea' : '#7a5310'; c.fill(); }
+  c.beginPath(); c.arc(cx, cy, 24, 0, Math.PI * 2); c.fillStyle = '#ffcb3d'; c.fill(); c.lineWidth = 4; c.strokeStyle = OL; c.stroke();
+  c.font = `11px ${FONT_D}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = OL; c.fillText(p ? 'TÚ' : 'CPU', cx, cy + 1);
+  c.beginPath(); c.moveTo(cx - 15, cy - r - 20); c.lineTo(cx + 15, cy - r - 20); c.lineTo(cx, cy - r + 8); c.closePath(); c.fillStyle = '#fff6ea'; c.fill(); c.lineWidth = 3.5; c.strokeStyle = OL; c.stroke();
+}
+// ---- efectos nuevos (habilidades y objetos de la v0.9.12)
+function onLand(u) {
+  if (u.abRun) { u.runT = u.abRun; addNum(u.x, u.y, topOf(u) + 18, '¡SPEEDRUN!', '#7df3ff', 13); }
+  if (u.abDrink) { u.drinkT = 10; addNum(u.x, u.y, topOf(u) + 44, '¡BEBIDA XXL!', '#9ef07a', 12); }
+  if (u.abSteal && S && G.state === 'play') {
+    const foe = other(u.team), n = Math.min(S[foe].chaos, u.abSteal);
+    if (n > 0.05) { S[foe].chaos -= n; S[u.team].chaos = Math.min(CFG.chaosMax, S[u.team].chaos + n); addNum(u.x, u.y, topOf(u) + 22, `¡MICROPAGO! +${fmtV(rnd(n, 1))} CAOS`, '#ff9be6', 13); if (u.team === 'p') chatEv('ability', null, null, 0.4, 15); }
+  }
+  if (u.abPhoto) {
+    let n = 0; for (const o of units) if (o.alive && o.team !== u.team && !o.immuneCC && o.deployT <= 0 && dist(o, u) <= 85) { o.stunT = Math.max(o.stunT, u.abPhoto); o.stunKind = 'daze'; n++; }
+    flashAt(u.x, u.y, 18, 100, '255,255,255', 0.55); ring(u.x, u.y, 8, 85, 'rgba(255,255,255,.9)', 0.35, 4); addNum(u.x, u.y, topOf(u) + 22, '¡FOTO!', '#ffffff', 15); play('zap');
+    if (n && u.team === 'p') chatEv('ability', null, null, 0.4, 15);
+  }
+  if (u.abGiant) addNum(u.x, u.y, topOf(u) + 12, '¡MODO GIGANTE!', '#ffcb3d', 13);
+  if (u.geared && u.team === 'e') addNum(u.x, u.y, topOf(u) + 30, 'EQUIPADO', '#ffcb3d', 12);
+}
+function tickExtras(u, dt) {
+  if (u.runT > 0) { u.runT -= dt; if (Math.random() < dt * 14) parts.push({ type: 'dust', x: u.x - u.face * 8, y: u.y, z: 3, vx: 0, vy: 0, vz: 6, g: 0, life: 0.4, max: 0.4, size: 3, color: '#cfe9ff' }); }
+  if (u.drinkT > 0) u.drinkT -= dt;
+  if (u.invulnT > 0) { u.invulnT -= dt; if (Math.random() < dt * 8) ring(u.x, u.y, 4, u.r * 2.3, 'rgba(125,243,255,.85)', 0.25, 3); }
+  if (u.abAura) {
+    u.auraT = (u.auraT || 0) - dt; if (u.auraT > 0) return; u.auraT = 1; let any = false;
+    for (const a of units) if (a.alive && a.team === u.team && a.deployT <= 0 && a.hp < a.maxHp && dist(a, u) <= 80) { a.hp = Math.min(a.maxHp, a.hp + a.maxHp * u.abAura); any = true; }
+    if (any) ring(u.x, u.y, 4, 80, 'rgba(140,240,90,.45)', 0.45, 2);
+  }
+}
+function deathExtras(t, src) {
+  if (G.state !== 'play') return;
+  if (t.abRage) {
+    const dmg = t.abRage * (t.mLvl || 1);
+    for (const o of units) if (o.alive && o.team !== t.team && Math.hypot(o.x - t.x, o.y - t.y) - o.r <= 64) hurt(o, dmg, null, 'aoe');
+    ring(t.x, t.y, 8, 80, 'rgba(255,90,90,.9)', 0.45, 6); puff(t.x, t.y, 10, '#ff6b6b', 70, 8, false, 12); addNum(t.x, t.y, topOf(t) + 26, '¡RAGE QUIT!', '#ff6b6b', 16); shake(4); play('trash');
+    if (t.team === 'p') chatEv('ability', null, null, 0.5, 15);
+  }
+  if (t.abDlc) { S[t.team].chaos = Math.min(CFG.chaosMax, S[t.team].chaos + t.abDlc); addNum(t.x, t.y, topOf(t) + 30, `DLC: +${fmtV(t.abDlc)} CAOS`, '#d08cff', 13); }
+  if (src && src.abMagnet && src.alive && src.kind === 'unit') { S[src.team].chaos = Math.min(CFG.chaosMax, S[src.team].chaos + src.abMagnet); addNum(src.x, src.y, topOf(src) + 14, `+${fmtV(src.abMagnet)} CAOS`, '#f3a6ff', 11); }
+  if (t.team === 'p' && G.eKillChaos && !t.summon) S.e.chaos = Math.min(CFG.chaosMax, S.e.chaos + G.eKillChaos);
+}
+function confetti(u, t, dmg) {   // Lanzaconfeti: el golpe salpica a los de alrededor
+  for (const o of units) if (o !== t && o.alive && o.team !== u.team && targetable(o) && dist(o, t) - o.r <= 48) hurt(o, dmg, u, 'aoe');
+  chips(t.x, t.y, topOf(t) * 0.6, 8, ['#ff5fa8', '#ffe14d', '#7be04a', '#63cfe0', '#d08cff'], 'chip', 3);
 }
 /* =========================================================
    v0.9.11: logros, premio diario, novedades, velocidad x2, partida guiada e instalar como app
@@ -5548,6 +5954,8 @@ const ACHS = [
   { id: 'lvl25', name: 'Subida de sueldo', txt: 'Sube 25 niveles a tus cartas.', joke: 'A ti sí te suben el sueldo.', ev: 'lvlup', goal: 25, gems: 50 },
   { id: 'flaw10', name: 'Sin un rasguño', txt: 'Gana 10 partidas sin perder ninguna torre.', joke: 'Ni una torre para Microblizz.', ev: 'flawless', goal: 10, gems: 60 },
   { id: 'streak7', name: 'Fan de verdad', txt: 'Entra 7 días seguidos.', joke: 'Microblizz no consigue echarte.', prog: () => (SAVE.login && SAVE.login.best) || 0, goal: 7, gems: 50 },
+  { id: 'hard1', name: 'Esto ya es otra cosa', txt: 'Gana a un jefe en Difícil.', joke: 'Microblizz pide refuerzos.', ev: 'hardboss', goal: 1, gems: 80 },
+  { id: 'myth1', name: 'Leyenda mítica', txt: 'Gana a un jefe en Mítica.', joke: 'Ni la ruleta de Microblizz ha podido contigo.', ev: 'mythboss', goal: 1, gems: 150 },
 ];
 const achProg = a => Math.min(a.goal, a.prog ? a.prog() : (SAVE.stats[a.ev] || 0));
 const achReady = () => ACHS.filter(a => achProg(a) >= a.goal && !SAVE.achDone.includes(a.id)).length;
@@ -5597,8 +6005,8 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['Primera partida guiada: Lola, una antigua trabajadora despedida por Microblizz, te enseña a jugar.', 'Premio por entrar días seguidos. El día 7: ¡10 tiradas gratis!', 'Pack de bienvenida en la tienda (solo se puede comprar una vez).', 'Las tiradas x10 y x50 traen al menos una épica por cada 10.', 'Botón de velocidad x2 en las partidas, arriba a la derecha.', 'Logros con premio en gemas, en Misiones.', 'Se puede instalar en el móvil como una app, desde Opciones.', 'Chat más grande, campo de batalla más abajo y textos más fáciles de entender.'],
-  joke: ['Hemos cerrado tres juegos para pagar esta actualización.', 'Hemos despedido al equipo que arreglaba los fallos. Ahora los fallos se llaman «sorpresas».', 'El pase de batalla cuesta lo mismo. De momento.'],
+  real: ['Campaña en <b>Difícil</b> y <b>Mítica</b>: al pasarte un mundo en Normal se abre en Difícil, y al pasarlo en Difícil, en Mítica.', 'En Difícil y Mítica los rivales son de nivel muy alto y sus líderes van equipados con objetos.', 'La Mítica tiene una <b>ruleta semanal</b>: un castigo para ti y una ventaja para la CPU, cada lunes uno nuevo.', 'Premios dobles en Difícil y triples en Mítica. Cada jefe de Mítica da un objeto o habilidad legendario.', '8 habilidades y 10 objetos nuevos con efectos nunca vistos: Speedrun, Rage quit, Modo foto, Baguette de ayer, Botón de pausa…', 'El chat comenta mucho más lo que pasa en la partida: tus cartas, las torres, los jefes, las remontadas…', 'El chat es un poco más pequeño.'],
+  joke: ['Hemos añadido dos dificultades para que pagues el doble de paciencia.', 'La ruleta está trucada. Igual que todas nuestras ruletas.', 'La Baguette de ayer no ha pasado el control de calidad. Ni lo intentó.'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;
@@ -5762,7 +6170,7 @@ $('#btn-passive').addEventListener('click', () => { const F = FACTIONS[G.faction
 $('#btn-resume').addEventListener('click', resumeGame);
 $('#btn-quit').addEventListener('click', toMenu);
 $('#btn-again').addEventListener('click', startGame);
-$('#btn-next').addEventListener('click', () => { const nx = nextLevel(G.level); if (nx) { G.prep = { mode: 'camp', lvl: nx }; startGame(); } });
+$('#btn-next').addEventListener('click', () => { const nx = nextLevel(G.level); if (nx) { G.prep = { mode: 'camp', lvl: nx, cd: G.cdiff || 'n' }; startGame(); } });
 $('#btn-menu').addEventListener('click', toMenu);
 /* opciones */
 $('#opt-vol').addEventListener('input', e => { SAVE.vol = +e.target.value; applyVolume(); saveGame(); });
@@ -5879,7 +6287,7 @@ async function boot() {
     try { if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { /* sin modo sin conexión */ }); } catch (e) { /* el navegador no lo permite aquí */ }
   }
 }
-window.__FOR = { stat, ACHS, achProg, achReady, LOGIN, loginState, openLogin, claimLogin, openNews, titlePopups, tutWant, tutTick, tutStep, tutFinish, curScreen, applySpeed, VERSION, buyStarter, get music() { return M; }, updateWallets, pull, pullCost, showCardTip, hideCardTip, roleOf, fitText, migrateSave, newCopy, addCopy, valsOf, avgQ, tierOf, rollQ, invGet, openInv, buildInv, openItem, massList, scrapValue, snapSpot, wornSet, QTIERS, G, get S() { return S; }, get units() { return units; }, get structs() { return structs; }, get parts() { return parts; }, get revives() { return revives; }, tryPlayerDeploy, playerPlay, spawnUnit, startMatch, setFaction, CFG, SPR, ART, BOX, TYPES, TOPS, drawVector, FACTIONS, get SAVE() { return SAVE; }, set SAVE(v) { SAVE = v; }, saveGame, setupMatch, startGame, openPrep, WORLDS, ECON, ABILITIES, ITEMS, findLevel, levelUp, pull, openCamp, buildColl, goHome, PASS, SHOP, passLevel, addPassXp, buildPass, openShop, buildMissions, makeShareImage, chatSay, missionEvent, get missionTab() { return missionTab; }, set missionTab(v) { missionTab = v; } };
+window.__FOR = { hurt, kill, attack, CDIFF, ENEMY_GEAR, starsD, worldOpenD, levelOpenD, mythicWeek, MYTH_DEB, MYTH_BUF, openRoulette, rlSpin, applyItem, legendaryPrize, get campDiff() { return campDiff; }, set campDiff(v) { campDiff = v; }, chatEv, stat, ACHS, achProg, achReady, LOGIN, loginState, openLogin, claimLogin, openNews, titlePopups, tutWant, tutTick, tutStep, tutFinish, curScreen, applySpeed, VERSION, buyStarter, get music() { return M; }, updateWallets, pull, pullCost, showCardTip, hideCardTip, roleOf, fitText, migrateSave, newCopy, addCopy, valsOf, avgQ, tierOf, rollQ, invGet, openInv, buildInv, openItem, massList, scrapValue, snapSpot, wornSet, QTIERS, G, get S() { return S; }, get units() { return units; }, get structs() { return structs; }, get parts() { return parts; }, get revives() { return revives; }, tryPlayerDeploy, playerPlay, spawnUnit, startMatch, setFaction, CFG, SPR, ART, BOX, TYPES, TOPS, drawVector, FACTIONS, get SAVE() { return SAVE; }, set SAVE(v) { SAVE = v; }, saveGame, setupMatch, startGame, openPrep, WORLDS, ECON, ABILITIES, ITEMS, findLevel, levelUp, pull, openCamp, buildColl, goHome, PASS, SHOP, passLevel, addPassXp, buildPass, openShop, buildMissions, makeShareImage, chatSay, missionEvent, get missionTab() { return missionTab; }, set missionTab(v) { missionTab = v; } };
 boot();
 })();
 </script>
