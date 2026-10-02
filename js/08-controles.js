@@ -21,7 +21,7 @@ const ART_FIT = { fox: [0.04, 0.92], junkcoon: [-0.04, 0.92], necrolord: [-0.06,
   vikingo: [-0.02, 1], titanbeta: [0, 1], rockracer: [0, 0.78], ghostagent: [-0.12, 0.92], retromarine: [-0.07, 0.94],
   directora: [-0.05, 1], kaiju: [0.08, 1], heroe: [0, 0.94], detective: [-0.07, 0.94], spoiler: [-0.06, 0.94], doble: [0, 0.92] };
 function drawArt(cv, key, LW, LH) {
-  const R2 = 3; cv.width = LW * R2; cv.height = LH * R2; const x = cv.getContext('2d'); x.setTransform(R2, 0, 0, R2, 0, 0); x.clearRect(0, 0, LW, LH);
+  const R2 = SAVE.pixel ? 0.55 : 3; cv.width = LW * R2; cv.height = LH * R2; const x = cv.getContext('2d'); x.setTransform(R2, 0, 0, R2, 0, 0); x.clearRect(0, 0, LW, LH);
   x.fillStyle = 'rgba(20,10,30,.25)'; x.beginPath(); x.ellipse(LW / 2, LH - 4, LW * 0.32, Math.max(2, LH * 0.08), 0, 0, Math.PI * 2); x.fill();
   const h = LH - 8, n = Math.min(3, (CFG.cards[key] && CFG.cards[key].count) || 1);
   if (n === 2) { drawVector(x, key, LW / 2 - LW * 0.15, LH - 4, h * 0.74, 1); drawVector(x, key, LW / 2 + LW * 0.15, LH - 2, h * 0.8, -1); }

@@ -428,33 +428,44 @@ const MDRUM = {
     g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.55 * v, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35); os.connect(g); g.connect(o); os.start(t); os.stop(t + 0.4); },
   X: (o, t, v) => mnoise(o, t, 0.9, 0.3 * v, 4500, 'highpass'),
 };
+// v0.9.16: cada tema es una canción de 8 vueltas (32 compases) antes de repetirse:
+//   vuelta 0 = tema tal cual · 1 = más agudo y con segunda voz · 2 = pregunta y respuesta (la melodía se da la vuelta)
+//   3 = respiro (melodía suelta, sin bombo al principio) y redoble para volver · 4 a 7 = lo mismo, un tono más alto
 function musicStep(T, out, step, bar, loop, t, sd) {
-  const bi = bar % T.prog.length, d = T.prog[bi], odd = loop % 2 === 1;
-  const n7 = T.sc.length, tones = [d, d + 2, d + 4, d + n7];
+  const bi = bar % T.prog.length, d = T.prog[bi], song = !T.once, sec = song ? loop % 4 : 0, odd = song ? sec === 1 : loop % 2 === 1;
+  const mod = song && Math.floor(loop / 4) % 2 === 1 ? (T.mod == null ? 2 : T.mod) : 0, hz = deg => midiHz(degMidi(T, deg) + mod);
+  const last = bi === T.prog.length - 1, n7 = T.sc.length, tones = [d, d + 2, d + 4, d + n7];
   if (step === 0) {
-    if (T.pad) { const vs = T.seven ? [d, d + 2, d + 4, d + 6] : [d, d + 2, d + 4]; vs.forEach(x => mnote(out, midiHz(degMidi(T, x)), t, sd * 16 * 0.98, T.pad.wave, T.pad.vol / vs.length * 1.6, { att: T.pad.att, rel: 0.3, lp: T.pad.lp, det: 6 })); }
+    if (T.pad) { const vs = T.seven ? [d, d + 2, d + 4, d + 6] : [d, d + 2, d + 4]; vs.forEach(x => mnote(out, hz(x), t, sd * 16 * 0.98, T.pad.wave, T.pad.vol / vs.length * (sec === 3 ? 2 : 1.6), { att: T.pad.att, rel: 0.3, lp: T.pad.lp, det: 6 })); }
     if (T.crash && bi === 0) MDRUM.X(out, t, 1);
   }
   // bajo
   for (const ev of T.B) if (ev.s === step) {
     const sh = T.bass.oct == null ? -n7 : T.bass.oct, deg = ev.v === 'r' ? d + sh : ev.v === 'f' ? d + 4 + sh : ev.v === 'o' ? d + sh + n7 : d + sh - n7;
-    mnote(out, midiHz(degMidi(T, deg)), t, ev.n * sd * 0.92, T.bass.wave, T.bass.vol, { att: 0.012, rel: 0.06, lp: T.bass.lp });
+    mnote(out, hz(deg), t, ev.n * sd * 0.92, T.bass.wave, T.bass.vol, { att: 0.012, rel: 0.06, lp: T.bass.lp });
   }
-  // batería
+  // batería (en el respiro, los dos primeros compases sin bombo; en el último, redoble para volver)
   if (T.drums) {
-    const dv = (T.dv || 1) * (M.rush ? 1.1 : 1);
-    for (const k in T.drums) if (T.drums[k][step] === 'x') MDRUM[k](out, t, dv);
+    const dv = (T.dv || 1) * (M.rush ? 1.1 : 1), brk = sec === 3 && bi < 2;
+    for (const k in T.drums) if (T.drums[k][step] === 'x' && !(brk && (k === 'k' || k === 's' || k === 'c'))) MDRUM[k](out, t, dv);
     if (M.rush && !T.drums.h && step % 2 === 0) MDRUM.h(out, t, dv);       // en el último minuto se añaden hi-hats
     if (M.rush && T.drums.h && step % 2 === 1 && step % 4 !== 3) MDRUM.h(out, t, dv * 0.7);
+    if (song && sec === 3 && last && step >= 12 && T.drums.k) MDRUM.s(out, t, dv * (0.55 + (step - 12) * 0.15));
+    if (song && sec === 3 && last && step === 14 && T.drums.k) MDRUM.s(out, t + sd / 2, dv * 0.8);
   }
   // arpegio
-  if (T.A && T.A[step] !== '.') mnote(out, midiHz(degMidi(T, tones[+T.A[step]] + (T.arp.oct || 0))), t, sd * T.arp.gate, T.arp.wave, T.arp.vol, { att: 0.005, rel: 0.05, lp: T.arp.lp });
+  if (T.A && T.A[step] !== '.') mnote(out, hz(tones[+T.A[step]] + (T.arp.oct || 0)), t, sd * T.arp.gate, T.arp.wave, T.arp.vol, { att: 0.005, rel: 0.05, lp: T.arp.lp });
   // melodía
-  const Ld = T.lead; for (const ev of T.L[bi % T.L.length]) if (ev.s === step) {
-    const deg = (ev.v === '?' ? pick([0, 1, 2, 4, 5, 7, 8, 9]) : ev.v) + (Ld.oct || 0) + (odd ? (Ld.up || 0) : 0);
-    const dur = Math.max(ev.n * sd * (Ld.gate || 0.9), Ld.min || 0), f = midiHz(degMidi(T, deg));
+  const Ld = T.lead, resp = sec === 2 && bi % 2 === 1, src = T.L[(resp ? bi + 2 : bi) % T.L.length];
+  for (const ev of src) if (ev.s === step) {
+    if (sec === 3 && ev.s % 4 !== 0) continue;   // respiro: solo las notas fuertes
+    let v = ev.v === '?' ? pick([0, 1, 2, 4, 5, 7, 8, 9]) : ev.v;
+    if (resp) v = 8 - v;                          // respuesta: la frase de otro compás, dada la vuelta
+    const deg = v + (Ld.oct || 0) + (odd ? (Ld.up || 0) : 0);
+    const dur = Math.max(ev.n * sd * (Ld.gate || 0.9) * (sec === 3 ? 2 : 1), Ld.min || 0), f = hz(deg);
     if (Ld.bell) { mnote(out, f, t, dur, 'sine', Ld.vol, { att: 0.004, rel: 0.4, dec: dur * 0.9, sus: 0.05 }); mnote(out, f * 2.01, t, dur * 0.4, 'sine', Ld.vol * 0.3, { att: 0.002, rel: 0.2, dec: 0.2, sus: 0.05 }); }
     else mnote(out, f, t, dur, Ld.wave, Ld.vol, { att: Ld.att || 0.012, rel: 0.07, lp: Ld.lp, det: Ld.det });
+    if (sec === 1) mnote(out, hz(deg + 2), t, dur, Ld.bell ? 'sine' : Ld.wave, Ld.vol * 0.38, { att: Ld.att || 0.012, rel: 0.07, lp: Ld.lp });   // segunda voz, una tercera por encima
   }
 }
 function musicSet(name, at) {

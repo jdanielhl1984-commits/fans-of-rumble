@@ -252,12 +252,11 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>Pantalla de mazo nueva</b>: tu líder en grande y tus 6 cartas en un expositor, con el nivel y el coste a la vista. Abajo están tus tropas: toca una para ponerla y, si el mazo está lleno, toca después la carta que quieres cambiar.',
-    '<b>Anuncios con premio</b> (de prueba): solo si tú quieres. Recoger x2 y turbo en HORAS EXTRA, premio x2 al acabar una partida, una tirada gratis al día, regalo diario x2 y cambiar una misión. Como mucho 12 al día.',
-    '<b>Sin anuncios</b> en la tienda: los premios de los anuncios te llegan al momento, sin ver nada.',
-    '<b>Modo pruebas</b>: ahora da toda la experiencia hasta el nivel 10 y 3.000.000 de oro. Subir de nivel lo haces tú, en la Colección.',
-    'El juego está dividido en archivos por dentro: carga igual y a partir de ahora es más fácil de mejorar.'],
-  joke: ['Microblizz descubre los anuncios y pone uno de sí misma. Le ha gustado tanto que se ha comprado.', 'Phony ofrece «Sin anuncios» por 9,99 € al mes. Los anuncios siguen saliendo.', 'El CEO de Microblizz ha visto tu mazo nuevo y ha pedido 300 diapositivas para copiarlo.'],
+  real: ['<b>Modo claro</b>: en Opciones → Aspecto puedes poner los menús claros u oscuros. El campo de batalla y las cartas no cambian.',
+    '<b>Pixel art</b>: en Opciones, todo el juego con aspecto retro, de píxeles grandes.',
+    '<b>Música más larga</b>: cada tema es ahora una canción de 32 compases antes de repetirse. Sube de tono, añade una segunda voz, se da la vuelta y respira con un redoble antes de volver.',
+    'De la versión anterior: pantalla de mazo nueva, anuncios con premio (de prueba), «Sin anuncios» en la tienda y modo pruebas con toda la experiencia.'],
+  joke: ['Microblizz cobra el modo claro como DLC. Aquí es gratis (y el oscuro también).', 'Phony ha patentado los píxeles grandes. Pagaremos la multa en CAOS.', 'El CEO ha escuchado la música nueva y ha pedido quitarle la segunda voz para ahorrar.'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;

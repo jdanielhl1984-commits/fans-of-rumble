@@ -762,6 +762,7 @@ function grantRewards() {
   SAVE.gold += R.gold; SAVE.gems += R.gems; saveGame(); return R;
 }
 
+const PIXEL_K = 0.4;   // v0.9.16: en modo pixel art, el campo se dibuja a la mitad de resolución
 function fit() {
   const bw = document.body.clientWidth, bh = document.body.clientHeight;
   const narrow = bw < 600, pad = narrow ? 0 : 24;
@@ -774,7 +775,7 @@ function fit() {
   const extra = LH - H; VIEW.LH = LH; VIEW.top = Math.round(extra * 0.45); VIEW.bot = extra - VIEW.top;
   ui.style.height = LH + 'px'; ui.style.setProperty('--top', VIEW.top + 'px'); ui.style.setProperty('--bot', VIEW.bot + 'px');
   ui.style.transform = `scale(${w / W})`; VIEW.sc = w / W;
-  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  const dpr = typeof SAVE !== 'undefined' && SAVE && SAVE.pixel ? (W * PIXEL_K) / w : Math.min(window.devicePixelRatio || 1, 3);   // v0.9.16: pixel art = menos píxeles
   cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
   VIEW.k = cv.width / W;
 }

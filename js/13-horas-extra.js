@@ -124,7 +124,7 @@ function idleBuild(cw, ch, fac) {
 function idleSize() {
   const cv = $('#idle-cv'); if (!cv) return false;
   const cw = cv.clientWidth, ch = cv.clientHeight; if (!cw || !ch) return false;
-  const R = clamp(Math.round((VIEW.sc || 1) * (window.devicePixelRatio || 1) * 2) / 2, 1, 2), fac = idleState().fac;
+  const R = SAVE.pixel ? 0.4 : clamp(Math.round((VIEW.sc || 1) * (window.devicePixelRatio || 1) * 2) / 2, 1, 2), fac = idleState().fac;
   if (cw === idleSc.cw && ch === idleSc.ch && R === idleSc.R && fac === idleSc.lfac && idleSc.L) return true;
   Object.assign(idleSc, { cw, ch, R, lfac: fac }); idleSc.hh = clamp(ch * 0.44, 54, 112); idleSc.k = idleSc.hh / 64; idleSc.gy = ch - Math.max(15, ch * 0.11);
   cv.width = Math.round(cw * R); cv.height = Math.round(ch * R); idleSc.L = idleBuild(cw, ch, fac); idleSc.mobs.length = 0;
