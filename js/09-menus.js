@@ -46,8 +46,9 @@ function buildColl() {
   const db = $('#btn-deck'); if (db) db.onclick = () => { play('select'); openDeck(collFac); };
   list.querySelectorAll('[data-goc]').forEach(b => { b.onclick = () => { play('select'); gachaTab = 'cd'; updateWallets(); openGacha(); }; });
   list.querySelectorAll('[data-up]').forEach(b => { b.onclick = () => { if (levelUp(b.dataset.up)) { updateWallets(); buildColl(); } }; });
-  list.querySelectorAll('[data-ab]').forEach(b => { b.onclick = () => openPick('ab', b.dataset.ab); });
-  list.querySelectorAll('[data-eq]').forEach(b => { b.onclick = () => openPick('eq', b.dataset.eq); });
+  // v0.9.19: si la ranura ya lleva algo, se abre su ficha (volver a tirar, bloquear, cambiar…); si está vacía, la lista para elegir
+  list.querySelectorAll('[data-ab]').forEach(b => { b.onclick = () => { const k = b.dataset.ab, u = SAVE.abEquip[k]; if (invGet(u)) openItem(u, { kind: 'ab', key: k }); else openPick('ab', k); }; });
+  list.querySelectorAll('[data-eq]').forEach(b => { b.onclick = () => { const k = b.dataset.eq, u = (SAVE.equip[collFac] || {})[k]; if (invGet(u)) openItem(u, { kind: 'eq', key: k }); else openPick('eq', k); }; });
   const ea = list.querySelector('[data-eqall]'); if (ea) ea.onclick = () => { play('select'); equipAll(collFac); };
 }
 function collRow(k, lock) {
@@ -270,7 +271,9 @@ function invRow(it) {
   const meta = w || it.lock ? `<span class="inv-meta">${it.lock ? LOCK_SVG + 'Bloqueada' : ''}${w && it.lock ? ' · ' : ''}${w ? 'Lo lleva ' + w : ''}</span>` : '';
   return `<button class="inv-row" data-u="${it.u}" style="--rc:${R[2]}"><span class="ic" style="background:${R[1]}">${it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><span class="inv-main"><span class="inv-top"><b class="ol">${D.name}</b>${qBadge(it)}</span><span class="inv-desc">${descOf(it)}</span>${meta}</span></button>`;
 }
-function openItem(uid) {
+let itemSlot = null;   // v0.9.19: la ranura de la Colección desde la que se abrió la ficha
+function openItem(uid, slot) {
+  itemSlot = slot === 'keep' ? itemSlot : slot || null;
   const it = invGet(uid); if (!it) { $('#scr-item').hidden = true; itemCur = null; return; } itemCur = uid;
   const D = defOf(it), R = RARITY[D.rar], S = statsOf(it), V = valsOf(it), w = wearer(it), pass = !!D.pass;
   const bars = S.map((st, i) => { const qi = it.q[i], Ti = QTIERS[tierOf(qi)]; return `<div class="qstat">${S.length > 1 ? `Efecto ${i + 1}: ` : 'Valor: '}<b>${fmtV(V[i])}</b> <small>(de ${fmtV(rnd(st.c * 0.5, st.dec))} a ${fmtV(rnd(st.c * 1.5, st.dec))}) · ${Ti.name}</small><div class="qbar" style="--qc:${Ti.col}"><i style="width:${Math.max(2, qi * 100)}%"></i></div></div>`; }).join('');
@@ -283,14 +286,14 @@ function openItem(uid) {
   $('#item-actions').innerHTML = `<button class="btn-ghost ol btn-ok" id="ia-equip">${w ? 'CAMBIAR' : 'EQUIPAR'}</button><button class="btn-ghost ol" id="ia-unequip" ${w ? '' : 'disabled'}>QUITAR</button>
     <button class="btn-ghost ol" id="ia-lock" ${pass ? 'disabled' : ''}>${it.lock ? 'DESBLOQUEAR' : 'BLOQUEAR'}</button><button class="btn-ghost ol danger" id="ia-scrap" ${canScrap(it) ? '' : 'disabled'}>DESPEDIR · +${fmt(sv)} ORO</button>
     <button class="btn-ghost ol wide" id="ia-reroll" ${pass ? 'disabled' : ''}>VOLVER A TIRAR · ${fmt(rc)} ORO</button>`;
-  $('#ia-equip').onclick = () => equipFromInv(it);
+  $('#ia-equip').onclick = () => { if (itemSlot && w) { $('#scr-item').hidden = true; openPick(itemSlot.kind, itemSlot.key); } else equipFromInv(it); };
   $('#ia-unequip').onclick = () => { unequip(it); saveGame(); play('select'); refreshInv(); };
   $('#ia-lock').onclick = () => { it.lock = !it.lock; saveGame(); play('select'); refreshInv(); toast(it.lock ? 'Bloqueada: ya no se puede despedir' : 'Desbloqueada: ya se puede despedir'); };
   $('#ia-scrap').onclick = () => scrapOne(it);
   $('#ia-reroll').onclick = () => rerollOne(it);
   $('#scr-item').hidden = false;
 }
-function refreshInv() { if (!$('#scr-inv').hidden) buildInv(); if (!$('#scr-coll').hidden) buildColl(); if (itemCur && !$('#scr-item').hidden) openItem(itemCur); }
+function refreshInv() { if (!$('#scr-inv').hidden) buildInv(); if (!$('#scr-coll').hidden) buildColl(); if (itemCur && !$('#scr-item').hidden) openItem(itemCur, 'keep'); }
 function equipFromInv(it) {
   const D = defOf(it), facs = FACTION_ORDER.filter(isUnlocked); let html = '';
   if (it.k === 'ab') {

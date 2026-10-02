@@ -254,6 +254,7 @@ $('#btn-login').addEventListener('click', claimLogin);
 const NEWS = {
   real: ['<b>Botón MAZO</b> en el menú principal, y el botón EDITAR de antes de jugar, más grande.',
     '<b>Mantén pulsada</b> una carta en la pantalla del mazo para ver qué hace.',
+    'En la Colección, toca una habilidad u objeto ya puesto para abrir su ficha: volver a tirar, bloquear, quitar o cambiar.',
     '<b>Zoom en combate</b>: pellizca con dos dedos para acercarte (con zoom, un dedo mueve la vista). «VISTA NORMAL» o doble toque para volver. En el PC, con la rueda del ratón.',
     '<b>Campo de jefe: RÍO DE LAVA</b>. El jefe del Sector Neón (y en el Modo Jefe) pelea sobre lava: las grietas queman a los dos bandos y, de vez en cuando, una entra en erupción. Los que vuelan no se queman.',
     'El cono de los sanadores ya no se ve todo el rato: solo cuando curan, en verde suave.',
