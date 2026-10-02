@@ -868,3 +868,5 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .ib-loot .rw-chip svg { width: 26px; height: 26px; }
 .ib-row { display: flex; gap: 10px; align-items: stretch; justify-content: center; flex-wrap: wrap; }
 .ib-row .ad-btn span { font-size: 18px; }
+/* v0.9.18: explicación pequeña debajo de los botones de la ficha de un objeto */
+#item-actions .btn-ghost small { display: block; margin-top: 2px; font-family: var(--font-ui); font-weight: 800; font-size: 11px; line-height: 1.1; text-shadow: none; opacity: 0.85; }

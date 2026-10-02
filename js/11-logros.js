@@ -97,7 +97,7 @@ fam('x10', 'g', 'x10', [1, 10, 25, 50, 100], [10, 15, 25, 40, 60], 'De diez en d
 fam('x50', 'g', 'x50', [1, 5, 10, 25, 50], [30, 40, 50, 70, 100], 'Modo ballena', g => veces(g, 'Haz una tirada x50.', 'Haz {n} tiradas x50.'), 'El CEO le ha puesto tu nombre a su yate.', { 1: 'x50' });
 fam('leg', 'g', 'leg', [1, 5, 10, 25, 50, 100], [10, 15, 25, 40, 60, 90], 'Suerte legendaria', g => veces(g, 'Consigue una legendaria en el gashapón.', 'Consigue {n} legendarias en el gashapón.'), 'Salen 3 de cada 100. Dicen.');
 fam('epic', 'g', 'epic', [1, 10, 25, 50, 100, 250], [5, 10, 15, 25, 35, 55], 'Épico', g => veces(g, 'Consigue una épica en el gashapón.', 'Consigue {n} épicas en el gashapón.'), 'Épico de verdad, no como el último parche.');
-fam('perfect', 'g', 'perfect', [1, 3, 5, 10, 25], [100, 40, 50, 70, 100], 'Perfeccionista', g => veces(g, 'Consigue una copia de calidad Perfecta.', 'Consigue {n} copias de calidad Perfecta.'), 'Sale una vez de cada cien.', { 1: 'perfect' });
+fam('perfect', 'g', 'perfect', [1, 3, 5, 10, 25], [100, 40, 50, 70, 100], 'Perfeccionista', g => veces(g, 'Consigue una copia de calidad CEO (perfecta).', 'Consigue {n} copias de calidad CEO (perfecta).'), 'Sale una vez de cada cien.', { 1: 'perfect' });
 fam('scrap', 'g', 'scrap', [10, 50, 100, 250, 500, 1000, 2500], [5, 40, 25, 35, 45, 60, 90], 'Despido masivo', g => `Despide ${fmt(g)} copias en el inventario.`, 'Como Microblizz, pero con cosas.', { 50: 'scrap50' });
 fam('reroll', 'g', 'reroll', [1, 5, 25, 50, 100, 250], [5, 30, 25, 35, 50, 70], 'Segunda oportunidad', g => veces(g, 'Vuelve a tirar los números de una copia.', 'Vuelve a tirar los números de una copia {n} veces.'), 'Más oportunidades de las que da Microblizz.', { 5: 'reroll5' });
 const N_AB = Object.keys(ABILITIES).length, N_EQ = Object.keys(ITEMS).length;
@@ -136,7 +136,7 @@ const SECRETS = [
   ['speed', 'speed2', 1, 20, 'Con prisa', 'Pon la partida a velocidad x2.', 'El tiempo es oro. Y el oro, de Microblizz.', 'Pista: hay un botón para ir más rápido.'],
   ['share', 'share', 1, 30, 'Fama mundial', 'Comparte el resultado de una partida.', 'Microblizz ha visto tu publicación.', 'Pista: presume de tus victorias.'],
   ['export', 'export', 1, 20, 'Copia de seguridad', 'Exporta tu progreso en Opciones.', 'Que no te lo cierren.', 'Pista: mira en Opciones.'],
-  ['scrapp', 'scrapperf', 1, 60, 'Esto no se tira', 'Despide una copia de calidad Perfecta.', '¿Seguro que no la querías?', 'Pista: despedir algo que no deberías.'],
+  ['scrapp', 'scrapperf', 1, 60, 'Esto no se tira', 'Despide una copia de calidad CEO (perfecta).', '¿Seguro que no la querías?', 'Pista: despedir algo que no deberías.'],
   ['broke', 'broke', 1, 30, 'Sin blanca', 'Quédate con 0 gemas después de girar el gashapón.', 'Microblizz te quiere mucho.', 'Pista: gástalo todo.'],
   ['starter', () => (SAVE.starter ? 1 : 0), 1, 20, 'Cliente fiel', 'Consigue el pack de bienvenida de la tienda.', 'Gratis en esta versión. Shh.', 'Pista: algo de la tienda.'],
   ['prem', () => (SAVE.pass && SAVE.pass.prem ? 1 : 0), 1, 30, 'VIP', 'Activa el pase premium.', 'Gratis en esta versión. Que no se entere el CEO.', 'Pista: el pase tiene dos caminos.'],
@@ -254,7 +254,8 @@ $('#btn-login').addEventListener('click', claimLogin);
 const NEWS = {
   real: ['<b>Botón MAZO</b> en el menú principal, y el botón EDITAR de antes de jugar, más grande.',
     '<b>Mantén pulsada</b> una carta en la pantalla del mazo para ver qué hace.',
-    'En la Colección, toca una habilidad u objeto ya puesto para abrir su ficha: volver a tirar, bloquear, quitar o cambiar.',
+    'En la Colección, toca una habilidad u objeto ya puesto para abrir su ficha: evaluación de desempeño, contrato indefinido, quitar o cambiar.',
+    'Vuelven los nombres de la oficina: <b>Evaluación de desempeño</b> (vuelve a sortear los números), <b>Contrato indefinido</b> (bloquear) y las calidades <b>Becario, Junior, Senior, Director y CEO</b>, con su explicación al lado.',
     '<b>Zoom en combate</b>: pellizca con dos dedos para acercarte (con zoom, un dedo mueve la vista). «VISTA NORMAL» o doble toque para volver. En el PC, con la rueda del ratón.',
     '<b>Campo de jefe: RÍO DE LAVA</b>. El jefe del Sector Neón (y en el Modo Jefe) pelea sobre lava: las grietas queman a los dos bandos y, de vez en cuando, una entra en erupción. Los que vuelan no se queman.',
     'El cono de los sanadores ya no se ve todo el rato: solo cuando curan, en verde suave.',

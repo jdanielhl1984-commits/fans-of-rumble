@@ -17,7 +17,7 @@ const ECON = {
   mission: [50, 10],
   scrap: { common: 25, rare: 60, epic: 150, legendary: 400 },      // oro al despedir una copia (x1 Básica, x1,5 Normal, x2 Buena, x3 Excelente, x5 Perfecta)
   reroll: { common: 250, rare: 500, epic: 1000, legendary: 2000 }, // oro por volver a tirar los números de una copia
-  pityQ: 10,                                                       // garantía: calidad Excelente o mejor como mucho cada 10 tiradas
+  pityQ: 10,                                                       // garantía: calidad Director (excelente) o mejor como mucho cada 10 tiradas
   cardOdds: { rare: 68, epic: 25, legendary: 7 },                  // v0.9.15: gashapón de cartas (hechizos y mata-sanadores)
   starStep: 0.05, maxStars: 5,                                     // cada estrella: +5 % (vida y daño, o fuerza del hechizo)
 };
@@ -96,11 +96,11 @@ const COFRE = [[p => `¡+${Math.round(30 * p)} % DE DAÑO!`, (u, p) => { u.mDmg 
 // v0.9.9: calidad de cada copia. Cada efecto sale entre el 50 % (calidad 0) y el 150 % (calidad 100) de su valor central.
 // Básica, Normal, Buena, Excelente o Perfecta; las probabilidades se enseñan en el gashapón.
 const QTIERS = [
-  { name: 'Básica', p: 30, lo: 0, hi: 0.4, col: '#b4bccb' },
-  { name: 'Normal', p: 40, lo: 0.4, hi: 0.7, col: '#63cfe0' },
-  { name: 'Buena', p: 20, lo: 0.7, hi: 0.88, col: '#8cf05a' },
-  { name: 'Excelente', p: 9, lo: 0.88, hi: 0.99, col: '#e2a8ff' },
-  { name: 'Perfecta', p: 1, lo: 1, hi: 1, col: '#ffcb3d' },
+  { name: 'Becario (básica)', p: 30, lo: 0, hi: 0.4, col: '#b4bccb' },
+  { name: 'Junior (normal)', p: 40, lo: 0.4, hi: 0.7, col: '#63cfe0' },
+  { name: 'Senior (buena)', p: 20, lo: 0.7, hi: 0.88, col: '#8cf05a' },
+  { name: 'Director (excelente)', p: 9, lo: 0.88, hi: 0.99, col: '#e2a8ff' },
+  { name: 'CEO (perfecta)', p: 1, lo: 1, hi: 1, col: '#ffcb3d' },
 ];
 const PASS_Q = 0.9;   // los premios del pase salen siempre con calidad Excelente
 function rollQ(minTier) {

@@ -185,7 +185,7 @@ function showMulti(res) {
   const cnt = r => res.filter(x => defOf(x.it).rar === r).length, good = res.filter(x => tierOf(avgQ(x.it)) >= 3).length, news = res.filter(x => x.isNew).length;
   const sum = ['legendary', 'epic', 'rare', 'common'].filter(r => cnt(r)).map(r => `${cnt(r)} ${RAR_PL[r][cnt(r) > 1 ? 1 : 0]}`).join(' · ');
   const order = res.slice().sort((a, b) => RAR_ORDER[defOf(a.it).rar] - RAR_ORDER[defOf(b.it).rar] || avgQ(b.it) - avgQ(a.it));
-  card.innerHTML = `<div class="gr-rar ol">TIRADA x${res.length}</div><div class="gr-sum">${sum}${good ? ` · <b>${good} Excelente o mejor</b>` : ''}${news ? ` · ${news} ${news > 1 ? 'nuevas' : 'nueva'}` : ''}</div><div class="gr-grid">${order.map(r => {
+  card.innerHTML = `<div class="gr-rar ol">TIRADA x${res.length}</div><div class="gr-sum">${sum}${good ? ` · <b>${good} Director (excelente) o mejor</b>` : ''}${news ? ` · ${news} ${news > 1 ? 'nuevas' : 'nueva'}` : ''}</div><div class="gr-grid">${order.map(r => {
     const D = defOf(r.it), RR = RARITY[D.rar], T = QTIERS[tierOf(avgQ(r.it))], nw = r.it.k === 'ab' ? 'NUEVA' : 'NUEVO';
     return `<button class="gt" data-gu="${r.it.u}" style="--rc:${RR[1]};--rc2:${RR[2]};--qc:${T.col}" aria-label="${D.name}, ${RR[0]}, calidad ${T.name}"><span class="gt-ic">${r.it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><span class="gt-name">${D.name}</span><span class="gt-q ol">${T.name}</span>${r.isNew ? `<span class="gt-new ol">${nw}</span>` : r.better ? '<span class="gt-new best ol">MEJOR</span>' : ''}</button>`;
   }).join('')}</div><small class="gr-hint">Toca una para ver sus números. Las que no quieras, despídelas en el inventario.</small>`;
@@ -205,11 +205,11 @@ function showPull(it, tag) {
 function buildGachaText() {
   for (const b of document.querySelectorAll('[data-gt]')) b.setAttribute('aria-pressed', String(b.dataset.gt === gachaTab));
   $('#btn-gr-inv').textContent = 'Ver en el inventario';
-  $('#gacha-sub').textContent = gachaTab === 'ab' ? 'Habilidades de cualquier facción para tus cartas. Cada copia sale con su propia calidad, de Básica a Perfecta: búscale la mejor.' : 'Equipo freak solo para los líderes: arma, cabeza y accesorio. Cada objeto sale con su propia calidad y se ve puesto en la partida.';
+  $('#gacha-sub').textContent = gachaTab === 'ab' ? 'Habilidades de cualquier facción para tus cartas. Cada copia sale con su propia calidad, de Becario (básica) a CEO (perfecta): búscale la mejor.' : 'Equipo freak solo para los líderes: arma, cabeza y accesorio. Cada objeto sale con su propia calidad y se ve puesto en la partida.';
   const lab = n => { const c = pullCost(n); return c.gems ? `${fmt(c.gems)} ${GEM_SVG}${c.free ? `<i class="fr">+${c.free} gratis</i>` : ''}` : `${TICKET_SVG} gratis`; };
   for (const b of document.querySelectorAll('[data-pull]')) { const n = +b.dataset.pull; b.innerHTML = `${n === 10 ? '<span class="tag">FAVORITA DEL CEO</span>' : n === 50 ? '<span class="tag">MODO BALLENA</span>' : ''}x${n}<small>${lab(n)}</small>${n >= 10 ? `<span class="sure">${n === 10 ? '1 épica segura' : n / 10 + ' épicas seguras'}</span>` : ''}`; }
   const P = SAVE.pity, O = ECON.odds;
-  $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Calidad de cada efecto (del 50 % al 150 % de su valor): ${QTIERS.map(t => t.name + ' ' + t.p + ' %').join(', ')}. Garantías: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}), legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}) y calidad Excelente o mejor cada ${ECON.pityQ} (llevas ${P['q' + gachaTab] || 0}). Las tiradas x10 y x50 traen al menos una épica o legendaria por cada 10. Cada tirada cuesta ${ECON.pull} gemas (unos 0,50 € si compras el pack pequeño de gemas). Microblizz no se hace responsable de tu afición a las cápsulas.`;
+  $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Calidad de cada efecto (del 50 % al 150 % de su valor): ${QTIERS.map(t => t.name + ' ' + t.p + ' %').join(', ')}. Garantías: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}), legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}) y calidad Director (excelente) o mejor cada ${ECON.pityQ} (llevas ${P['q' + gachaTab] || 0}). Las tiradas x10 y x50 traen al menos una épica o legendaria por cada 10. Cada tirada cuesta ${ECON.pull} gemas (unos 0,50 € si compras el pack pequeño de gemas). Microblizz no se hace responsable de tu afición a las cápsulas.`;
   if (gachaTab === 'cd') buildCardGachaText();   // v0.9.15: la máquina de cartas cambia los textos
   adGachaOffer();   // v0.9.16: tirada gratis con anuncio
 }
@@ -249,7 +249,7 @@ const INV_SORTS = { q: 'calidad', rar: 'rareza', name: 'nombre' };
 const LOCK_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7.5" rx="1.6" fill="#ffcb3d" stroke="#20102c" stroke-width="1.4"/><path d="M5.3 7V5.2a2.7 2.7 0 0 1 5.4 0V7" stroke="#20102c" stroke-width="1.6" fill="none"/></svg>';
 const scrapValue = it => Math.round(ECON.scrap[defOf(it).rar] * [1, 1.5, 2, 3, 5][tierOf(avgQ(it))]);
 const canScrap = it => !it.lock && !wearer(it) && !defOf(it).pass;
-// despido masivo: copias Básicas y Normales que nadie lleva, sin bloquear, y nunca tu mejor copia de cada una
+// despido masivo: copias Becario y Junior que nadie lleva, sin bloquear, y nunca tu mejor copia de cada una
 const massList = () => SAVE.inv.filter(it => it.k === invTab && canScrap(it) && tierOf(avgQ(it)) <= 1 && bestCopy(it.k, it.id) !== it);
 function openInv(tab) { if (tab) invTab = tab; invFilter = 'all'; updateWallets(); show('scr-inv'); buildInv(); $('#inv-list').scrollTop = 0; }
 function buildInv() {
@@ -268,7 +268,7 @@ function buildInv() {
 }
 function invRow(it) {
   const D = defOf(it), R = RARITY[D.rar], w = wearer(it);
-  const meta = w || it.lock ? `<span class="inv-meta">${it.lock ? LOCK_SVG + 'Bloqueada' : ''}${w && it.lock ? ' · ' : ''}${w ? 'Lo lleva ' + w : ''}</span>` : '';
+  const meta = w || it.lock ? `<span class="inv-meta">${it.lock ? LOCK_SVG + 'Contrato indefinido' : ''}${w && it.lock ? ' · ' : ''}${w ? 'Lo lleva ' + w : ''}</span>` : '';
   return `<button class="inv-row" data-u="${it.u}" style="--rc:${R[2]}"><span class="ic" style="background:${R[1]}">${it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><span class="inv-main"><span class="inv-top"><b class="ol">${D.name}</b>${qBadge(it)}</span><span class="inv-desc">${descOf(it)}</span>${meta}</span></button>`;
 }
 let itemSlot = null;   // v0.9.19: la ranura de la Colección desde la que se abrió la ficha
@@ -281,14 +281,14 @@ function openItem(uid, slot) {
   const oth = others.length ? `Tus otras copias: ${others.slice(0, 5).map(x => `${QTIERS[tierOf(avgQ(x))].name} ${Math.round(avgQ(x) * 100)} %`).join(' · ')}${others.length > 5 ? ` y ${others.length - 5} más` : ''}.` : 'Es tu única copia.';
   $('#item-body').innerHTML = `<div class="item-head"><span class="ic" style="background:${R[1]}">${it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><div><b class="ol">${D.name}</b><div class="item-note">${R[0]}${it.k === 'eq' ? ' · ' + SLOTS[D.slot] + ' (solo líderes)' : ''}${it.k === 'ab' && D.fac ? ' · de los ' + FACTIONS[D.fac].name : ''}</div></div></div>
     <div>${qBadge(it, true)}</div><div class="inv-desc">${descOf(it)}</div>${bars}
-    <div class="item-note">${w ? 'Lo lleva ' + w + '.' : 'No lo lleva nadie.'}${pass ? ' Premio del pase: no se puede despedir ni volver a tirar.' : it.lock ? ' Bloqueada: no se puede despedir.' : ''}</div><div class="item-note">${oth}</div>`;
+    <div class="item-note">${w ? 'Lo lleva ' + w + '.' : 'No lo lleva nadie.'}${pass ? ' Premio del pase: no se puede despedir ni volver a tirar.' : it.lock ? ' Contrato indefinido: no se puede despedir.' : ''}</div><div class="item-note">${oth}</div>`;
   const rc = ECON.reroll[D.rar], sv = scrapValue(it);
   $('#item-actions').innerHTML = `<button class="btn-ghost ol btn-ok" id="ia-equip">${w ? 'CAMBIAR' : 'EQUIPAR'}</button><button class="btn-ghost ol" id="ia-unequip" ${w ? '' : 'disabled'}>QUITAR</button>
-    <button class="btn-ghost ol" id="ia-lock" ${pass ? 'disabled' : ''}>${it.lock ? 'DESBLOQUEAR' : 'BLOQUEAR'}</button><button class="btn-ghost ol danger" id="ia-scrap" ${canScrap(it) ? '' : 'disabled'}>DESPEDIR · +${fmt(sv)} ORO</button>
-    <button class="btn-ghost ol wide" id="ia-reroll" ${pass ? 'disabled' : ''}>VOLVER A TIRAR · ${fmt(rc)} ORO</button>`;
+    <button class="btn-ghost ol" id="ia-lock" ${pass ? 'disabled' : ''}>${it.lock ? 'RESCINDIR CONTRATO<small>se puede despedir</small>' : 'CONTRATO INDEFINIDO<small>bloquear: no se despide</small>'}</button><button class="btn-ghost ol danger" id="ia-scrap" ${canScrap(it) ? '' : 'disabled'}>DESPEDIR · +${fmt(sv)} ORO<small>indemnización: desaparece</small></button>
+    <button class="btn-ghost ol wide" id="ia-reroll" ${pass ? 'disabled' : ''}>EVALUACIÓN DE DESEMPEÑO · ${fmt(rc)} ORO<small>vuelve a sortear sus números</small></button>`;
   $('#ia-equip').onclick = () => { if (itemSlot && w) { $('#scr-item').hidden = true; openPick(itemSlot.kind, itemSlot.key); } else equipFromInv(it); };
   $('#ia-unequip').onclick = () => { unequip(it); saveGame(); play('select'); refreshInv(); };
-  $('#ia-lock').onclick = () => { it.lock = !it.lock; saveGame(); play('select'); refreshInv(); toast(it.lock ? 'Bloqueada: ya no se puede despedir' : 'Desbloqueada: ya se puede despedir'); };
+  $('#ia-lock').onclick = () => { it.lock = !it.lock; saveGame(); play('select'); refreshInv(); toast(it.lock ? 'Contrato indefinido: ya no se puede despedir' : 'Contrato rescindido: ya se puede despedir'); };
   $('#ia-scrap').onclick = () => scrapOne(it);
   $('#ia-reroll').onclick = () => rerollOne(it);
   $('#scr-item').hidden = false;
@@ -320,7 +320,7 @@ function rerollOne(it) {
   const D = defOf(it); if (D.pass) return;
   const cost = ECON.reroll[D.rar];
   if (SAVE.gold < cost) { toast(`Te falta oro: ${fmt(cost - SAVE.gold)} más`); play('deny'); return; }
-  confirmBox('VOLVER A TIRAR', `Se vuelven a sortear todos los números de tu <b>${D.name}</b>.<span class="big">${fmt(cost)} ${COIN_SVG}</span><small>Puede salir mejor… o peor. Ahora es ${QTIERS[tierOf(avgQ(it))].name} (${Math.round(avgQ(it) * 100)} %). Mismas probabilidades que el gashapón, sin garantía.</small>`, 'TIRAR', () => {
+  confirmBox('EVALUACIÓN DE DESEMPEÑO', `Se vuelven a sortear todos los números de tu <b>${D.name}</b>.<span class="big">${fmt(cost)} ${COIN_SVG}</span><small>Puede salir mejor… o peor. Ahora es ${QTIERS[tierOf(avgQ(it))].name} (${Math.round(avgQ(it) * 100)} %). Mismas probabilidades que el gashapón, sin garantía.</small>`, 'TIRAR', () => {
     const before = avgQ(it); SAVE.gold -= cost; it.q = it.q.map(() => rollQ(0)); stat('reroll', 1); if (tierOf(avgQ(it)) === 4) stat('perfect', 1); saveGame(); updateWallets();
     const after = avgQ(it), T = QTIERS[tierOf(after)];
     play(after > before ? 'levelup' : 'sad'); toast(after > before ? `¡Ha salido mejor! Ahora es ${T.name} (${Math.round(after * 100)} %)` : `Ha salido peor: ahora es ${T.name} (${Math.round(after * 100)} %). Mala suerte`);
@@ -330,7 +330,7 @@ function rerollOne(it) {
 function massScrap() {
   const L = massList(); if (!L.length) return;
   const gold = L.reduce((a, it) => a + scrapValue(it), 0);
-  confirmBox('DESPIDO MASIVO', `Vas a despedir <b>${L.length} ${L.length === 1 ? 'copia' : 'copias'}</b> de ${invTab === 'ab' ? 'habilidades' : 'equipo'} de calidad Básica y Normal que nadie lleva puestas.<span class="big">+${fmt(gold)} ${COIN_SVG}</span><small>Se salvan las bloqueadas y tu mejor copia de cada una. Microblizz estaría orgullosa.</small>`, 'DESPEDIR A TODAS', () => {
+  confirmBox('DESPIDO MASIVO', `Vas a despedir <b>${L.length} ${L.length === 1 ? 'copia' : 'copias'}</b> de ${invTab === 'ab' ? 'habilidades' : 'equipo'} de calidad Becario y Junior que nadie lleva puestas.<span class="big">+${fmt(gold)} ${COIN_SVG}</span><small>Se salvan las bloqueadas y tu mejor copia de cada una. Microblizz estaría orgullosa.</small>`, 'DESPEDIR A TODAS', () => {
     const del = new Set(L); SAVE.inv = SAVE.inv.filter(x => !del.has(x)); SAVE.gold += gold; stat('scrap', L.length); stat('scrapperf', L.filter(x => tierOf(avgQ(x)) === 4).length); saveGame(); updateWallets(); play('despido'); buildInv(); toast(`${L.length} despedidas: +${fmt(gold)} de oro`);
   });
 }
@@ -469,8 +469,8 @@ function buildShop() {
   };
   if (!SAVE.starter) {
     const P = SHOP.starter;
-    $('#gift-row').insertAdjacentHTML('beforeend', `<div class="pack starter"><span class="joke-flag">1 VEZ</span><div class="pk-ic">${PILE(5, true)}</div><div><div class="pk-name ol">Pack de bienvenida</div><div class="pk-amt ol">${GEM_SVG}${fmt(P.gems)} <span class="pk-plus">+</span> ${COIN_SVG}${fmt(P.gold)}</div><div class="pk-note">Y un objeto épico de equipo con calidad Excelente o mejor. Vale casi el doble que comprarlo por separado. Microblizz lo llama «regalo».</div></div><button class="btn-price ol" id="btn-starter">${eur(P.eur)}</button></div>`);
-    $('#btn-starter').onclick = () => { play('select'); confirmBox('¿COMPRAR?', `Pack de bienvenida<span class="big">${GEM_SVG} ${fmt(P.gems)} · ${COIN_SVG} ${fmt(P.gold)}</span>y un objeto épico de calidad Excelente o mejor, por <b>${eur(P.eur)}</b><small>Versión de prueba: no se cobra nada y te lo llevas gratis. Solo se puede comprar una vez.</small>`, 'COMPRAR', buyStarter); };
+    $('#gift-row').insertAdjacentHTML('beforeend', `<div class="pack starter"><span class="joke-flag">1 VEZ</span><div class="pk-ic">${PILE(5, true)}</div><div><div class="pk-name ol">Pack de bienvenida</div><div class="pk-amt ol">${GEM_SVG}${fmt(P.gems)} <span class="pk-plus">+</span> ${COIN_SVG}${fmt(P.gold)}</div><div class="pk-note">Y un objeto épico de equipo con calidad Director (excelente) o mejor. Vale casi el doble que comprarlo por separado. Microblizz lo llama «regalo».</div></div><button class="btn-price ol" id="btn-starter">${eur(P.eur)}</button></div>`);
+    $('#btn-starter').onclick = () => { play('select'); confirmBox('¿COMPRAR?', `Pack de bienvenida<span class="big">${GEM_SVG} ${fmt(P.gems)} · ${COIN_SVG} ${fmt(P.gold)}</span>y un objeto épico de calidad Director (excelente) o mejor, por <b>${eur(P.eur)}</b><small>Versión de prueba: no se cobra nada y te lo llevas gratis. Solo se puede comprar una vez.</small>`, 'COMPRAR', buyStarter); };
   }
   adShopOffer();   // v0.9.16: regalo x2 y «Sin anuncios»
   const L = SHOP[shopTab], gem = shopTab === 'gems';
