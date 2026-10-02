@@ -1,0 +1,13 @@
+{
+  "name": "fans-of-rumble",
+  "private": true,
+  "description": "Fans of Rumble · lo usa GitHub para fabricar la app de Android (el juego no lo necesita)",
+  "dependencies": {
+    "@capacitor/android": "latest",
+    "@capacitor/app": "latest",
+    "@capacitor/core": "latest"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "latest"
+  }
+}
