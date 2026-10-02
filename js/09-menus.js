@@ -647,6 +647,11 @@ function openPrep(mode, lvl) {
     const ffi = lvl.boss && cd !== 'n' && worldFac(lvl.wi) && !(SAVE.facItem || {})[worldFac(lvl.wi)] ? ` · Y su objeto de facción: ${ITEMS[FAC_ITEM[worldFac(lvl.wi)]].name}` : '';
     const prize = (cd === 'm' && lvl.boss && !SAVE.mythPrize[lvl.wi] ? ' · Al ganar por primera vez: ¡un objeto o habilidad legendario!' : '') + ffi;
     info.innerHTML = `${cd !== 'n' ? `<span class="cd-badge ${cd} ol">${C.name.toUpperCase()}</span>` : ''}<b class="ol">${lvl.name}</b><br>Mundo ${lvl.wi + 1}: ${Wd.name}. Rival: ${enemyLabel(Wd.efac)}, nivel ${cd === 'n' ? lvl.elvl : C.lvl(lvl)}${lvl.boss ? ', con jefe y sus habilidades' : ''}.${extra}<br><span class="stars">${'★'.repeat(st)}<span style="color:#4a3866">${'★'.repeat(3 - st)}</span></span> Estrellas: ganar · sin perder ninguna torre · tirando su base.<br><span class="rw">${st ? `Recompensa: ${ECON.camp.replay * pay} de oro` : `Primera vez: ${fr[0] * pay} de oro y ${fr[1] * pay} gemas`}${st < 3 ? ` · 3 estrellas: +${ECON.camp.stars3[0] * pay} de oro y ${ECON.camp.stars3[1] * pay} gemas` : ''}${prize}</span>`;
+  } else if (mode === 'sandbox') {   // v0.9.20
+    $('#prep-title').textContent = 'SALA DE PRUEBAS';
+    info.innerHTML = 'Aquí no se gana ni se pierde nada: <b>CAOS infinito</b>, el tiempo no corre y tú decides qué enemigos salen y en qué campo. Prueba tu mazo, tus hechizos y tu equipo.<br><span class="rw">Sin premios ni experiencia.</span>';
+  } else if (mode === 'arena') {   // v0.9.20
+    $('#prep-title').textContent = 'ARENA'; buildArenaPrep();
   } else if (mode === 'boss') {
     $('#prep-title').textContent = 'MODO JEFE';
     buildBossPrep();   // v0.9.15
@@ -671,16 +676,20 @@ function setupMatch(mode, lvl, cd) {
     G.bossWi = wi; G.bossDiff = d;
     G.efac = B.efac; G.elvl = Math.min(12, avgLevel(G.faction) + BD.lvl); G.bossOn = true; G.bossName = B.name; G.ebaseName = wi === CEO_WI ? 'EL CEO' : B.name.toUpperCase();
     G.diffCfg = Object.assign({}, CFG.diff.normal, { aiIncome: B.inc * BD.inc, think: BD.think.slice(), bossCd: BD.cd, stun: BD.stun, despido: 20 + G.elvl * 2 });
+  } else if (mode === 'sandbox') {   // v0.9.20: sala de pruebas
+    G.efac = SB.fac; G.elvl = avgLevel(G.faction); G.bossOn = false; G.bossName = ''; G.ebaseName = 'MUÑECO DE PRUEBAS'; G.diffCfg = Object.assign({}, CFG.diff.normal);
+  } else if (mode === 'arena') {   // v0.9.20: arena contra «jugadores» inventados
+    arenaSetup();
   } else {
     G.efac = 'microblizz'; G.elvl = avgLevel(G.faction); G.bossOn = true; G.bossName = 'SurvivalBot'; G.ebaseName = 'SURVIVALBOT'; G.diffCfg = CFG.diff[G.diff];
   }
-  const deck = mode === 'boss' ? WORLDS[G.bossWi].levels[3].deck || null : G.level && G.level.deck ? G.level.deck : G.efac === 'microblizz' && mode === 'quick' ? ['becario', 'starbot', 'fallen'] : null;
+  const deck = mode === 'arena' ? G.arenaDeck : mode === 'sandbox' ? null : mode === 'boss' ? WORLDS[G.bossWi].levels[3].deck || null : G.level && G.level.deck ? G.level.deck : G.efac === 'microblizz' && mode === 'quick' ? ['becario', 'starbot', 'fallen'] : null;
   G.classicAI = G.efac === 'microblizz' && !!deck && deck.every(k => ['becario', 'starbot', 'fallen'].includes(k));
   G.edeck = deck;
-  G.eextra = enemyExtras(mode, lvl);   // v0.9.15: hechizos y mata-sanadores de la CPU
+  G.eextra = mode === 'arena' ? (G.arenaSpells || []) : mode === 'sandbox' ? [] : enemyExtras(mode, lvl);   // v0.9.15: hechizos y mata-sanadores de la CPU
   if (mode === 'boss' && BDIFF[G.bossDiff].gear) { const BD = BDIFF[G.bossDiff]; G.egear = ENEMY_GEAR[BD.gear][G.bossWi]; G.egearQ = BD.q; if (isCorp(G.efac)) G.egearOn = G.efac === 'phony' ? PH_GEAR_ON : MB_GEAR_ON; }
   if (G.cdiff !== 'n') setupHardMode(lvl);
-  G.terrain = terrainFor(mode, lvl);   // v0.9.18: campo especial de algunos jefes
+  G.terrain = mode === 'sandbox' ? SB.terrain : terrainFor(mode, lvl);   // v0.9.18: campo especial de algunos jefes
 }
 // v0.9.15: la CPU también lanza hechizos (y en Difícil y Mítica saca a su mata-sanadores)
 function enemyExtras(mode, lvl) {
@@ -699,12 +708,14 @@ function startGame() {
 }
 /* ---------- recompensas al terminar ---------- */
 function grantRewards() {
+  if (G.mode === 'sandbox') return { gold: 0, gems: 0, xp: [], stars: 0, unlock: null, record: false, ready: [], passXp: 0 };   // v0.9.20: la sala de pruebas no da nada
   const R = { gold: 0, gems: 0, xp: [], stars: 0, unlock: null, record: false, ready: [] }, win = G.winner === 'p', w = G.winner;
   for (const [k, n] of Object.entries(S.p.plays)) {
     const us = uSave(k); if (us.lvl >= ECON.maxLvl) continue;
     const x = Math.round(n * ECON.xpPerPlay * (win ? ECON.winXpMult : 1)); us.xp += x; R.xp.push([k, x]); if (canLevel(k)) R.ready.push(k);
   }
   if (G.mode === 'quick') R.gold = win ? ECON.quick[G.diff] : ECON.quick.lose;
+  else if (G.mode === 'arena') arenaReward(R, w);   // v0.9.20
   else if (G.mode === 'camp') {
     const L = G.level, cd = G.cdiff || 'n', pay = CDIFF[cd].pay || 1, prev = starsD(L.id, cd);
     if (win) {
@@ -989,6 +1000,7 @@ function showEnd() {
   if (R.gems) rw += `<span class="rw-chip ol">${GEM_SVG}+${fmt(R.gems)}</span>`;
   if (R.xp.length) rw += `<div class="rw-xp">Experiencia: ${R.xp.map(([k, x]) => `${CFG.cards[k].name} +${x}`).join(' · ')}</div>`;
   if (R.ready.length) rw += `<div class="rw-xp" style="color:#9ef07a">¡Listas para subir de nivel en la Colección: ${R.ready.map(k => CFG.cards[k].name).join(', ')}!</div>`;
+  if (R.arena) rw += `<span class="rw-chip big ol">${R.arena.d >= 0 ? '+' : ''}${R.arena.d} COPAS · ${fmt(R.arena.cups)} · LIGA ${R.arena.league.toUpperCase()}</span>`;   // v0.9.20
   $('#end-rewards').innerHTML = rw; adEndOffer(R);   // v0.9.16: premio x2 con anuncio
   $('#end-pass').innerHTML = passLevel() >= PASS.levels && !R.passUp ? 'Pase de batalla completado' : `Pase de batalla: +${R.passXp} puntos${R.passUp ? ` · <b style="color:#ffe14d">¡NIVEL ${passLevel()}!</b>` : ` · ${SAVE.pass.xp - passLevel() * PASS.xpPer}/${PASS.xpPer} para el nivel ${passLevel() + 1}`}`;
   $('#end-quote').textContent = R.unlock ? `${capFirst(losOf(R.unlock))} se libran de ${ownerName()} y se unen a la rebelión.` : pick((ownerOf() === 'phony' ? QUOTES_PH : QUOTES)[w || 'd']);

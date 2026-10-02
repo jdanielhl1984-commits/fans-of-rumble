@@ -60,6 +60,7 @@ function applySpawnMods(u) {
   else if (M) { if (M.buf.id === 'horas') u.mCd *= 0.7; if (M.buf.id === 'robots') u.mHp *= 1.25; if (M.buf.id === 'bonus') u.mDmg *= 1.25; if (M.buf.id === 'turbo') u.mSpeed *= 1.25; }
   if (team === 'e' && G.mode === 'camp' && G.cdiff && G.cdiff !== 'n') { const el = CDIFF[G.cdiff].elite; u.mHp *= el; u.mDmg *= el; }   // tropas de élite en Difícil y Mítica
   if (team === 'e' && G.mode === 'boss' && G.bossDiff && G.bossDiff !== 'n') { const el = BDIFF[G.bossDiff].elite; u.mHp *= el; u.mDmg *= el; }   // v0.9.15: y en el Modo Jefe
+  const FB = FAC_BAL[f]; if (FB) { u.mHp *= FB.hp; u.mDmg *= FB.dmg; }   // v0.9.20: ajuste de equilibrio por facción (01-config.js)
   u.hpBase = u.d.hp * u.mHp * u.mLvl;
   u.maxHp = Math.round(u.hpBase * (f === 'heroes' ? 1 + S[team].xpLvl * P.heroes.step : 1)); u.hp = u.maxHp;
   if (f === 'ciber') u.shieldMax = u.shield = Math.round(u.maxHp * P.ciber.frac);
@@ -333,10 +334,11 @@ function dmgMult(u) {
   return m;
 }
 // Hype (Streamers), Turbo (Memes) y equipo/habilidades aceleran los ataques
-const cdMult = u => (u.mCd || 1) * (u.actT > 0 ? 0.7 : 1) * (u.zombT > 0 ? 2 : 1) * (u.hasteT > 0 ? 0.7 : 1) / (S && facOf(u.team) === 'streamers' ? 1 + S[u.team].hypeLvl * CFG.passives.streamers.step : 1);
+const cdMult = u => (u.mCd || 1) * (u.actT > 0 ? 0.7 : 1) * (u.zombT > 0 ? 2 : 1) * (u.hasteT > 0 ? 0.7 : 1) * (u.crunchT > 0 ? 0.5 : 1) / (S && facOf(u.team) === 'streamers' ? 1 + S[u.team].hypeLvl * CFG.passives.streamers.step : 1);
 function topOf(e) { return e.kind === 'unit' ? TYPES[e.type].top * (e.mScale || 1) * (e.shrinkT > 0 ? e.shrinkF || 0.6 : 1) : TOPS[e.skin + '_' + e.role]; }
 function hurt(t, amount, src, style = 'hit') {
   if (!t || !t.alive) return;
+  if (t.kind === 'struct' && t.reviewUntil > G.t) amount *= 1 + (t.reviewAmp || 0.4);   // v0.9.20: Review bombing
   if (src && src.kind === 'unit') for (const c of units) if (c.abCute && c.alive && c.team !== src.team && dist(c, src) <= 75) { amount *= 1 - c.abCute; break; }   // orejas de gato
   if (t.kind === 'unit') {
     if (t.jump) return;
@@ -366,6 +368,7 @@ function hurt(t, amount, src, style = 'hit') {
   }
   amount = Math.round(amount);
   if (G.mode === 'boss' && t === bases.e) S.p.bossDmg += Math.min(amount, Math.max(0, t.hp));
+  if (G.mode === 'sandbox' && t.team === 'e') sbDamage(amount);   // v0.9.20: contador de daño
   t.hp -= amount; t.hitT = 0.12;
   if (src && src.abVamp && src.alive && src.kind === 'unit') { const hv = Math.min(src.maxHp - src.hp, amount * src.abVamp); src.hp += hv; if (hv >= 2 && Math.random() < 0.45) addNum(src.x + rand(-5, 5), src.y, topOf(src) * 0.75 + 8, '+' + Math.round(hv), '#8cf05a', 13); }
   const col = style === 'crit' ? '#ffd23f' : style === 'aoe' ? '#f3a6ff' : style === 'boss' ? '#ff6b7a' : style === 'rage' ? '#ff8a3d' : '#ffffff';
@@ -942,14 +945,15 @@ function endMatch(w, reason) {
 }
 function updateGame(dt) {
   if (G.state === 'play') {
-    G.time -= dt;
+    if (G.mode !== 'sandbox') G.time -= dt;   // v0.9.20: en la sala de pruebas el tiempo no corre
     if (!G.double && G.time <= CFG.doubleAt) { G.double = true; $('#x2').hidden = false; banner('¡CAOS x2!', 'Último minuto: el CAOS se recarga el doble de rápido', 'chaos'); play('go'); chatSay('x2'); }
     chatTick(dt); chatWatch(dt);
     const rate = (G.double ? 2 : 1) / CFG.chaosEvery;
     S.p.chaos = Math.min(CFG.chaosMax, S.p.chaos + dt * rate * (G.pInc || 1));
     S.e.chaos = Math.min(CFG.chaosMax, S.e.chaos + dt * rate * G.diffCfg.aiIncome);
     for (const t of ['p', 'e']) if (S[t].leaderCd > 0) S[t].leaderCd = Math.max(0, S[t].leaderCd - dt);
-    if (G.classicAI) aiUpdate('e', dt); else aiGeneric('e', dt);
+    if (G.mode === 'sandbox') { S.p.chaos = CFG.chaosMax; S.e.chaos = CFG.chaosMax; if (SB.ai) aiGeneric('e', dt); sbTick(dt); }
+    else if (G.classicAI) aiUpdate('e', dt); else aiGeneric('e', dt);
     terrainUpdate(dt);   // v0.9.18
     if (G.efac === 'phony') {   // v0.9.13: cada 20 s Phony te cobra la suscripción
       const PS = CFG.passives.phony; if (S.e.subT == null) S.e.subT = PS.every;

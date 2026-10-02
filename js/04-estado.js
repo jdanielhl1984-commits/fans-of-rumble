@@ -39,6 +39,7 @@ function resetMatch() {
   if (G.mode === 'boss') { for (const t of towers.e) { t.alive = false; t.hidden = true; } bases.e.hp = bases.e.maxHp = bossHp(G.bossWi == null ? CEO_WI : G.bossWi, G.bossDiff); }
   else if (G.level && G.level.baseHp) bases.e.hp = bases.e.maxHp = G.level.baseHp;
   else if (G.level && G.level.boss) bases.e.hp = bases.e.maxHp = 2400;
+  if (G.mode === 'sandbox') for (const s of [...towers.p, ...towers.e, bases.p, bases.e]) s.hp = s.maxHp = 999999;   // v0.9.20: en la sala de pruebas no se cae nada
   structs = [...towers.p, ...towers.e, bases.p, bases.e];
   G.time = G.mode === 'boss' ? BOSS_MODE.time : CFG.matchTime; G.double = false; G.winner = null; G.shake = 0; G.slowmo = 1; G.layoffShown = false; G.subShown = false;
   AI.p = { think: 1.5, plan: null }; AI.e = { think: 2.5, plan: null };

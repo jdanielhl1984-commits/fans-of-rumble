@@ -25,6 +25,8 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - Chat falso en directo que comenta lo que pasa en la partida: tus cartas, las torres, los jefes, las remontadas…
 - Zoom con dos dedos en combate y campos especiales en algunos jefes (el primero: un río de lava).
 - Anuncios con premio (de prueba, solo si quieres) y «Sin anuncios» en la tienda.
+- **Sala de pruebas** (sin premios) y **Arena** sin internet contra «jugadores» inventados, con copas y ligas.
+- La carpeta `herramientas/` tiene los simuladores que miden el equilibrio (facción contra facción) y el progreso de un jugador que no paga.
 - Funciona en el móvil y en el PC. **Se puede instalar como una app** (Opciones → Instalar) y funciona sin internet. El progreso se guarda en el navegador.
 
 ## Archivos
@@ -39,4 +41,4 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
   - `09-menus.js`, `10-dificultad.js` (Difícil, Mítica y ruleta), `11-logros.js`, `12-app-y-preparacion.js`, `13-horas-extra.js`, `14-cartas-y-jefes.js` (hechizos, mazo, Modo Jefe) y `15-arranque.js` (va el último).
 - `manifest.webmanifest`, `sw.js` e iconos (`icon-192.png`, `icon-512.png`, `icon-maskable.png`): para instalarlo como app y jugar sin conexión.
 
-Prototipo en desarrollo (versión 0.9.19). Todo el arte, el sonido y la música están hechos con código.
+Prototipo en desarrollo (versión 0.9.20). Todo el arte, el sonido y la música están hechos con código.

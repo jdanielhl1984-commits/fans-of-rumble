@@ -15,6 +15,19 @@ const BRIDGE_HALF = 27;
 const BOUNDS = { x0: 18, x1: 522, y0: 66, y1: 782 };
 const ZONE = { p: { y0: 452, y1: 738 }, e: { y0: 72, y1: 388 } };
 
+// v0.9.20: ajuste de equilibrio por facción, medido con miles de partidas automáticas (facción contra facción).
+// Multiplica la vida (hp) y el daño (dmg) de TODAS las unidades de esa facción, juegue quien juegue con ella. 1 = sin cambios.
+const FAC_BAL = {
+  animales:  { hp: 1.32, dmg: 1.25 },
+  nomuertos: { hp: 0.80, dmg: 0.88 },
+  streamers: { hp: 1.00, dmg: 1.00 },
+  heroes:    { hp: 1.05, dmg: 1.04 },
+  ciber:     { hp: 0.95, dmg: 0.94 },
+  memes:     { hp: 0.92, dmg: 0.94 },
+  gamer:     { hp: 1.38, dmg: 1.33 },
+  olvidados: { hp: 1.07, dmg: 1.06 },
+  pop:       { hp: 1.09, dmg: 1.08 },
+};
 const CFG = {
   matchTime: 240,          // 4:00
   doubleAt: 60,            // último minuto: CAOS x2
@@ -143,6 +156,8 @@ const CFG = {
     sp_likes: { name: "Like masivo", cost: 3, count: 1, rarity: 'rare', rar: 'Rara', tag: 'Hechizo · cura', desc: "Mil likes de golpe: curan 140 a tus tropas de una zona grande.", gacha: true, fac: 'memes', spell: { side: "ally", kind: "heal", r: 100, amt: 140, fx: "heart", col: "#ff5fa8" } },
     sp_confusion: { name: "Confusión", cost: 4, count: 1, rarity: 'legendary', rar: 'Legendaria', tag: 'Hechizo · loco', desc: "Nadie entiende el meme: los enemigos de la zona se pelean entre ellos durante 3 s.", gacha: true, fac: 'memes', spell: { side: "foe", kind: "confuse", r: 80, t: 3, fx: "swirl", col: "#ff3df0", label: "¿EH?" } },
     sp_critico: { name: "Golpe crítico", cost: 4, count: 1, rarity: 'rare', rar: 'Rara', tag: 'Hechizo · daño', desc: "¡CRÍTICO! Un golpe enorme en una zona pequeña: 300 de daño.", gacha: true, fac: 'gamer', spell: { side: "foe", kind: "dmg", r: 45, amt: 300, bld: 0.45, fx: "sword", col: "#ff4b5c" } },
+    sp_crunch: { name: "Crunch", cost: 3, count: 1, rarity: 'epic', rar: 'Épica', tag: 'Hechizo · loco', desc: "Semana de crunch: tus tropas de la zona atacan el doble de rápido durante 6 s… pero se van quemando (pierden un 4 % de vida por segundo).", gacha: true, fac: 'nomuertos', spell: { side: "ally", kind: "crunch", r: 85, t: 6, drain: 0.04, fx: "clock", col: "#ff8a3d", label: "¡CRUNCH!" } },
+    sp_review: { name: "Review bombing", cost: 3, count: 1, rarity: 'epic', rar: 'Épica', tag: 'Hechizo · loco', desc: "La comunidad llena la tienda de reseñas de 1 estrella: las torres y la sede del rival en la zona reciben un 40 % más de daño durante 8 s.", gacha: true, fac: 'gamer', spell: { side: "foe", kind: "review", r: 80, t: 8, amp: 0.4, fx: "letter", col: "#ffcb3d", label: "★☆☆☆☆" } },
     sp_energetica: { name: "Bebida energética", cost: 3, count: 1, rarity: 'rare', rar: 'Rara', tag: 'Hechizo · cura', desc: "Una lata para todos: cura 120 a tus tropas de la zona y atacan un 30 % más rápido durante 5 s.", gacha: true, fac: 'gamer', spell: { side: "ally", kind: "heal", r: 85, amt: 120, haste: 5, fx: "can", col: "#7be04a" } },
     sp_ping: { name: "Ping de 999", cost: 3, count: 1, rarity: 'legendary', rar: 'Legendaria', tag: 'Hechizo · loco', desc: "Lag horrible: los enemigos de la zona dan un salto hacia atrás y se quedan congelados 1 s.", gacha: true, fac: 'gamer', spell: { side: "foe", kind: "knock", r: 85, d: 80, t: 1, fx: "wifi", col: "#ff4b5c", label: "LAG" } },
     sp_cartuchos: { name: "Lluvia de cartuchos", cost: 3, count: 1, rarity: 'rare', rar: 'Rara', tag: 'Hechizo · daño', desc: "Caen cartuchos de juegos olvidados: 150 de daño en la zona.", gacha: true, fac: 'olvidados', spell: { side: "foe", kind: "dmg", r: 80, amt: 150, bld: 0.35, fx: "cart", col: "#a16207" } },
@@ -347,7 +362,7 @@ const TYPES = {
   espia: { top: 49, foot: "#1f2937" },
   paparazzi: { top: 46, foot: "#1e3a8a" },
 };
-const TOPS = { ceo: 64, presi: 64, sp_bellotas: 46, sp_botiquin: 46, sp_pulgas: 46, sp_lapidas: 46, sp_formol: 46, sp_eternas: 46, sp_donaciones: 46, sp_merienda: 46, sp_baneo: 46, sp_rayo: 46, sp_ambrosia: 46, sp_nerfeo: 46, sp_orbital: 46, sp_nanobots: 46, sp_update: 46, sp_gatos: 46, sp_likes: 46, sp_confusion: 46, sp_critico: 46, sp_energetica: 46, sp_ping: 46, sp_cartuchos: 46, sp_parchefan: 46, sp_cancelado: 46, sp_taquilla: 46, sp_maquillaje: 46, sp_remake: 46, sp_despido: 46, sp_cobro: 46, p_tower: 86, p_base: 106, e_tower: 88, e_base: 140, u_tower: 84, u_base: 110, s_tower: 88, s_base: 104, h_tower: 106, h_base: 112, c_tower: 78, c_base: 102, m_tower: 90, m_base: 112, o_tower: 88, o_base: 104, y_tower: 92, y_base: 124, k_tower: 80, k_base: 108, g_tower: 82, g_base: 102 };
+const TOPS = { ceo: 64, presi: 64, sp_crunch: 46, sp_review: 46, sp_bellotas: 46, sp_botiquin: 46, sp_pulgas: 46, sp_lapidas: 46, sp_formol: 46, sp_eternas: 46, sp_donaciones: 46, sp_merienda: 46, sp_baneo: 46, sp_rayo: 46, sp_ambrosia: 46, sp_nerfeo: 46, sp_orbital: 46, sp_nanobots: 46, sp_update: 46, sp_gatos: 46, sp_likes: 46, sp_confusion: 46, sp_critico: 46, sp_energetica: 46, sp_ping: 46, sp_cartuchos: 46, sp_parchefan: 46, sp_cancelado: 46, sp_taquilla: 46, sp_maquillaje: 46, sp_remake: 46, sp_despido: 46, sp_cobro: 46, p_tower: 86, p_base: 106, e_tower: 88, e_base: 140, u_tower: 84, u_base: 110, s_tower: 88, s_base: 104, h_tower: 106, h_base: 112, c_tower: 78, c_base: 102, m_tower: 90, m_base: 112, o_tower: 88, o_base: 104, y_tower: 92, y_base: 124, k_tower: 80, k_base: 108, g_tower: 82, g_base: 102 };
 // por piel de edificio: [boca de disparo x, altura] y proyectil [torre, base]
 const SKINS = {
   p: { tower: [0, 68], base: [0, 70], shot: ['acorn', 'carrot'], chips: ['#8b5530', '#d39a5f', '#ff7a1a'] },
@@ -379,7 +394,7 @@ const FACTION_ORDER = ['animales', 'nomuertos', 'streamers', 'heroes', 'ciber', 
 // v0.9.15: cartas del gashapón de cada facción (mata-sanadores, hechizo de daño, de cura y uno loco)
 const HEALER_SPELL = 1.5;   // v0.9.15: los hechizos de daño hacen un 50 % más a los sanadores
 for (const k in CFG.cards) { const c = CFG.cards[k]; if (c.spell && c.spell.kind === 'dmg') c.desc += ' A los sanadores, un 50 % más.'; }
-const GACHA_CARDS = {"animales": ["huron", "sp_bellotas", "sp_botiquin", "sp_pulgas"], "nomuertos": ["sombra", "sp_lapidas", "sp_formol", "sp_eternas"], "streamers": ["hater", "sp_donaciones", "sp_merienda", "sp_baneo"], "heroes": ["arpia", "sp_rayo", "sp_ambrosia", "sp_nerfeo"], "ciber": ["dron", "sp_orbital", "sp_nanobots", "sp_update"], "memes": ["clickbait", "sp_gatos", "sp_likes", "sp_confusion"], "gamer": ["campero", "sp_critico", "sp_energetica", "sp_ping"], "olvidados": ["espia", "sp_cartuchos", "sp_parchefan", "sp_cancelado"], "pop": ["paparazzi", "sp_taquilla", "sp_maquillaje", "sp_remake"]};
+const GACHA_CARDS = {"animales": ["huron", "sp_bellotas", "sp_botiquin", "sp_pulgas"], "nomuertos": ["sombra", "sp_lapidas", "sp_formol", "sp_eternas", "sp_crunch"], "streamers": ["hater", "sp_donaciones", "sp_merienda", "sp_baneo"], "heroes": ["arpia", "sp_rayo", "sp_ambrosia", "sp_nerfeo"], "ciber": ["dron", "sp_orbital", "sp_nanobots", "sp_update"], "memes": ["clickbait", "sp_gatos", "sp_likes", "sp_confusion"], "gamer": ["campero", "sp_critico", "sp_energetica", "sp_ping", "sp_review"], "olvidados": ["espia", "sp_cartuchos", "sp_parchefan", "sp_cancelado"], "pop": ["paparazzi", "sp_taquilla", "sp_maquillaje", "sp_remake"]};
 for (const f in GACHA_CARDS) FACTIONS[f].gacha = GACHA_CARDS[f];
 // Microblizz: solo rival (no tiene líder: su jefe es SurvivalBot, encima de la sede)
 FACTIONS.microblizz = { name: 'Microblizz', pname: 'Despidos rentables', leader: null, units: ['becario', 'starbot', 'fallen', 'cajabotin', 'soportebot', 'parchebot'], skin: 'e', base: 'SURVIVALBOT', passive: 'DESPIDOS RENTABLES', kind: 'enemy', end: 'la Sede de Microblizz' };
@@ -401,7 +416,7 @@ const ROLES = { twitchking: 'tank', subswarm: 'swarm', hypebeast: 'assassin', vi
   directora: 'support', extras: 'swarm', doble: 'assassin', detective: 'ranged', heroe: 'tank', spoiler: 'control', kaiju: 'buster',
   descargabot: 'swarm', licenciabot: 'ranged', plusbot: 'support', cobradlc: 'buster', servidorbot: 'tank', remasterbot: 'tank',
   // v0.9.15
-  huron: 'assassin', sombra: 'assassin', hater: 'assassin', arpia: 'assassin', dron: 'assassin', clickbait: 'assassin', campero: 'assassin', espia: 'assassin', paparazzi: 'assassin', sp_bellotas: 'spell', sp_botiquin: 'spell', sp_pulgas: 'spell', sp_lapidas: 'spell', sp_formol: 'spell', sp_eternas: 'spell', sp_donaciones: 'spell', sp_merienda: 'spell', sp_baneo: 'spell', sp_rayo: 'spell', sp_ambrosia: 'spell', sp_nerfeo: 'spell', sp_orbital: 'spell', sp_nanobots: 'spell', sp_update: 'spell', sp_gatos: 'spell', sp_likes: 'spell', sp_confusion: 'spell', sp_critico: 'spell', sp_energetica: 'spell', sp_ping: 'spell', sp_cartuchos: 'spell', sp_parchefan: 'spell', sp_cancelado: 'spell', sp_taquilla: 'spell', sp_maquillaje: 'spell', sp_remake: 'spell', sp_despido: 'spell', sp_cobro: 'spell' };
+  huron: 'assassin', sombra: 'assassin', hater: 'assassin', arpia: 'assassin', dron: 'assassin', clickbait: 'assassin', campero: 'assassin', espia: 'assassin', paparazzi: 'assassin', sp_bellotas: 'spell', sp_botiquin: 'spell', sp_pulgas: 'spell', sp_lapidas: 'spell', sp_formol: 'spell', sp_eternas: 'spell', sp_donaciones: 'spell', sp_merienda: 'spell', sp_baneo: 'spell', sp_rayo: 'spell', sp_ambrosia: 'spell', sp_nerfeo: 'spell', sp_orbital: 'spell', sp_nanobots: 'spell', sp_update: 'spell', sp_gatos: 'spell', sp_likes: 'spell', sp_confusion: 'spell', sp_critico: 'spell', sp_crunch: 'spell', sp_review: 'spell', sp_energetica: 'spell', sp_ping: 'spell', sp_cartuchos: 'spell', sp_parchefan: 'spell', sp_cancelado: 'spell', sp_taquilla: 'spell', sp_maquillaje: 'spell', sp_remake: 'spell', sp_despido: 'spell', sp_cobro: 'spell' };
 const isLeader = k => !!CFG.cards[k] && CFG.cards[k].rarity === 'leader';
 const cardDef = k => CFG.cards[k] || CFG.enemyCards[k];
 // invocaciones que no son carta: suben de nivel con su carta "madre"

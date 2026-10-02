@@ -208,7 +208,11 @@ function onLand(u) {
 }
 function tickExtras(u, dt) {
   if (u.ignT > 0) u.ignT -= dt;
-  for (const k of ['disarmT', 'zombT', 'shrinkT', 'confT', 'hasteT']) if (u[k] > 0) { u[k] -= dt; if (k === 'confT' && u[k] <= 0) { u.target = null; u.retarget = 0; } }   // v0.9.15: efectos de hechizos
+  for (const k of ['disarmT', 'zombT', 'shrinkT', 'confT', 'hasteT', 'crunchT']) if (u[k] > 0) { u[k] -= dt; if (k === 'confT' && u[k] <= 0) { u.target = null; u.retarget = 0; } }   // v0.9.15: efectos de hechizos
+  if (u.crunchT > 0) {   // v0.9.20: hechizo Crunch: pega el doble de rápido pero se va quemando
+    u.crAcc = (u.crAcc || 0) + u.maxHp * (u.crunchDrain || 0.04) * dt; u.crTk = (u.crTk || 0) + dt;
+    if (u.crTk >= 0.5 && u.crAcc >= 1) { const n = Math.floor(u.crAcc); u.crAcc -= n; u.crTk = 0; if (u.hp - n >= 1) u.hp -= n; else hurt(u, n, null, 'rage'); if (Math.random() < 0.12) addNum(u.x, u.y, topOf(u) + 16, pick(['¡CRUNCH!', '¿Y las vacaciones?', 'Café nº 14']), '#ff8a3d', 12); }
+  }
   if (u.bshT > 0) { u.bshT -= dt; if (u.bshT <= 0) u.bshield = 0; }
   if (u.actT > 0) u.actT -= dt;
   if (u.markT > 0) u.markT -= dt;

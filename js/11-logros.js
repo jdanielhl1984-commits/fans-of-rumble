@@ -163,7 +163,8 @@ function achInit() {   // los logros de la 0.9.13 (una lista de ids) pasan al fo
   SAVE.achV = 2;
 }
 let achNew = 0, achNewName = '', achT = 0, achScanT = 0;
-function stat(ev, n) { if (!n) return; SAVE.stats[ev] = (SAVE.stats[ev] || 0) + n; achSoon(); }
+function stat(ev, n) { if (!n || (G.mode === 'sandbox' && G.state !== 'title')) return;   // v0.9.20: la sala de pruebas no cuenta para logros ni misiones
+  SAVE.stats[ev] = (SAVE.stats[ev] || 0) + n; achSoon(); }
 function achSoon() { if (!achScanT) achScanT = setTimeout(() => { achScanT = 0; achScan(); }, 0); }
 function achScan() {   // marca los niveles conseguidos (se quedan aunque luego bajes) y avisa con un solo mensaje
   if (SAVE.achV !== 2) achInit();
@@ -252,14 +253,12 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>Los 12 jefes tienen su propio campo</b>, con río, puentes, suelo y sorpresas distintas. Afecta a los dos bandos:',
-    'Café que resbala y cartas de despido (SurvivalBot) · túnel bajo el río donde no se ve la pelea y tumbas que agarran (NecroLord) · cables y focos (TwitchKing) · <b>río helado</b> que se cruza por donde quieras (EpicChampion).',
-    'Lava con grietas en sitios distintos cada vez y meteoritos (CyberMarine) · río de chocolate, puentes de galleta y chicle (MemeLord) · piezas de construcción y <b>diapositivas del CEO</b> (CEO).',
-    'Un solo puente y ratoneras (Vikingo) · río de discos de verdad y lluvia de CDs (PayStation) · alfombras turbo y picos de lag (ProGamer) · río arcoíris, pintura y maquillaje que cura (LaDirectora) · <b>puentes con peaje</b> (Presidente de Phony).',
-    'Lo que va a caer del cielo avisa con una sombra y un círculo. Los que vuelan no pisan las zonas del suelo.',
-    '<b>Opciones</b>: quitar los números de daño (solo verás las barras) y poner sangre (una niebla roja pequeña al pegar).',
-    'En la Colección vuelven la <b>Evaluación de desempeño</b>, el <b>Contrato indefinido</b> y las calidades Becario, Junior, Senior, Director y CEO.'],
-  joke: ['Microblizz cobra 2,99 € por cada puente. El tercero viene en el pase.', 'Phony ha instalado peajes en el río. Dice que es «para mejorar la experiencia».', 'El CEO ha preparado 300 diapositivas. Solo ha tirado 12. Quedan 288.'],
+  real: ['<b>Equilibrio de facciones</b>: medido con miles de partidas automáticas. Antes una facción ganaba el 94 % y otra el 6 %; ahora todas quedan entre el 47 % y el 54 %. Animales Locos y Comunidad Gamer, más fuertes; No-Muertos y Memes, algo menos.',
+    '<b>Sala de pruebas</b> (abajo en el menú): CAOS infinito, el tiempo no corre y nada se cae. Saca grupos, tanques, sanadores, tiradores o líderes de cualquier rival, enciende su IA, cambia al campo de cualquier jefe y mira el daño por segundo. Sin premios.',
+    '<b>Arena</b> (abajo en el menú): elige uno de 3 «jugadores» inventados, gana copas y sube de liga: Becario, Junior, Senior, Director y CEO.',
+    '<b>Hechizos nuevos</b> en el gashapón de cartas: <b>Crunch</b> (No-Muertos: tus tropas pegan el doble de rápido, pero se van quemando) y <b>Review bombing</b> (Comunidad Gamer: las torres y la sede del rival reciben un 40 % más de daño).',
+    'De antes: campos propios para los 12 jefes y opciones de números de daño y sangre.'],
+  joke: ['Microblizz ha probado su juego en la sala de pruebas. Dice que está «equilibrado»: gana siempre ella.', 'Phony cobra la Arena como DLC. Aquí es gratis y las copas no se venden.', 'El CEO hizo Crunch tres semanas para entregar esta versión. Él no, sus empleados.'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;

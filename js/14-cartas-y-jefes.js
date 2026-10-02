@@ -73,6 +73,12 @@ function applySpell(sp) {
     case 'confuse': for (const o of cc) { o.confT = D.t; o.target = null; o.retarget = 0; } play('laugh'); break;
     case 'knock': for (const o of cc) { const dir = o.team === 'e' ? -1 : 1; o.y = clamp(o.y + dir * D.d, BOUNDS.y0, BOUNDS.y1); o.x = clamp(o.x + rand(-14, 14), BOUNDS.x0, BOUNDS.x1); o.stunT = Math.max(o.stunT, D.t); o.stunKind = 'lag'; o.target = null; puff(o.x, o.y, 6, '#ff9aa6', 40, 5, true); } play('blink'); break;
     case 'ban': for (const o of cc) { o.banT = D.t; o.target = null; } play('slam'); break;
+    case 'crunch': for (const o of allies) { o.crunchT = D.t; o.crunchDrain = D.drain; } play('go'); break;   // v0.9.20
+    case 'review': {   // v0.9.20: las torres y la sede del rival en la zona reciben más daño un rato
+      let n = 0; for (const st of structs) if (st.alive && st.team === foe && !st.hidden && Math.hypot(st.x - sp.x, st.y - sp.y) - st.r <= D.r) { st.reviewUntil = G.t + D.t; st.reviewAmp = D.amp * P; n++; addNum(st.x, st.y, 90, '★☆☆☆☆', '#ffcb3d', 16); }
+      if (!n) addNum(sp.x, sp.y, 80, 'Aquí no hay nada que reseñar', '#cdb9ea', 12);
+      play('despido'); break;
+    }
     case 'remake': {
       const o = cc.slice().sort((a, b) => b.maxHp - a.maxHp)[0];
       if (o) { o.shrinkT = D.t; o.shrinkF = D.f; const cut = o.hp * D.cut; o.hp = Math.max(1, o.hp - cut); addNum(o.x, o.y, topOf(o) + 30, 'VERSIÓN REMAKE · 70 €', '#ff9ab8', 13); }
