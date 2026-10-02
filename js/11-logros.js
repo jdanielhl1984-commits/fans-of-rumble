@@ -255,12 +255,10 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>CAMPAÑA 3 · FIN DE LA PARTIDA</b> (se abre al ganar a Phony): Microblizz y Phony compran <b>IAhorro</b>, «la IA del ahorro… de sueldos», despiden a todo el estudio y sacan juegos idénticos cada cinco minutos. 4 mundos nuevos con sus jefes y sus campos: la Granja de Prompts, el Almacén de Datos (río congelado), el Estudio Vacío y el Núcleo de IAhorro.',
-    '<b>Pasiva de IAhorro, ENTRENADA CON TU TRABAJO</b>: cada 25 s copia la última unidad que has sacado y la pone de su lado.',
-    '<b>Facción 10: LOS CREADORES</b> (al apagar a IAhorro): la IndieDev (¡Hotfix!), Game Jam, Tester de QA, Pixelartista, Compositora, Diseñadora de Niveles y El Prototipo. Su pasiva, <b>SIN CRUNCH</b>: tras 3 s sin recibir daño, sus unidades descansan y se curan. Y 4 cartas en el gashapón: Freelance, Lluvia de portfolios, 48 horas de Jam y Créditos finales.',
-    '<b>Más anuncios con premio</b>: premio x2 al acabar hasta 12 veces al día y 3 tiradas gratis en cada máquina del gashapón (tope de 30 al día).',
-    'Música nueva para Los Creadores y para los 4 jefes, y se pueden elegir en Opciones como música del menú.'],
-  joke: ['IAhorro ha escrito estas notas del parche. Dicen que el juego «es increíble» y que lo ha hecho ella.', 'Microblizz y Phony anuncian que la IA les ahorrará el 100 % de los sueldos. Y el 100 % de los jugadores.', 'El Asistente Alucinado jura que esta versión tiene 47 campañas.'],
+  real: ['<b>GOLPES CON MÁS JUGO</b>: las unidades cogen impulso antes de pegar, se lanzan con una estela y el que recibe sale despedido y se aplasta. Los golpes de los líderes, de los gigantes y los críticos paran el tiempo un instante y hacen temblar la pantalla.',
+    'Los arcos de los golpes son más grandes, los impactos llevan líneas de cómic y los ataques a distancia dan un culatazo con fogonazo.',
+    'Si tu móvil tiene activado «reducir movimiento», no hay parón ni estela.'],
+  joke: ['Microblizz ha patentado el «parón del golpe». A partir de ahora cada parón cuesta 0,99 €.', 'CrazyBunny dice que ya no es el único que sabe pegar. Está muy enfadado.', 'IAhorro ha copiado las animaciones nuevas. Le han salido todas con seis dedos.'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;

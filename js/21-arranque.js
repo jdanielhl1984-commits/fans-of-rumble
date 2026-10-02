@@ -8,7 +8,8 @@ function frame(now) {
   const real = Math.min(0.05, (now - last) / 1000); last = now;
   const steps = G.state === 'play' || G.state === 'ending' ? Math.max(1, Math.round(G.timeScale)) : 1;   // v0.9.11: el x2 solo acelera la partida
   for (let i = 0; i < steps; i++) {
-    const dt = real * G.slowmo;
+    let stop = 1; if (G.hitstop > 0) { G.hitstop -= real / steps; stop = 0.07; }   // v0.9.24: parón del golpe
+    const dt = real * G.slowmo * stop;
     if (G.state !== 'title') G.t += dt;   // v0.9.9: en los menús el fondo no se mueve
     if (G.shake > 0) G.shake = Math.max(0, G.shake - dt * 32);
     if (G.state === 'play' || G.state === 'ending') updateGame(dt);

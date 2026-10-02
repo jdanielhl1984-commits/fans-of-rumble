@@ -20,7 +20,11 @@ function addNum(x, y, z, txt, color, size = 15) {
 // v0.9.8: destello de golpe, tajo de los ataques cuerpo a cuerpo, resplandor y flash de pantalla
 function impact(x, y, z, size, color) { parts.push({ type: 'impact', x, y, z, size, color, rot: Math.random() * Math.PI, life: 0.17, max: 0.17 }); }
 function flashAt(x, y, z, size, rgb, dur = 0.3) { parts.push({ type: 'flash', x, y, z, size, rgb, life: dur, max: dur }); }
-function slashFx(u, t) { const d = dist(u, t) || 1; parts.push({ type: 'slash', x: u.x, y: u.y, z: topOf(u) * 0.45, ang: Math.atan2((t.y - u.y) * 1.6, t.x - u.x), size: clamp(d * 0.95, 14, 46), color: u.team === 'p' ? '#ffd28a' : '#a9d8ff', life: 0.2, max: 0.2 }); }
+function slashFx(u, t, heavy) { const d = dist(u, t) || 1; parts.push({ type: 'slash', x: u.x, y: u.y, z: topOf(u) * 0.45, ang: Math.atan2((t.y - u.y) * 1.6, t.x - u.x), size: clamp(d * 1.08, 16, 54) * (heavy ? 1.2 : 1), color: u.team === 'p' ? '#ffd28a' : '#a9d8ff', life: 0.26, max: 0.26, w: heavy ? 1.6 : 1 }); }
+// v0.9.24: golpes con más jugo. Parón del golpe (hit-stop): el juego casi se congela un instante en los golpes fuertes
+function hitStop(s) { if (REDUCED || G.state !== 'play') return; if (G.t - (G.stopAt || -9) < 0.35) return; G.stopAt = G.t; G.hitstop = Math.max(G.hitstop || 0, s); }
+// líneas de impacto tipo cómic que salen del golpe
+function hitLines(x, y, z, n, color, big) { const a0 = Math.random() * Math.PI; for (let i = 0; i < n; i++) parts.push({ type: 'hitline', x, y, z, a: a0 + (i / n) * Math.PI * 2 + rand(-0.2, 0.2), r0: big ? 9 : 6, len: (big ? 20 : 13) * rand(0.75, 1.2), color, life: 0.17, max: 0.17 }); }
 function screenFlash(a) { if (!REDUCED) G.flash = Math.max(G.flash || 0, a); }
 
 /* =========================================================
@@ -237,9 +241,10 @@ function attack(u, t) {
   const tf = u.tfBoost; if (tf) { mult *= 1.5; u.tfBoost = false; }
   if (u.d.leap && t.kind === 'unit' && (t.d.healer || t.d.ranged || ROLES[t.type] === 'support')) mult *= u.d.leap.mult;   // v0.9.15: mata-sanadores
   if (surprise && u.d.ranged) { mult *= surpriseM; addNum(t.x, t.y, topOf(t) + 22, '¡SORPRESA!', '#e6a8ff', 15); if (u.team === 'p') chatEv('stealth', null, null, 0.5, 12); }   // v0.9.13: GhostAgent
-  if (u.d.chain) { zapChain(u, t, u.d.dmg * mult); u.lungeT = 0.12; const d = dist(u, t) || 1; u.lungeX = -(t.x - u.x) / d * 0.5; u.lungeY = -(t.y - u.y) / d * 0.5; return; }
-  if (u.d.ranged) { shoot(u, t, u.d.ranged, u.d.dmg * mult, tf || critHit || surprise ? 'crit' : st); u.lungeT = 0.12; const d = dist(u, t) || 1; u.lungeX = -(t.x - u.x) / d * 0.5; u.lungeY = -(t.y - u.y) / d * 0.5; return; }
-  u.lungeT = 0.18; const d = dist(u, t) || 1; u.lungeX = (t.x - u.x) / d; u.lungeY = (t.y - u.y) / d;
+  if (u.d.chain) { zapChain(u, t, u.d.dmg * mult); u.lungeT = u.lungeMax = 0.16; const d = dist(u, t) || 1; u.lungeX = -(t.x - u.x) / d * 0.5; u.lungeY = -(t.y - u.y) / d * 0.5; return; }
+  if (u.d.ranged) { shoot(u, t, u.d.ranged, u.d.dmg * mult, tf || critHit || surprise ? 'crit' : st); u.lungeT = u.lungeMax = 0.16; const d = dist(u, t) || 1; u.lungeX = -(t.x - u.x) / d * 0.85; u.lungeY = -(t.y - u.y) / d * 0.85; flashAt(u.x + (t.x - u.x) / d * 13, u.y + (t.y - u.y) / d * 4, topOf(u) * 0.6, 20, u.team === 'p' ? '255,220,140' : '170,215,255', 0.12); puff(u.x - (t.x - u.x) / d * 5, u.y, 2, '#e9dcc0', 22, 3.5, true); return; }
+  u.lungeT = u.lungeMax = 0.24; const d = dist(u, t) || 1; u.lungeX = (t.x - u.x) / d; u.lungeY = (t.y - u.y) / d;
+  puff(u.x - u.lungeX * 4, u.y, 3, '#e9dcc0', 34, 4.5, true);   // v0.9.24: levanta polvo al lanzarse
   let dmg = u.d.dmg * mult, crit = surprise || tf || critHit;
   if (surprise) { dmg *= surpriseM; addNum(t.x, t.y, topOf(t) + 22, '¡SORPRESA!', '#e6a8ff', 15); if (u.team === 'p') chatEv('stealth', null, null, 0.5, 12); }
   if (u.d.charge && u.runDist >= u.d.charge.dist) {   // Minotaur: embestida si llega corriendo
@@ -262,8 +267,10 @@ function attack(u, t) {
   }
   const sl = u.d.slow || u.abSlow;
   if (sl && t.kind === 'unit' && t.alive && !t.immuneCC) { t.slowT = sl.t; chips(t.x, t.y, topOf(t) * 0.5, 3, ['#9fe3ff', '#ffffff'], 'chip', 2.5); }
-  slashFx(u, t);
+  const heavy = isLeader(u.type) || u.r >= 18 || dmg >= 40;   // v0.9.24: golpe pesado (líderes, gigantes y golpes de 40+)
+  slashFx(u, t, heavy || crit);
   hurt(t, dmg, u, crit ? 'crit' : st);
+  if (crit) { hitStop(0.09); shake(3.5); } else if (heavy) { hitStop(0.05); shake(2); }
   if (u.abSplash) confetti(u, t, dmg * u.abSplash);
   if (u.abChain) chainOne(u, t, dmg * u.abChain);
   if (u.d.cleave) {   // BanHammer: el martillazo también da a los de alrededor
@@ -373,13 +380,14 @@ function hurt(t, amount, src, style = 'hit') {
   if (G.mode === 'boss' && t === bases.e) S.p.bossDmg += Math.min(amount, Math.max(0, t.hp));
   if (G.mode === 'sandbox' && t.team === 'e') sbDamage(amount);   // v0.9.20: contador de daño
   t.hp -= amount; t.hitT = 0.12;
+  if (t.kind === 'unit' && src && src.x !== undefined) { const kd = Math.hypot(t.x - src.x, t.y - src.y) || 1; t.kbX = (t.x - src.x) / kd; t.kbY = (t.y - src.y) / kd; t.kbT = 0.18; }   // v0.9.24: retroceso visual
   if (src && src.abVamp && src.alive && src.kind === 'unit') { const hv = Math.min(src.maxHp - src.hp, amount * src.abVamp); src.hp += hv; if (hv >= 2 && Math.random() < 0.45) addNum(src.x + rand(-5, 5), src.y, topOf(src) * 0.75 + 8, '+' + Math.round(hv), '#8cf05a', 13); }
   const col = style === 'crit' ? '#ffd23f' : style === 'aoe' ? '#f3a6ff' : style === 'boss' ? '#ff6b7a' : style === 'rage' ? '#ff8a3d' : '#ffffff';
   addNum(t.x + rand(-7, 7), t.y, topOf(t) * 0.75 + 6, amount, col, style === 'crit' ? 22 : style === 'rage' ? 16 : t.kind === 'struct' ? 14 : 15);
   sparks(t.x, t.y, topOf(t) * 0.45, style === 'hit' ? 3 : 6, t.team === 'e' ? '#bfe9ff' : '#ffe7a8');
   if (SAVE.blood && t.kind === 'unit') for (let i = 0; i < (style === 'hit' ? 3 : 5); i++)   // v0.9.19: Opciones → sangre: una niebla roja pequeña que se va (sin charcos)
     parts.push({ type: 'dust', x: t.x + rand(-5, 5), y: t.y + rand(-2, 2), z: topOf(t) * rand(0.35, 0.65), vx: rand(-22, 22), vy: 0, vz: rand(4, 16), g: 0, life: rand(0.35, 0.55), max: 0.55, size: rand(2.6, 4.2), color: 'rgba(200,16,32,.75)' });
-  if (!t.fxT || G.t - t.fxT > 0.07) { t.fxT = G.t; const big = style === 'crit'; impact(t.x + rand(-4, 4), t.y, topOf(t) * 0.5 + rand(-4, 4), big ? 17 : style === 'aoe' ? 12 : t.kind === 'struct' ? 13 : 10, big ? '#ffd23f' : t.team === 'e' ? '#d8f1ff' : '#fff0c2'); if (big) flashAt(t.x, t.y, topOf(t) * 0.5, 36, '255,210,63', 0.25); }
+  if (!t.fxT || G.t - t.fxT > 0.07) { t.fxT = G.t; const big = style === 'crit'; impact(t.x + rand(-4, 4), t.y, topOf(t) * 0.5 + rand(-4, 4), big ? 23 : style === 'aoe' ? 15 : t.kind === 'struct' ? 15 : 14, big ? '#ffd23f' : t.team === 'e' ? '#d8f1ff' : '#fff0c2'); hitLines(t.x, t.y, topOf(t) * 0.5, big ? 8 : 5, big ? '#ffd23f' : '#ffffff', big); if (big) flashAt(t.x, t.y, topOf(t) * 0.5, 36, '255,210,63', 0.25); }
   play(t.kind === 'unit' && t.team === 'e' ? 'clank' : 'hit');
   if (t.kind === 'struct') shake(style === 'aoe' ? 5 : 1.2);
   if (t.kind === 'struct' && t.role === 'base' && !t.lowSaid && t.hp > 0 && t.hp < t.maxHp * 0.35) { t.lowSaid = true; chatEv(t.team === 'e' ? 'baseLowE' : 'baseLowP', null, null, 1, 0); }
@@ -530,7 +538,7 @@ function updateProjs(dt) {
   projs = projs.filter(p => !p.done);
 }
 function updateUnit(u, dt) {
-  u.hitT = Math.max(0, u.hitT - dt); u.lungeT = Math.max(0, u.lungeT - dt); u.labelT = Math.max(0, u.labelT - dt);
+  u.hitT = Math.max(0, u.hitT - dt); u.lungeT = Math.max(0, u.lungeT - dt); u.kbT = Math.max(0, (u.kbT || 0) - dt); u.labelT = Math.max(0, u.labelT - dt);
   if (u.deployT > 0) {
     u.deployT -= dt;
     if (u.deployT <= 0) {

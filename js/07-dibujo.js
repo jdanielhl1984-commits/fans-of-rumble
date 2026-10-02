@@ -212,14 +212,26 @@ function drawUnit(u) {
   } else if (u.moving && u.stunT <= 0) { z += Math.abs(Math.sin(u.walk)) * 2.4 * (u.r / 14); const w = Math.sin(u.walk * 2); sy = 1 + w * 0.035; sx = 1 - w * 0.03; ang = (T.hover ? 0.08 : 0.05) + Math.sin(u.walk) * (T.hover ? 0.02 : 0.06); }   // se inclina hacia delante y se balancea al andar
   else if (u.stunT <= 0) { const br = Math.sin(G.t * 3 + u.id * 1.7) * 0.025; sy = 1 + br; sx = 1 - br * 0.6; }
   else if (u.stunKind !== 'stone') ang = Math.sin(G.t * 11 + u.id) * 0.07;   // aturdido: se tambalea
-  if (u.lungeT > 0) { const k = Math.sin((1 - u.lungeT / 0.18) * Math.PI); x += u.lungeX * k * 7; y += u.lungeY * k * 5; if (u.d.ranged || u.d.chain) ang -= 0.1 * k; else { ang += 0.24 * k; sx *= 1 + 0.07 * k; sy *= 1 - 0.05 * k; } }   // el golpe: se echa encima (y los de distancia, retroceso)
-  else if (!u.moving && u.target && u.stunT <= 0 && u.deployT <= 0 && !u.d.ranged && u.atkT > 0 && u.atkT < 0.22) ang -= 0.13 * (1 - u.atkT / 0.22);   // coge impulso justo antes de pegar
-  if (u.hitT > 0 && u.deployT <= 0) { const h = u.hitT / 0.12; ang -= 0.1 * h; x -= u.face * 2.2 * h; }   // le dan: da un respingo hacia atrás
+  let ghost = 0;   // v0.9.24: estela del golpe
+  if (u.lungeT > 0) {   // el golpe: sale disparado (rápido) y vuelve (más lento); los de distancia dan un culatazo
+    const lm = u.lungeMax || 0.18, p = 1 - u.lungeT / lm, k = p < 0.3 ? 1 - Math.pow(1 - p / 0.3, 3) : 1 - Math.pow((p - 0.3) / 0.7, 2);
+    if (u.d.ranged || u.d.chain) { x += u.lungeX * k * 7; y += u.lungeY * k * 4; ang -= 0.16 * k; sx *= 1 - 0.06 * k; sy *= 1 + 0.06 * k; }
+    else { x += u.lungeX * k * 12; y += u.lungeY * k * 7; ang += 0.32 * k; sx *= 1 + 0.16 * k; sy *= 1 - 0.1 * k; if (p < 0.55) ghost = k; }
+  }
+  else if (!u.moving && u.target && u.stunT <= 0 && u.deployT <= 0 && !u.d.ranged && !u.d.chain && u.atkT > 0 && u.atkT < 0.32) {   // coge impulso: se echa atrás y se encoge como un muelle
+    const w = 1 - u.atkT / 0.32, e = w * w; ang -= 0.22 * e; x -= u.face * 2.5 * e; sx *= 1 + 0.08 * e; sy *= 1 - 0.1 * e;
+  }
+  if (u.kbT > 0 && u.deployT <= 0) { const h = u.kbT / 0.18, e = h * h; x += (u.kbX || 0) * 6 * e; y += (u.kbY || 0) * 3 * e; ang -= 0.16 * e; sx *= 1 + 0.12 * e; sy *= 1 - 0.12 * e; }   // le dan: sale despedido un poco y se aplasta
+  else if (u.hitT > 0 && u.deployT <= 0) { const h = u.hitT / 0.12; ang -= 0.1 * h; x -= u.face * 2.2 * h; }
   if (T.hover && u.deployT <= 0) z += 4 + Math.sin(G.t * 4 + u.id) * 1.5;
   let alpha = rise; if (u.stealthT > 0 && u.deployT <= 0) alpha = 0.36 + Math.sin(G.t * 9 + u.id) * 0.07;
   if (u.mut === 'glass') alpha *= 0.72;
   const ms = (u.mScale || 1) * (u.shrinkT > 0 ? u.shrinkF || 0.6 : 1);
   if (u.banT > 0) alpha *= 0.22;   // v0.9.15: baneado
+  if (ghost > 0.25 && !REDUCED && u.stealthT <= 0) for (const g of [0.55, 0.25]) {   // v0.9.24: estela
+    ctx.save(); ctx.globalAlpha = alpha * ghost * (g === 0.55 ? 0.3 : 0.16); ctx.translate(x - u.lungeX * ghost * 12 * (1 - g), y - z - u.lungeY * ghost * 7 * (1 - g));
+    if (ang) ctx.rotate(ang * u.face * g); ctx.scale(u.face * sx * ms, sy * ms); ctx.drawImage(s.w, -s.ax, -s.ay, s.wd, s.ht); ctx.restore();
+  }
   ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y - z);
   if (u.jump) { const pv = T.top * 0.45; ctx.translate(0, -pv); ctx.rotate(u.spin); ctx.translate(0, pv); }
   if (ang) ctx.rotate(ang * u.face);
@@ -585,7 +597,10 @@ function drawPart(p) {
       ctx.globalAlpha = 1; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, fy, r, 0, Math.PI * 2); ctx.fill(); break; }
     case 'slash': { const a = 1 - k, a0 = p.ang - 0.95, a1 = a0 + 1.9 * Math.min(1, a * 2.2); ctx.save(); ctx.translate(p.x, p.y - p.z); ctx.scale(1, 0.62); ctx.lineCap = 'round'; ctx.globalAlpha = Math.min(1, k * 2);
       ctx.beginPath(); ctx.arc(0, 0, p.size, Math.max(a0, a1 - 1.3), a1);
-      ctx.strokeStyle = 'rgba(32,16,44,.55)'; ctx.lineWidth = 6 * k + 2; ctx.stroke(); ctx.strokeStyle = p.color; ctx.lineWidth = 4 * k + 1; ctx.stroke(); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.6 * k + 0.5; ctx.stroke(); ctx.restore(); break; }
+      const W2 = p.w || 1; ctx.strokeStyle = 'rgba(32,16,44,.55)'; ctx.lineWidth = (8 * k + 2) * W2; ctx.stroke(); ctx.strokeStyle = p.color; ctx.lineWidth = (5.5 * k + 1) * W2; ctx.stroke(); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = (2.2 * k + 0.5) * W2; ctx.stroke();
+      ctx.globalAlpha = Math.min(1, k * 2) * 0.35; ctx.beginPath(); ctx.arc(0, 0, p.size * 0.78, Math.max(a0, a1 - 1.1), a1); ctx.strokeStyle = p.color; ctx.lineWidth = (3 * k + 1) * W2; ctx.stroke(); ctx.restore(); break; }
+    case 'hitline': { const a = 1 - k, r1 = p.r0 + p.len * (0.35 + a * 0.9), r0 = p.r0 + p.len * a * 0.85; ctx.globalAlpha = Math.min(1, k * 2); ctx.strokeStyle = p.color; ctx.lineCap = 'round'; ctx.lineWidth = 2.6 * k + 0.6;   // v0.9.24
+      ctx.beginPath(); ctx.moveTo(p.x + Math.cos(p.a) * r0, p.y - p.z + Math.sin(p.a) * r0 * 0.75); ctx.lineTo(p.x + Math.cos(p.a) * r1, p.y - p.z + Math.sin(p.a) * r1 * 0.75); ctx.stroke(); break; }
     case 'clapper': {   // v0.9.13: claqueta de cine
       const age = p.max - p.life, pop = Math.min(1, age / 0.15), shut = Math.min(1, age / 0.35), a = -0.55 * (1 - shut);
       ctx.globalAlpha = Math.min(1, k * 3); ctx.save(); ctx.translate(p.x, p.y - p.z - age * 8); ctx.scale(pop, pop); ctx.lineWidth = 1.6; ctx.strokeStyle = OL;
