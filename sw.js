@@ -1,7 +1,7 @@
 // Fans of Rumble · modo sin conexión (v0.9.11; archivos separados desde la v0.9.15)
 // El juego (index.html, css/ y js/) se pide primero a internet para tener siempre la última versión;
 // si no hay conexión, se usa la copia guardada. Iconos y letras se guardan la primera vez.
-const CACHE = 'for-v0.9.24';
+const CACHE = 'for-v0.9.25';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable.png', './css/estilos.css',
   './js/01-config.js', './js/02-progresion.js', './js/03-arte.js', './js/04-estado.js', './js/05-audio.js', './js/05b-iahorro.js', './js/06-combate.js', './js/07-dibujo.js', './js/08-controles.js', './js/09-menus.js', './js/10-dificultad.js', './js/11-logros.js', './js/12-app-y-preparacion.js', './js/13-horas-extra.js', './js/14-cartas-y-jefes.js', './js/15-anuncios.js', './js/16-camara.js', './js/17-campos.js', './js/18-sala.js', './js/19-arena.js', './js/20-iahorro-final.js', './js/21-arranque.js'];
 

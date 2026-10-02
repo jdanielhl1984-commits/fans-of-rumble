@@ -3,7 +3,7 @@
 /* =========================================================
    EFFECTS
    ========================================================= */
-function shake(n) { if (!REDUCED) G.shake = Math.max(G.shake, n); }
+function shake(n) { if (!REDUCED && !SAVE.noShake) G.shake = Math.max(G.shake, n); }
 function puff(x, y, n, color, spd = 40, size = 6, ground = false, z0 = 2) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = rand(spd * 0.4, spd); parts.push({ type: 'dust', x, y, z: z0 + rand(0, 6), vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.5, vz: rand(5, 28), g: 0, life: rand(0.35, 0.65), max: 0.65, size: rand(size * 0.6, size), color, ground }); } }
 function ring(x, y, r0, r1, color, dur = 0.4, lw = 4, circ = false) { parts.push({ type: 'ring', x, y, z: 0, r0, r1, color, life: dur, max: dur, lw, ground: true, circ }); }   // circ: círculo exacto (áreas de efecto)
 function sparks(x, y, z, n, color) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = rand(60, 160); parts.push({ type: 'spark', x, y, z, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.5, vz: rand(20, 140), g: 420, life: rand(0.2, 0.35), max: 0.35, color }); } }

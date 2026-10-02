@@ -45,10 +45,11 @@ const MENU_TRACKS = [['menu', 'Espera de Microblizz'], ['animales', 'Animales Lo
 const menuTrack = () => (MENU_TRACKS.find(t => t[0] === SAVE.menuMus) || MENU_TRACKS[0]);
 $('#btn-menumus').addEventListener('click', () => { const i = MENU_TRACKS.indexOf(menuTrack()); SAVE.menuMus = MENU_TRACKS[(i + 1) % MENU_TRACKS.length][0]; saveGame(); play('select'); optLabels(); });
 $('#btn-badges').addEventListener('click', () => { SAVE.noBadges = !SAVE.noBadges; saveGame(); play('select'); optLabels(); });
-function optLabels() { $('#btn-menumus').textContent = menuTrack()[1].toUpperCase() + ' ▸'; $('#btn-badges').textContent = SAVE.noBadges ? 'NO' : 'SÍ'; $('#btn-feed').textContent = SAVE.feed ? 'EN LA CAJA' : 'ENCIMA'; $('#btn-nums').textContent = SAVE.noNums ? 'NO' : 'SÍ'; $('#btn-blood').textContent = SAVE.blood ? 'SÍ' : 'NO'; }
+function optLabels() { $('#btn-menumus').textContent = menuTrack()[1].toUpperCase() + ' ▸'; $('#btn-badges').textContent = SAVE.noBadges ? 'NO' : 'SÍ'; $('#btn-feed').textContent = SAVE.feed ? 'EN LA CAJA' : 'ENCIMA'; $('#btn-nums').textContent = SAVE.noNums ? 'NO' : 'SÍ'; $('#btn-blood').textContent = SAVE.blood ? 'SÍ' : 'NO'; $('#btn-shake').textContent = SAVE.noShake ? 'NO' : 'SÍ'; }
 $('#btn-nums').addEventListener('click', () => { SAVE.noNums = !SAVE.noNums; saveGame(); play('select'); optLabels(); });
 $('#btn-feed').addEventListener('click', () => { SAVE.feed = !SAVE.feed; saveGame(); play('select'); optLabels(); });
 $('#btn-blood').addEventListener('click', () => { SAVE.blood = !SAVE.blood; saveGame(); play('select'); optLabels(); });
+$('#btn-shake').addEventListener('click', () => { SAVE.noShake = !SAVE.noShake; G.shake = 0; saveGame(); play('select'); optLabels(); });   // v0.9.25: Opciones → temblor de pantalla
 $('#btn-options').addEventListener('click', optLabels);
 $('#btn-chat').addEventListener('click', () => { SAVE.chatOff = !SAVE.chatOff; saveGame(); $('#btn-chat').textContent = SAVE.chatOff ? 'NO' : 'SÍ'; play('select'); });
 for (const b of document.querySelectorAll('[data-back]')) b.addEventListener('click', () => { play('select'); goHome(); });

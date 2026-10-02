@@ -257,7 +257,8 @@ $('#btn-login').addEventListener('click', claimLogin);
 const NEWS = {
   real: ['<b>GOLPES CON MÁS JUGO</b>: las unidades cogen impulso antes de pegar, se lanzan con una estela y el que recibe sale despedido y se aplasta. Los golpes de los líderes, de los gigantes y los críticos paran el tiempo un instante y hacen temblar la pantalla.',
     'Los arcos de los golpes son más grandes, los impactos llevan líneas de cómic y los ataques a distancia dan un culatazo con fogonazo.',
-    'Si tu móvil tiene activado «reducir movimiento», no hay parón ni estela.'],
+    'Si tu móvil tiene activado «reducir movimiento», no hay parón ni estela.',
+    '<b>Nueva opción: Temblor de pantalla SÍ/NO</b>, en Opciones, por si te marea.'],
   joke: ['Microblizz ha patentado el «parón del golpe». A partir de ahora cada parón cuesta 0,99 €.', 'CrazyBunny dice que ya no es el único que sabe pegar. Está muy enfadado.', 'IAhorro ha copiado las animaciones nuevas. Le han salido todas con seis dedos.'],
 };
 function openNews() {

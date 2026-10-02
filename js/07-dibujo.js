@@ -15,7 +15,7 @@ function render() {
   ctx.fillStyle = '#24133a'; ctx.fillRect(0, 0, W, VIEW.LH);
   camApply();   // v0.9.18: zoom
   ctx.translate(0, VIEW.top + FIELD_DY);
-  if (G.shake > 0.15) ctx.translate(rand(-1, 1) * G.shake, rand(-1, 1) * G.shake);
+  if (G.shake > 0.15 && !SAVE.noShake) ctx.translate(rand(-1, 1) * G.shake, rand(-1, 1) * G.shake);
   ctx.drawImage(BG, 0, 0, W, H);
   if (!terrainGround()) drawWater();   // v0.9.18: el terreno del jefe puede cambiar el río
   ctx.drawImage(BRIDGE_LAYER, 0, 0, W, H);
