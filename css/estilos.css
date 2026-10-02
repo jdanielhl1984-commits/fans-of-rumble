@@ -887,3 +887,10 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .ar-r canvas { width: 40px; height: 36px; flex: none; }
 .ar-r b { display: block; font-size: 14.5px; }
 .ar-r small { display: block; font-size: 12px; color: var(--ink-dim); font-weight: 700; }
+/* v0.9.21: caja de avisos de las unidades (abajo a la derecha) */
+#feed { position: absolute; right: 6px; top: calc(var(--top) + 616px); width: 200px; height: 170px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 3px; pointer-events: none; z-index: 4; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 26px); mask-image: linear-gradient(to bottom, transparent 0, #000 26px); }
+#feed .fl { display: flex; align-items: center; gap: 5px; max-width: 100%; font-family: var(--font-display); font-size: 12.5px; line-height: 1.15; background: rgba(16, 8, 28, 0.6); border-radius: 9px; padding: 4px 8px 2px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9); animation: clin 0.2s ease-out; transition: opacity 0.6s; }
+#feed .fl.out { opacity: 0.25; }
+#feed .fl i { flex: none; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid #20102c; margin-top: -2px; }
+#feed .fl span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#feed .fl b { flex: none; font-weight: 400; color: #ffe06a; font-size: 12px; }

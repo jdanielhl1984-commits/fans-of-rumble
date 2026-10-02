@@ -71,3 +71,27 @@ cv.addEventListener('wheel', e => {
   if (G.state !== 'play' && G.state !== 'paused') return;
   e.preventDefault(); const p = camScreen(e); camZoomAt(p.x, p.y, CAM.z * Math.exp(-e.deltaY * 0.0016));
 }, { passive: false });
+
+/* ---------- v0.9.21: caja de avisos (abajo a la derecha) ----------
+   Con Opciones → «Avisos de las unidades: EN LA CAJA», los textos que salían encima de las unidades
+   («¡RABIA MÁXIMA!», «¡TROPIEZO!», «EQUIPADO»…) van aquí. Si se repite el mismo, sube un contador (x2, x3…). */
+const FEED = { list: [], max: 5, life: 3.2 };
+function feedAdd(txt, color, x, y) {
+  let team = null, bd = 40;
+  for (const u of units) { const d = Math.hypot(u.x - x, u.y - y); if (d < bd) { bd = d; team = u.team; } }
+  if (!team) { for (const s of structs) { const d = Math.hypot(s.x - x, s.y - y); if (d < 70 && d < bd + 30) { bd = d; team = s.team; } } }
+  const now = G.t, same = FEED.list.find(f => f.txt === txt && f.team === team && now - f.t < 4);
+  if (same) { same.n++; same.t = now; } else { FEED.list.push({ txt, color, team, n: 1, t: now, id: Math.random() }); if (FEED.list.length > FEED.max) FEED.list.shift(); }
+  feedDraw();
+}
+function feedDraw() {   // solo se vuelve a pintar si cambia algo (si no, la animación de entrada se repetiría sin parar)
+  const el = document.getElementById('feed'); if (!el) return;
+  const now = G.t; FEED.list = FEED.list.filter(f => now - f.t < FEED.life);
+  const html = FEED.list.map(f => `<div class="fl" data-id="${f.id}"><i style="background:${f.team === 'e' ? '#3d9bff' : f.team === 'p' ? '#ff9a3c' : '#cdb9ea'}"></i><span style="color:${f.color || '#fff6ea'}">${f.txt}</span>${f.n > 1 ? `<b>x${f.n}</b>` : ''}</div>`).join('');
+  if (el._h !== html) {
+    const old = new Set([...el.children].map(c => c.dataset.id)); el.innerHTML = html; el._h = html;
+    for (const c of el.children) if (old.has(c.dataset.id)) c.style.animation = 'none';   // las que ya estaban no vuelven a entrar
+  }
+  for (const c of el.children) { const f = FEED.list.find(x => String(x.id) === c.dataset.id); c.classList.toggle('out', !!f && now - f.t > FEED.life - 0.6); }
+}
+setInterval(() => { const el = document.getElementById('feed'); if (!el) return; const on = !!SAVE.feed && ['play', 'ending', 'paused'].includes(G.state); el.hidden = !on; if (!on) { FEED.list.length = 0; el.innerHTML = ''; el._h = ''; } else feedDraw(); }, 250);

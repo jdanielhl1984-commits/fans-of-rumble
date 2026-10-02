@@ -39,8 +39,9 @@ $('#btn-share-close').addEventListener('click', () => { $('#scr-share').hidden =
 // v0.9.17 probó un modo claro y uno pixel art; Daniel los descartó en la v0.9.18: el juego va siempre oscuro y sin pixelar
 function applyLook() { delete SAVE.theme; delete SAVE.pixel; document.documentElement.dataset.theme = 'dark'; document.body.classList.remove('pixel'); fit(); }
 // v0.9.19: números de daño y sangre
-function optLabels() { $('#btn-nums').textContent = SAVE.noNums ? 'NO' : 'SÍ'; $('#btn-blood').textContent = SAVE.blood ? 'SÍ' : 'NO'; }
+function optLabels() { $('#btn-feed').textContent = SAVE.feed ? 'EN LA CAJA' : 'ENCIMA'; $('#btn-nums').textContent = SAVE.noNums ? 'NO' : 'SÍ'; $('#btn-blood').textContent = SAVE.blood ? 'SÍ' : 'NO'; }
 $('#btn-nums').addEventListener('click', () => { SAVE.noNums = !SAVE.noNums; saveGame(); play('select'); optLabels(); });
+$('#btn-feed').addEventListener('click', () => { SAVE.feed = !SAVE.feed; saveGame(); play('select'); optLabels(); });
 $('#btn-blood').addEventListener('click', () => { SAVE.blood = !SAVE.blood; saveGame(); play('select'); optLabels(); });
 $('#btn-options').addEventListener('click', optLabels);
 $('#btn-chat').addEventListener('click', () => { SAVE.chatOff = !SAVE.chatOff; saveGame(); $('#btn-chat').textContent = SAVE.chatOff ? 'NO' : 'SÍ'; play('select'); });

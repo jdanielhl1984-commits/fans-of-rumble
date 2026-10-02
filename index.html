@@ -54,6 +54,7 @@
     <div id="toast" role="status" aria-live="polite"></div>
     <div id="card-tip" hidden></div>
     <div id="chat" aria-hidden="true"></div>
+    <div id="feed" aria-hidden="true"></div>
     <div id="tut" hidden><div class="tut-dot"></div><div class="tut-text">Arrastra una carta a tu lado del campo</div></div>
     <div id="tut-tip" hidden></div>
     <div id="hud-mods" hidden></div>
@@ -252,6 +253,7 @@
         <label class="opt-row"><span>Volumen</span><input type="range" id="opt-vol" min="0" max="100" step="5"></label>
         <label class="opt-row"><span><b>Música</b><br>Al mínimo, se quita.</span><input type="range" id="opt-mus" min="0" max="100" step="5"></label>
         <div class="opt-row"><span><b>Números de daño</b><br>Si los quitas, solo verás bajar las barras de vida.</span><button class="btn-ghost ol" id="btn-nums">SÍ</button></div>
+        <div class="opt-row"><span><b>Avisos de las unidades</b><br>«¡Rabia máxima!», «¡Tropiezo!», «Equipado»…: encima de su cabeza o en una caja abajo a la derecha.</span><button class="btn-ghost ol" id="btn-feed">ENCIMA</button></div>
         <div class="opt-row"><span><b>Sangre</b><br>Al pegar sale una pequeña niebla roja (sin charcos).</span><button class="btn-ghost ol" id="btn-blood">NO</button></div>
         <div class="opt-row"><span><b>Chat en directo</b><br>Los comentarios falsos durante la partida.</span><button class="btn-ghost ol" id="btn-chat">SÍ</button></div>
         <div class="opt-row"><span><b>Modo pruebas</b><br>Desbloquea todas las facciones y mundos, da toda la experiencia hasta el nivel 10 (subir lo haces tú en la Colección), 3.000.000 de oro y 5.000 gemas.</span><button class="btn-ghost ol" id="btn-test">ACTIVAR</button></div>
@@ -260,7 +262,7 @@
         <div class="opt-row"><span><b>Instalar en el móvil</b><br>Ábrelo como una app: a pantalla completa y sin la barra del navegador.</span><button class="btn-ghost ol" id="btn-install">INSTALAR</button></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.20</p>
+      <p class="ver">Fans of Rumble · versión 0.9.21</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>

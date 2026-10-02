@@ -41,4 +41,4 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
   - `09-menus.js`, `10-dificultad.js` (Difícil, Mítica y ruleta), `11-logros.js`, `12-app-y-preparacion.js`, `13-horas-extra.js`, `14-cartas-y-jefes.js` (hechizos, mazo, Modo Jefe) y `15-arranque.js` (va el último).
 - `manifest.webmanifest`, `sw.js` e iconos (`icon-192.png`, `icon-512.png`, `icon-maskable.png`): para instalarlo como app y jugar sin conexión.
 
-Prototipo en desarrollo (versión 0.9.20). Todo el arte, el sonido y la música están hechos con código.
+Prototipo en desarrollo (versión 0.9.21). Todo el arte, el sonido y la música están hechos con código.

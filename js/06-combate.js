@@ -12,6 +12,7 @@ function addNum(x, y, z, txt, color, size = 15) {
   txt = String(txt);
   if (/^[+-]?[0-9]/.test(txt)) { if (SAVE.noNums) return;   // v0.9.19: Opciones → sin números de daño
     nums.push({ x, y, z, vz: 46, txt, color, size, life: 0.85, max: 0.85 }); return; }   // números (daño, curas, +CAOS): rápidos
+  if (SAVE.feed && (G.state === 'play' || G.state === 'ending')) { feedAdd(txt, color, x, y); return; }   // v0.9.21: Opciones → avisos en la caja de abajo a la derecha
   // v0.9.9: los mensajes duran más, suben despacio, llevan fondo y no se pisan entre ellos
   for (let k = 0; k < 4; k++) { const o = nums.find(n => n.tx && Math.abs(n.x - x) < 90 && Math.abs((n.y - n.z) - (y - z)) < 20); if (!o) break; z = o.z + (y - o.y) + 22; }
   nums.push({ x, y, z, vz: 22, txt, color, size: Math.max(14, size), life: 2.1, max: 2.1, tx: true });
