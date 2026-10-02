@@ -13,7 +13,9 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - Las unidades suben de nivel (del 1 al 10) con experiencia y oro.
 - Gashapón de habilidades para las unidades y de equipo para el líder: cada copia sale con su propia calidad, de Básica a Perfecta. Tiradas x1, x10 y x50 (cada x10 trae al menos una épica). Habilidades y objetos de lo más raro: Rage quit, Modo foto, Baguette de ayer, Botón de pausa…
 - Inventario con todas tus copias: equipar, volver a tirar sus números o despedirlas.
-- Modo Jefe contra el CEO de Microblizz, misiones diarias y semanales, logros y pase de batalla.
+- **HORAS EXTRA**: en el menú, tu líder sigue luchando solo aunque no juegues y gana oro, gemas y a veces objetos según su poder. Lo recoges cuando quieras (se llena a las 12 horas).
+- Modo Jefe contra el CEO de Microblizz, misiones diarias y semanales y pase de batalla.
+- Más de 1.500 logros que dan gemas, por categorías, con logros secretos y un botón para cobrarlos todos de golpe.
 - Premio por entrar días seguidos (el día 7, 10 tiradas gratis) y pack de bienvenida.
 - Velocidad x2 en las partidas.
 - Tienda de prueba (no se cobra nada) y botón para compartir tu resultado como portada de periódico.
@@ -26,4 +28,4 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - `index.html`: el juego entero.
 - `manifest.webmanifest`, `sw.js` e iconos (`icon-192.png`, `icon-512.png`, `icon-maskable.png`): para instalarlo como app y jugar sin conexión.
 
-Prototipo en desarrollo (versión 0.9.13). Todo el arte, el sonido y la música están hechos con código.
+Prototipo en desarrollo (versión 0.9.14). Todo el arte, el sonido y la música están hechos con código.
