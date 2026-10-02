@@ -138,6 +138,7 @@ function applyItem(u, it) {
       case 'gafas_pixel': u.abCrit = Math.max(u.abCrit || 0, v[0] / 100); u.mSpeed *= pc(1); break;
       case 'raton_campeon': u.mCd *= 1 - v[0] / 100; u.mRange = (u.mRange || 1) * pc(1); break;
       case 'cartucho_dorado': u.mHp *= pc(0); u.mDmg *= pc(0); u.olvT = (u.olvT || 0) + v[1]; break;
+      case 'taza_indie': u.mDmg *= pc(0); u.regen = (u.regen || 0) + v[1] / 100; break;   // v0.9.23
       case 'claqueta_oro': u.mDmg *= pc(0); u.abSplash = Math.max(u.abSplash || 0, v[1] / 100); break;
     }
     u.equip = u.equip || {}; u.equip[ITEMS[id].slot] = id;
@@ -340,6 +341,7 @@ function topOf(e) { return e.kind === 'unit' ? TYPES[e.type].top * (e.mScale || 
 function hurt(t, amount, src, style = 'hit') {
   if (!t || !t.alive) return;
   if (t.kind === 'struct' && t.reviewUntil > G.t) amount *= 1 + (t.reviewAmp || 0.4);   // v0.9.20: Review bombing
+  if (t.kind === 'unit') t.hitAt = G.t;   // v0.9.23: para la pasiva SIN CRUNCH
   if (src && src.kind === 'unit') for (const c of units) if (c.abCute && c.alive && c.team !== src.team && dist(c, src) <= 75) { amount *= 1 - c.abCute; break; }   // orejas de gato
   if (t.kind === 'unit') {
     if (t.jump) return;
@@ -429,7 +431,7 @@ function kill(t, src) {
       addNum(t.x, t.y, 70, t.d.ejectTxt || '¡EYECCIÓN!', '#ff8fc8', 18); play('eject');
     }
     if (G.state === 'play' && !t.summon && G.t >= (G.quipT || 0) && Math.random() < (t.team === 'p' ? 0.12 : 0.4)) {   // frase de despedida
-      const pool = t.team === 'p' ? QUIPS.player.concat(QUIPS_FAC[G.faction] || []) : isCorp(facOf(t.team)) ? QUIPS[facOf(t.team)] : (ownerOf() === 'phony' ? QUIPS.corruptPh : QUIPS.corrupt).concat(QUIPS_CORRUPT[facOf(t.team)] || []);
+      const pool = t.team === 'p' ? QUIPS.player.concat(QUIPS_FAC[G.faction] || []) : isCorp(facOf(t.team)) ? QUIPS[facOf(t.team)] : (ownerOf() === 'phony' ? QUIPS.corruptPh : ownerOf() === 'iahorro' ? QUIPS.corruptIa : QUIPS.corrupt).concat(QUIPS_CORRUPT[facOf(t.team)] || []);
       parts.push({ type: 'quip', x: clamp(t.x, 70, W - 70), y: t.y, z: topOf(t) + 24, vz: 9, txt: pick(pool), life: 3.3, max: 3.3 }); G.quipT = G.t + 3.2;
     }
     S[other(t.team)].kills++; if (G.state === 'play') passiveKill(other(t.team));
@@ -804,8 +806,8 @@ function updateStruct(s, dt) {
 function updateBoss(dt) {
   const b = bases.e; if (!b.alive || !G.bossOn) return;
   const D = G.diffCfg, nm = G.bossName;
-  const ph = ownerOf() === 'phony', own = ownerName();
-  if (!S.e.phase2 && b.hp < b.maxHp * 0.5) { S.e.phase2 = true; S.e.bossT = Math.min(S.e.bossT, 3); banner(ph ? 'FASE 2: SUBIDA DE PRECIOS' : 'FASE 2: DESPIDOS MASIVOS', `${nm} está a media vida y se ha enfadado`, 'enemy'); play('womp'); chatBurst('phase2', 2); }
+  const ph = ownerOf() === 'phony', ia = ownerOf() === 'iahorro', own = ownerName();
+  if (!S.e.phase2 && b.hp < b.maxHp * 0.5) { S.e.phase2 = true; S.e.bossT = Math.min(S.e.bossT, 3); banner(ia ? 'FASE 2: SUSTITUCIÓN TOTAL' : ph ? 'FASE 2: SUBIDA DE PRECIOS' : 'FASE 2: DESPIDOS MASIVOS', `${nm} está a media vida y se ha enfadado`, 'enemy'); play('womp'); chatBurst('phase2', 2); }
   if (b.hackedT > 0) return;   // hackeado: tampoco lanza habilidades
   S.e.bossT -= dt; if (S.e.bossT > 0) return;
   const near = units.filter(u => u.alive && u.team === 'p' && u.y < RIVER.y + 30 && !u.jump && u.deployT <= 0 && !u.immuneBoss);
@@ -817,13 +819,15 @@ function updateBoss(dt) {
   if (!cast) { S.e.bossT = 1; return; }
   b.castT = 0.9; ring(b.x, b.y, 20, 260, 'rgba(255,51,72,.8)', 0.7, 6); if (cast === 'entierro') chatEv('stun', null, null, 0.75, 6); else if (Math.random() < 0.6) chatSay('boss');
   if (cast === 'entierro') {
-    for (const u of near) { u.stunT = D.stun; u.stunKind = ph ? 'net' : 'ip'; puff(u.x, u.y, 6, '#9fb3d6', 30, 5); }
-    if (ph) banner(G.efac === 'phony' ? '¡SERVIDORES EN MANTENIMIENTO!' : 'ORDEN DE PHONY', `${nm} ha dejado sin conexión a tus unidades de su lado`, 'enemy');
+    for (const u of near) { u.stunT = D.stun; u.stunKind = ph || ia ? 'net' : 'ip'; puff(u.x, u.y, 6, '#9fb3d6', 30, 5); }
+    if (ia) banner(G.efac === 'iahorro' ? 'ACTUALIZACIÓN OBLIGATORIA' : 'ORDEN DE IAHORRO', `${nm} ha dejado «actualizando» a tus unidades de su lado`, 'enemy');
+    else if (ph) banner(G.efac === 'phony' ? '¡SERVIDORES EN MANTENIMIENTO!' : 'ORDEN DE PHONY', `${nm} ha dejado sin conexión a tus unidades de su lado`, 'enemy');
     else banner(G.efac === 'microblizz' ? '¡JUEGO CERRADO!' : 'ORDEN DE MICROBLIZZ', `${nm} ha congelado a tus unidades de su lado`, 'enemy');
     play('womp');
   } else {
     for (const u of all) parts.push({ type: 'env', k: ph ? 'lic' : 'env', tgt: u, x: u.x, y: u.y, z: 170, t: rand(-0.25, 0), dur: 0.6, dmg: D.despido, life: 2, max: 2, rot: rand(-0.4, 0.4) });
-    if (ph) banner('LICENCIAS REVOCADAS', G.efac === 'phony' ? 'Phony borra la licencia de todas tus unidades' : 'Phony le obliga a revocar la licencia de todas tus unidades', 'enemy');
+    if (ia) banner('SUSTITUIDOS POR IA', G.efac === 'iahorro' ? 'IAhorro quiere cambiar a todas tus unidades por bots' : 'IAhorro le obliga a sustituir a todas tus unidades', 'enemy');
+    else if (ph) banner('LICENCIAS REVOCADAS', G.efac === 'phony' ? 'Phony borra la licencia de todas tus unidades' : 'Phony le obliga a revocar la licencia de todas tus unidades', 'enemy');
     else banner('DESPIDOS MASIVOS', G.efac === 'microblizz' ? 'Carta de despido para todas tus unidades' : `${own} le obliga a despedir a todas tus unidades`, 'enemy');
     play('despido');
   }
@@ -956,6 +960,7 @@ function updateGame(dt) {
     if (G.mode === 'sandbox') { S.p.chaos = CFG.chaosMax; S.e.chaos = CFG.chaosMax; if (SB.ai) aiGeneric('e', dt); sbTick(dt); }
     else if (G.classicAI) aiUpdate('e', dt); else aiGeneric('e', dt);
     terrainUpdate(dt);   // v0.9.18
+    iaUpdate(dt);   // v0.9.23: pasivas de IAhorro y de Los Creadores, y el ¡Hotfix! de la IndieDev
     if (G.efac === 'phony') {   // v0.9.13: cada 20 s Phony te cobra la suscripción
       const PS = CFG.passives.phony; if (S.e.subT == null) S.e.subT = PS.every;
       S.e.subT -= dt;
@@ -1016,7 +1021,7 @@ const FUR = { bunny: ['#f7f3ff', '#ffb3cf', '#ff7a1a'], fox: ['#e8702a', '#fff4e
   vikingo: ['#7c4a1e', '#e2572b', '#aab4c4'], swarmbug: ['#7c3aed', '#c4b5fd'], vikingsquad: ['#3b5b8a', '#f2c94c'], retromarine: ['#4d7c0f', '#fb923c'], ghostagent: ['#374151', '#22e3ff'], rockracer: ['#dc2626', '#ffffff', '#1f2937'], titanbeta: ['#78716c', '#ffe14d', '#65a30d'],
   directora: ['#d97706', '#dc2626', '#1f2937'], extras: ['#9ca3af', '#d6b07a'], doble: ['#f5f5f4', '#dc2626'], detective: ['#c8a97e', '#5b4636'], heroe: ['#2563eb', '#dc2626', '#facc15'], spoiler: ['#16a34a', '#f5f0e1'], kaiju: ['#8b5cf6', '#f472b6', '#facc15'] , huron: ["#9a6634", "#f3dfc0", "#e63946"], sombra: ["#3b1d5c", "#7dffb8"], hater: ["#6b7280", "#f1c9a5", "#e63946"], arpia: ["#9a6634", "#4a2f6b", "#ffb04f"], dron: ["#334155", "#ff3348", "#22e3ff"], clickbait: ["#ffe14d", "#ff3348", "#fff6ea"], campero: ["#65a30d", "#3f6212", "#a3e635"], espia: ["#c8a46e", "#4b5563", "#111827"], paparazzi: ["#78716c", "#e63946", "#ffe14d"] };
 const BIG = ['mechavaca', 'stitchbrute', 'banhammer', 'minotaur', 'siegemech', 'chonkcat', 'hypetrain', 'recreativa', 'titanbeta', 'kaiju'];
-const CORP_BIG = ['fallen', 'parchebot', 'cobradlc', 'servidorbot', 'remasterbot'];
+const CORP_BIG = ['fallen', 'parchebot', 'cobradlc', 'servidorbot', 'remasterbot', 'granjaserv', 'clonador'];
 function deathFx(u, src) {
   const top = topOf(u);
   if (SPR[u.type]) parts.push({ type: 'body', key: u.type, x: u.x, y: u.y, face: u.face || 1, ms: (u.mScale || 1) * (u.shrinkT > 0 ? u.shrinkF || 0.6 : 1), cor: !!u.corrupt, life: 0.6, max: 0.6, ground: true });   // v0.9.15
@@ -1028,12 +1033,12 @@ function deathFx(u, src) {
     parts.push({ type: 'ghost', x: u.x, y: u.y, z: top * 0.6, vz: 30, life: 1.4, max: 1.4 });
     play('poof');
   } else {
-    const ph = facOf(u.team) === 'phony', big = CORP_BIG.includes(u.type);
+    const ph = facOf(u.team) === 'phony', ia = facOf(u.team) === 'iahorro', big = CORP_BIG.includes(u.type);
     sparks(u.x, u.y, top * 0.5, 10, '#ffd34d'); flashAt(u.x, u.y, top * 0.5, big ? 60 : 34, '255,200,80', 0.28);
     chips(u.x, u.y, top * 0.5, big ? 8 : 4, ['#9aa5ba'], 'gear', 4);
     if (ph) chips(u.x, u.y, top * 0.5, big ? 8 : 4, ['#ffcb3d', '#e5e7eb'], 'chip', 3.5);   // monedas y discos
     puff(u.x, u.y, 8, '#9aa3b2', 50, 7, false, top * 0.4);
-    parts.push({ type: 'stamp', x: u.x, y: u.y, z: top + 12, txt: src && src.type === 'banhammer' ? 'BANEADO' : ph ? 'CANCELADO' : 'DESPEDIDO', color: '#ff3348', life: 0.9, max: 0.9 });
+    parts.push({ type: 'stamp', x: u.x, y: u.y, z: top + 12, txt: src && src.type === 'banhammer' ? 'BANEADO' : ia ? 'DESCONECTADO' : ph ? 'CANCELADO' : 'DESPEDIDO', color: '#ff3348', life: 0.9, max: 0.9 });
     play('clank');
   }
 }

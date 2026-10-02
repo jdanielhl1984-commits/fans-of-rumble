@@ -5,7 +5,7 @@
    En esta versión el anuncio es de prueba (5 s, de Microblizz). En la app de Google Play se cambiará por uno de verdad (AdMob).
    Con «Sin anuncios» (tienda) los premios llegan al momento, sin ver nada, pero con el mismo tope diario. */
 const ADS = {
-  dayMax: 12,     // anuncios al día en total (entre todos los sitios)
+  dayMax: 30,     // anuncios al día en total (entre todos los sitios). v0.9.23: de 12 a 30
   secs: 5,        // lo que dura el anuncio de prueba
   turboH: 2,      // horas que dura el turbo de HORAS EXTRA
   idleH: 4,       // horas de ganancias que da el anuncio de HORAS EXTRA
@@ -14,8 +14,10 @@ const ADS = {
     idle2: { max: 3, name: 'Recoger x2 en HORAS EXTRA' },
     idle4: { max: 2, name: 'Ganancias de 4 h en HORAS EXTRA' },
     turbo: { max: 2, name: 'Turbo de HORAS EXTRA' },
-    end2:  { max: 5, name: 'Premio x2 al acabar una partida' },
-    pull:  { max: 1, name: 'Tirada gratis del gashapón' },
+    end2:  { max: 12, name: 'Premio x2 al acabar una partida' },
+    pull_ab: { max: 3, name: 'Tirada gratis: habilidades' },
+    pull_eq: { max: 3, name: 'Tirada gratis: equipo' },
+    pull_cd: { max: 3, name: 'Tirada gratis: cartas' },
     gift2: { max: 1, name: 'Regalo diario x2' },
     swap:  { max: 2, name: 'Cambiar una misión diaria' },
   },
@@ -118,8 +120,9 @@ function adEndOffer(R) {   // pantalla final: premio x2 (oro y gemas; la experie
 }
 function adGachaOffer() {   // una tirada gratis al día
   const box = $('#gacha-ad'); if (!box) return;
-  box.innerHTML = adBtn('pull', 'TIRADA GRATIS');
-  box.querySelector('[data-ad]').onclick = () => watchAd('pull', () => { SAVE.tickets = (SAVE.tickets || 0) + 1; buildGachaText(); toast('+1 tirada gratis del gashapón', true); });
+  const slot = 'pull_' + (ADS.slots['pull_' + gachaTab] ? gachaTab : 'ab');   // v0.9.23: cada máquina tiene sus propias tiradas gratis
+  box.innerHTML = adBtn(slot, 'TIRADA GRATIS EN ESTA MÁQUINA');
+  box.querySelector('[data-ad]').onclick = () => watchAd(slot, () => { SAVE.tickets = (SAVE.tickets || 0) + 1; pull(1); });
 }
 function adShopOffer() {   // regalo diario x2 y el pack «Sin anuncios»
   const gift = document.querySelector('#gift-row .pack.gift');

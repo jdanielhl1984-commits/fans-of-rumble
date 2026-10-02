@@ -2005,7 +2005,7 @@ const THEMES = {
   pop:       { grad: ['#6cc04a', '#72c850', '#62b440'], greens: ['#4f9a35', '#62b440', '#8fd86a', '#438a2d', '#a2e47c'], hedge: ['#3f8a35', '#5fae4a'], cap: '#dc2626', capDot: '#fff', title: ['#62b440', '#8fd86a'] },
 };
 function buildBG(fac = 'animales', plaza = 'mb') {
-  const undead = fac === 'nomuertos', TH = THEMES[fac] || THEMES.animales, ph = plaza === 'ph';
+  const undead = fac === 'nomuertos', TH = THEMES[fac] || THEMES.animales, ph = plaza === 'ph', ia = plaza === 'ia';   // v0.9.23: plaza de IAhorro
   const cv = document.createElement('canvas'); cv.width = W * BG_RES; cv.height = H * BG_RES;
   const c = cv.getContext('2d'); c.scale(BG_RES, BG_RES); c.lineJoin = 'round'; c.lineCap = 'round';
   const R = mulberry32(37), r = (a, b) => a + R() * (b - a);
@@ -2027,8 +2027,8 @@ function buildBG(fac = 'animales', plaza = 'mb') {
   // Microblizz corporate plaza eating the meadow
   const edge = px => 200 + Math.sin(px * 0.045) * 8 + Math.sin(px * 0.13) * 4 + (Math.abs(px - 270) < 120 ? 34 * Math.cos(((px - 270) / 120) * Math.PI / 2) : 0);
   c.save(); c.beginPath(); c.moveTo(0, 0); c.lineTo(W, 0); for (let px = W; px >= 0; px -= 6) c.lineTo(px, edge(px)); c.closePath();
-  c.fillStyle = ph ? '#5b6475' : '#a9b1bf'; c.fill(); c.clip();
-  c.strokeStyle = ph ? 'rgba(255,203,61,.22)' : 'rgba(70,80,100,.22)'; c.lineWidth = 1; c.beginPath();
+  c.fillStyle = ia ? '#3d4f5c' : ph ? '#5b6475' : '#a9b1bf'; c.fill(); c.clip();
+  c.strokeStyle = ia ? 'rgba(34,227,255,.25)' : ph ? 'rgba(255,203,61,.22)' : 'rgba(70,80,100,.22)'; c.lineWidth = 1; c.beginPath();
   for (let px = 0; px <= W; px += 26) { c.moveTo(px, 0); c.lineTo(px, 270); }
   for (let py = 0; py <= 270; py += 26) { c.moveTo(0, py); c.lineTo(W, py); }
   c.stroke();
@@ -2036,14 +2036,15 @@ function buildBG(fac = 'animales', plaza = 'mb') {
   c.strokeStyle = 'rgba(30,36,54,.5)'; c.lineWidth = 2.4;
   for (let i = 0; i < 5; i++) { const sx = r(20, 520); c.beginPath(); c.moveTo(sx, 50); c.bezierCurveTo(sx + r(-80, 80), 120, sx + r(-80, 80), 170, sx + r(-60, 60), 250); c.stroke(); }
   c.restore();
-  c.beginPath(); for (let px = 0; px <= W; px += 6) { px ? c.lineTo(px, edge(px)) : c.moveTo(px, edge(px)); } c.strokeStyle = ph ? '#ffcb3d' : '#7d8597'; c.lineWidth = 3; c.stroke();
+  c.beginPath(); for (let px = 0; px <= W; px += 6) { px ? c.lineTo(px, edge(px)) : c.moveTo(px, edge(px)); } c.strokeStyle = ia ? '#22e3ff' : ph ? '#ffcb3d' : '#7d8597'; c.lineWidth = 3; c.stroke();
+  if (ia) for (let i = 0; i < 26; i++) { const px = r(20, 520), py = r(70, 190); if (Math.abs(px - 270) < 70 && py > 120) continue; c.fillStyle = R() < 0.5 ? 'rgba(125,243,255,.55)' : 'rgba(255,255,255,.35)'; c.font = '9px monospace'; c.fillText(R() < 0.5 ? '0' : '1', px, py); }   // ceros y unos por el suelo
   if (ph) for (let i = 0; i < 18; i++) { const px = r(20, 520), py = r(70, 190); if (Math.abs(px - 270) < 70 && py > 120) continue; c.save(); c.translate(px, py); c.rotate(r(-0.6, 0.6)); c.fillStyle = 'rgba(229,231,235,.75)'; c.beginPath(); c.arc(0, 0, 4, 0, Math.PI * 2); c.fill(); c.strokeStyle = 'rgba(32,16,44,.7)'; c.lineWidth = 1; c.stroke(); c.fillStyle = 'rgba(32,16,44,.7)'; c.beginPath(); c.arc(0, 0, 1, 0, Math.PI * 2); c.fill(); c.restore(); }   // discos tirados por el suelo
   // dusk sky + skyline behind HQ
   const sky = c.createLinearGradient(0, 0, 0, 62); sky.addColorStop(0, '#24133a'); sky.addColorStop(1, '#5b4a80');
   c.fillStyle = sky; c.fillRect(0, 0, W, 62);
   let bx = -10;
-  while (bx < W) { const bw = r(34, 64), bh = r(26, 58); c.fillStyle = ph ? '#2a3140' : '#41506f'; c.fillRect(bx, 62 - bh, bw, bh); c.strokeStyle = OL; c.lineWidth = 1.5; c.strokeRect(bx, 62 - bh, bw, bh);
-    c.fillStyle = ph ? 'rgba(255,203,61,.6)' : 'rgba(255,230,140,.55)'; for (let wy = 62 - bh + 6; wy < 56; wy += 9) for (let wx = bx + 5; wx < bx + bw - 6; wx += 9) if (R() < 0.45) c.fillRect(wx, wy, 4, 4);
+  while (bx < W) { const bw = r(34, 64), bh = r(26, 58); c.fillStyle = ia ? '#16222c' : ph ? '#2a3140' : '#41506f'; c.fillRect(bx, 62 - bh, bw, bh); c.strokeStyle = OL; c.lineWidth = 1.5; c.strokeRect(bx, 62 - bh, bw, bh);
+    c.fillStyle = ia ? 'rgba(125,243,255,.6)' : ph ? 'rgba(255,203,61,.6)' : 'rgba(255,230,140,.55)'; for (let wy = 62 - bh + 6; wy < 56; wy += 9) for (let wx = bx + 5; wx < bx + bw - 6; wx += 9) if (R() < 0.45) c.fillRect(wx, wy, 4, 4);
     bx += bw + 2; }
   c.fillStyle = '#5a6582'; c.fillRect(0, 60, W, 5);
   // dirt lanes

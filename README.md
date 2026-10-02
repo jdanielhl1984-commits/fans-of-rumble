@@ -9,7 +9,8 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - Campaña 1 "La Rebelión de los Fans": 8 mundos contra Microblizz, con el sótano donde guardaba los juegos que canceló. Libera cada mundo y su facción se une a ti.
 - Campaña 2 "La Era Digital": 4 mundos contra **Phony y su PayStation**, la consola sin lector de discos que te cobra la suscripción hasta en plena partida.
 - Cada mundo se puede jugar después en **Difícil** (rivales casi al máximo y líderes equipados) y en **Mítica**, el verdadero desafío, con una ruleta semanal que da un castigo al jugador y una ventaja a la CPU.
-- 9 facciones: Animales Locos, No-Muertos, Streamers, Héroes, Ciberpunks, Memes, Comunidad Gamer, Olvidados y Cultura Pop, cada una con su líder, 6 cartas y una pasiva propia.
+- Campaña 3 "Fin de la partida": 4 mundos contra **IAhorro**, la IA del ahorro… de sueldos, que copia tus cartas. Al apagarla se une la facción 10, **Los Creadores**.
+- 10 facciones: Animales Locos, No-Muertos, Streamers, Héroes, Ciberpunks, Memes, Comunidad Gamer, Olvidados y Cultura Pop, cada una con su líder, 6 cartas y una pasiva propia.
 - Las unidades suben de nivel (del 1 al 10) con experiencia y oro.
 - **Gashapón de cartas** (v0.9.15): 27 hechizos y 9 mata-sanadores, 4 por facción. Los hechizos se lanzan en cualquier sitio (daño, cura y efectos locos como pulgas, baneo o remake) y los mata-sanadores saltan por encima de la primera línea. Las repetidas dan estrellas (+5 % cada una).
 - **Mazo personalizado**: líder + 6 cartas de su facción, con 2 hechizos como mucho. Se edita en la Colección o antes de jugar.
@@ -41,4 +42,4 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
   - `09-menus.js`, `10-dificultad.js` (Difícil, Mítica y ruleta), `11-logros.js`, `12-app-y-preparacion.js`, `13-horas-extra.js`, `14-cartas-y-jefes.js` (hechizos, mazo, Modo Jefe) y `15-arranque.js` (va el último).
 - `manifest.webmanifest`, `sw.js` e iconos (`icon-192.png`, `icon-512.png`, `icon-maskable.png`): para instalarlo como app y jugar sin conexión.
 
-Prototipo en desarrollo (versión 0.9.22). Todo el arte, el sonido y la música están hechos con código.
+Prototipo en desarrollo (versión 0.9.23). Todo el arte, el sonido y la música están hechos con código.

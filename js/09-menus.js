@@ -515,7 +515,7 @@ const chatSt = { t: 6 };
 function chatSay(kind, extra, key) {
   if (SAVE.chatOff) return;
   const box = $('#chat'); if (!box) return;
-  const lines = (ownerOf() === 'phony' && CHAT_PH[kind]) || CHAT[kind]; if (!lines) return;
+  const lines = (ownerOf() === 'phony' && CHAT_PH[kind]) || (ownerOf() === 'iahorro' && CHAT_IA[kind]) || CHAT[kind]; if (!lines) return;
   const own = (CHAT_FAC[G.faction] || {})[kind];
   const vs = kind === 'idle' ? CHAT_VS[G.efac] : null;
   const bossI = G.mode === 'boss' ? (G.bossWi == null ? CEO_WI : G.bossWi) : G.level && G.level.boss ? G.level.wi : -1, bl = bossI >= 0 && (kind === 'idle' || kind === 'boss' || kind === 'start') ? CHAT_BOSS[bossI] : null;
@@ -552,7 +552,7 @@ function chatWatch(dt) {   // CAOS a tope sin gastar, nadie juega cartas, final 
 function shareHeadline() {
   const R = G.rewards || {}, w = G.winner;
   let key = G.mode === 'boss' ? 'boss' : R.unlock ? 'unlock' : w === 'p' ? 'win' : 'lose';
-  const HL = ownerOf() === 'phony' && key !== 'boss' ? HEADLINES_PH : HEADLINES;
+  const HL = key !== 'boss' && ownerOf() === 'phony' ? HEADLINES_PH : key !== 'boss' && ownerOf() === 'iahorro' ? HEADLINES_IA : HEADLINES;
   return pick(HL[key]).replace('{c}', S.p.crowns).replace('{L}', CFG.cards[FACTIONS[G.faction].leader].name).replace('{F}', FACTIONS[G.faction].name).replace('{U}', R.unlock ? capFirst(losOf(R.unlock)) : '').replace('{S}', fmt(R.score || 0)).replace('{B}', G.bossName || 'El jefe');
 }
 function wrapLines(c, str, maxW) {
@@ -619,12 +619,12 @@ function buildCamp() {
     const open = worldOpenD(wi, d), stars = w.levels.reduce((a, l) => a + starsD(l.id, d), 0); if (open) cur = wi;
     const nodes = w.levels.map(l => { const st = starsD(l.id, d), ok = levelOpenD(l, d); return `<button class="node${d !== 'n' ? ' cd-' + d : ''}${l.boss ? ' boss' : ''}${ok && !st ? ' next' : ''}" data-lv="${l.id}" ${ok ? '' : 'disabled'}><b class="ol">${l.boss ? 'JEFE' : wi + 1 + '-' + (l.li + 1)}</b><small>${l.name}</small><span class="st">${'★'.repeat(st)}<i>${'★'.repeat(3 - st)}</i></span></button>`; }).join('');
     const lv = d === 'n' ? '' : `Nivel ${CDIFF[d].lvl(w.levels[0])}${CDIFF[d].lvl(w.levels[0]) !== CDIFF[d].lvl(w.levels[3]) ? '-' + CDIFF[d].lvl(w.levels[3]) : ''} · `;
-    const nextTxt = wi === CEO_WI ? 'Premio: abre el sótano y la Campaña 2' : wi === WORLDS.length - 1 ? 'El final de la Era Digital' : 'Premio: abre el mundo ' + (wi + 2);
+    const nextTxt = wi === CEO_WI ? 'Premio: abre el sótano y la Campaña 2' : wi === 11 ? 'Premio: abre la Campaña 3' : wi === WORLDS.length - 1 ? 'El final de la partida' : 'Premio: abre el mundo ' + (wi + 2);
     const reward = d === 'h' ? lv + 'premios dobles' : d === 'm' ? lv + (SAVE.mythPrize[wi] ? 'legendario conseguido' : 'su jefe da un legendario') : w.unlock ? `Premio: se unen ${losOf(w.unlock)}` : nextTxt;
-    const lockTxt = d === 'h' ? 'Pásate este mundo en Normal para jugarlo en Difícil.' : d === 'm' ? 'Pásate este mundo en Difícil para jugarlo en Mítica.' : w.openAfter ? 'Bloqueado: gana al CEO de Microblizz (mundo 7) para empezar la Campaña 2.' : 'Bloqueado: gana al jefe del mundo anterior.';
-    const port = w.efac === 'microblizz' ? (wi ? 'parchebot' : 'becario') : w.efac === 'phony' ? (wi === WORLDS.length - 1 ? 'remasterbot' : 'descargabot') : FACTIONS[w.efac].leader;
-    const head = wi === 0 ? '<div class="camp-head ol">CAMPAÑA 1 · LA REBELIÓN DE LOS FANS<small>contra Microblizz</small></div>' : w.camp === 2 && WORLDS[wi - 1].camp !== 2 ? '<div class="camp-head c2 ol">CAMPAÑA 2 · LA ERA DIGITAL<small>contra Phony y su PayStation</small></div>' : '';
-    return head + `<div class="world${open ? '' : ' locked'}${d === 'm' && open ? ' cd-m' : ''}" data-wi="${wi}" style="--wc:${d === 'h' ? '#8a2b3a' : d === 'm' ? '#5b2a8f' : w.efac === 'microblizz' ? '#1d3f8a' : w.efac === 'phony' ? '#8a6a12' : FAC_COLOR[w.efac] + '77'}"><div class="world-head"><canvas data-k="${port}"></canvas><div class="world-name ol">${wi + 1}. ${w.name}<small>${enemyLabel(w.efac)} · ${reward}</small></div><div class="world-stars ol">★ ${stars}/12</div></div><p class="world-story">${open ? w.story : lockTxt}</p><div class="nodes">${nodes}</div></div>`;
+    const lockTxt = d === 'h' ? 'Pásate este mundo en Normal para jugarlo en Difícil.' : d === 'm' ? 'Pásate este mundo en Difícil para jugarlo en Mítica.' : w.openAfter ? (w.camp === 3 ? 'Bloqueado: gana al Presidente de Phony (mundo 12) para empezar la Campaña 3.' : 'Bloqueado: gana al CEO de Microblizz (mundo 7) para empezar la Campaña 2.') : 'Bloqueado: gana al jefe del mundo anterior.';
+    const port = w.efac === 'microblizz' ? (wi ? 'parchebot' : 'becario') : w.efac === 'phony' ? (wi === 11 ? 'remasterbot' : 'descargabot') : w.efac === 'iahorro' ? (wi === IA_FINAL ? 'iahorro' : 'copiapega') : FACTIONS[w.efac].leader;
+    const head = wi === 0 ? '<div class="camp-head ol">CAMPAÑA 1 · LA REBELIÓN DE LOS FANS<small>contra Microblizz</small></div>' : w.camp === 2 && WORLDS[wi - 1].camp !== 2 ? '<div class="camp-head c2 ol">CAMPAÑA 2 · LA ERA DIGITAL<small>contra Phony y su PayStation</small></div>' : w.camp === 3 && WORLDS[wi - 1].camp !== 3 ? '<div class="camp-head c3 ol">CAMPAÑA 3 · FIN DE LA PARTIDA<small>contra IAhorro, la IA del ahorro… de sueldos</small></div>' : '';
+    return head + `<div class="world${open ? '' : ' locked'}${d === 'm' && open ? ' cd-m' : ''}" data-wi="${wi}" style="--wc:${d === 'h' ? '#8a2b3a' : d === 'm' ? '#5b2a8f' : w.efac === 'microblizz' ? '#1d3f8a' : w.efac === 'phony' ? '#8a6a12' : w.efac === 'iahorro' ? '#0e5a6e' : FAC_COLOR[w.efac] + '77'}"><div class="world-head"><canvas data-k="${port}"></canvas><div class="world-name ol">${wi + 1}. ${w.name}<small>${enemyLabel(w.efac)} · ${reward}</small></div><div class="world-stars ol">★ ${stars}/12</div></div><p class="world-story">${open ? w.story : lockTxt}</p><div class="nodes">${nodes}</div></div>`;
   }).join('');
   for (const cv of list.querySelectorAll('canvas[data-k]')) drawArt(cv, cv.dataset.k, 52, 46);
   list.querySelectorAll('[data-lv]').forEach(b => { b.onclick = () => { play('select'); openPrep('camp', findLevel(b.dataset.lv)); }; });
@@ -640,7 +640,7 @@ function openPrep(mode, lvl) {
     $('#prep-title').textContent = lvl.boss ? `JEFE DEL MUNDO ${lvl.wi + 1}` : `NIVEL ${lvl.wi + 1}-${lvl.li + 1}`;
     let extra = '';
     if (cd !== 'n') {
-      const who = Wd.efac === 'microblizz' ? 'Sus FallenHero y Parche Día 1 llevan' : Wd.efac === 'phony' ? 'Sus Servidor Caído y Remaster 70 € llevan' : `${CFG.cards[FACTIONS[Wd.efac].leader].name} lleva`;
+      const who = Wd.efac === 'microblizz' ? 'Sus FallenHero y Parche Día 1 llevan' : Wd.efac === 'phony' ? 'Sus Servidor Caído y Remaster 70 € llevan' : Wd.efac === 'iahorro' ? 'Sus Granja de Servidores y Clonador 3000 llevan' : `${CFG.cards[FACTIONS[Wd.efac].leader].name} lleva`;
       extra += `<div class="gear-list"><span class="gear-who">${who}:</span>${ENEMY_GEAR[cd][lvl.wi].map(id => gearRow(id, C.q)).join('')}</div>`;
       if (cd === 'm') { const M = mythicWeek(); extra += `<div class="mod-row bad"><b>TU CASTIGO</b>${M.deb.name}: ${M.deb.desc}</div><div class="mod-row good"><b>VENTAJA DE LA CPU</b>${M.buf.name}: ${M.buf.desc}</div>`; }
     }
@@ -670,7 +670,7 @@ function setupMatch(mode, lvl, cd) {
   if (mode === 'camp') {
     const Wd = WORLDS[lvl.wi]; G.efac = Wd.efac; G.elvl = lvl.elvl; G.bossOn = !!lvl.boss; G.bossName = lvl.boss || 'SurvivalBot';
     G.diffCfg = Object.assign({}, CFG.diff.normal, { aiIncome: lvl.income, think: [0.6, 1.2], bossCd: 18, stun: 2, despido: 20 + lvl.elvl * 2 });
-    G.ebaseName = lvl.boss ? lvl.boss.toUpperCase() : Wd.efac === 'microblizz' ? 'SEDE DE MICROBLIZZ' : Wd.efac === 'phony' ? 'SEDE DE PHONY' : FACTIONS[Wd.efac].base;
+    G.ebaseName = lvl.boss ? lvl.boss.toUpperCase() : Wd.efac === 'microblizz' ? 'SEDE DE MICROBLIZZ' : Wd.efac === 'phony' ? 'SEDE DE PHONY' : Wd.efac === 'iahorro' ? 'IAHORRO' : FACTIONS[Wd.efac].base;
   } else if (mode === 'boss') {   // v0.9.15: el jefe y la dificultad que elegiste
     const sel = SAVE.bossSel || { wi: CEO_WI, d: 'n' }, wi = bossOpen(sel.wi) ? sel.wi : CEO_WI, d = BDIFF[sel.d] ? sel.d : 'n', B = bossOf(wi), BD = BDIFF[d];
     G.bossWi = wi; G.bossDiff = d;
@@ -687,7 +687,7 @@ function setupMatch(mode, lvl, cd) {
   G.classicAI = G.efac === 'microblizz' && !!deck && deck.every(k => ['becario', 'starbot', 'fallen'].includes(k));
   G.edeck = deck;
   G.eextra = mode === 'arena' ? (G.arenaSpells || []) : mode === 'sandbox' ? [] : enemyExtras(mode, lvl);   // v0.9.15: hechizos y mata-sanadores de la CPU
-  if (mode === 'boss' && BDIFF[G.bossDiff].gear) { const BD = BDIFF[G.bossDiff]; G.egear = ENEMY_GEAR[BD.gear][G.bossWi]; G.egearQ = BD.q; if (isCorp(G.efac)) G.egearOn = G.efac === 'phony' ? PH_GEAR_ON : MB_GEAR_ON; }
+  if (mode === 'boss' && BDIFF[G.bossDiff].gear) { const BD = BDIFF[G.bossDiff]; G.egear = ENEMY_GEAR[BD.gear][G.bossWi]; G.egearQ = BD.q; if (isCorp(G.efac)) G.egearOn = G.efac === 'phony' ? PH_GEAR_ON : G.efac === 'iahorro' ? IA_GEAR_ON : MB_GEAR_ON; }
   if (G.cdiff !== 'n') setupHardMode(lvl);
   G.terrain = mode === 'sandbox' ? SB.terrain : terrainFor(mode, lvl);   // v0.9.18: campo especial de algunos jefes
 }
@@ -731,7 +731,8 @@ function grantRewards() {
       missionEvent('star', R.stars);
       if (L.boss && L.wi === CEO_WI) stat('ceo', 1);
       if (L.boss && WORLDS[L.wi].unlock === 'olvidados') stat('olvido', 1);
-      if (L.boss && L.wi === WORLDS.length - 1) stat('phonyboss', 1);
+      if (L.boss && L.wi === 11) stat('phonyboss', 1);
+      if (L.boss && L.wi === IA_FINAL) stat('iaboss', 1);   // v0.9.23
       if (L.boss && cd !== 'n') stat(cd === 'h' ? 'hardboss' : 'mythboss', 1);
       if (L.boss && cd === 'm' && !SAVE.mythPrize[L.wi]) { SAVE.mythPrize[L.wi] = 1; R.prize = legendaryPrize(); }
       const ff = worldFac(L.wi); if (L.boss && cd !== 'n' && ff && !(SAVE.facItem || {})[ff]) { SAVE.facItem = SAVE.facItem || {}; SAVE.facItem[ff] = 1; R.facItem = newCopy('eq', FAC_ITEM[ff], 2); }
@@ -940,7 +941,7 @@ function hideScreens() { for (const s of document.querySelectorAll('.screen')) s
 let BG_KEY = '';
 function ensureBG(plaza) { const key = G.faction + '|' + plaza; if (BG_KEY !== key) { BG = buildBG(G.faction, plaza); BG_KEY = key; } }
 function startMatch() {
-  ensureBG(ownerOf() === 'phony' ? 'ph' : 'mb');
+  ensureBG({ phony: 'ph', iahorro: 'ia' }[ownerOf()] || 'mb');
   audioInit(); hideScreens(); resetMatch(); chatClear(); G.state = 'countdown'; camReset(); terrainStart();
   G.tutMatch = !G.autoplay && !SAVE.tut.done && SAVE.tut.step === 0; tutBattleStart(); applySpeed(); applyMatchMods(); hudMods();
   const F = FACTIONS[G.faction];
@@ -1003,7 +1004,7 @@ function showEnd() {
   if (R.arena) rw += `<span class="rw-chip big ol">${R.arena.d >= 0 ? '+' : ''}${R.arena.d} COPAS · ${fmt(R.arena.cups)} · LIGA ${R.arena.league.toUpperCase()}</span>`;   // v0.9.20
   $('#end-rewards').innerHTML = rw; adEndOffer(R);   // v0.9.16: premio x2 con anuncio
   $('#end-pass').innerHTML = passLevel() >= PASS.levels && !R.passUp ? 'Pase de batalla completado' : `Pase de batalla: +${R.passXp} puntos${R.passUp ? ` · <b style="color:#ffe14d">¡NIVEL ${passLevel()}!</b>` : ` · ${SAVE.pass.xp - passLevel() * PASS.xpPer}/${PASS.xpPer} para el nivel ${passLevel() + 1}`}`;
-  $('#end-quote').textContent = R.unlock ? `${capFirst(losOf(R.unlock))} se libran de ${ownerName()} y se unen a la rebelión.` : pick((ownerOf() === 'phony' ? QUOTES_PH : QUOTES)[w || 'd']);
+  $('#end-quote').textContent = R.unlock ? `${capFirst(losOf(R.unlock))} se libran de ${ownerName()} y se unen a la rebelión.` : pick((ownerOf() === 'phony' ? QUOTES_PH : ownerOf() === 'iahorro' ? QUOTES_IA : QUOTES)[w || 'd']);
   $('#st-cards').textContent = S.p.deployed; $('#st-kills').textContent = S.p.kills; $('#st-chaos').textContent = Math.round(S.p.spent);
   let nx = G.mode === 'camp' && w === 'p' ? nextLevel(G.level) : null; if (nx && !levelOpenD(nx, G.cdiff || 'n')) nx = null;
   $('#btn-next').hidden = !nx; $('#btn-next').textContent = nx && nx.wi !== G.level.wi ? 'MUNDO ' + (nx.wi + 1) : 'SIGUIENTE';

@@ -44,7 +44,7 @@ fam('bkmyth', 'b', () => WORLDS.filter((w, i) => (SAVE.bossPay[i + 'm'] || 0) & 
 fam('lead', 'b', 'leader', [10, 50, 100, 250, 500, 1000], [5, 5, 10, 15, 25, 40], 'Líder de verdad', g => `Saca a tu líder ${fmt(g)} veces.`, 'Un jefe que sí baja al campo.');
 fam('wstreak', 'b', () => SAVE.stats.bestStreak || 0, [3, 5, 10, 15, 25], [10, 15, 30, 45, 80], 'En racha', g => `Gana ${g} partidas seguidas.`, 'Microblizz pide revisar la jugada.');
 // -- Facciones
-const FAC_ACH = { animales: ['Manada salvaje', 'La rabia también es una pasiva.'], nomuertos: ['Ejército eterno', 'Ni muertos trabajan ya para Microblizz.'], streamers: ['En directo', '¡Dale a la campanita!'], heroes: ['Leyenda viva', 'Los dioses vuelven a estar de buen humor.'], ciber: ['Alto voltaje', 'Firmware libre, por fin.'], memes: ['Viral', 'Este logro ya es un meme.'], gamer: ['GG', 'GG, Phony. GG.'], olvidados: ['Recordados', 'Por fin alguien se acuerda de ellos.'], pop: ['Taquillazo', 'Y sin remake.'] };
+const FAC_ACH = { animales: ['Manada salvaje', 'La rabia también es una pasiva.'], nomuertos: ['Ejército eterno', 'Ni muertos trabajan ya para Microblizz.'], streamers: ['En directo', '¡Dale a la campanita!'], heroes: ['Leyenda viva', 'Los dioses vuelven a estar de buen humor.'], ciber: ['Alto voltaje', 'Firmware libre, por fin.'], memes: ['Viral', 'Este logro ya es un meme.'], gamer: ['GG', 'GG, Phony. GG.'], olvidados: ['Recordados', 'Por fin alguien se acuerda de ellos.'], pop: ['Taquillazo', 'Y sin remake.'] , creadores: ['Hecho a mano', 'Sin crunch y sin rendirse.'] };
 for (const f of FACTION_ORDER) {
   const F = FACTIONS[f], L = CFG.cards[F.leader].name, [nm, jk] = FAC_ACH[f], n0 = ACHF.length;
   fam('fw_' + f, 'f', 'fwin_' + f, [1, 10, 25, 50, 100, 250, 500], [5, 10, 15, 20, 25, 35, 50], nm, g => veces(g, `Gana una partida con ${F.name}.`, `Gana {n} partidas con ${F.name}.`), jk);
@@ -79,6 +79,7 @@ for (const d of ['n', 'h', 'm']) {
 fam('ceo', 'k', 'ceo', [1], [150], 'Compra cancelada', () => 'Gana al CEO de Microblizz.', 'El CEO tendrá que vender su yate.', { 1: 'ceo' });
 fam('olvido', 'k', 'olvido', [1], [80], 'Recuerdos recuperados', () => 'Libera a los Olvidados del sótano de Microblizz.', 'Por fin alguien se acuerda de ellos.', { 1: 'olvido' });
 fam('phony', 'k', 'phonyboss', [1], [150], 'Devolvednos los discos', () => 'Gana al Presidente de Phony.', 'Tu colección de discos está a salvo.', { 1: 'phony' });
+fam('iaboss', 'k', 'iaboss', [1], [200], 'Desconectada', () => 'Apaga a IAhorro (mundo 16).', 'Los juegos vuelven a tener alma.');   // v0.9.23
 fam('hard', 'k', 'hardboss', [1, 5, 12, 25, 50], [80, 50, 70, 90, 130], 'Esto ya es otra cosa', g => veces(g, 'Gana a un jefe en Difícil.', 'Gana a {n} jefes en Difícil.'), 'Microblizz pide refuerzos.', { 1: 'hard1' });
 fam('myth', 'k', 'mythboss', [1, 5, 12, 25, 50], [150, 80, 100, 130, 200], 'Leyenda mítica', g => veces(g, 'Gana a un jefe en Mítica.', 'Gana a {n} jefes en Mítica.'), 'Ni la ruleta de Microblizz ha podido contigo.', { 1: 'myth1' });
 fam('rl', 'k', 'rlspin', [1, 5, 10, 25], [5, 10, 15, 25], 'La ruleta de la semana', g => veces(g, 'Gira la ruleta de la Mítica.', 'Gira {n} veces la ruleta de la Mítica.'), 'La casa siempre gana. O casi.');
@@ -89,6 +90,7 @@ for (const k in ENEMY_ACH) { const [nm, pl, jk] = ENEMY_ACH[k]; fam('ek_' + k, '
 const CORR_ACH = { gamer: 'Gamers corrompidos', pop: 'personajes de Cultura Pop corrompidos' };
 for (const f of FACTION_ORDER) if (WORLDS.some(w => w.efac === f)) fam('ef_' + f, 'e', 'ekf_' + f, [25, 100, 250, 500, 1000], [5, 10, 15, 20, 30], `Rescate: ${FACTIONS[f].name}`, g => `Derrota a ${fmt(g)} ${CORR_ACH[f] || FACTIONS[f].name + ' corrompidos'}.`, 'No es nada personal: es para liberarlos.');
 fam('ef_microblizz', 'e', 'ekf_microblizz', [100, 500, 1000, 2500, 5000, 10000], [5, 10, 15, 25, 35, 50], 'Contra Microblizz', g => `Derrota a ${fmt(g)} enemigos de Microblizz.`, 'Despidos, pero al revés.');
+fam('ef_iahorro', 'e', 'ekf_iahorro', [100, 500, 1000, 2500, 5000], [5, 10, 15, 25, 40], 'Contra IAhorro', g => `Derrota a ${fmt(g)} bots de IAhorro.`, 'Ningún prompt sobrevive.');   // v0.9.23
 fam('ef_phony', 'e', 'ekf_phony', [100, 500, 1000, 2500, 5000, 10000], [5, 10, 15, 25, 35, 50], 'Contra Phony', g => `Derrota a ${fmt(g)} enemigos de Phony.`, 'Suscripción cancelada.');
 fam('elead', 'e', 'eleader', [1, 10, 25, 50, 100, 250], [5, 10, 15, 25, 40, 60], 'Cazalíderes', g => veces(g, 'Derrota a un líder enemigo.', 'Derrota a {n} líderes enemigos.'), 'Sin jefe, el equipo se toma el día libre.');
 // -- Gashapón y tesoro
@@ -253,15 +255,12 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>ARENA</b> y <b>PRUEBAS</b> ahora son botones a los lados de CAMPAÑA, y el título es más grande.',
-    '<b>Opciones</b>: elige la <b>música del menú</b> (cualquier tema del juego, también los de los jefes) y quita las <b>chapas sobre las unidades</b> (siglas de la habilidad, llama de Rabia y estrella de los Héroes) para ver el campo más limpio.',
-    '<b>Opciones → Avisos de las unidades</b>: «¡Rabia máxima!», «¡Tropiezo!», «Equipado»… pueden ir encima de las unidades o en una caja abajo a la derecha (con un punto naranja si es tuyo y azul si es del rival, y x2, x3… si se repiten). Así el campo queda más limpio.',
-    '<b>Equilibrio de facciones</b>: medido con miles de partidas automáticas. Antes una facción ganaba el 94 % y otra el 6 %; ahora todas quedan entre el 47 % y el 54 %. Animales Locos y Comunidad Gamer, más fuertes; No-Muertos y Memes, algo menos.',
-    '<b>Sala de pruebas</b> (abajo en el menú): CAOS infinito, el tiempo no corre y nada se cae. Saca grupos, tanques, sanadores, tiradores o líderes de cualquier rival, enciende su IA, cambia al campo de cualquier jefe y mira el daño por segundo. Sin premios.',
-    '<b>Arena</b> (abajo en el menú): elige uno de 3 «jugadores» inventados, gana copas y sube de liga: Becario, Junior, Senior, Director y CEO.',
-    '<b>Hechizos nuevos</b> en el gashapón de cartas: <b>Crunch</b> (No-Muertos: tus tropas pegan el doble de rápido, pero se van quemando) y <b>Review bombing</b> (Comunidad Gamer: las torres y la sede del rival reciben un 40 % más de daño).',
-    'De antes: campos propios para los 12 jefes y opciones de números de daño y sangre.'],
-  joke: ['Microblizz ha probado su juego en la sala de pruebas. Dice que está «equilibrado»: gana siempre ella.', 'Phony cobra la Arena como DLC. Aquí es gratis y las copas no se venden.', 'El CEO hizo Crunch tres semanas para entregar esta versión. Él no, sus empleados.'],
+  real: ['<b>CAMPAÑA 3 · FIN DE LA PARTIDA</b> (se abre al ganar a Phony): Microblizz y Phony compran <b>IAhorro</b>, «la IA del ahorro… de sueldos», despiden a todo el estudio y sacan juegos idénticos cada cinco minutos. 4 mundos nuevos con sus jefes y sus campos: la Granja de Prompts, el Almacén de Datos (río congelado), el Estudio Vacío y el Núcleo de IAhorro.',
+    '<b>Pasiva de IAhorro, ENTRENADA CON TU TRABAJO</b>: cada 25 s copia la última unidad que has sacado y la pone de su lado.',
+    '<b>Facción 10: LOS CREADORES</b> (al apagar a IAhorro): la IndieDev (¡Hotfix!), Game Jam, Tester de QA, Pixelartista, Compositora, Diseñadora de Niveles y El Prototipo. Su pasiva, <b>SIN CRUNCH</b>: tras 3 s sin recibir daño, sus unidades descansan y se curan. Y 4 cartas en el gashapón: Freelance, Lluvia de portfolios, 48 horas de Jam y Créditos finales.',
+    '<b>Más anuncios con premio</b>: premio x2 al acabar hasta 12 veces al día y 3 tiradas gratis en cada máquina del gashapón (tope de 30 al día).',
+    'Música nueva para Los Creadores y para los 4 jefes, y se pueden elegir en Opciones como música del menú.'],
+  joke: ['IAhorro ha escrito estas notas del parche. Dicen que el juego «es increíble» y que lo ha hecho ella.', 'Microblizz y Phony anuncian que la IA les ahorrará el 100 % de los sueldos. Y el 100 % de los jugadores.', 'El Asistente Alucinado jura que esta versión tiene 47 campañas.'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;

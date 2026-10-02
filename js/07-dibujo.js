@@ -67,7 +67,7 @@ function ambNew(kind, top, init) {
 }
 function drawAmbient(dt) {
   if (REDUCED) return;
-  const ek = G.efac === 'microblizz' ? 'memo' : G.efac === 'phony' ? 'disc' : 'ember', pk = AMB_KIND[G.faction] || 'butterfly', key = pk + ek;
+  const ek = G.efac === 'microblizz' ? 'memo' : G.efac === 'phony' ? 'disc' : G.efac === 'iahorro' ? 'bit' : 'ember', pk = AMB_KIND[G.faction] || 'butterfly', key = pk + ek;
   if (AMB.key !== key) { AMB.key = key; AMB.list = []; for (let i = 0; i < 12; i++) AMB.list.push(ambNew(pk, false, true)); for (let i = 0; i < 7; i++) AMB.list.push(ambNew(ek, true, true)); }
   for (let i = 0; i < AMB.list.length; i++) {
     let a = AMB.list[i]; a.life -= dt;
@@ -322,7 +322,7 @@ function drawStruct(s) {
     const g = ctx.createRadialGradient(ex, ey, 0, ex, ey, r); g.addColorStop(0, ph2 ? 'rgba(255,90,90,.95)' : 'rgba(255,220,110,.95)'); g.addColorStop(1, 'rgba(255,180,40,0)');
     ctx.fillStyle = g; ctx.beginPath(); ctx.arc(ex, ey, r, 0, Math.PI * 2); ctx.fill();
   }
-  if (s.team === 'e' && s.role === 'base' && G.bossOn && s.skin !== 'e' && s.skin !== 'y') {   // jefe corrupto: aura roja
+  if (s.team === 'e' && s.role === 'base' && G.bossOn && s.skin !== 'e' && s.skin !== 'y' && s.skin !== 'i') {   // jefe corrupto: aura roja
     const r = 40 + 6 * Math.sin(G.t * 4) + (s.castT > 0 ? 18 : 0), cy = s.y - TOPS[s.skin + '_base'] * 0.55;
     const g = ctx.createRadialGradient(s.x, cy, 0, s.x, cy, r * 1.4); g.addColorStop(0, 'rgba(255,40,80,.28)'); g.addColorStop(1, 'rgba(255,40,80,0)');
     ctx.fillStyle = g; ctx.beginPath(); ctx.arc(s.x, cy, r * 1.4, 0, Math.PI * 2); ctx.fill();

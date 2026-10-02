@@ -9,7 +9,7 @@ const CDIFF = {
   m: { name: 'Mítica', lvl: l => Math.min(12, Math.max(9, l.elvl + 7)), inc: 1.8, incMin: 1.35, start: 9, elite: 1.25, think: [0.3, 0.7], bossCd: 11, stun: 2.8, hp: 1.55, dmg: 1.35, pay: 3, q: 1 },
 };
 const CAMP_SUB = {
-  n: 'Libera cada mundo corrompido y su facción se unirá a ti. Campaña 1: Microblizz. Al ganar al CEO se abren el sótano y la Campaña 2, contra Phony.',
+  n: 'Libera cada mundo corrompido y su facción se unirá a ti. Campaña 1: Microblizz. Al ganar al CEO se abren el sótano y la Campaña 2, contra Phony; y al ganar a Phony, la Campaña 3, contra IAhorro.',
   h: 'Difícil: rivales de nivel 6 a 10 y líderes equipados. Te hará falta subir tus cartas y equiparlas bien. Premios dobles.',
   m: 'Mítica, el verdadero desafío: rivales de nivel 9 a 12, equipo perfecto y la ruleta de la semana. Premios triples y un legendario por cada jefe.',
 };
@@ -20,7 +20,10 @@ const ENEMY_GEAR = {
   m: [['baguette', 'casco_vr', 'bebida_xxl'], ['lanzaconfeti', 'gorro_aluminio', 'almohada'], ['banhammer_oro', 'orejas_gato', 'silla_gamer'], ['teclado_rgb', 'auriculares', 'boton_pausa'], ['lanzaconfeti', 'auriculares', 'alfombrilla'], ['banhammer_oro', 'orejas_gato', 'boton_pausa'], ['banhammer_oro', 'auriculares', 'boton_pausa'],
       ['banhammer_oro', 'auriculares', 'almohada'], ['baguette', 'auriculares', 'boton_pausa'], ['teclado_rgb', 'orejas_gato', 'boton_pausa'], ['lanzaconfeti', 'auriculares', 'alfombrilla'], ['banhammer_oro', 'auriculares', 'boton_pausa']],
 };
-const MB_GEAR_ON = ['fallen', 'parchebot'], PH_GEAR_ON = ['servidorbot', 'remasterbot'];
+const MB_GEAR_ON = ['fallen', 'parchebot'], PH_GEAR_ON = ['servidorbot', 'remasterbot'], IA_GEAR_ON = ['granjaserv', 'clonador'];
+// v0.9.23: equipo del rival en los mundos de la Campaña 3
+ENEMY_GEAR.h.push(['raton_dpi', 'auriculares', 'silla_gamer'], ['teclado_rgb', 'casco_vr', 'cofre'], ['lanzaconfeti', 'orejas_gato', 'bebida_xxl'], ['banhammer_oro', 'gorro_aluminio', 'alfombrilla']);
+ENEMY_GEAR.m.push(['banhammer_oro', 'auriculares', 'boton_pausa'], ['teclado_rgb', 'orejas_gato', 'boton_pausa'], ['baguette', 'auriculares', 'alfombrilla'], ['banhammer_oro', 'casco_vr', 'boton_pausa']);
 let campDiff = 'n';
 const campOf = d => (d === 'h' ? SAVE.campH || (SAVE.campH = {}) : d === 'm' ? SAVE.campM || (SAVE.campM = {}) : SAVE.camp);
 const starsD = (id, d) => campOf(d || 'n')[id] || 0;
@@ -39,7 +42,7 @@ function setupHardMode(lvl) {
   const cd = G.cdiff, C = CDIFF[cd];
   G.elvl = C.lvl(lvl);
   G.diffCfg = Object.assign({}, G.diffCfg, { aiIncome: Math.max(C.incMin, lvl.income * C.inc), think: C.think.slice(), bossCd: C.bossCd, stun: C.stun, despido: 24 + G.elvl * 3 });
-  if (isCorp(G.efac)) { G.edeck = FACTIONS[G.efac].units.slice(); G.classicAI = false; G.egearOn = G.efac === 'phony' ? PH_GEAR_ON : MB_GEAR_ON; }
+  if (isCorp(G.efac)) { G.edeck = FACTIONS[G.efac].units.slice(); G.classicAI = false; G.egearOn = G.efac === 'phony' ? PH_GEAR_ON : G.efac === 'iahorro' ? IA_GEAR_ON : MB_GEAR_ON; }
   G.egear = ENEMY_GEAR[cd][lvl.wi]; G.egearQ = C.q;
   if (cd === 'm') {
     const M = G.mod = mythicWeek();

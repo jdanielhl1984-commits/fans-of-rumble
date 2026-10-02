@@ -8,7 +8,7 @@ try { const d = localStorage.getItem('for-diff'); if (d && CFG.diff[d]) { G.diff
 if (FACTION_ORDER.includes(SAVE.lastFac) && isUnlocked(SAVE.lastFac)) G.faction = SAVE.lastFac;
 const facOf = team => (team === 'p' ? G.faction : G.efac);
 // v0.9.13: la empresa que está detrás del rival (en la campaña 2 es Phony)
-const ownerOf = () => ((G.mode === 'camp' && G.level && WORLDS[G.level.wi].camp === 2) || (G.mode === 'boss' && G.bossWi != null && WORLDS[G.bossWi].camp === 2) ? 'phony' : 'microblizz');
+const ownerOf = () => { const wi = G.mode === 'camp' && G.level ? G.level.wi : G.mode === 'boss' && G.bossWi != null ? G.bossWi : -1, c = wi >= 0 ? WORLDS[wi].camp : 0; return c === 3 ? 'iahorro' : c === 2 ? 'phony' : 'microblizz'; };   // v0.9.23: la campaña 3 es de IAhorro
 const ownerName = () => CORP[ownerOf()];
 let revives = [];
 let S = null;
