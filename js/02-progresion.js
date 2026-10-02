@@ -334,7 +334,7 @@ const CHAT_FAC = {
     lose: ['Microblizz vuelve a cerrar el Olimpo', 'necesitamos un parche urgente'],
   },
   ciber: {
-    idle: ['los escudos son mi única defensa contra los lunes', 'HackerKid ha hackeado mi wifi', 'NeonSniper dispara desde la otra punta del mapa', 'en el Sector Neón hay más neón que gente', 'CyberNinja, teletranspórtate a mi trabajo', '¿los NanoBots pagan IVA?', 'StarCraft, ¿eres tú?', 'drones del cielo: envío urgente versión guerra', 'ese mecha tiene más RGB que mi PC', 'beep boop, GG'],
+    idle: ['los escudos son mi única defensa contra los lunes', 'HackerKid ha hackeado mi wifi', 'NeonSniper dispara desde la otra punta del mapa', 'en el Sector Neón hay más neón que gente', 'CyberNinja, teletranspórtate a mi trabajo', '¿los NanoBots pagan IVA?', 'esto me suena a un juego de 1998…', 'drones del cielo: envío urgente versión guerra', 'ese mecha tiene más RGB que mi PC', 'beep boop, GG'],
     leader: ['¡Orbital Drop!', 'CyberMarine en el campo: todos a cubierto', 'ese casco tiene wifi'],
     towerP: ['torre desconectada', '404: torre no encontrada', 'firewall atravesado'],
     win: ['sistema de Microblizz hackeado ✅', 'Ctrl+Alt+Victoria', 'firewall de Microblizz 0, rebelión 1'],
