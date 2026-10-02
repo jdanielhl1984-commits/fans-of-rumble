@@ -27,7 +27,14 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 
 ## Archivos
 
-- `index.html`: el juego entero.
+- `index.html`: la página del juego (botones y pantallas). Carga el resto de archivos.
+- `css/estilos.css`: colores, tamaños y aspecto de los menús.
+- `js/`: el código del juego, en 15 archivos que se cargan en orden (el número del nombre es el orden):
+  - `01-config.js`: **todos los números del equilibrio** (vida, daño, costes de CAOS, torres). Para cambiar el balance, normalmente basta con tocar este archivo.
+  - `02-progresion.js`: niveles, oro, gemas, gashapón y campaña.
+  - `03-arte.js`: los personajes y edificios, dibujados con código.
+  - `04-estado.js`, `05-audio.js` (sonidos y música), `06-combate.js` (unidades, ataques e IA), `07-dibujo.js` (pintar el campo), `08-controles.js` (arrastrar cartas).
+  - `09-menus.js`, `10-dificultad.js` (Difícil, Mítica y ruleta), `11-logros.js`, `12-app-y-preparacion.js`, `13-horas-extra.js`, `14-cartas-y-jefes.js` (hechizos, mazo, Modo Jefe) y `15-arranque.js` (va el último).
 - `manifest.webmanifest`, `sw.js` e iconos (`icon-192.png`, `icon-512.png`, `icon-maskable.png`): para instalarlo como app y jugar sin conexión.
 
 Prototipo en desarrollo (versión 0.9.15). Todo el arte, el sonido y la música están hechos con código.
