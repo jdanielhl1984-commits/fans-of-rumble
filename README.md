@@ -11,11 +11,13 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - Cada mundo se puede jugar después en **Difícil** (rivales casi al máximo y líderes equipados) y en **Mítica**, el verdadero desafío, con una ruleta semanal que da un castigo al jugador y una ventaja a la CPU.
 - 9 facciones: Animales Locos, No-Muertos, Streamers, Héroes, Ciberpunks, Memes, Comunidad Gamer, Olvidados y Cultura Pop, cada una con su líder, 6 cartas y una pasiva propia.
 - Las unidades suben de nivel (del 1 al 10) con experiencia y oro.
+- **Gashapón de cartas** (v0.9.15): 27 hechizos y 9 mata-sanadores, 4 por facción. Los hechizos se lanzan en cualquier sitio (daño, cura y efectos locos como pulgas, baneo o remake) y los mata-sanadores saltan por encima de la primera línea. Las repetidas dan estrellas (+5 % cada una).
+- **Mazo personalizado**: líder + 6 cartas de su facción, con 2 hechizos como mucho. Se edita en la Colección o antes de jugar.
 - Gashapón de habilidades para las unidades y de equipo para el líder: cada copia sale con su propia calidad, de Básica a Perfecta. Tiradas x1, x10 y x50 (cada x10 trae al menos una épica). Habilidades y objetos de lo más raro: Rage quit, Modo foto, Baguette de ayer, Botón de pausa…
-- Inventario con todas tus copias: equipar, volver a tirar sus números o despedirlas.
+- Inventario con todas tus copias: equipar, volver a tirar sus números o despedirlas. El equipo se comparte: un objeto lo pueden llevar todos los líderes a la vez. Hay 9 objetos de facción más fuertes que da el jefe de cada mundo en Difícil.
 - **HORAS EXTRA**: en el menú, tu líder sigue luchando solo aunque no juegues y gana oro, gemas y a veces objetos según su poder. Lo recoges cuando quieras (se llena a las 12 horas).
-- Modo Jefe contra el CEO de Microblizz, misiones diarias y semanales y pase de batalla.
-- Más de 1.500 logros que dan gemas, por categorías, con logros secretos y un botón para cobrarlos todos de golpe.
+- Modo Jefe con los 12 jefes de la campaña, en Normal, Difícil y Mítica (4 minutos, premio extra si lo derrotas), misiones diarias y semanales y pase de batalla.
+- Más de 1.800 logros que dan gemas, por categorías, con logros secretos y un botón para cobrarlos todos de golpe.
 - Premio por entrar días seguidos (el día 7, 10 tiradas gratis) y pack de bienvenida.
 - Velocidad x2 en las partidas.
 - Tienda de prueba (no se cobra nada) y botón para compartir tu resultado como portada de periódico.
@@ -28,4 +30,4 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - `index.html`: el juego entero.
 - `manifest.webmanifest`, `sw.js` e iconos (`icon-192.png`, `icon-512.png`, `icon-maskable.png`): para instalarlo como app y jugar sin conexión.
 
-Prototipo en desarrollo (versión 0.9.14). Todo el arte, el sonido y la música están hechos con código.
+Prototipo en desarrollo (versión 0.9.15). Todo el arte, el sonido y la música están hechos con código.
