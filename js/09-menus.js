@@ -524,6 +524,7 @@ function chatSay(kind, extra, key) {
   for (let i = 0; i < 8 && recent.includes(txt); i++) txt = choose();   // v0.9.13: sin repetir lo que acaba de salir
   recent.push(txt); if (recent.length > 10) recent.shift();
   if (extra) txt = txt.replace('{X}', extra);
+  txt = txt.replace(/\{yo\}/g, esc(pname()));   // v0.9.26: el chat te llama por tu nombre
   const fu = CHAT_USERS_FAC[G.faction], [nm, col] = fu && Math.random() < 0.3 ? pick(fu) : pick(CHAT_USERS);
   const d = document.createElement('div'); d.className = 'cl';
   d.innerHTML = `<b style="color:${col}">${nm}</b>: ${txt}`;
@@ -964,7 +965,7 @@ function startMatch() {
 function pauseGame() { if (G.state !== 'play') return; G.state = 'paused'; input.card = null; input.dragging = false; show('scr-pause'); }
 function resumeGame() { if (G.state !== 'paused') return; hideScreens(); G.state = 'play'; }
 function goHome() { if (G.terrain) { G.terrain = null; terrainStart(); }   // v0.9.19: el menú vuelve al campo de siempre
-  ensureBG('mb'); setTagline(); $('#hud-mods').hidden = true; G.state = 'title'; chatClear(); resetMatch(); hud.update(); drawTitleArt(); updateWallets(); show('scr-title'); idleSc.tick = 0; achDay(); titlePopups(); }
+  ensureBG('mb'); setTagline(); $('#hud-mods').hidden = true; G.state = 'title'; chatClear(); resetMatch(); hud.update(); drawTitleArt(); updateWallets(); show('scr-title'); profileChip(); idleSc.tick = 0; achDay(); titlePopups(); }
 function toMenu() { chatClear(); if (G.mode === 'camp') { G.state = 'title'; resetMatch(); hud.update(); openCamp(); } else goHome(); }
 // v0.9.13: lo que dice cada jefe nuevo al empezar
 const BOSS_QUOTE = { 7: '«Microblizz me encerró aquí abajo. Ahora no sale nadie.»', 8: '«¿Discos? Eso es del siglo pasado. Ahora pagas cada mes.»', 9: '«Phony me paga por ganar. Tú pagas por jugar.»', 10: '«Phony quiere otra secuela. Y la vas a protagonizar tú.»', 11: '«Todo lo que compraste es mío. Lo borro cuando quiera.»' };

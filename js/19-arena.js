@@ -32,7 +32,7 @@ function arenaGold(lgName) { return ARENA.gold[0] + ARENA.gold[1] * ARENA.league
 function buildArenaPrep() {
   const A = arenaState(), L = arenaLeague(A.cups);
   const card = (r, i) => { const F = FACTIONS[r.fac]; return `<button class="ar-r${A.sel === i ? ' on' : ''}" data-ar="${i}"><canvas data-arl="${F.leader}"></canvas><span><b>${r.name}</b><small>${F.name} · nivel ${r.lvl} · ${fmt(r.cups)} copas</small></span></button>`; };
-  $('#prep-info').innerHTML = `<div class="ar-head"><b class="ol">LIGA ${L.toUpperCase()}</b> · <b>${fmt(A.cups)}</b> copas · récord ${fmt(A.best)} · ${A.w} ganadas, ${A.l} perdidas</div>
+  $('#prep-info').innerHTML = `<div class="ar-head"><b class="ol">${esc(pname())}</b> · <b class="ol">LIGA ${L.toUpperCase()}</b> · <b>${fmt(A.cups)}</b> copas · récord ${fmt(A.best)} · ${A.w} ganadas, ${A.l} perdidas</div>
     <div class="ar-sub">Elige rival. Son mazos de otros «jugadores» (de momento, inventados: los maneja la CPU).</div>
     <div class="ar-list">${A.rivals.map(card).join('')}</div>
     <span class="rw">Ganar: +${ARENA.win} copas, ${arenaGold(L)} de oro y ${ARENA.gems} gemas · Perder: -${ARENA.lose} copas</span> <button class="btn-link" id="btn-ar-roll">Otros rivales</button>`;

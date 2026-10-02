@@ -69,6 +69,7 @@
     </footer>
 
     <section id="scr-title" class="screen">
+      <button class="prof-chip" id="btn-profile" aria-label="Tu perfil"><canvas aria-hidden="true"></canvas><span><b class="pc-name ol">TU PERFIL</b><small class="pc-sub">Liga Becario</small></span></button>
       <div class="wallet" data-wallet></div>
       <h1 class="logo"><span class="l1 ol">FANS OF</span><span class="l2 ol-big">RUMBLE</span></h1>
       <p class="tagline" id="tagline"><b>Animales Locos</b> contra <i>Microblizz</i></p>
@@ -243,6 +244,24 @@
       <div class="modal-card roulette-card"><h3 class="ol" id="rl-title">RULETA DE LA SEMANA</h3><p class="rl-sub" id="rl-sub"></p><canvas id="rl-cv" aria-hidden="true"></canvas><div class="rl-res" id="rl-res" role="status" aria-live="polite"></div><button class="btn-big ol" id="btn-rl">¡GIRAR!</button><button class="btn-link" id="btn-rl-skip">Saltar la animación</button></div>
     </section>
 
+    <section id="scr-name" class="screen modal" hidden>
+      <div class="modal-card name-card"><span class="coach-who">LOLA · DESPEDIDA POR MICROBLIZZ</span><h3 class="ol" id="name-title">¿CÓMO TE LLAMAS?</h3><p id="name-text"></p>
+        <input id="name-in" type="text" maxlength="14" autocomplete="nickname" spellcheck="false" placeholder="Tu nombre" aria-label="Tu nombre">
+        <p class="name-err" id="name-err" role="alert"></p>
+        <div class="row"><button class="btn-ghost ol" id="name-dice">🎲 AL AZAR</button><button class="btn-big ol" id="name-ok">¡ESE SOY YO!</button></div>
+        <button class="btn-link" id="name-cancel" hidden>Cancelar</button>
+        <p class="small-print">De 3 a 14 letras o números. Lo puedes cambiar cuando quieras en tu perfil.</p></div>
+    </section>
+
+    <section id="scr-profile" class="screen modal" hidden>
+      <div class="modal-card profile-card"><h3 class="ol">TU PERFIL</h3>
+        <div class="pf-top"><canvas id="profile-av" aria-hidden="true"></canvas><div><b class="ol" id="profile-who"></b><small id="profile-league"></small><button class="btn-ghost ol" id="profile-name">✏️ CAMBIAR NOMBRE</button></div></div>
+        <div class="pf-grid" id="profile-stats"></div>
+        <div class="pf-avtitle">TU AVATAR <small>(los líderes de tus facciones)</small></div>
+        <div class="pf-avs" id="profile-avs"></div>
+        <button class="btn-big ol" id="profile-close">LISTO</button></div>
+    </section>
+
     <section id="scr-news" class="screen modal" hidden>
       <div class="modal-card news-card"><h3 class="ol" id="news-title">NOVEDADES</h3><div class="news-body" id="news-body"></div><button class="btn-big ol" id="btn-news-ok">¡GENIAL!</button></div>
     </section>
@@ -269,7 +288,7 @@
         <div class="opt-row"><span><b>Instalar en el móvil</b><br>Ábrelo como una app: a pantalla completa y sin la barra del navegador.</span><button class="btn-ghost ol" id="btn-install">INSTALAR</button></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.25</p>
+      <p class="ver">Fans of Rumble · versión 0.9.26</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
@@ -339,6 +358,7 @@
 <script src="js/18-sala.js"></script>
 <script src="js/19-arena.js"></script>
 <script src="js/20-iahorro-final.js"></script>
+<script src="js/20b-perfil.js"></script>
 <script src="js/21-arranque.js"></script>
 
 </body>

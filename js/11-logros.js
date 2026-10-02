@@ -255,11 +255,10 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>GOLPES CON MÁS JUGO</b>: las unidades cogen impulso antes de pegar, se lanzan con una estela y el que recibe sale despedido y se aplasta. Los golpes de los líderes, de los gigantes y los críticos paran el tiempo un instante y hacen temblar la pantalla.',
-    'Los arcos de los golpes son más grandes, los impactos llevan líneas de cómic y los ataques a distancia dan un culatazo con fogonazo.',
-    'Si tu móvil tiene activado «reducir movimiento», no hay parón ni estela.',
-    '<b>Nueva opción: Temblor de pantalla SÍ/NO</b>, en Opciones, por si te marea.'],
-  joke: ['Microblizz ha patentado el «parón del golpe». A partir de ahora cada parón cuesta 0,99 €.', 'CrazyBunny dice que ya no es el único que sabe pegar. Está muy enfadado.', 'IAhorro ha copiado las animaciones nuevas. Le han salido todas con seis dedos.'],
+  real: ['<b>TU PERFIL</b>: Lola te pregunta cómo te llamas. Tu nombre sale en la Arena, en el chat de las partidas y en los mensajes de Lola.',
+    'Toca tu avatar arriba a la izquierda del menú para ver tus números (Arena, copas, estrellas, logros…), cambiar el nombre o elegir avatar entre los líderes de tus facciones.',
+    '<b>Golpes con más jugo</b> (0.9.24) y opción de <b>Temblor de pantalla SÍ/NO</b> en Opciones (0.9.25).'],
+  joke: ['Microblizz quería cobrarte 9,99 € por cambiar de nombre. Lola dijo que no.', 'El chat ya sabe cómo te llamas. El CEO de Microblizz, también.', 'IAhorro ha intentado llamarse como tú. Le salió «Usuario_7714».'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;
@@ -269,7 +268,8 @@ function openNews() {
 $('#btn-news-ok').addEventListener('click', () => { $('#scr-news').hidden = true; play('select'); stat('news', 1); if (SAVE.seenVer !== VERSION) { SAVE.seenVer = VERSION; saveGame(); } titlePopups(); });
 // al volver al menú principal: primero las novedades y luego el premio diario (nunca durante la partida guiada)
 function titlePopups() {
-  if (!SAVE.tut.done || G.autoplay || $('#scr-title').hidden || !$('#scr-news').hidden || !$('#scr-login').hidden) return;
+  if (!SAVE.tut.done || G.autoplay || $('#scr-title').hidden || !$('#scr-news').hidden || !$('#scr-login').hidden || !$('#scr-name').hidden) return;
+  if (!SAVE.name) { if ($('#scr-name').hidden) openName(true); return; }   // v0.9.26: los que ya jugaban también eligen nombre
   if (SAVE.seenVer !== VERSION) { openNews(); return; }
   if (loginState().ready) openLogin();
 }
@@ -312,14 +312,14 @@ function tutWant() {
   const T = SAVE.tut; if (!T || T.done || G.autoplay) return null;
   const sc = curScreen();
   if (T.step === 0) {
-    if (sc === 'scr-title') return { sel: '#btn-camp', text: '¡Hola! Soy Lola. Microblizz, una empresa millonaria, compró el estudio donde yo trabajaba, nos despidió a todos y ahora quiere cerrar tus juegos favoritos. ¡Vamos a impedirlo! Toca <b>CAMPAÑA</b>.' };
+    if (sc === 'scr-title') return { sel: '#btn-camp', text: `¡Encantada, <b>${esc(pname())}</b>! Microblizz, una empresa millonaria, compró el estudio donde yo trabajaba, nos despidió a todos y ahora quiere cerrar tus juegos favoritos. ¡Vamos a impedirlo! Toca <b>CAMPAÑA</b>.` };
     if (sc === 'scr-camp') return { sel: '[data-lv="1-1"]', text: 'Empieza por el primer nivel: <b>La compra</b>.' };
     if (sc === 'scr-prep') return { sel: '#btn-play', text: 'Aquí eliges con qué facción juegas. Por ahora tienes a los <b>Animales Locos</b>. Toca <b>JUGAR</b>.' };
     if (sc === 'scr-end') return { sel: '#btn-again', text: `¡Casi! Esta vez ha ganado Microblizz. Toca <b>${$('#btn-again').textContent}</b> y vuelve a intentarlo.` };
     return null;
   }
   if (T.step === 1) {
-    if (sc === 'scr-end') return { sel: '#btn-menu', text: G.tutJust ? '¡Victoria! Te regalo una habilidad: <b>Cafeína</b>, que hace que una carta corra más. Toca <b>MENÚ</b> y vamos a ponérsela.' : 'Toca <b>MENÚ</b> y vamos a ponerle una habilidad a una carta.' };
+    if (sc === 'scr-end') return { sel: '#btn-menu', text: G.tutJust ? `¡Victoria, ${esc(pname())}!` + ' Te regalo una habilidad: <b>Cafeína</b>, que hace que una carta corra más. Toca <b>MENÚ</b> y vamos a ponérsela.' : 'Toca <b>MENÚ</b> y vamos a ponerle una habilidad a una carta.' };
     if (sc === 'scr-camp') return { sel: '#scr-camp .back', text: 'Vuelve al menú principal con la flecha.' };
     if (sc === 'scr-title') return { sel: '#btn-coll', text: 'Toca <b>COLECCIÓN</b>: ahí están tus cartas y lo que llevan puesto.' };
     if (sc === 'scr-coll') return { sel: '#coll-list [data-ab]', text: 'Cada carta tiene una <b>ranura de HABILIDAD</b>. Toca la de tu líder.' };
@@ -347,6 +347,7 @@ function coachPlace(t) {
 }
 function tutTick() {
   const T = SAVE.tut;
+  if (!T.done && !SAVE.name && !G.autoplay && curScreen() === 'scr-title' && $('#scr-name').hidden) { $('#coach').hidden = true; coachKey = ''; openName(true); return; }   // v0.9.26: Lola te pregunta el nombre
   if (!T.done && T.step === 2 && T.sawG && curScreen() !== 'scr-gacha') { tutFinish(); return; }   // vio el gashapón y se fue: listo
   const want = tutWant(), key = want ? want.sel + '|' + want.text : '', co = $('#coach');
   if (key !== coachKey) {

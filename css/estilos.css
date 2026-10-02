@@ -904,3 +904,40 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 #scr-title .logo .l1 { font-size: 46px; }
 #scr-title .logo .l2 { font-size: 112px; }
 #scr-title .logo { margin: 0; line-height: 0.92; }
+
+/* ---------- v0.9.26: perfil del jugador ---------- */
+.prof-chip { position: absolute; top: 14px; left: 14px; z-index: 2; display: flex; align-items: center; gap: 6px; max-width: 46%; height: 40px; box-sizing: border-box; padding: 2px 12px 0 3px; border-radius: 999px; border: 3px solid var(--tray-hi); background: var(--panel-2); color: var(--ink); cursor: pointer; font: inherit; text-align: left; }
+.prof-chip canvas { width: 34px; height: 34px; flex: none; margin-top: -3px; }
+.prof-chip span { display: flex; flex-direction: column; min-width: 0; line-height: 1; }
+.prof-chip .pc-name { font-family: var(--font-display); font-size: 15px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prof-chip .pc-sub { font-size: 11px; font-weight: 700; color: var(--ink-dim); white-space: nowrap; }
+#scr-name { z-index: 32; }   /* por encima del perfil */
+.name-card { gap: 8px; }
+.name-card .coach-who { font-size: 11px; font-weight: 800; letter-spacing: .04em; color: var(--player-lite); }
+.name-card h3, .profile-card h3 { margin: 0; }
+.name-card p { margin: 0; text-align: center; line-height: 1.35; }
+#name-in { width: 100%; max-width: 320px; box-sizing: border-box; border-radius: 14px; border: 3px solid var(--outline); background: #140a20; color: #fff6ea; font: 24px var(--font-display); text-align: center; padding: 12px 10px 7px; }
+#name-in:focus { outline: 3px solid var(--player-lite); outline-offset: 1px; }
+.name-err { min-height: 16px; font-size: 13px; font-weight: 800; color: #ff7a7a; }
+.name-card .row { gap: 10px; flex-wrap: wrap; justify-content: center; }
+.name-card .btn-ghost { font-size: 18px; padding: 12px 14px 7px; }
+.name-card .btn-big { font-size: 26px; padding: 13px 22px 8px; }
+.profile-card { overflow-y: auto; }
+.pf-top { display: flex; align-items: center; gap: 12px; width: 100%; }
+#profile-av { width: 96px; height: 96px; flex: none; border-radius: 18px; background: var(--tray-hi); border: 3px solid var(--outline); }
+.pf-top > div { display: flex; flex-direction: column; gap: 5px; min-width: 0; align-items: flex-start; }
+#profile-who { font-family: var(--font-display); font-weight: 400; font-size: 28px; line-height: 1; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#profile-league { font-size: 14px; font-weight: 800; color: var(--player-lite); }
+#profile-name { font-size: 15px; padding: 9px 12px 5px; }
+.pf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
+.pf-cell { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px 7px; border-radius: 14px; background: var(--panel-2); border: 2px solid var(--tray-hi); }
+.pf-cell small { font-size: 11px; font-weight: 800; color: var(--ink-dim); letter-spacing: .03em; }
+.pf-cell b { font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 1.05; }
+.pf-cell i { font-style: normal; font-size: 11px; color: var(--ink-dim); }
+.pf-avtitle { align-self: flex-start; font-family: var(--font-display); font-size: 16px; }
+.pf-avtitle small { font-family: inherit; font-size: 12px; color: var(--ink-dim); }
+.pf-avs { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
+.pf-av { width: 54px; height: 54px; padding: 2px; border-radius: 14px; border: 3px solid var(--tray-hi); background: var(--panel-2); cursor: pointer; }
+.pf-av.on { border-color: #ffcb3d; box-shadow: 0 0 0 2px var(--outline), 0 0 10px rgba(255, 203, 61, .6); }
+.pf-av canvas { width: 46px; height: 46px; display: block; }
+.profile-card .btn-big { font-size: 26px; padding: 12px 40px 8px; flex: none; }
