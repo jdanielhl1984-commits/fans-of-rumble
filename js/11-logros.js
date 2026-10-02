@@ -252,16 +252,14 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>Botón MAZO</b> en el menú principal, y el botón EDITAR de antes de jugar, más grande.',
-    '<b>Mantén pulsada</b> una carta en la pantalla del mazo para ver qué hace.',
-    'En la Colección, toca una habilidad u objeto ya puesto para abrir su ficha: evaluación de desempeño, contrato indefinido, quitar o cambiar.',
-    'Vuelven los nombres de la oficina: <b>Evaluación de desempeño</b> (vuelve a sortear los números), <b>Contrato indefinido</b> (bloquear) y las calidades <b>Becario, Junior, Senior, Director y CEO</b>, con su explicación al lado.',
-    '<b>Zoom en combate</b>: pellizca con dos dedos para acercarte (con zoom, un dedo mueve la vista). «VISTA NORMAL» o doble toque para volver. En el PC, con la rueda del ratón.',
-    '<b>Campo de jefe: RÍO DE LAVA</b>. El jefe del Sector Neón (y en el Modo Jefe) pelea sobre lava: las grietas queman a los dos bandos y, de vez en cuando, una entra en erupción. Los que vuelan no se queman.',
-    'El cono de los sanadores ya no se ve todo el rato: solo cuando curan, en verde suave.',
-    '<b>HORAS EXTRA</b>: al pulsar RECOGER ves lo que vas a cobrar y puedes doblarlo con un anuncio. Y un anuncio nuevo: cobra al momento las ganancias de 4 horas.',
-    'Fuera el modo claro y el pixel art: no estaban a la altura.'],
-  joke: ['Microblizz ha vendido la lava como «suelo con calefacción premium».', 'Phony cobra el zoom por separado: 4,99 € por cada dedo.', 'El CEO de Microblizz se acercó demasiado a la lava para la foto. Está bien. Su bonus no.'],
+  real: ['<b>Los 12 jefes tienen su propio campo</b>, con río, puentes, suelo y sorpresas distintas. Afecta a los dos bandos:',
+    'Café que resbala y cartas de despido (SurvivalBot) · túnel bajo el río donde no se ve la pelea y tumbas que agarran (NecroLord) · cables y focos (TwitchKing) · <b>río helado</b> que se cruza por donde quieras (EpicChampion).',
+    'Lava con grietas en sitios distintos cada vez y meteoritos (CyberMarine) · río de chocolate, puentes de galleta y chicle (MemeLord) · piezas de construcción y <b>diapositivas del CEO</b> (CEO).',
+    'Un solo puente y ratoneras (Vikingo) · río de discos de verdad y lluvia de CDs (PayStation) · alfombras turbo y picos de lag (ProGamer) · río arcoíris, pintura y maquillaje que cura (LaDirectora) · <b>puentes con peaje</b> (Presidente de Phony).',
+    'Lo que va a caer del cielo avisa con una sombra y un círculo. Los que vuelan no pisan las zonas del suelo.',
+    '<b>Opciones</b>: quitar los números de daño (solo verás las barras) y poner sangre (una niebla roja pequeña al pegar).',
+    'En la Colección vuelven la <b>Evaluación de desempeño</b>, el <b>Contrato indefinido</b> y las calidades Becario, Junior, Senior, Director y CEO.'],
+  joke: ['Microblizz cobra 2,99 € por cada puente. El tercero viene en el pase.', 'Phony ha instalado peajes en el río. Dice que es «para mejorar la experiencia».', 'El CEO ha preparado 300 diapositivas. Solo ha tirado 12. Quedan 288.'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;

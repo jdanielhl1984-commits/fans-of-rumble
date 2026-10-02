@@ -41,7 +41,7 @@ function render() {
   drawSpellsAir();
   terrainAir();
   if (G.state !== 'title') drawAmbient(rdt); else G.flash = 0;
-  for (const e of list) drawBars(e);
+  for (const e of list) if (!(e.kind === 'unit' && inTunnel(e))) drawBars(e);   // v0.9.19: dentro del túnel no se ve nada
   for (const n of nums) drawNum(n);
   if (showZones) drawGhost();
   if (G.flash > 0.01) { ctx.setTransform(VIEW.k, 0, 0, VIEW.k, 0, 0); ctx.globalAlpha = 1; ctx.fillStyle = `rgba(255,246,225,${Math.min(0.6, G.flash)})`; ctx.fillRect(0, 0, W, VIEW.LH); G.flash *= Math.pow(0.02, rdt); }
@@ -633,7 +633,7 @@ function drawGhost() {
   ctx.globalAlpha = good ? 0.82 : 0.42;
   for (let i = 0; i < card.count; i++) { const ox = card.count > 1 ? (i - (card.count - 1) / 2) * 22 : 0, oy = card.count > 1 ? (i % 2) * 6 : 0; const s = SPR[key]; ctx.drawImage(s.c, x + ox - s.ax, y + oy - s.ay, s.wd, s.ht); }
   ctx.globalAlpha = 1;
-  if (good) { const bx = BRIDGES[x < W / 2 ? 0 : 1]; const b = (G.t * 1.8) % 1; for (let i = 0; i < 3; i++) { const yy = RIVER.bottom + 10 - i * 15 - b * 15; ctx.globalAlpha = Math.max(0, 0.95 - i * 0.28); ctx.beginPath(); ctx.moveTo(bx - 12, yy + 6); ctx.lineTo(bx, yy - 4); ctx.lineTo(bx + 12, yy + 6); ctx.lineWidth = 6; ctx.strokeStyle = OL; ctx.stroke(); ctx.lineWidth = 3.4; ctx.strokeStyle = '#fff'; ctx.stroke(); } ctx.globalAlpha = 1; }
+  if (good) { const bx = laneBridge(x < W / 2 ? 0 : 1); const b = (G.t * 1.8) % 1; for (let i = 0; i < 3; i++) { const yy = RIVER.bottom + 10 - i * 15 - b * 15; ctx.globalAlpha = Math.max(0, 0.95 - i * 0.28); ctx.beginPath(); ctx.moveTo(bx - 12, yy + 6); ctx.lineTo(bx, yy - 4); ctx.lineTo(bx + 12, yy + 6); ctx.lineWidth = 6; ctx.strokeStyle = OL; ctx.stroke(); ctx.lineWidth = 3.4; ctx.strokeStyle = '#fff'; ctx.stroke(); } ctx.globalAlpha = 1; }
   else { const msg = !can ? (S.p.leaderCd > 0 ? `Vuelve en ${Math.ceil(S.p.leaderCd)} s` : 'Ya está en el campo') : !ok ? 'Aquí no: solo tu lado' : `Faltan ${Math.ceil(card.cost - S.p.chaos)} de CAOS`; text(msg, clamp(x, 90, W - 90), y - TYPES[key].top - 20, 17, '#ffb3bc'); }
   ctx.restore();
 }

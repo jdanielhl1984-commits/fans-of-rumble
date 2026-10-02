@@ -10,7 +10,8 @@ function sparks(x, y, z, n, color) { for (let i = 0; i < n; i++) { const a = Mat
 function chips(x, y, z, n, colors, kind = 'chip', size = 4) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = rand(30, 110); parts.push({ type: kind, x, y, z, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.5, vz: rand(90, 220), g: 520, rot: rand(0, 6), vr: rand(-12, 12), life: rand(0.7, 1.1), max: 1.1, size: rand(size * 0.7, size * 1.3), color: pick(colors) }); } }
 function addNum(x, y, z, txt, color, size = 15) {
   txt = String(txt);
-  if (/^[+-]?[0-9]/.test(txt)) { nums.push({ x, y, z, vz: 46, txt, color, size, life: 0.85, max: 0.85 }); return; }   // números (daño, curas, +CAOS): rápidos
+  if (/^[+-]?[0-9]/.test(txt)) { if (SAVE.noNums) return;   // v0.9.19: Opciones → sin números de daño
+    nums.push({ x, y, z, vz: 46, txt, color, size, life: 0.85, max: 0.85 }); return; }   // números (daño, curas, +CAOS): rápidos
   // v0.9.9: los mensajes duran más, suben despacio, llevan fondo y no se pisan entre ellos
   for (let k = 0; k < 4; k++) { const o = nums.find(n => n.tx && Math.abs(n.x - x) < 90 && Math.abs((n.y - n.z) - (y - z)) < 20); if (!o) break; z = o.z + (y - o.y) + 22; }
   nums.push({ x, y, z, vz: 22, txt, color, size: Math.max(14, size), life: 2.1, max: 2.1, tx: true });
@@ -198,14 +199,15 @@ function moveToward(u, tx, ty, dt) {
   // puentes: cada unidad cruza por su sitio dentro del ancho del puente (antes todas iban al centro exacto
   // y, si llegaban dos juntas, se empujaban y se quedaban atascadas en la entrada)
   const bx = nearestBridge(u.x), lim = Math.max(4, BRIDGE_HALF - u.r * 0.6), ex = clamp(u.x, bx - lim, bx + lim);
-  if (inBand) { gx = ex; gy = tN ? RIVER.top - 18 : RIVER.bottom + 18; }
+  if (RIVER_OPEN) { /* río helado: se cruza por donde sea */ }
+  else if (inBand) { gx = ex; gy = tN ? RIVER.top - 18 : RIVER.bottom + 18; }
   else if (uN !== tN) {
     const ey = uN ? RIVER.top - 8 : RIVER.bottom + 8;
     const atMouth = Math.abs(u.y - ey) <= 30 && Math.abs(u.x - bx) <= BRIDGE_HALF + u.r;   // ya está en la entrada: a cruzar
     gx = ex; gy = atMouth ? (uN ? RIVER.bottom + 18 : RIVER.top - 18) : ey;
   }
   const dx = gx - u.x, dy = gy - u.y, dl = Math.hypot(dx, dy) || 1;
-  const step = Math.min(dl, u.d.speed * (u.slowT > 0 ? 0.5 : 1) * u.mSpeed * (u.abFury && u.hp < u.maxHp * 0.5 ? u.abFury : 1) * (u.runT > 0 ? 3 : 1) * (u.drinkT > 0 ? 1 + u.abDrink : 1) * (u.actT > 0 ? 1.2 : 1) * (u.d.fury && u.hp < u.maxHp * u.d.fury.f ? u.d.fury.spd : 1) * dt);
+  const step = Math.min(dl, u.d.speed * (u.slowT > 0 ? 0.5 : 1) * u.mSpeed * (u.tSpd || 1) * (u.abFury && u.hp < u.maxHp * 0.5 ? u.abFury : 1) * (u.runT > 0 ? 3 : 1) * (u.drinkT > 0 ? 1 + u.abDrink : 1) * (u.actT > 0 ? 1.2 : 1) * (u.d.fury && u.hp < u.maxHp * u.d.fury.f ? u.d.fury.spd : 1) * dt);
   u.x += (dx / dl) * step; u.y += (dy / dl) * step; u.runDist += step;
   if (Math.abs(dx) > 3) u.face = dx > 0 ? 1 : -1;
   u.moving = true; u.walk += dt * u.d.speed * u.mSpeed * 0.2;
@@ -369,6 +371,8 @@ function hurt(t, amount, src, style = 'hit') {
   const col = style === 'crit' ? '#ffd23f' : style === 'aoe' ? '#f3a6ff' : style === 'boss' ? '#ff6b7a' : style === 'rage' ? '#ff8a3d' : '#ffffff';
   addNum(t.x + rand(-7, 7), t.y, topOf(t) * 0.75 + 6, amount, col, style === 'crit' ? 22 : style === 'rage' ? 16 : t.kind === 'struct' ? 14 : 15);
   sparks(t.x, t.y, topOf(t) * 0.45, style === 'hit' ? 3 : 6, t.team === 'e' ? '#bfe9ff' : '#ffe7a8');
+  if (SAVE.blood && t.kind === 'unit') for (let i = 0; i < (style === 'hit' ? 3 : 5); i++)   // v0.9.19: Opciones → sangre: una niebla roja pequeña que se va (sin charcos)
+    parts.push({ type: 'dust', x: t.x + rand(-5, 5), y: t.y + rand(-2, 2), z: topOf(t) * rand(0.35, 0.65), vx: rand(-22, 22), vy: 0, vz: rand(4, 16), g: 0, life: rand(0.35, 0.55), max: 0.55, size: rand(2.6, 4.2), color: 'rgba(200,16,32,.75)' });
   if (!t.fxT || G.t - t.fxT > 0.07) { t.fxT = G.t; const big = style === 'crit'; impact(t.x + rand(-4, 4), t.y, topOf(t) * 0.5 + rand(-4, 4), big ? 17 : style === 'aoe' ? 12 : t.kind === 'struct' ? 13 : 10, big ? '#ffd23f' : t.team === 'e' ? '#d8f1ff' : '#fff0c2'); if (big) flashAt(t.x, t.y, topOf(t) * 0.5, 36, '255,210,63', 0.25); }
   play(t.kind === 'unit' && t.team === 'e' ? 'clank' : 'hit');
   if (t.kind === 'struct') shake(style === 'aoe' ? 5 : 1.2);
@@ -743,7 +747,7 @@ function followAlly(u, dt) {
     return true;
   }
   if (units.some(o => o.alive && o.team !== u.team && targetable(o) && dist(o, u) < u.d.sight)) return false;   // la atacan: se defiende
-  const wx = BRIDGES[u.x < W / 2 ? 0 : 1], wy = u.team === 'p' ? ZONE.p.y0 + 75 : ZONE.e.y1 - 75;
+  const wx = laneBridge(u.x < W / 2 ? 0 : 1), wy = u.team === 'p' ? ZONE.p.y0 + 75 : ZONE.e.y1 - 75;
   if (Math.hypot(wx - u.x, wy - u.y) > 12) moveToward(u, wx, wy, dt); else u.moving = false;
   return true;
 }
@@ -841,7 +845,7 @@ function separate() {
 function constrain(u) {
   u.x = clamp(u.x, BOUNDS.x0 + u.r * 0.5, BOUNDS.x1 - u.r * 0.5); u.y = clamp(u.y, BOUNDS.y0, BOUNDS.y1);
   const m = u.r * 0.3;
-  if (u.y > RIVER.top - m && u.y < RIVER.bottom + m) {
+  if (!RIVER_OPEN && u.y > RIVER.top - m && u.y < RIVER.bottom + m) {
     const bx = nearestBridge(u.x); const lim = BRIDGE_HALF - u.r * 0.55;
     if (Math.abs(u.x - bx) <= BRIDGE_HALF + 3) u.x = clamp(u.x, bx - lim, bx + lim);
     else u.y = u.y < RIVER.y ? RIVER.top - m : RIVER.bottom + m;
@@ -884,7 +888,7 @@ function aiUpdate(team, dt) {
   const total = P.seq.reduce((a, c) => a + cards[c].cost, 0);
   if (me.chaos < cards[k].cost) return;
   if (P.started || me.chaos >= Math.min(P.wait, total) || me.chaos >= CFG.chaosMax - 0.3) {
-    const bx = BRIDGES[P.lane]; const tank = k === 'fallen' || k === 'bunny';
+    const bx = laneBridge(P.lane); const tank = k === 'fallen' || k === 'bunny';
     const front = team === 'e' ? 330 : 495, back = team === 'e' ? 296 : 530;
     doDeploy(team, k, clamp(bx + rand(-16, 16), 34, W - 34), P.started && !tank ? back : front);
     P.started = true; P.seq.shift(); if (!P.seq.length) A.plan = null;
@@ -917,7 +921,7 @@ function aiGeneric(team, dt) {
   const c = P.n === 0 ? find(['tank', 'assassin', 'swarm']) : find(['support', 'ranged', 'control', 'buster', 'swarm', 'assassin']);
   if (!c) { if (P.n > 0 && me.chaos >= 9) A.plan = null; return; }
   const front = team === 'p' ? 495 : 330, back = team === 'p' ? 530 : 296;
-  go(c, clamp(BRIDGES[P.lane] + rand(-16, 16), 34, W - 34), P.n === 0 ? front : back);
+  go(c, clamp(laneBridge(P.lane) + rand(-16, 16), 34, W - 34), P.n === 0 ? front : back);
   P.n++; if (P.n >= (myth ? 4 : 3)) A.plan = null;
 }
 /* ---------- match flow ---------- */

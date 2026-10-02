@@ -2151,17 +2151,19 @@ function bigDecor(c, fac, px, py, R, r) {
   else if (fac === 'pop') { line(c, [px - 5, py, px, py - 12], OL, 2); line(c, [px + 5, py, px, py - 12], OL, 2); line(c, [px, py, px, py - 12], OL, 2); c.save(); c.translate(px, py - 15); c.rotate(-0.4); shape(c, rr(-5, -4, 9, 8, 2), '#1f2937', 1.3); shape(c, el(4.6, 0, 1.8, 3.6), '#fff7d6', 1); c.restore(); shape(c, el(px, py + 1, 7, 2.2), 'rgba(30,60,30,.4)', 0); }
   else if (fac === 'memes') { shape(c, rr(px - 7, py - 12, 14, 11, 2), '#e7dcc4', 1.4); shape(c, rr(px - 5, py - 10.5, 10, 7, 1.4), '#1e3a8a', 1); dot(c, px - 2, py - 7.5, 0.8, '#7be04a'); dot(c, px + 2, py - 7.5, 0.8, '#7be04a'); shape(c, el(px, py + 1, 9, 2.4), 'rgba(30,60,30,.4)', 0); }
 }
-function buildBridges() {
+function buildBridges() {   // v0.9.19: con BRIDGE_STYLE se cambian los colores (piedra, metal, galleta, oro…)
   const cv = document.createElement('canvas'); cv.width = W * BG_RES; cv.height = H * BG_RES;
   const c = cv.getContext('2d'); c.scale(BG_RES, BG_RES);
+  const S2 = BRIDGE_STYLE || { deck: '#a8703f', plank: '#7d4f2a', rail: '#6e4424', post: '#5a361b' };
   for (const bx of BRIDGES) {
     const L = bx - 34, T = RIVER.top - 12, B = RIVER.bottom + 12, Wd = 68;
     c.fillStyle = 'rgba(10,40,50,.35)'; c.fillRect(L + 5, T + 6, Wd, B - T);
-    c.fillStyle = '#a8703f'; c.strokeStyle = OL; c.lineWidth = 2; c.beginPath(); c.rect(L, T, Wd, B - T); c.fill(); c.stroke();
-    c.strokeStyle = '#7d4f2a'; c.lineWidth = 1.2; for (let y = T + 6; y < B; y += 7) { c.beginPath(); c.moveTo(L + 6, y); c.lineTo(L + Wd - 6, y); c.stroke(); }
+    c.fillStyle = S2.deck; c.strokeStyle = OL; c.lineWidth = 2; c.beginPath(); c.rect(L, T, Wd, B - T); c.fill(); c.stroke();
+    c.strokeStyle = S2.plank; c.lineWidth = 1.2; for (let y = T + 6; y < B; y += 7) { c.beginPath(); c.moveTo(L + 6, y); c.lineTo(L + Wd - 6, y); c.stroke(); }
+    if (S2.dots) { c.fillStyle = S2.dots; for (let y = T + 9; y < B - 4; y += 9) for (let x = L + 14; x < L + Wd - 10; x += 12) { c.beginPath(); c.arc(x, y, 1.6, 0, Math.PI * 2); c.fill(); } }
     for (const rx of [L, L + Wd - 6]) {
-      c.fillStyle = '#6e4424'; c.fillRect(rx, T - 2, 6, B - T + 4); c.strokeStyle = OL; c.lineWidth = 1.6; c.strokeRect(rx, T - 2, 6, B - T + 4);
-      for (const py of [T - 3, (T + B) / 2, B - 3]) { c.fillStyle = '#5a361b'; c.fillRect(rx - 1.5, py - 3.5, 9, 7); c.strokeRect(rx - 1.5, py - 3.5, 9, 7); }
+      c.fillStyle = S2.rail; c.fillRect(rx, T - 2, 6, B - T + 4); c.strokeStyle = OL; c.lineWidth = 1.6; c.strokeRect(rx, T - 2, 6, B - T + 4);
+      for (const py of [T - 3, (T + B) / 2, B - 3]) { c.fillStyle = S2.post; c.fillRect(rx - 1.5, py - 3.5, 9, 7); c.strokeRect(rx - 1.5, py - 3.5, 9, 7); }
     }
   }
   return cv;

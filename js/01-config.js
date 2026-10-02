@@ -7,7 +7,10 @@ const W = 540, H = 960, RES = 3, BG_RES = 2;
 const TRAY_Y = 790;
 const FIELD_DY = 40;   // v0.9.11: el campo se dibuja 40 px más abajo para que la base enemiga no quede bajo el marcador
 const RIVER = { y: 420, top: 401, bottom: 439 };
-const BRIDGES = [110, 430];
+const BRIDGES = [110, 430];   // v0.9.19: los campos de jefe pueden cambiar cuántos puentes hay y dónde (ver 17-campos.js)
+const BASE_BRIDGES = [110, 430];
+let RIVER_OPEN = false;      // v0.9.19: río helado: se puede cruzar por cualquier sitio
+let BRIDGE_STYLE = null;     // v0.9.19: colores de los puentes (null = madera)
 const BRIDGE_HALF = 27;
 const BOUNDS = { x0: 18, x1: 522, y0: 66, y1: 782 };
 const ZONE = { p: { y0: 452, y1: 738 }, e: { y0: 72, y1: 388 } };
