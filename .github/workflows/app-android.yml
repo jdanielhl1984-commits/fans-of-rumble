@@ -1,0 +1,92 @@
+# Fans of Rumble · Fabrica la app de Android cada vez que se sube una versión.
+# · Siempre: APK de prueba (se instala directamente en un móvil Android) → en «Releases», versión «app-prueba».
+# · Cuando estén las claves de firma en los secretos del repo: AAB firmado para subir a Google Play (en «Artifacts»).
+name: App Android
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**.md']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: app-android
+  cancel-in-progress: true
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    env:
+      KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Instalar Capacitor
+        run: npm install --no-save --no-audit --no-fund @capacitor/cli@latest @capacitor/core@latest @capacitor/android@latest @capacitor/app@latest
+
+      - name: Copiar el juego dentro de la app
+        run: node app/preparar.js web
+
+      - name: Crear el proyecto Android
+        run: npx cap add android
+
+      - name: Preparar la clave de firma (solo si está guardada)
+        if: env.KEYSTORE_B64 != ''
+        run: |
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/subida.jks"
+          echo "FOR_KEYSTORE=$RUNNER_TEMP/subida.jks" >> "$GITHUB_ENV"
+
+      - name: Ajustar la app (iconos, vertical, versión)
+        run: node app/preparar.js android
+
+      - name: Sincronizar
+        run: npx cap sync android
+
+      - name: Fabricar el APK de prueba
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Fabricar el AAB firmado para Google Play
+        if: env.FOR_KEYSTORE != ''
+        working-directory: android
+        env:
+          FOR_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          FOR_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          FOR_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew bundleRelease --no-daemon --stacktrace
+
+      - name: Poner nombre a los archivos
+        run: |
+          mkdir -p salida
+          cp android/app/build/outputs/apk/debug/app-debug.apk "salida/FansOfRumble-$FOR_VERSION-prueba.apk"
+          if [ -f android/app/build/outputs/bundle/release/app-release.aab ]; then cp android/app/build/outputs/bundle/release/app-release.aab "salida/FansOfRumble-$FOR_VERSION.aab"; fi
+          ls -la salida
+
+      - name: Guardar los archivos
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-android-${{ env.FOR_VERSION }}
+          path: salida/
+
+      - name: Publicar el APK de prueba en «app-prueba»
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete app-prueba --yes --cleanup-tag || true
+          gh release create app-prueba salida/*.apk --prerelease --target "$GITHUB_SHA" \
+            --title "App de prueba para Android · $FOR_VERSION" \
+            --notes "Toca el archivo .apk desde el móvil Android para descargarlo e instalarlo. Es una versión de prueba: Android pedirá permiso para instalar apps de fuera de Google Play."

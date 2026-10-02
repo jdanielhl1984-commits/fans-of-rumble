@@ -31,7 +31,7 @@ async function boot() {
   setInterval(tutTick, 250); titlePopups();
   // app instalable: solo en la web del juego (https), no en un archivo ni dentro de otra página
   let top = true; try { top = window.self === window.top; } catch (e) { top = false; }
-  if (top && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  if (top && !NATIVE && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     const l = document.createElement('link'); l.rel = 'manifest'; l.href = 'manifest.webmanifest'; document.head.appendChild(l);
     try { if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { /* sin modo sin conexión */ }); } catch (e) { /* el navegador no lo permite aquí */ }
   }

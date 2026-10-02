@@ -1,0 +1,6 @@
+# Lo genera GitHub al fabricar la app (no se sube)
+node_modules/
+www/
+android/
+salida/
+package-lock.json

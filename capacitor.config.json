@@ -1,0 +1,8 @@
+{
+  "appId": "com.fansofrumble.game",
+  "appName": "Fans of Rumble",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#150b21"
+  }
+}
