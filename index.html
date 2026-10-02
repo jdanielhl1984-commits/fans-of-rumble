@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fans of Rumble</title>
+<meta name="description" content="Fans of Rumble: juego de estrategia de humor. Microblizz, una empresa millonaria, ha comprado tus juegos favoritos para cerrarlos. ¡Párale los pies!">
+<meta name="theme-color" content="#150b21">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Fans of Rumble">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Luckiest+Guy&display=swap">
@@ -414,6 +422,19 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .gacha-wrap canvas { position: relative; }
 #scr-end:has(.end-title.win)::before { content: ""; position: absolute; left: 50%; top: 26%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%; background: repeating-conic-gradient(rgba(255, 203, 61, 0.12) 0deg 10deg, rgba(255, 203, 61, 0) 10deg 24deg); -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 66%); mask-image: radial-gradient(circle, #000 20%, transparent 66%); pointer-events: none; z-index: -1; }
 .card:not(.poor) .cost { box-shadow: 0 0 9px rgba(243, 166, 255, 0.85); }
+/* ---------- v0.9.11: chat más grande, cartera sin solaparse y títulos que caben ---------- */
+#chat { top: calc(var(--top) + 600px); width: 236px; height: 186px; gap: 4px; }
+#chat .cl { font-size: 15px; line-height: 1.2; padding: 4px 9px 3px; background: rgba(16, 8, 28, 0.55); border-radius: 9px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.9); }   /* más transparente: se ven las tropas de detrás */
+.scr-head { grid-template-columns: 46px minmax(0, 1fr) auto; }
+.scr-head .h2 { white-space: nowrap; overflow: hidden; min-width: 0; padding: 4px 2px 2px; }
+.wallet { flex-wrap: nowrap; flex: none; }
+.wallet .wal { height: 32px; box-sizing: border-box; padding: 2px 3px 0 6px; white-space: nowrap; flex: none; line-height: 1; }
+.wal-plus { flex: none; width: 20px; height: 20px; margin: 0 0 1px 3px; }
+.scr-head .wallet { font-size: 15px; gap: 5px; }
+.scr-head .wallet svg { width: 16px; height: 16px; }
+.scr-head .wal-plus { width: 18px; height: 18px; font-size: 13px; }
+#scr-title { justify-content: flex-start; padding-top: 58px; }
+#scr-title > .wallet { position: absolute; top: 14px; right: 14px; margin: 0; }
 /* ---------- v0.9.10: logo con movimiento suave (solo las letras; los cambios de pantalla siguen sin fundidos) ---------- */
 #scr-title .logo .l1 { animation: logoBob 3.2s ease-in-out infinite; }
 #scr-title .logo .l2 { animation: logoWob 3.2s ease-in-out infinite; }
@@ -550,6 +571,57 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
   #chaos-fill::after { animation: none; }
   .tut-dot { animation-duration: 4s; }
 }
+
+/* v0.9.11: velocidad x2, partida guiada, premio diario, logros, novedades y pack de bienvenida */
+.speed-btn { position: absolute; right: 10px; top: 64px; height: 36px; padding: 4px 10px 0 8px; border-radius: 11px; border: 3px solid var(--outline); background: var(--tray-hi); box-shadow: 0 3px 0 var(--outline); display: flex; align-items: center; gap: 5px; font-family: var(--font-display); font-size: 18px; line-height: 1; color: var(--ink); cursor: pointer; pointer-events: auto; }
+.speed-btn svg { width: 19px; height: 14px; margin-top: -3px; }
+.speed-btn[aria-pressed="true"] { background: linear-gradient(to bottom, #ffe06a, #c47f10); }
+.speed-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--outline); }
+#tut-tip { position: absolute; left: 50%; top: calc(var(--top) + 474px); transform: translateX(-50%); width: max-content; max-width: 470px; box-sizing: border-box; background: rgba(20, 10, 32, 0.92); border: 3px solid var(--gold); border-radius: 14px; padding: 8px 16px 6px; font-weight: 800; font-size: 17px; line-height: 1.3; text-align: center; pointer-events: none; z-index: 8; }
+#tut-tip b { color: var(--gold); }
+#coach { position: absolute; left: 24px; top: 0; width: 492px; box-sizing: border-box; z-index: 45; pointer-events: none; background: #fff6ea; color: #20102c; border: 4px solid var(--outline); border-radius: 18px; padding: 10px 14px 8px; font-weight: 800; font-size: 16.5px; line-height: 1.32; text-align: left; box-shadow: 0 5px 0 var(--outline), 0 12px 30px rgba(0, 0, 0, 0.55); }
+#coach b { color: #a3168f; }
+#coach .coach-who { display: block; font-family: var(--font-display); font-weight: 400; font-size: 13px; letter-spacing: 1px; color: #6d28d9; margin-bottom: 3px; }
+#coach .coach-skip { pointer-events: auto; display: block; margin: 5px 0 0 auto; padding: 4px 2px; background: none; border: 0; font: inherit; font-size: 13px; color: #6b5a80; text-decoration: underline; cursor: pointer; }
+#coach::after { content: ""; position: absolute; left: var(--ax, 50%); width: 16px; height: 16px; background: #fff6ea; border: 4px solid var(--outline); transform: rotate(45deg); }
+#coach.up::after { bottom: -12px; border-top: 0; border-left: 0; }
+#coach.down::after { top: -12px; border-bottom: 0; border-right: 0; }
+.coach-glow { outline: 4px solid #ffe14d; outline-offset: 3px; animation: coachGlow 1s ease-in-out infinite alternate; }
+@keyframes coachGlow { from { outline-color: #ffe14d; } to { outline-color: rgba(255, 225, 77, 0.3); } }
+.login-card { max-width: 480px; }
+#btn-login { max-width: 100%; box-sizing: border-box; white-space: nowrap; overflow: hidden; padding-inline: 24px; }
+.login-sub { margin: 0; font-size: 14px; font-weight: 700; line-height: 1.35; color: var(--ink-dim); }
+.login-sub b { color: #ffb4bd; }
+.login-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; }
+.lg-day { position: relative; border: 3px solid var(--outline); border-radius: 14px; background: rgba(38, 20, 60, 0.95); padding: 7px 4px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-height: 84px; box-sizing: border-box; }
+.lg-day .lg-n { font-family: var(--font-display); font-size: 13px; color: var(--ink-dim); }
+.lg-day .lg-r { display: flex; align-items: center; gap: 4px; font-family: var(--font-display); font-size: 16px; line-height: 1; white-space: nowrap; }
+.lg-day .lg-r svg { width: 18px; height: 18px; margin-top: -3px; flex: none; }
+.lg-day.big { grid-column: span 2; background: linear-gradient(to bottom, #8a1f6e, #3e2363); }
+.lg-day.big .lg-r { font-size: 19px; color: var(--gold); }
+.lg-day.done { opacity: 0.5; }
+.lg-day.done::after { content: "✓"; position: absolute; right: 6px; top: 1px; color: #9ef07a; font-weight: 800; font-size: 18px; }
+.lg-day.today { box-shadow: 0 0 0 3px var(--gold); background: linear-gradient(to bottom, #7a5310, #3e2363); }
+.news-card { max-width: 480px; }
+.news-body { width: 100%; text-align: left; overflow-y: auto; min-height: 0; flex: 0 1 auto; }
+.news-body h4 { font-family: var(--font-display); font-weight: 400; font-size: 17px; margin: 2px 0 6px; color: var(--gold); letter-spacing: 1px; }
+.news-body ul { margin: 0 0 10px; padding-left: 20px; font-size: 14.5px; font-weight: 700; line-height: 1.35; }
+.news-body li { margin-bottom: 4px; }
+.news-body ul.joke { color: var(--ink-dim); font-style: italic; }
+.mission .ach-txt { display: block; font-size: 13px; font-weight: 700; line-height: 1.3; margin-top: 2px; }
+.mission .ach-txt i { color: var(--ink-dim); }
+.gift-row { display: flex; flex-direction: column; gap: 8px; }
+.pack.starter { --pc: #b7790c; overflow: hidden; }
+.pack.starter .pk-amt { flex-wrap: wrap; font-size: 20px; }
+.pack.starter .pk-amt .pk-plus { color: var(--ink); }
+.btn-pull .sure { display: block; font-family: var(--font-ui); font-size: 11.5px; font-weight: 800; letter-spacing: 0; color: #fff3a0; margin-top: 4px; }
+#toast { width: max-content; max-width: 500px; box-sizing: border-box; white-space: normal; text-align: center; line-height: 1.25; }
+#toast.good { border-color: var(--gold); }
+#toast.menu { top: 12px; }
+.mission .xpbar span { text-shadow: 0 0 2px #20102c, 0 0 2px #20102c, 0 1px 0 #20102c; }
+#scr-options .opt-list { overflow-y: auto; min-height: 0; flex: 0 1 auto; padding-bottom: 4px; }
+#scr-options .opt-row .row { gap: 8px; }
+@media (prefers-reduced-motion: reduce) { .coach-glow { animation: none; } }
 </style>
 
 </head>
@@ -581,6 +653,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
           <svg viewBox="0 0 24 24" id="ico-sound"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 6a8.6 8.6 0 0 1 0 12" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
         </button>
       </div>
+      <button class="speed-btn ol" id="btn-speed" aria-pressed="false" aria-label="Velocidad normal. Pulsa para ir el doble de rápido"><svg viewBox="0 0 24 18" aria-hidden="true"><path d="M2 2l9 7-9 7zM12 2l9 7-9 7z" fill="currentColor" style="stroke: var(--outline)" stroke-width="1.6" stroke-linejoin="round"/></svg><span id="speed-txt">x1</span></button>
     </header>
 
     <div id="banner"><div class="b-title ol"></div><div class="b-sub"></div></div>
@@ -589,6 +662,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
     <div id="card-tip" hidden></div>
     <div id="chat" aria-hidden="true"></div>
     <div id="tut" hidden><div class="tut-dot"></div><div class="tut-text">Arrastra una carta a tu lado del campo</div></div>
+    <div id="tut-tip" hidden></div>
 
     <footer id="tray">
       <div class="chaos-row">
@@ -676,7 +750,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
     <section id="scr-missions" class="screen top" hidden>
       <div class="scr-head"><button class="icon-btn back" data-back="scr-title" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2 class="h2 ol">MISIONES</h2><div class="wallet" data-wallet></div></div>
-      <div class="tabs" role="group" aria-label="Tipo de misión"><button class="tab ol" data-mt="d" aria-pressed="true">Diarias</button><button class="tab ol" data-mt="w" aria-pressed="false">Semanales</button></div>
+      <div class="tabs" role="group" aria-label="Tipo de misión"><button class="tab ol" data-mt="d" aria-pressed="true">Diarias</button><button class="tab ol" data-mt="w" aria-pressed="false">Semanales</button><button class="tab ol" data-mt="a" aria-pressed="false">Logros</button></div>
       <p class="deck-sub" id="mission-sub"></p>
       <div class="scroll-list mission-list" id="mission-list"></div>
     </section>
@@ -700,6 +774,14 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
       <div class="modal-card"><h3 class="ol" id="cf-title"></h3><div class="cf-body" id="cf-body"></div><div class="row" id="cf-btns"></div></div>
     </section>
 
+    <section id="scr-login" class="screen modal" hidden>
+      <div class="modal-card login-card"><h3 class="ol">PREMIO DIARIO</h3><p class="login-sub" id="login-sub"></p><div class="login-grid" id="login-grid"></div><button class="btn-big ol" id="btn-login">¡COBRAR!</button></div>
+    </section>
+
+    <section id="scr-news" class="screen modal" hidden>
+      <div class="modal-card news-card"><h3 class="ol" id="news-title">NOVEDADES</h3><div class="news-body" id="news-body"></div><button class="btn-big ol" id="btn-news-ok">¡GENIAL!</button></div>
+    </section>
+
     <section id="scr-share" class="screen modal" hidden>
       <div class="modal-card"><h3 class="ol">COMPARTIR</h3><img id="share-img" alt="Imagen de tu resultado para compartir"><p class="small-print" id="share-hint">Mantén pulsada la imagen (o clic derecho) para guardarla y compártela donde quieras.</p><div class="row"><a class="btn-ghost ol" id="share-dl" download="fans-of-rumble.png">DESCARGAR</a><button class="btn-ghost ol" id="btn-share-close">CERRAR</button></div></div>
     </section>
@@ -712,9 +794,11 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
         <div class="opt-row"><span><b>Chat en directo</b><br>Los comentarios falsos durante la partida.</span><button class="btn-ghost ol" id="btn-chat">SÍ</button></div>
         <div class="opt-row"><span><b>Modo pruebas</b><br>Desbloquea todas las facciones y mundos, y da 50.000 de oro y 5.000 gemas.</span><button class="btn-ghost ol" id="btn-test">ACTIVAR</button></div>
         <div class="opt-row col"><span><b>Tu progreso</b> se guarda en este navegador. Para pasarlo a otro móvil o PC, copia el código y pégalo allí.</span><div class="row"><button class="btn-ghost ol" id="btn-export">COPIAR CÓDIGO</button><button class="btn-ghost ol" id="btn-import">CARGAR CÓDIGO</button></div><textarea id="save-code" rows="3" aria-label="Código de progreso" placeholder="Aquí aparece o se pega el código"></textarea></div>
+        <div class="opt-row col"><span><b>Ayuda</b><br>Mira lo nuevo de esta versión o vuelve a hacer la partida guiada.</span><div class="row"><button class="btn-ghost ol" id="btn-news">NOVEDADES</button><button class="btn-ghost ol" id="btn-tut">TUTORIAL</button></div></div>
+        <div class="opt-row"><span><b>Instalar en el móvil</b><br>Ábrelo como una app: a pantalla completa y sin la barra del navegador.</span><button class="btn-ghost ol" id="btn-install">INSTALAR</button></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.10</p>
+      <p class="ver">Fans of Rumble · versión 0.9.11</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
@@ -722,18 +806,18 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
       <ol class="steps">
         <li><span class="n ol">1</span><span><b>Arrastra una carta</b> a tu lado del campo, o tócala y luego toca el campo. Tienes 4 unidades en la mano y a tu <b>líder</b> siempre disponible; al jugar una, entra la <b>siguiente</b>. <b>Mantén pulsada</b> una carta para ver qué hace.</span></li>
         <li><span class="n ol">2</span><span>Cada carta gasta <em>CAOS</em>. Se recarga solo, 1 cada 3 segundos, y al doble en el último minuto.</span></li>
-        <li><span class="n ol">3</span><span>Tus unidades <b>siguen su carril</b> y pelean solas. El puente que elijas decide el carril.</span></li>
+        <li><span class="n ol">3</span><span>Tus unidades <b>siguen su carril</b> y pelean solas. El puente que elijas decide el carril. Con el botón <b>x2</b> de arriba a la derecha, la partida va el doble de rápido.</span></li>
         <li><span class="n ol">4</span><span>Cada torre derribada es una corona. <b>Tira la Sede de Microblizz</b> y ganas al instante.</span></li>
         <li><span class="n ol">5</span><span>Hay 6 facciones y cada una tiene su <b>pasiva</b>: Rabia, Renacer, Hype, Experiencia, Escudos y RNG. Toca el botón de la pasiva, arriba a la izquierda, para ver qué hace. Microblizz tiene <em>Despidos rentables</em>: cada bot que despides le devuelve algo de CAOS.</span></li>
-        <li><span class="n ol">6</span><span>Cuidado: SurvivalBot <em>entierra</em> a las unidades que cruzan a su lado y, a media vida, empieza los <em>despidos masivos</em>.</span></li>
-        <li><span class="n ol">7</span><span><b>Mejora tus cartas</b> en <em>Colección</em>: súbelas de nivel con oro y toca sus <b>ranuras</b> para ponerles habilidades y objetos del <em>Gashapón</em>. En el <em>Inventario</em> ves todo lo que tienes y su calidad, de Becario a CEO.</span></li>
+        <li><span class="n ol">6</span><span>Cuidado: SurvivalBot <em>congela</em> a las unidades que cruzan a su lado y, a media vida, empieza los <em>despidos masivos</em>.</span></li>
+        <li><span class="n ol">7</span><span><b>Mejora tus cartas</b> en <em>Colección</em>: súbelas de nivel con oro y toca sus <b>ranuras</b> para ponerles habilidades y objetos del <em>Gashapón</em>. En el <em>Inventario</em> ves todo lo que tienes y su calidad, de Básica a Perfecta.</span></li>
       </ol>
       <button class="btn-big ol" id="btn-howto-ok">¡VAMOS!</button>
     </section>
 
     <section id="scr-pause" class="screen" hidden>
       <h2 class="h2 ol">PAUSA</h2>
-      <p class="quote">Microblizz aprovecha para convocar una reunión que podría haber sido un correo.</p>
+      <p class="quote">Microblizz ya está pensando qué juego cerrar ahora.</p>
       <div class="row">
         <button class="btn-big ol" id="btn-resume">SEGUIR</button>
       </div>
@@ -758,6 +842,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
         <button class="btn-ghost ol" id="btn-menu">MENÚ</button>
       </div>
     </section>
+    <div id="coach" hidden></div>
   </div>
 </div>
 
@@ -770,11 +855,12 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
    ========================================================= */
 const W = 540, H = 960, RES = 3, BG_RES = 2;
 const TRAY_Y = 790;
+const FIELD_DY = 40;   // v0.9.11: el campo se dibuja 40 px más abajo para que la base enemiga no quede bajo el marcador
 const RIVER = { y: 420, top: 401, bottom: 439 };
 const BRIDGES = [110, 430];
 const BRIDGE_HALF = 27;
 const BOUNDS = { x0: 18, x1: 522, y0: 66, y1: 782 };
-const ZONE = { p: { y0: 452, y1: 778 }, e: { y0: 72, y1: 388 } };
+const ZONE = { p: { y0: 452, y1: 738 }, e: { y0: 72, y1: 388 } };
 
 const CFG = {
   matchTime: 240,          // 4:00
@@ -809,7 +895,7 @@ const CFG = {
     // No-Muertos
     necrolord:   { name: 'NecroLord',    cost: 5, count: 1, respawn: 12, rarity: 'leader', rar: 'Líder', tag: 'Invoca', desc: 'Lanza rayos de sombra y cada 8 s levanta 2 esqueletos a su lado. Si cae del todo, vuelve a los 12 s.' },
     skeleton:    { name: 'SkeletonCrew', cost: 2, count: 4, rarity: 'common', rar: 'Común', tag: 'Salen 4', desc: 'Cuatro esqueletos piratas, frágiles y muy rápidos. Rodean al enemigo y distraen a las torres.' },
-    zombie:      { name: 'CrunchZombie', cost: 3, count: 3, rarity: 'common', rar: 'Común', tag: 'Lentos · x3', desc: 'Tres programadores zombificados tras meses de crunch. Lentos pero duros, y no se quejan.' },
+    zombie:      { name: 'CrunchZombie', cost: 3, count: 3, rarity: 'common', rar: 'Común', tag: 'Lentos · x3', desc: 'Tres programadores convertidos en zombis por trabajar meses sin parar. Lentos pero duros, y no se quejan.' },
     ghostmage:   { name: 'GhostMage',    cost: 3, count: 1, rarity: 'rare',   rar: 'Rara',  tag: 'A distancia', desc: 'Mago fantasma que lanza rayos de escarcha desde lejos. Cada impacto frena al enemigo.' },
     banshee:     { name: 'Banshee',      cost: 4, count: 1, rarity: 'rare',   rar: 'Rara',  tag: 'Grito aturde', desc: 'Grita cada 7 s y aturde a los enemigos cercanos. Entre grito y grito, lanza ondas que golpean en área.' },
     skullknight: { name: 'SkullKnight',  cost: 4, count: 1, rarity: 'rare',   rar: 'Rara',  tag: 'Ralentiza', desc: 'Caballero esqueleto con espada rúnica de hielo: cada golpe frena al enemigo.' },
@@ -1022,9 +1108,9 @@ const ECON = {
   pityEpic: 10, pityLeg: 50,                                                     // garantía: épica o mejor cada 10, legendaria a las 50
   start: { gold: 150, gems: 100 },
   mission: [50, 10],
-  scrap: { common: 25, rare: 60, epic: 150, legendary: 400 },      // oro al despedir una copia (x1 Becario, x1,5 Junior, x2 Senior, x3 Director, x5 CEO)
-  reroll: { common: 250, rare: 500, epic: 1000, legendary: 2000 }, // oro de la «evaluación de desempeño» (volver a tirar sus números)
-  pityQ: 10,                                                       // garantía: calidad Director o mejor como mucho cada 10 tiradas
+  scrap: { common: 25, rare: 60, epic: 150, legendary: 400 },      // oro al despedir una copia (x1 Básica, x1,5 Normal, x2 Buena, x3 Excelente, x5 Perfecta)
+  reroll: { common: 250, rare: 500, epic: 1000, legendary: 2000 }, // oro por volver a tirar los números de una copia
+  pityQ: 10,                                                       // garantía: calidad Excelente o mejor como mucho cada 10 tiradas
 };
 const RARITY = { common: ['Común', '#63cfe0', '#2a7895'], rare: ['Rara', '#ffb04f', '#cf5a16'], epic: ['Épica', '#d08cff', '#6d28c9'], legendary: ['Legendaria', '#ffe06a', '#c47f10'] };
 // gashapón de habilidades: una por carta, de cualquier facción; rango 1-3 con las repetidas
@@ -1065,15 +1151,15 @@ const ITEMS = {   // st: valor central de cada efecto; cada copia sale entre el 
 };
 const COFRE = [[p => `¡+${Math.round(30 * p)} % DE DAÑO!`, (u, p) => { u.mDmg *= 1 + 0.3 * p; }], [p => `¡+${Math.round(40 * p)} % DE VIDA!`, (u, p) => { u.mHp *= 1 + 0.4 * p; }], [() => '¡TURBO!', (u, p) => { u.mSpeed *= 1 + 0.3 * p; u.mCd *= 1 - 0.2 * p; }], [() => '¡REGENERACIÓN!', (u, p) => { u.regen = (u.regen || 0) + 0.02 * p; }], [() => '…estaba vacío', () => {}]];
 // v0.9.9: calidad de cada copia. Cada efecto sale entre el 50 % (calidad 0) y el 150 % (calidad 100) de su valor central.
-// Los cargos dicen lo buena que es; las probabilidades se enseñan en el gashapón.
+// Básica, Normal, Buena, Excelente o Perfecta; las probabilidades se enseñan en el gashapón.
 const QTIERS = [
-  { name: 'Becario', p: 30, lo: 0, hi: 0.4, col: '#b4bccb' },
-  { name: 'Junior', p: 40, lo: 0.4, hi: 0.7, col: '#63cfe0' },
-  { name: 'Senior', p: 20, lo: 0.7, hi: 0.88, col: '#8cf05a' },
-  { name: 'Director', p: 9, lo: 0.88, hi: 0.99, col: '#e2a8ff' },
-  { name: 'CEO', p: 1, lo: 1, hi: 1, col: '#ffcb3d' },
+  { name: 'Básica', p: 30, lo: 0, hi: 0.4, col: '#b4bccb' },
+  { name: 'Normal', p: 40, lo: 0.4, hi: 0.7, col: '#63cfe0' },
+  { name: 'Buena', p: 20, lo: 0.7, hi: 0.88, col: '#8cf05a' },
+  { name: 'Excelente', p: 9, lo: 0.88, hi: 0.99, col: '#e2a8ff' },
+  { name: 'Perfecta', p: 1, lo: 1, hi: 1, col: '#ffcb3d' },
 ];
-const PASS_Q = 0.9;   // los premios del pase salen siempre con calidad Director
+const PASS_Q = 0.9;   // los premios del pase salen siempre con calidad Excelente
 function rollQ(minTier) {
   const pool = QTIERS.slice(minTier || 0); let x = Math.random() * pool.reduce((a, t) => a + t.p, 0);
   for (const t of pool) { if (x < t.p) return Math.floor((t.lo + Math.random() * (t.hi - t.lo)) * 1000) / 1000; x -= t.p; }
@@ -1088,30 +1174,30 @@ const rnd = (v, dec) => { const m = Math.pow(10, dec); return Math.round(v * m) 
 const valsOf = it => statsOf(it).map((st, i) => rnd(st.c * (0.5 + (it.q[i] == null ? 0.5 : it.q[i])), st.dec));
 // campaña "La Rebelión de los Fans": 7 mundos de 4 niveles (el 4.º es el jefe)
 const WORLDS = [
-  { name: 'Oficinas de Microblizz', efac: 'microblizz', story: 'Todo empieza aquí: becarios, bots y reuniones que podrían haber sido un correo.', levels: [
-    { name: 'Primer día', elvl: 1, income: 0.6, deck: ['becario', 'starbot'] },
-    { name: 'Reunión de equipo', elvl: 1, income: 0.65, deck: ['becario', 'starbot', 'fallen'] },
-    { name: 'Reestructuración', elvl: 1, income: 0.7, deck: ['becario', 'starbot', 'fallen', 'cajabotin'] },
+  { name: 'Oficinas de Microblizz', efac: 'microblizz', story: 'Microblizz, una empresa millonaria, ha comprado el estudio que hacía tus juegos favoritos. Lo primero: despedir a la gente y poner robots.', levels: [
+    { name: 'La compra', elvl: 1, income: 0.6, deck: ['becario', 'starbot'] },
+    { name: 'Cartas de despido', elvl: 1, income: 0.65, deck: ['becario', 'starbot', 'fallen'] },
+    { name: 'Cierre del estudio', elvl: 1, income: 0.7, deck: ['becario', 'starbot', 'fallen', 'cajabotin'] },
     { name: 'SurvivalBot', elvl: 2, income: 0.75, boss: 'SurvivalBot', deck: ['becario', 'starbot', 'fallen', 'cajabotin'] }] },
-  { name: 'Cementerio de IPs', efac: 'nomuertos', unlock: 'nomuertos', story: 'Aquí entierra Microblizz los juegos que cancela. Los No-Muertos trabajan para ellos… sin cobrar.', levels: [
-    { name: 'Tumbas sin nombre', elvl: 2, income: 0.5 }, { name: 'Fosa del crunch', elvl: 2, income: 0.53 }, { name: 'Mausoleo corporativo', elvl: 3, income: 0.56 }, { name: 'NecroLord corrupto', elvl: 3, income: 0.55, boss: 'NecroLord corrupto' }] },
-  { name: 'Plató Abandonado', efac: 'streamers', unlock: 'streamers', story: 'Un plató sin espectadores. Microblizz les prometió visibilidad a cambio de exclusividad.', levels: [
+  { name: 'Cementerio de juegos', efac: 'nomuertos', unlock: 'nomuertos', story: 'Aquí entierra Microblizz los juegos que cierra. Los No-Muertos trabajan para ellos… sin cobrar.', levels: [
+    { name: 'Tumbas sin nombre', elvl: 2, income: 0.5 }, { name: 'Fosa de las horas extra', elvl: 2, income: 0.53 }, { name: 'Mausoleo de juegos cerrados', elvl: 3, income: 0.56 }, { name: 'NecroLord corrupto', elvl: 3, income: 0.55, boss: 'NecroLord corrupto' }] },
+  { name: 'Plató Abandonado', efac: 'streamers', unlock: 'streamers', story: 'Un plató vacío. Microblizz compró el canal, echó al público y ahora solo pone anuncios.', levels: [
     { name: 'Directo sin audio', elvl: 3, income: 0.55 }, { name: 'Caída del chat', elvl: 3, income: 0.58 }, { name: 'Oleada de baneos', elvl: 4, income: 0.6 }, { name: 'TwitchKing corrupto', elvl: 4, income: 0.6, boss: 'TwitchKing corrupto' }] },
-  { name: 'Olimpo en Mantenimiento', efac: 'heroes', unlock: 'heroes', story: 'Los dioses llevan años sin un parche nuevo y están de muy mal humor.', levels: [
-    { name: 'Templo en obras', elvl: 4, income: 0.58 }, { name: 'Laberinto de tickets', elvl: 4, income: 0.6 }, { name: 'Monte sin parche', elvl: 5, income: 0.62 }, { name: 'EpicChampion corrupto', elvl: 5, income: 0.62, boss: 'EpicChampion corrupto' }] },
-  { name: 'Sector Neón', efac: 'ciber', unlock: 'ciber', story: 'Una ciudad de neón con el contrato de Microblizz firmado en letra muy pequeña.', levels: [
+  { name: 'Olimpo Abandonado', efac: 'heroes', unlock: 'heroes', story: 'Desde que Microblizz compró a los dioses, nadie arregla su juego. Están de muy mal humor.', levels: [
+    { name: 'Templo en obras', elvl: 4, income: 0.58 }, { name: 'Laberinto de quejas', elvl: 4, income: 0.6 }, { name: 'Monte olvidado', elvl: 5, income: 0.62 }, { name: 'EpicChampion corrupto', elvl: 5, income: 0.62, boss: 'EpicChampion corrupto' }] },
+  { name: 'Sector Neón', efac: 'ciber', unlock: 'ciber', story: 'Una ciudad de neón que Microblizz compró entera. Ahora todo es de pago, hasta las farolas.', levels: [
     { name: 'Callejón de neón', elvl: 5, income: 0.6 }, { name: 'Red de drones', elvl: 5, income: 0.62 }, { name: 'Servidor central', elvl: 6, income: 0.65 }, { name: 'CyberMarine corrupto', elvl: 6, income: 0.64, boss: 'CyberMarine corrupto' }] },
-  { name: 'El Foro Infinito', efac: 'memes', unlock: 'memes', story: 'Un hilo de foro que nunca termina. Microblizz lo moderó… a su manera.', levels: [
-    { name: 'Hilo infinito', elvl: 6, income: 0.62 }, { name: 'Moderación automática', elvl: 6, income: 0.65 }, { name: 'Spam masivo', elvl: 7, income: 0.68 }, { name: 'MemeLord corrupto', elvl: 7, income: 0.68, boss: 'MemeLord corrupto' }] },
-  { name: 'Torre de Microblizz', efac: 'microblizz', story: 'La sede central. En el último piso, el CEO te espera con una presentación de 300 diapositivas.', levels: [
-    { name: 'Recepción', elvl: 7, income: 0.8 }, { name: 'Departamento de monetización', elvl: 8, income: 0.88 }, { name: 'Sala de juntas', elvl: 8, income: 0.95 }, { name: 'El CEO de Microblizz', elvl: 9, income: 1, boss: 'El CEO de Microblizz', baseHp: 2600 }] },
+  { name: 'El Foro Infinito', efac: 'memes', unlock: 'memes', story: 'El foro de los fans. Microblizz lo compró, borró las quejas y lo llenó de anuncios.', levels: [
+    { name: 'Hilo infinito', elvl: 6, income: 0.62 }, { name: 'Borrado de quejas', elvl: 6, income: 0.65 }, { name: 'Lluvia de anuncios', elvl: 7, income: 0.68 }, { name: 'MemeLord corrupto', elvl: 7, income: 0.68, boss: 'MemeLord corrupto' }] },
+  { name: 'Torre de Microblizz', efac: 'microblizz', story: 'La sede de la empresa. En el último piso, el CEO cuenta sus millones mientras decide qué juego cerrar.', levels: [
+    { name: 'Recepción', elvl: 7, income: 0.8 }, { name: 'Planta de las cajas de botín', elvl: 8, income: 0.88 }, { name: 'Despacho de los despidos', elvl: 8, income: 0.95 }, { name: 'El CEO de Microblizz', elvl: 9, income: 1, boss: 'El CEO de Microblizz', baseHp: 2600 }] },
 ];
 WORLDS.forEach((w, wi) => w.levels.forEach((l, li) => { l.id = `${wi + 1}-${li + 1}`; l.wi = wi; l.li = li; }));
 // misiones diarias: cada día salen 3 de esta lista
 const MISSIONS = [
   { id: 'win2', txt: 'Gana 2 partidas', goal: 2, ev: 'win' },
   { id: 'cards20', txt: 'Juega 20 cartas', goal: 20, ev: 'card' },
-  { id: 'kills40', txt: 'Despide a 40 enemigos', goal: 40, ev: 'kill' },
+  { id: 'kills40', txt: 'Derrota a 40 enemigos', goal: 40, ev: 'kill' },
   { id: 'towers3', txt: 'Derriba 3 torres', goal: 3, ev: 'tower' },
   { id: 'stars3', txt: 'Consigue 3 estrellas en la campaña', goal: 3, ev: 'star' },
   { id: 'boss1', txt: 'Juega una partida del Modo Jefe', goal: 1, ev: 'boss' },
@@ -1131,7 +1217,7 @@ const DAILY_N = 4;
 // misiones semanales: se renuevan cada lunes
 const WEEKLY = [
   { id: 'wwin', txt: 'Gana 15 partidas', goal: 15, ev: 'win' },
-  { id: 'wkill', txt: 'Despide a 400 enemigos', goal: 400, ev: 'kill' },
+  { id: 'wkill', txt: 'Derrota a 400 enemigos', goal: 400, ev: 'kill' },
   { id: 'wtower', txt: 'Derriba 20 torres', goal: 20, ev: 'tower' },
   { id: 'wstar', txt: 'Consigue 12 estrellas en la campaña', goal: 12, ev: 'star' },
   { id: 'wcard', txt: 'Juega 200 cartas', goal: 200, ev: 'card' },
@@ -1151,7 +1237,7 @@ const SHOP = {
   gold: [
     { id: 'g1', name: 'Puñado de oro', amt: 1000, eur: 0.99, note: 'Para ir tirando.' },
     { id: 'g2', name: 'Saco de oro', amt: 6000, eur: 4.99, note: 'El CEO te lo agradece personalmente (no).' },
-    { id: 'g3', name: 'Cofre de oro', amt: 13000, eur: 9.99, note: 'Huele a beneficios trimestrales.' },
+    { id: 'g3', name: 'Cofre de oro', amt: 13000, eur: 9.99, note: 'Huele a los millones de Microblizz.' },
     { id: 'g4', name: 'Cámara acorazada', amt: 28000, eur: 19.99, note: 'Incluye la llave. La puerta no.' },
     { id: 'g5', name: 'Bóveda del CEO', amt: 75000, eur: 49.99, note: 'Para subir cartas al 10 sin mirar el precio.' },
   ],
@@ -1162,11 +1248,12 @@ const SHOP = {
     { id: 'e4', name: 'Cofre de gemas', amt: 2600, eur: 19.99, note: '' },
     { id: 'e5', name: 'Caja fuerte de gemas', amt: 7000, eur: 49.99, note: 'Ni el becario sabe la combinación.' },
   ],
-  joke: { name: 'Paquete Accionista', amt: 1000000, was: 500, eur: 100 },
+  joke: { name: 'Paquete Millonario', amt: 1000000, was: 500, eur: 100 },
   gift: { gold: 100, gems: 5 },
+  starter: { gems: 600, gold: 5000, eur: 4.99 },   // v0.9.11: solo una vez; vale casi el doble que por separado
 };
 // Pase de batalla: 30 niveles, pista gratis y pista Ejecutiva (de pago simulado)
-const PASS = { name: 'Temporada 1: Reestructuración', sub: 'Dura hasta que Microblizz diga lo contrario', levels: 30, xpPer: 400, eur: 4.99, xpWin: 100, xpLose: 40, xpDaily: 60, xpWeekly: 250 };
+const PASS = { name: 'Temporada 1: La Gran Compra', sub: 'Dura hasta que Microblizz la cierre', levels: 30, xpPer: 400, eur: 4.99, xpWin: 100, xpLose: 40, xpDaily: 60, xpWeekly: 250 };
 function passReward(track, i) {
   if (track === 'free') {
     if (i === PASS.levels) return { item: 'diploma' };
@@ -1181,22 +1268,22 @@ function passReward(track, i) {
 }
 // frases de despedida al caer (humor)
 const QUIPS = {
-  microblizz: ['¿Hay indemnización?', 'Me llevo la grapadora', 'Esto lo hablo con RR. HH.', '¿Me puedo quedar la taza?', 'Ya he actualizado mi LinkedIn', 'Firmé un NDA, no puedo quejarme', 'Me faltaban 2 años para ser fijo', '¿Esto cuenta como teletrabajo?', 'Error 404: empleo no encontrado', 'Mi jefe dijo que éramos una familia', 'Dejo el proyecto al 90 %', 'Ojalá un despido sin reunión'],
-  corrupt: ['¡Por fin libre!', 'Microblizz me prometió visibilidad', 'Mi contrato tenía letra pequeña', 'Gracias, necesitaba vacaciones', 'Dile a Microblizz que dimito', 'Volveré… en el DLC', '¿Dónde firmo el finiquito?'],
+  microblizz: ['¿Me han despedido?', 'Me llevo la grapadora', '¿Y mi finiquito?', '¿Me puedo quedar la taza?', 'Me cambian por un robot más barato', 'Ocho años aquí y me echan por correo', 'Me faltaban 2 años para ser fijo', '¿Esto cuenta como vacaciones?', 'Error 404: trabajo no encontrado', 'Mi jefe dijo que éramos una familia', 'Dejo el juego a medias', 'El CEO se ha comprado otro yate'],
+  corrupt: ['¡Por fin libre!', 'Microblizz me prometió fama', 'Mi contrato tenía letra pequeña', 'Gracias, necesitaba vacaciones', 'Dile a Microblizz que me voy', 'Volveré… en el DLC', '¡Que cierren otro juego, no a mí!'],
   player: ['¡Ha sido el lag!', 'Nerfeadme esto', 'GG', 'Me han reportado', 'Vuelvo en 5 minutos', 'Era un plan', 'Respawn, por favor'],
 };
 // chat falso en directo
-const CHAT_USERS = [['ConejoFan_88', '#ffb04f'], ['LagLord', '#63cfe0'], ['ExDeMicroblizz', '#7da8ff'], ['TioDelPase', '#ffe14d'], ['SoyDeRRHH', '#ff6b7a'], ['NerfEsto', '#d08cff'], ['GemaPerdida', '#ff8fd8'], ['Ardilla_Rabiosa', '#ff9a3c'], ['ClipItPls', '#9ef07a'], ['MamaDelStreamer', '#fda4af'], ['Becario_42', '#a3e635'], ['ElCEO_Real', '#60a5fa'], ['ZorroSigiloso', '#fb923c'], ['ParcheDia1', '#c4b5fd'], ['CAOSenjoyer', '#e879f9'], ['ModCansado', '#5ef2c0']];
+const CHAT_USERS = [['ConejoFan_88', '#ffb04f'], ['LagLord', '#63cfe0'], ['ExDeMicroblizz', '#7da8ff'], ['TioDelPase', '#ffe14d'], ['DespedidoUnLunes', '#ff6b7a'], ['NerfEsto', '#d08cff'], ['GemaPerdida', '#ff8fd8'], ['Ardilla_Rabiosa', '#ff9a3c'], ['ClipItPls', '#9ef07a'], ['MamaDelStreamer', '#fda4af'], ['Becario_42', '#a3e635'], ['ElCEO_Real', '#60a5fa'], ['ZorroSigiloso', '#fb923c'], ['ParcheDia1', '#c4b5fd'], ['CAOSenjoyer', '#e879f9'], ['ModCansado', '#5ef2c0']];
 const CHAT = {
   start: ['¡Empieza! A ver si hoy gana alguien que no sea Microblizz', 'primer', 'hola desde el trabajo 👀', 'llego tarde, ¿qué me he perdido?', '¡vamos rebelión!'],
-  idle: ['nerf conejo', '¿esto es pay to win?', '¿cuándo sale para móvil?', 'mi primo trabaja en Microblizz y dice que todo va bien', 'mod, banéalo', 'primera vez aquí, ¿de qué va esto?', 'LOL', '¿quién va ganando?', 'jajaja el becario', 'pon música', '¿se puede jugar con mando?', 'el CEO es mi tío, no digáis nada', 'hype hype hype', '¿alguien ha leído los términos y condiciones?', 'esto es mejor que lo de Microblizz', 'Microblizz ha vuelto a subir el precio de las gemas', '¿el pase de batalla merece la pena?', 'Kappa', 'ese carril está solo', 'más ardillas, menos reuniones'],
-  towerP: ['¡TORRE! 🔥', 'Microblizz: «era una torre heredada»', 'F por la torre', 'clip it!!', 'eso ha dolido en bolsa', 'ajuste de plantilla jajaja'],
-  towerE: ['uff', 'skill issue', 'eso pasa por no comprar el pack', 'F', 'defiende ese carril!!', 'Microblizz lo celebra con una reunión'],
+  idle: ['nerf conejo', '¿esto es pay to win?', '¿cuándo sale para móvil?', 'mi primo trabaja en Microblizz y dice que todo va bien', 'mod, banéalo', 'primera vez aquí, ¿de qué va esto?', 'LOL', '¿quién va ganando?', 'jajaja el becario', 'pon música', '¿se puede jugar con mando?', 'el CEO es mi tío, no digáis nada', 'hype hype hype', '¿alguien ha leído los términos y condiciones?', 'esto es mejor que lo de Microblizz', 'Microblizz ha vuelto a subir el precio de las gemas', '¿el pase de batalla merece la pena?', 'Kappa', 'ese carril está solo', 'más ardillas, menos anuncios', 'Microblizz ha cerrado otro juego hoy', 'Microblizz compró mi juego favorito y lo cerró 😭', '¿cuántos juegos ha cerrado ya Microblizz?'],
+  towerP: ['¡TORRE! 🔥', 'Microblizz: «esa torre nos sobraba»', 'F por la torre', 'clip it!!', 'eso le ha dolido al CEO en la cartera', 'otra torre cerrada, como sus juegos jajaja'],
+  towerE: ['uff', 'skill issue', 'eso pasa por no comprar el pack', 'F', '¡defiende ese carril!', 'Microblizz lo celebra subiendo los precios'],
   leader: ['¡que salga el jefe!', 'ya viene el bueno', '¡LÍDER EN PISTA!', 'ahora sí'],
-  boss: ['¿otra vez despidos?', 'RR. HH. ataca de nuevo', 'eso es pay to win', 'el jefe está chetado', 'nerf jefe ya'],
+  boss: ['¿otra vez despidos?', 'el jefe despide a todo el mundo', 'eso es pay to win', 'el jefe está chetado', 'nerf jefe ya'],
   phase2: ['FASE 2 😱', 'se viene lo gordo', 'se ha enfadado el jefe'],
   x2: ['¡CAOS x2! ahora sí', 'último minuto, nervios', '🍿🍿🍿'],
-  win: ['GG EZ', '¡VAMOOOS!', 'Microblizz lo llamará «aprendizaje»', 'clip para TikTok', 'GG WP', 'despedidos todos jajaja'],
+  win: ['GG EZ', '¡VAMOOOS!', 'Microblizz dirá que lo tenía planeado', 'clip para TikTok', 'GG WP', '¡fuera robots!'],
   lose: ['GG', 'nerf Microblizz', 'la culpa es del lag', 'en la próxima sí', 'F en el chat', 'compra el pack (es broma)'],
 };
 // v0.9.8: el chat habla de tu facción, de la facción enemiga y de cada jefe
@@ -1209,7 +1296,7 @@ const CHAT_FAC = {
     lose: ['los animales vuelven a la madriguera 😢', 'el conejo necesita unas vacaciones'],
   },
   nomuertos: {
-    idle: ['los zombis del crunch tienen mejor horario que yo', '¿Renacer cuenta como horas extra?', 'NecroLord, ¿quieres una bufanda?', 'huele a cripta desde aquí', 'la Banshee necesita un micro con menos ganancia', 'esto me recuerda a cierto rey con corona de pinchos 👀', 'morir y volver: el ciclo de vida de un parche', 'StitchBrute solo quiere abrazos (y torres)', 'esqueletos piratas > esqueletos normales', 'ningún no-muerto ha leído los términos y condiciones'],
+    idle: ['los zombis de las horas extra tienen mejor horario que yo', '¿Renacer cuenta como horas extra?', 'NecroLord, ¿quieres una bufanda?', 'huele a cripta desde aquí', 'la Banshee necesita un micro con menos ganancia', 'esto me recuerda a cierto rey con corona de pinchos 👀', 'morir y volver: el ciclo de vida de un parche', 'StitchBrute solo quiere abrazos (y torres)', 'esqueletos piratas > esqueletos normales', 'ningún no-muerto ha leído los términos y condiciones'],
     leader: ['¡se levanta el NecroLord!', 'ojo, que invoca', 'el rey de la cripta en directo'],
     towerP: ['torre enviada a la cripta ⚰️', 'RIP torre', 'esa torre no tiene Renacer'],
     win: ['ni la muerte para a estos', 'Microblizz enterrado (otra vez)', 'Renacer GOD'],
@@ -1223,11 +1310,11 @@ const CHAT_FAC = {
     lose: ['se ha caído el directo', 'el chat se va a otro canal 😢'],
   },
   heroes: {
-    idle: ['¿Héroes no estaba en mantenimiento?', 'el Minotauro aún busca la salida del laberinto de tickets', 'Medusa, unas gafas de sol, por favor', '¡TEAM FIGHT! ¡TEAM FIGHT!', 'los Hoplitas son el grupo de WhatsApp de la familia', 'ThunderGod lleva años pidiendo un parche', 'el querubín me ha enamorado de este juego', 'la ShieldMaiden aguanta más que mi portátil', 'héroes a nivel 5 sin pagar nada', 'esto es más épico que la última cinemática de Microblizz'],
+    idle: ['¿Héroes no lo había cerrado Microblizz?', 'el Minotauro aún busca la salida de su laberinto', 'Medusa, unas gafas de sol, por favor', '¡TEAM FIGHT! ¡TEAM FIGHT!', 'los Hoplitas son el grupo de WhatsApp de la familia', 'ThunderGod lleva años pidiendo un parche', 'el querubín me ha enamorado de este juego', 'la ShieldMaiden aguanta más que mi portátil', 'héroes a nivel 5 sin pagar nada', 'esto es más épico que la última cinemática de Microblizz'],
     leader: ['¡HA LLEGADO EL CAMPEÓN!', 'EpicChampion, el carry de la partida', 'que empiece la team fight'],
     towerP: ['¡torre al Olimpo!', 'eso ha sido mitológico', 'XP para todos'],
-    win: ['leyendas sin parche', 'los dioses vuelven del mantenimiento', 'MVP para todos'],
-    lose: ['los héroes vuelven a mantenimiento', 'necesitamos un parche de equilibrio urgente'],
+    win: ['leyendas de verdad', 'los dioses vuelven a casa', 'MVP para todos'],
+    lose: ['Microblizz vuelve a cerrar el Olimpo', 'necesitamos un parche urgente'],
   },
   ciber: {
     idle: ['los escudos son mi única defensa contra los lunes', 'HackerKid ha hackeado mi wifi', 'NeonSniper dispara desde la otra punta del mapa', 'en el Sector Neón hay más neón que gente', 'CyberNinja, teletranspórtate a mi trabajo', '¿los NanoBots pagan IVA?', 'StarCraft, ¿eres tú?', 'drones del cielo: envío urgente versión guerra', 'ese mecha tiene más RGB que mi PC', 'beep boop, GG'],
@@ -1246,22 +1333,22 @@ const CHAT_FAC = {
 };
 // lo que comenta el chat de la facción enemiga (Microblizz o las corrompidas)
 const CHAT_VS = {
-  microblizz: ['los becarios cobran en «visibilidad»', 'SurvivalBot, ¿quién te ha diseñado?', 'esos servidores gastan más luz que mi pueblo', 'Microblizz despide bots para pagar el yate del CEO', '¿la CajaBotín da algo bueno? (no)', 'el Parche Día 1 pesa 80 GB', 'SoporteBot: «¿ha probado a reiniciar?»'],
-  nomuertos: ['¡libéralos!', 'los No-Muertos corrompidos tienen contrato de por vida (literal)', 'ojos rojos = plan de negocio nuevo', 'Microblizz les cobra el alquiler de la tumba'],
-  streamers: ['¡libéralos!', 'esos streamers corrompidos solo hacen directos patrocinados', 'el TwitchKing corrupto: «usa mi código de descuento»', 'el chat de ese lado son todo bots'],
-  heroes: ['¡libéralos!', 'los dioses firmaron con Microblizz por un parche que nunca llegó', 'el Minotauro corrupto vive en el laberinto de RR. HH.', 'esa Medusa petrifica con correos de despido'],
-  ciber: ['¡libéralos!', 'los Ciberpunks corrompidos llevan el firmware de Microblizz', 'ese HackerKid ahora hace ciberseguridad corporativa', 'la NeonSniper corrupta cobra por disparo'],
-  memes: ['¡libéralos!', 'los Memes corrompidos ya no hacen gracia: son anuncios', 'el Stonks corrupto solo sube para los accionistas', 'MemeLord corrupto: «este meme tiene derechos de autor»'],
+  microblizz: ['los becarios de Microblizz trabajan gratis', 'SurvivalBot, ¿quién te ha diseñado?', 'esos servidores gastan más luz que mi pueblo', 'Microblizz despide gente para pagar el yate del CEO', '¿la CajaBotín da algo bueno? (no)', 'el Parche Día 1 pesa 80 GB', 'SoporteBot: «¿ha probado a apagar y encender?»'],
+  nomuertos: ['¡libéralos!', 'Microblizz les hace trabajar hasta muertos (literal)', 'ojos rojos = ahora son de Microblizz', 'Microblizz les cobra el alquiler de la tumba'],
+  streamers: ['¡libéralos!', 'esos streamers corrompidos solo hacen directos de anuncios', 'el TwitchKing corrupto: «usa mi código de descuento»', 'el chat de ese lado son todo bots'],
+  heroes: ['¡libéralos!', 'Microblizz compró a los dioses y dejó de arreglar su juego', 'el Minotauro corrupto se ha perdido en su propio laberinto', 'esa Medusa petrifica con cartas de despido'],
+  ciber: ['¡libéralos!', 'Microblizz les ha metido anuncios en el cerebro', 'ese HackerKid ahora trabaja para la empresa', 'la NeonSniper corrupta cobra por disparo'],
+  memes: ['¡libéralos!', 'los Memes corrompidos ya no hacen gracia: son anuncios', 'el Stonks corrupto solo sube para el CEO', 'MemeLord corrupto: «este meme es de pago»'],
 };
 // frases para cada jefe de mundo (0 = SurvivalBot … 6 = el CEO, que también es el del Modo Jefe)
 const CHAT_BOSS = [
   ['SurvivalBot sobrevive a todo menos a las críticas', 'congelar unidades: la única actualización de SurvivalBot en 5 años'],
   ['el NecroLord corrupto despide a los muertos… otra vez', 'eso de congelar es muy de rey exánime'],
   ['TwitchKing corrupto banea a todo el chat', 'ese jefe tiene 3 viewers y son bots'],
-  ['EpicChampion corrupto: «sin parche no hay gloria»', 'el campeón cobra por cada team fight'],
-  ['CyberMarine corrupto con actualización obligatoria', 'drones de Microblizz con anuncios'],
+  ['EpicChampion corrupto: ahora cobra por pelear', 'el campeón se ha vendido a Microblizz'],
+  ['CyberMarine corrupto lleva anuncios en el casco', 'drones de Microblizz con anuncios'],
   ['MemeLord corrupto solo publica memes de empresa', 'el meme del jefe lleva marca de agua'],
-  ['el CEO ha traído 300 diapositivas', '«sinergias», dijo el CEO antes de atacar', 'el paracaídas dorado del CEO está chetado', 'esta música me suena del ascensor…'],
+  ['el CEO ha venido a cerrar otro juego', 'el CEO cobra más que todo el estudio junto', 'el CEO se ha comprado otro yate con tus gemas', 'esta música me suena del ascensor…'],
 ];
 // nombres del chat según tu facción (se mezclan con los de siempre)
 const CHAT_USERS_FAC = {
@@ -1274,32 +1361,33 @@ const QUIPS_FAC = {
   animales: ['¡Mis bellotas!', 'Decidle a la madriguera que la quiero', 'Era un plan… de ardilla'],
   nomuertos: ['Vuelvo enseguida (literal)', 'Otra vez a la tumba', 'Ya estaba muerto, no cuenta'],
   streamers: ['¡Se me ha caído el directo!', 'Nos vemos en el próximo stream', 'Dadle a like antes de que me vaya'],
-  heroes: ['¡Por el Olimpo!', 'Los héroes no mueren, entran en mantenimiento', 'Esto lo arregla un parche'],
+  heroes: ['¡Por el Olimpo!', 'Los héroes no mueren, los cierra Microblizz', 'Esto lo arregla un parche'],
   ciber: ['Error crítico del sistema', 'Reiniciando…', 'Batería al 0 %'],
   memes: ['F', 'Me ha tocado la mutación mala', 'Not stonks'],
 };
 const QUIPS_CORRUPT = {
   nomuertos: ['¡Por fin descanso en paz!', 'Microblizz no paga ni a los muertos'],
   streamers: ['¡Por fin sin patrocinadores!', 'Fin del directo patrocinado'],
-  heroes: ['¡Libre del contrato divino!', 'Me voy a hacer mi propio parche'],
+  heroes: ['¡Libre de Microblizz!', 'Me voy a hacer mi propio juego'],
   ciber: ['Firmware de Microblizz desinstalado', 'Sistema liberado'],
   memes: ['Ya puedo volver a hacer gracia', 'Este meme ya es libre'],
 };
 // titulares de broma para compartir
 const HEADLINES = {
-  win: ['Microblizz pierde {c} torres: sus acciones caen un 0,0001 %', '{L} humilla a Microblizz; la empresa anuncia despidos para compensar', 'Microblizz confirma que la derrota «estaba en el plan estratégico»', 'Un jugador gana a Microblizz sin comprar ningún pack. Investigación abierta', 'Microblizz convoca una reunión de crisis que podría haber sido un correo'],
-  lose: ['Microblizz gana una partida y lo celebra subiendo el precio del pase', '{F} cae ante Microblizz: «el problema es que no compraste el pack»', 'Microblizz despide a sus bots tras ganar, por si acaso', 'Victoria de Microblizz. Los accionistas aplauden desde su yate'],
-  unlock: ['Los {U} se libran de Microblizz y piden el finiquito', 'Fuga de talento en Microblizz: los {U} se pasan a la rebelión'],
-  boss: ['El CEO de Microblizz recibe {S} de daño y lo llama «feedback constructivo»', 'El CEO de Microblizz sobrevive a {S} de daño gracias a su paracaídas dorado'],
+  win: ['Microblizz pierde {c} torres y el CEO llora en su yate', '{L} humilla a Microblizz; la empresa despide a alguien para compensar', 'Microblizz dice que perder «estaba en el plan»', 'Un jugador gana a Microblizz sin comprar ningún pack. Escándalo', 'Microblizz pierde y cierra otro juego para animarse'],
+  lose: ['Microblizz gana una partida y lo celebra subiendo el precio del pase', '{F} cae ante Microblizz: «el problema es que no compraste el pack»', 'Microblizz despide a sus bots tras ganar, por si acaso', 'Microblizz gana y el CEO se compra otro yate'],
+  unlock: ['Los {U} se escapan de Microblizz y piden su finiquito', 'Los {U} dejan Microblizz y se unen a la rebelión'],
+  boss: ['El CEO de Microblizz recibe {S} de daño y dice que no le ha dolido', 'El CEO de Microblizz aguanta {S} de daño escondido detrás de su montaña de dinero'],
 };
 const GAME_URL = 'jdanielhl1984-commits.github.io/fans-of-rumble';
 
 /* ---------- guardado (en el navegador; se puede exportar e importar) ---------- */
 const SAVE_KEY = 'for-save-1';
-function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, inv: [], invSeq: 0, abEquip: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0, qab: 0, qeq: 0 }, daily: null, weekly: null, tickets: 0, pass: { xp: 0, prem: false, free: [], paid: [] }, giftDay: '', chatOff: false, bestBoss: 0, lastFac: 'animales' }; }
+const VERSION = '0.9.11';
+function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, inv: [], invSeq: 0, abEquip: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0, qab: 0, qeq: 0 }, daily: null, weekly: null, tickets: 0, pass: { xp: 0, prem: false, free: [], paid: [] }, giftDay: '', chatOff: false, bestBoss: 0, lastFac: 'animales', tut: { done: false, step: 0 }, tutGift: {}, login: { last: '', day: 0, best: 0 }, stats: {}, achDone: [], achSeen: [], starter: false, speed2: false, seenVer: '' }; }
 // v0.9.9: antes se guardaba «tengo esta habilidad (rango 1-3)» y «tengo este objeto»; ahora cada copia tiene su calidad.
 // Las partidas antiguas se convierten sin perder nada: la habilidad conserva su valor exacto y los objetos quedan como estaban.
-function migrateSave(s) {
+function migrateSave(s, raw) {
   if (!Array.isArray(s.inv)) s.inv = [];
   s.invSeq = s.invSeq || s.inv.length;
   const add = (k, id, q) => { const it = { u: 'i' + (++s.invSeq), k, id, q }; s.inv.push(it); return it.u; };
@@ -1318,10 +1406,23 @@ function migrateSave(s) {
   }
   s.abEquip = s.abEquip || {}; s.equip = s.equip || {};
   s.pity = Object.assign({ ab: 0, abL: 0, eq: 0, eqL: 0, qab: 0, qeq: 0 }, s.pity || {});
+  // v0.9.11: logros, premio diario y partida guiada. Quien ya jugaba antes no repite el tutorial.
+  s.stats = s.stats || {}; s.achDone = s.achDone || []; s.achSeen = s.achSeen || []; s.tutGift = s.tutGift || {};
+  s.login = Object.assign({ last: '', day: 0, best: 0 }, s.login || {});
+  if (raw && !raw.tut) {
+    const played = Object.keys(s.camp || {}).length > 0 || (s.inv || []).length > 0 || (s.pass && s.pass.xp > 0) || (s.unlocked || []).length > 1 || Object.values(s.units || {}).some(u => u && (u.lvl > 1 || u.xp > 0));
+    s.tut = { done: played, step: played ? 3 : 0 };
+    if (played) {   // lo que ya se puede contar para los logros
+      s.stats.unlock = Math.max(s.stats.unlock || 0, (s.unlocked || []).length - 1);
+      s.stats.lvlup = Math.max(s.stats.lvlup || 0, Object.values(s.units || {}).reduce((a, u) => a + Math.max(0, ((u && u.lvl) || 1) - 1), 0));
+      if ((s.camp || {})[WORLDS.length + '-4']) s.stats.ceo = Math.max(s.stats.ceo || 0, 1);
+    }
+  }
+  s.tut = Object.assign({ done: false, step: 0 }, s.tut || {});
   return s;
 }
 function loadSave() {
-  try { const t = localStorage.getItem(SAVE_KEY); if (t) { const o = JSON.parse(t); if (o && o.v === 1) return migrateSave(Object.assign(newSave(), o)); } } catch (e) { /* storage blocked */ }
+  try { const t = localStorage.getItem(SAVE_KEY); if (t) { const o = JSON.parse(t); if (o && o.v === 1) return migrateSave(Object.assign(newSave(), o), o); } } catch (e) { /* storage blocked */ }
   return newSave();
 }
 let SAVE = loadSave();
@@ -3299,6 +3400,7 @@ function doDeploy(team, key, x, y) {
 }
 function playerPlay(slot, key, x, y) {
   doDeploy('p', key, x, y); S.p.plays[key] = (S.p.plays[key] || 0) + 1;
+  if (G.tutMatch && G.tutB === 0) { G.tutB = 1; G.tutAt = G.tutT; tipBattle('¡Muy bien! Cada carta gasta <b>CAOS</b>: la barra morada de abajo. Se recarga sola.', 7); }
   if (slot >= 0) { const used = S.p.hand[slot]; S.p.hand[slot] = S.p.queue.shift(); S.p.queue.push(used); }
 }
 function tryPlayerDeploy(slot, key, x, y) {
@@ -3520,7 +3622,7 @@ function kill(t, src) {
   const winner = other(t.team);
   if (t.role === 'base') { S[winner].crowns = 3; endMatch(winner, 'base'); return; }
   S[winner].crowns++;
-  if (winner === 'p') { if (facOf('e') === 'streamers') { S.e.hype = 0; S.e.hypeLvl = 0; } banner('¡TORRE DERRIBADA!', 'Microblizz lo llama «ajuste de plantilla»', 'player'); play('crown'); chatBurst('towerP', 2); }
+  if (winner === 'p') { if (facOf('e') === 'streamers') { S.e.hype = 0; S.e.hypeLvl = 0; } banner('¡TORRE DERRIBADA!', 'Microblizz dice que esa torre le sobraba', 'player'); play('crown'); chatBurst('towerP', 2); }
   else {
     const lostHype = facOf('p') === 'streamers' && S.p.hype > 0; if (lostHype) { S.p.hype = 0; S.p.hypeLvl = 0; }
     chatBurst('towerE', 2);
@@ -3817,7 +3919,7 @@ function updateBoss(dt) {
   b.castT = 0.9; ring(b.x, b.y, 20, 260, 'rgba(255,51,72,.8)', 0.7, 6); if (Math.random() < 0.6) chatSay('boss');
   if (cast === 'entierro') {
     for (const u of near) { u.stunT = D.stun; u.stunKind = 'ip'; puff(u.x, u.y, 6, '#9fb3d6', 30, 5); }
-    banner(G.efac === 'microblizz' ? 'ENTIERRO DE IP' : 'ORDEN DE MICROBLIZZ', `${nm} ha congelado a tus unidades de su lado`, 'enemy'); play('womp');
+    banner(G.efac === 'microblizz' ? '¡JUEGO CERRADO!' : 'ORDEN DE MICROBLIZZ', `${nm} ha congelado a tus unidades de su lado`, 'enemy'); play('womp');
   } else {
     for (const u of all) parts.push({ type: 'env', tgt: u, x: u.x, y: u.y, z: 170, t: rand(-0.25, 0), dur: 0.6, dmg: D.despido, life: 2, max: 2, rot: rand(-0.4, 0.4) });
     banner('DESPIDOS MASIVOS', G.efac === 'microblizz' ? 'Carta de despido para todas tus unidades' : 'Microblizz le obliga a despedir a todas tus unidades', 'enemy'); play('despido');
@@ -3930,7 +4032,7 @@ function timeUp() {
 function endMatch(w, reason) {
   if (G.state !== 'play') return;
   G.state = 'ending'; G.winner = w; G.endReason = reason; G.endT = 1.9; G.slowmo = 0.35;
-  input.card = null; input.dragging = false; input.selected = null; input.ghost = null; hideTut();
+  input.card = null; input.dragging = false; input.selected = null; input.ghost = null; hideTut(); $('#tut-tip').hidden = true;
   if (w === 'p') { play('win'); for (let i = 0; i < 140; i++) parts.push({ type: 'conf', x: rand(0, W), y: rand(80, 780), z: rand(250, 700), vx: rand(-20, 20), vy: 0, vz: -rand(90, 160), g: 0, rot: rand(0, 6), vr: rand(-8, 8), life: 6, max: 6, color: pick(['#ff7a1a', '#ffcb3d', '#d43cff', '#63cfe0', '#ffffff', '#7be04a']) }); }
   else if (w === 'e') play('lose'); else play('tick');
   chatBurst(w === 'e' ? 'lose' : 'win', 3);
@@ -4029,7 +4131,7 @@ function render() {
   ctx.setTransform(VIEW.k, 0, 0, VIEW.k, 0, 0);
   ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   ctx.fillStyle = '#24133a'; ctx.fillRect(0, 0, W, VIEW.LH);
-  ctx.translate(0, VIEW.top);
+  ctx.translate(0, VIEW.top + FIELD_DY);
   if (G.shake > 0.15) ctx.translate(rand(-1, 1) * G.shake, rand(-1, 1) * G.shake);
   ctx.drawImage(BG, 0, 0, W, H);
   drawWater();
@@ -4672,28 +4774,29 @@ function chooseFor(kind, key, uid) {
   if (it) unequip(it);
   if (kind === 'ab') { if (it) SAVE.abEquip[key] = uid; else delete SAVE.abEquip[key]; }
   else { SAVE.equip[collFac] = SAVE.equip[collFac] || {}; if (it) SAVE.equip[collFac][key] = uid; else delete SAVE.equip[collFac][key]; }
+  if (kind === 'ab' && it) tutStep(2);
   saveGame(); play('select'); buildColl();
 }
 /* ---------- gashapón de Microblizz ---------- */
 let gachaTab = 'ab', gachaAnim = null, gachaRAF = 0;
-function rollRarity(kind) {
+function rollRarity(kind, force) {
   const P = SAVE.pity, pk = kind, pl = kind + 'L'; P[pk] = (P[pk] || 0) + 1; P[pl] = (P[pl] || 0) + 1;
   let r = 'common';
   if (P[pl] >= ECON.pityLeg) r = 'legendary';
-  else if (P[pk] >= ECON.pityEpic) r = Math.random() < ECON.odds.legendary / (ECON.odds.legendary + ECON.odds.epic) ? 'legendary' : 'epic';
+  else if (force || P[pk] >= ECON.pityEpic) r = Math.random() < ECON.odds.legendary / (ECON.odds.legendary + ECON.odds.epic) ? 'legendary' : 'epic';
   else { let x = Math.random() * 100; for (const k of ['legendary', 'epic', 'rare']) { if (x < ECON.odds[k]) { r = k; break; } x -= ECON.odds[k]; } }
   if (r === 'epic' || r === 'legendary') P[pk] = 0;
   if (r === 'legendary') P[pl] = 0;
   return r;
 }
 // v0.9.10: tiradas x1, x10 y x50. Primero se gastan las tiradas gratis; cada tirada cuenta para las garantías
-function onePull(kind) {
-  const rar = rollRarity(kind), DB = kind === 'ab' ? ABILITIES : ITEMS, pool = Object.keys(DB).filter(k => DB[k].rar === rar && !DB[k].pass);
+function onePull(kind, force) {
+  const rar = rollRarity(kind, force), DB = kind === 'ab' ? ABILITIES : ITEMS, pool = Object.keys(DB).filter(k => DB[k].rar === rar && !DB[k].pass);
   const id = pick(pool), prev = bestCopy(kind, id), nPrev = SAVE.inv.filter(x => x.k === kind && x.id === id).length;
   const P = SAVE.pity, qk = 'q' + kind; P[qk] = (P[qk] || 0) + 1;
   const it = newCopy(kind, id, P[qk] >= ECON.pityQ ? 3 : 0), tq = tierOf(avgQ(it)); if (tq >= 3) P[qk] = 0;
   const pn = prev && QTIERS[tierOf(avgQ(prev))].name, better = !!prev && avgQ(it) > avgQ(prev);
-  const tag = tq === 4 ? '¡CALIDAD CEO! Tirada perfecta' : !prev ? (kind === 'ab' ? '¡NUEVA!' : '¡NUEVO!') : better ? `¡TU MEJOR COPIA! (la anterior era ${pn})` : `Copia n.º ${nPrev + 1} · tu mejor copia sigue siendo ${pn}`;
+  const tag = tq === 4 ? '¡CALIDAD PERFECTA!' : !prev ? (kind === 'ab' ? '¡NUEVA!' : '¡NUEVO!') : better ? `¡TU MEJOR COPIA! (la anterior era ${pn})` : `Copia n.º ${nPrev + 1} · tu mejor copia sigue siendo ${pn}`;
   return { it, tag, isNew: !prev, better };
 }
 function pullCost(n) { const free = Math.min(SAVE.tickets || 0, n); return { free, gems: (n - free) * ECON.pull }; }
@@ -4703,8 +4806,16 @@ function pull(n) {
   if (SAVE.gems < c.gems) { play('deny'); confirmBox('FALTAN GEMAS', `Para girar x${n} te faltan <b>${fmt(c.gems - SAVE.gems)} gemas</b>.<small>Las consigues con misiones, la campaña, el pase de batalla o en la tienda.</small>`, 'IR A LA TIENDA', () => openShop('gems')); return; }
   SAVE.tickets = (SAVE.tickets || 0) - c.free; SAVE.gems -= c.gems;
   audioInit();
-  const kind = gachaTab, res = []; for (let i = 0; i < n; i++) res.push(onePull(kind));
-  missionEvent('pull', n); saveGame(); updateWallets(); buildGachaText();
+  // v0.9.11: cada bloque de 10 tiradas trae al menos una épica (o legendaria)
+  const kind = gachaTab, res = []; let gotEpic = false;
+  for (let i = 0; i < n; i++) {
+    if (i % 10 === 0) gotEpic = false;
+    const r = onePull(kind, n >= 10 && i % 10 === 9 && !gotEpic), rr = defOf(r.it).rar;
+    if (rr === 'epic' || rr === 'legendary') gotEpic = true;
+    res.push(r);
+  }
+  missionEvent('pull', n); if (n >= 50) stat('x50', 1); saveGame(); updateWallets(); buildGachaText();
+  if (!SAVE.tut.done && SAVE.tut.step === 2) setTimeout(() => { tutFinish(); toast('¡Tutorial completado! Ya sabes lo básico. ¡A por Microblizz!', true); }, 1500);
   const cv = $('#gacha-cv'); cv.classList.remove('shake'); void cv.offsetWidth; cv.classList.add('shake'); play('roll');
   const top = res.reduce((a, r) => (RAR_ORDER[defOf(r.it).rar] < RAR_ORDER[defOf(a.it).rar] ? r : a));
   gachaAnim = { t: 0, col: RARITY[defOf(top.it).rar][1] };
@@ -4717,7 +4828,7 @@ function showMulti(res) {
   const cnt = r => res.filter(x => defOf(x.it).rar === r).length, good = res.filter(x => tierOf(avgQ(x.it)) >= 3).length, news = res.filter(x => x.isNew).length;
   const sum = ['legendary', 'epic', 'rare', 'common'].filter(r => cnt(r)).map(r => `${cnt(r)} ${RAR_PL[r][cnt(r) > 1 ? 1 : 0]}`).join(' · ');
   const order = res.slice().sort((a, b) => RAR_ORDER[defOf(a.it).rar] - RAR_ORDER[defOf(b.it).rar] || avgQ(b.it) - avgQ(a.it));
-  card.innerHTML = `<div class="gr-rar ol">TIRADA x${res.length}</div><div class="gr-sum">${sum}${good ? ` · <b>${good} Director o mejor</b>` : ''}${news ? ` · ${news} ${news > 1 ? 'nuevas' : 'nueva'}` : ''}</div><div class="gr-grid">${order.map(r => {
+  card.innerHTML = `<div class="gr-rar ol">TIRADA x${res.length}</div><div class="gr-sum">${sum}${good ? ` · <b>${good} Excelente o mejor</b>` : ''}${news ? ` · ${news} ${news > 1 ? 'nuevas' : 'nueva'}` : ''}</div><div class="gr-grid">${order.map(r => {
     const D = defOf(r.it), RR = RARITY[D.rar], T = QTIERS[tierOf(avgQ(r.it))], nw = r.it.k === 'ab' ? 'NUEVA' : 'NUEVO';
     return `<button class="gt" data-gu="${r.it.u}" style="--rc:${RR[1]};--rc2:${RR[2]};--qc:${T.col}" aria-label="${D.name}, ${RR[0]}, calidad ${T.name}"><span class="gt-ic">${r.it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><span class="gt-name">${D.name}</span><span class="gt-q ol">${T.name}</span>${r.isNew ? `<span class="gt-new ol">${nw}</span>` : r.better ? '<span class="gt-new best ol">MEJOR</span>' : ''}</button>`;
   }).join('')}</div><small class="gr-hint">Toca una para ver sus números. Las que no quieras, despídelas en el inventario.</small>`;
@@ -4726,7 +4837,7 @@ function showMulti(res) {
   play(res.some(x => tierOf(avgQ(x.it)) >= 3 || defOf(x.it).rar === 'legendary' || defOf(x.it).rar === 'epic') ? 'win' : 'levelup');
 }
 function addCopy(k, id, q) { const it = { u: 'i' + (++SAVE.invSeq), k, id, q }; SAVE.inv.push(it); return it; }
-function newCopy(k, id, minTier) { const n = k === 'ab' ? 1 : ITEMS[id].st.length; return addCopy(k, id, Array.from({ length: n }, () => rollQ(minTier))); }
+function newCopy(k, id, minTier) { const n = k === 'ab' ? 1 : ITEMS[id].st.length, it = addCopy(k, id, Array.from({ length: n }, () => rollQ(minTier))); if (tierOf(avgQ(it)) === 4) stat('perfect', 1); return it; }
 function bestCopy(k, id) { let b = null; for (const it of SAVE.inv) if (it.k === k && it.id === id && (!b || avgQ(it) > avgQ(b))) b = it; return b; }
 function showPull(it, tag) {
   const D = defOf(it), kind = it.k, R = RARITY[D.rar], T = QTIERS[tierOf(avgQ(it))], card = $('#gr-card');
@@ -4736,11 +4847,11 @@ function showPull(it, tag) {
 }
 function buildGachaText() {
   for (const b of document.querySelectorAll('[data-gt]')) b.setAttribute('aria-pressed', String(b.dataset.gt === gachaTab));
-  $('#gacha-sub').textContent = gachaTab === 'ab' ? 'Habilidades de cualquier facción para tus cartas. Cada copia sale con su propia calidad, de Becario a CEO: búscale la mejor.' : 'Equipo freak solo para los líderes: arma, cabeza y accesorio. Cada objeto sale con su propia calidad y se ve puesto en la partida.';
+  $('#gacha-sub').textContent = gachaTab === 'ab' ? 'Habilidades de cualquier facción para tus cartas. Cada copia sale con su propia calidad, de Básica a Perfecta: búscale la mejor.' : 'Equipo freak solo para los líderes: arma, cabeza y accesorio. Cada objeto sale con su propia calidad y se ve puesto en la partida.';
   const lab = n => { const c = pullCost(n); return c.gems ? `${fmt(c.gems)} ${GEM_SVG}${c.free ? `<i class="fr">+${c.free} gratis</i>` : ''}` : `${TICKET_SVG} gratis`; };
-  for (const b of document.querySelectorAll('[data-pull]')) { const n = +b.dataset.pull; b.innerHTML = `${n === 10 ? '<span class="tag">FAVORITA DEL CEO</span>' : n === 50 ? '<span class="tag">MODO BALLENA</span>' : ''}x${n}<small>${lab(n)}</small>`; }
+  for (const b of document.querySelectorAll('[data-pull]')) { const n = +b.dataset.pull; b.innerHTML = `${n === 10 ? '<span class="tag">FAVORITA DEL CEO</span>' : n === 50 ? '<span class="tag">MODO BALLENA</span>' : ''}x${n}<small>${lab(n)}</small>${n >= 10 ? `<span class="sure">${n === 10 ? '1 épica segura' : n / 10 + ' épicas seguras'}</span>` : ''}`; }
   const P = SAVE.pity, O = ECON.odds;
-  $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Calidad de cada efecto (del 50 % al 150 % de su valor): ${QTIERS.map(t => t.name + ' ' + t.p + ' %').join(', ')}. Garantías: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}), legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}) y calidad Director o mejor cada ${ECON.pityQ} (llevas ${P['q' + gachaTab] || 0}). Cada tirada cuesta ${ECON.pull} gemas (unos 0,50 € si compras el pack pequeño de gemas). Microblizz no se hace responsable de tu afición a las cápsulas.`;
+  $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Calidad de cada efecto (del 50 % al 150 % de su valor): ${QTIERS.map(t => t.name + ' ' + t.p + ' %').join(', ')}. Garantías: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}), legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}) y calidad Excelente o mejor cada ${ECON.pityQ} (llevas ${P['q' + gachaTab] || 0}). Las tiradas x10 y x50 traen al menos una épica o legendaria por cada 10. Cada tirada cuesta ${ECON.pull} gemas (unos 0,50 € si compras el pack pequeño de gemas). Microblizz no se hace responsable de tu afición a las cápsulas.`;
 }
 function drawGacha() {
   const cv = $('#gacha-cv'); if (!cv || $('#scr-gacha').hidden) { gachaRAF = 0; return; }
@@ -4769,7 +4880,7 @@ function drawGacha() {
   shape(c, rr(100, 2, 70, 18, 7), '#2e6fd8', 2.4);
   gachaRAF = requestAnimationFrame(drawGacha);
 }
-function openGacha() { buildGachaText(); show('scr-gacha'); $('#gacha-result').hidden = true; if (!gachaRAF) gachaRAF = requestAnimationFrame(drawGacha); }
+function openGacha() { buildGachaText(); show('scr-gacha'); if (!SAVE.tut.done && SAVE.tut.step === 2) SAVE.tut.sawG = true; $('#gacha-result').hidden = true; if (!gachaRAF) gachaRAF = requestAnimationFrame(drawGacha); }
 /* ---------- inventario (v0.9.9): todas tus copias, con su calidad ---------- */
 let invTab = 'ab', invFilter = 'all', invSort = 'q', itemCur = null;
 const INV_FILTERS = { ab: [['all', 'Todas'], ['common', 'Comunes'], ['rare', 'Raras'], ['epic', 'Épicas'], ['legendary', 'Legendarias']], eq: [['all', 'Todo'], ['weapon', 'Armas'], ['head', 'Cabeza'], ['acc', 'Accesorios']] };
@@ -4777,7 +4888,7 @@ const INV_SORTS = { q: 'calidad', rar: 'rareza', name: 'nombre' };
 const LOCK_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7.5" rx="1.6" fill="#ffcb3d" stroke="#20102c" stroke-width="1.4"/><path d="M5.3 7V5.2a2.7 2.7 0 0 1 5.4 0V7" stroke="#20102c" stroke-width="1.6" fill="none"/></svg>';
 const scrapValue = it => Math.round(ECON.scrap[defOf(it).rar] * [1, 1.5, 2, 3, 5][tierOf(avgQ(it))]);
 const canScrap = it => !it.lock && !wearer(it) && !defOf(it).pass;
-// despido masivo: Becarios y Juniors que nadie lleva, sin contrato indefinido, y nunca tu mejor copia de cada una
+// despido masivo: copias Básicas y Normales que nadie lleva, sin bloquear, y nunca tu mejor copia de cada una
 const massList = () => SAVE.inv.filter(it => it.k === invTab && canScrap(it) && tierOf(avgQ(it)) <= 1 && bestCopy(it.k, it.id) !== it);
 function openInv(tab) { if (tab) invTab = tab; invFilter = 'all'; updateWallets(); show('scr-inv'); buildInv(); $('#inv-list').scrollTop = 0; }
 function buildInv() {
@@ -4796,7 +4907,7 @@ function buildInv() {
 }
 function invRow(it) {
   const D = defOf(it), R = RARITY[D.rar], w = wearer(it);
-  const meta = w || it.lock ? `<span class="inv-meta">${it.lock ? LOCK_SVG + 'Contrato indefinido' : ''}${w && it.lock ? ' · ' : ''}${w ? 'Lo lleva ' + w : ''}</span>` : '';
+  const meta = w || it.lock ? `<span class="inv-meta">${it.lock ? LOCK_SVG + 'Bloqueada' : ''}${w && it.lock ? ' · ' : ''}${w ? 'Lo lleva ' + w : ''}</span>` : '';
   return `<button class="inv-row" data-u="${it.u}" style="--rc:${R[2]}"><span class="ic" style="background:${R[1]}">${it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><span class="inv-main"><span class="inv-top"><b class="ol">${D.name}</b>${qBadge(it)}</span><span class="inv-desc">${descOf(it)}</span>${meta}</span></button>`;
 }
 function openItem(uid) {
@@ -4807,14 +4918,14 @@ function openItem(uid) {
   const oth = others.length ? `Tus otras copias: ${others.slice(0, 5).map(x => `${QTIERS[tierOf(avgQ(x))].name} ${Math.round(avgQ(x) * 100)} %`).join(' · ')}${others.length > 5 ? ` y ${others.length - 5} más` : ''}.` : 'Es tu única copia.';
   $('#item-body').innerHTML = `<div class="item-head"><span class="ic" style="background:${R[1]}">${it.k === 'ab' ? D.ic : SLOT_SVG[D.slot]}</span><div><b class="ol">${D.name}</b><div class="item-note">${R[0]}${it.k === 'eq' ? ' · ' + SLOTS[D.slot] + ' (solo líderes)' : ''}${it.k === 'ab' && D.fac ? ' · de los ' + FACTIONS[D.fac].name : ''}</div></div></div>
     <div>${qBadge(it, true)}</div><div class="inv-desc">${descOf(it)}</div>${bars}
-    <div class="item-note">${w ? 'Lo lleva ' + w + '.' : 'No lo lleva nadie.'}${pass ? ' Premio del pase: contrato blindado (ni se evalúa ni se despide).' : it.lock ? ' Contrato indefinido: no se puede despedir.' : ''}</div><div class="item-note">${oth}</div>`;
+    <div class="item-note">${w ? 'Lo lleva ' + w + '.' : 'No lo lleva nadie.'}${pass ? ' Premio del pase: no se puede despedir ni volver a tirar.' : it.lock ? ' Bloqueada: no se puede despedir.' : ''}</div><div class="item-note">${oth}</div>`;
   const rc = ECON.reroll[D.rar], sv = scrapValue(it);
   $('#item-actions').innerHTML = `<button class="btn-ghost ol btn-ok" id="ia-equip">${w ? 'CAMBIAR' : 'EQUIPAR'}</button><button class="btn-ghost ol" id="ia-unequip" ${w ? '' : 'disabled'}>QUITAR</button>
-    <button class="btn-ghost ol" id="ia-lock" ${pass ? 'disabled' : ''}>${it.lock ? 'SIN CONTRATO' : 'CONTRATO INDEFINIDO'}</button><button class="btn-ghost ol danger" id="ia-scrap" ${canScrap(it) ? '' : 'disabled'}>DESPEDIR · +${fmt(sv)} ORO</button>
-    <button class="btn-ghost ol wide" id="ia-reroll" ${pass ? 'disabled' : ''}>EVALUACIÓN DE DESEMPEÑO · ${fmt(rc)} ORO</button>`;
+    <button class="btn-ghost ol" id="ia-lock" ${pass ? 'disabled' : ''}>${it.lock ? 'DESBLOQUEAR' : 'BLOQUEAR'}</button><button class="btn-ghost ol danger" id="ia-scrap" ${canScrap(it) ? '' : 'disabled'}>DESPEDIR · +${fmt(sv)} ORO</button>
+    <button class="btn-ghost ol wide" id="ia-reroll" ${pass ? 'disabled' : ''}>VOLVER A TIRAR · ${fmt(rc)} ORO</button>`;
   $('#ia-equip').onclick = () => equipFromInv(it);
   $('#ia-unequip').onclick = () => { unequip(it); saveGame(); play('select'); refreshInv(); };
-  $('#ia-lock').onclick = () => { it.lock = !it.lock; saveGame(); play('select'); refreshInv(); toast(it.lock ? 'Contrato indefinido: ya no se puede despedir' : 'Contrato normal: ya se puede despedir'); };
+  $('#ia-lock').onclick = () => { it.lock = !it.lock; saveGame(); play('select'); refreshInv(); toast(it.lock ? 'Bloqueada: ya no se puede despedir' : 'Desbloqueada: ya se puede despedir'); };
   $('#ia-scrap').onclick = () => scrapOne(it);
   $('#ia-reroll').onclick = () => rerollOne(it);
   $('#scr-item').hidden = false;
@@ -4827,7 +4938,7 @@ function equipFromInv(it) {
       const F = FACTIONS[f];
       html += `<p class="pick-head ol">${F.name}</p>` + [F.leader, ...F.units].map(k => { const cur = invGet(SAVE.abEquip[k]); return `<button class="pick-opt unit" data-id="${k}" aria-pressed="${SAVE.abEquip[k] === it.u}"><canvas data-art="${k}"></canvas><span><b class="ol">${CFG.cards[k].name}</b><span>${cur ? 'Lleva ' + ABILITIES[cur.id].name + ' (' + QTIERS[tierOf(avgQ(cur))].name + ')' : 'Sin habilidad'}</span></span></button>`; }).join('');
     }
-    openList(`¿Quién lleva ${D.name}?`, html, k => { unequip(it); SAVE.abEquip[k] = it.u; saveGame(); play('select'); toast(`${CFG.cards[k].name} lleva ahora ${D.name}`); refreshInv(); });
+    openList(`¿Quién lleva ${D.name}?`, html, k => { unequip(it); SAVE.abEquip[k] = it.u; tutStep(2); saveGame(); play('select'); toast(`${CFG.cards[k].name} lleva ahora ${D.name}`); refreshInv(); });
   } else {
     html = facs.map(f => { const L = FACTIONS[f].leader, cur = invGet((SAVE.equip[f] || {})[D.slot]); return `<button class="pick-opt unit" data-id="${f}" aria-pressed="${cur === it}"><canvas data-art="${L}"></canvas><span><b class="ol">${CFG.cards[L].name}</b><span>${FACTIONS[f].name} · ${cur ? 'lleva ' + ITEMS[cur.id].name + ' (' + QTIERS[tierOf(avgQ(cur))].name + ')' : SLOTS[D.slot] + ' libre'}</span></span></button>`; }).join('');
     openList(`¿Qué líder lleva ${D.name}?`, html, f => { unequip(it); SAVE.equip[f] = SAVE.equip[f] || {}; SAVE.equip[f][D.slot] = it.u; saveGame(); play('select'); toast(`${CFG.cards[FACTIONS[f].leader].name} lleva ahora ${D.name}`); refreshInv(); });
@@ -4836,27 +4947,27 @@ function equipFromInv(it) {
 function scrapOne(it) {
   if (!canScrap(it)) return;
   const D = defOf(it), sv = scrapValue(it);
-  confirmBox('DESPEDIR', `¿Despedir esta copia de <b>${D.name}</b> (${QTIERS[tierOf(avgQ(it))].name})?<span class="big">+${fmt(sv)} ${COIN_SVG}</span><small>La indemnización depende de su cargo. La copia desaparece para siempre.</small>`, 'DESPEDIR', () => {
-    SAVE.inv = SAVE.inv.filter(x => x !== it); SAVE.gold += sv; saveGame(); play('despido'); updateWallets();
-    $('#scr-item').hidden = true; itemCur = null; refreshInv(); toast(`Despedida: +${fmt(sv)} de oro de indemnización`);
+  confirmBox('DESPEDIR', `¿Despedir esta copia de <b>${D.name}</b> (${QTIERS[tierOf(avgQ(it))].name})?<span class="big">+${fmt(sv)} ${COIN_SVG}</span><small>La copia desaparece y te da oro. Cuanto mejor es su calidad, más oro.</small>`, 'DESPEDIR', () => {
+    SAVE.inv = SAVE.inv.filter(x => x !== it); SAVE.gold += sv; stat('scrap', 1); saveGame(); play('despido'); updateWallets();
+    $('#scr-item').hidden = true; itemCur = null; refreshInv(); toast(`Despedida: +${fmt(sv)} de oro`);
   });
 }
 function rerollOne(it) {
   const D = defOf(it); if (D.pass) return;
   const cost = ECON.reroll[D.rar];
   if (SAVE.gold < cost) { toast(`Te falta oro: ${fmt(cost - SAVE.gold)} más`); play('deny'); return; }
-  confirmBox('EVALUACIÓN DE DESEMPEÑO', `Microblizz vuelve a evaluar tu <b>${D.name}</b>: todos sus números se tiran otra vez.<span class="big">${fmt(cost)} ${COIN_SVG}</span><small>Puede salir mejor… o peor. Ahora es ${QTIERS[tierOf(avgQ(it))].name} (${Math.round(avgQ(it) * 100)} %). Mismas probabilidades que el gashapón, sin garantía.</small>`, 'EVALUAR', () => {
-    const before = avgQ(it); SAVE.gold -= cost; it.q = it.q.map(() => rollQ(0)); saveGame(); updateWallets();
+  confirmBox('VOLVER A TIRAR', `Se vuelven a sortear todos los números de tu <b>${D.name}</b>.<span class="big">${fmt(cost)} ${COIN_SVG}</span><small>Puede salir mejor… o peor. Ahora es ${QTIERS[tierOf(avgQ(it))].name} (${Math.round(avgQ(it) * 100)} %). Mismas probabilidades que el gashapón, sin garantía.</small>`, 'TIRAR', () => {
+    const before = avgQ(it); SAVE.gold -= cost; it.q = it.q.map(() => rollQ(0)); stat('reroll', 1); if (tierOf(avgQ(it)) === 4) stat('perfect', 1); saveGame(); updateWallets();
     const after = avgQ(it), T = QTIERS[tierOf(after)];
-    play(after > before ? 'levelup' : 'sad'); toast(after > before ? `¡Ascenso! Ahora es ${T.name} (${Math.round(after * 100)} %)` : `Degradada a ${T.name} (${Math.round(after * 100)} %). Así son las evaluaciones`);
+    play(after > before ? 'levelup' : 'sad'); toast(after > before ? `¡Ha salido mejor! Ahora es ${T.name} (${Math.round(after * 100)} %)` : `Ha salido peor: ahora es ${T.name} (${Math.round(after * 100)} %). Mala suerte`);
     refreshInv();
   });
 }
 function massScrap() {
   const L = massList(); if (!L.length) return;
   const gold = L.reduce((a, it) => a + scrapValue(it), 0);
-  confirmBox('DESPIDO MASIVO', `Vas a despedir <b>${L.length} ${L.length === 1 ? 'copia' : 'copias'}</b> de ${invTab === 'ab' ? 'habilidades' : 'equipo'} de calidad Becario y Junior que nadie lleva puestas.<span class="big">+${fmt(gold)} ${COIN_SVG}</span><small>Se salvan las que tienen contrato indefinido y tu mejor copia de cada una. Microblizz estaría orgullosa.</small>`, 'DESPEDIR A TODAS', () => {
-    const del = new Set(L); SAVE.inv = SAVE.inv.filter(x => !del.has(x)); SAVE.gold += gold; saveGame(); updateWallets(); play('despido'); buildInv(); toast(`${L.length} despedidas: +${fmt(gold)} de oro`);
+  confirmBox('DESPIDO MASIVO', `Vas a despedir <b>${L.length} ${L.length === 1 ? 'copia' : 'copias'}</b> de ${invTab === 'ab' ? 'habilidades' : 'equipo'} de calidad Básica y Normal que nadie lleva puestas.<span class="big">+${fmt(gold)} ${COIN_SVG}</span><small>Se salvan las bloqueadas y tu mejor copia de cada una. Microblizz estaría orgullosa.</small>`, 'DESPEDIR A TODAS', () => {
+    const del = new Set(L); SAVE.inv = SAVE.inv.filter(x => !del.has(x)); SAVE.gold += gold; stat('scrap', L.length); saveGame(); updateWallets(); play('despido'); buildInv(); toast(`${L.length} despedidas: +${fmt(gold)} de oro`);
   });
 }
 /* ---------- misiones diarias y semanales ---------- */
@@ -4880,6 +4991,7 @@ function ensureWeekly() {
 }
 function missionEvent(ev, n, fac) {
   if (!n) return;
+  stat(ev, n);
   ensureDaily(); ensureWeekly();
   for (const m of SAVE.daily.list) { const M = mDef(m); if (M && M.ev === ev && !m.claimed && (!m.fac || m.fac === fac)) m.prog = Math.min(M.goal, m.prog + n); }
   for (const m of SAVE.weekly.list) { const M = mDef(m, true); if (M && M.ev === ev && !m.claimed) m.prog = Math.min(M.goal, m.prog + n); }
@@ -4895,6 +5007,8 @@ function buildMissions() {
   ensureDaily(); ensureWeekly();
   const W = missionTab === 'w', L = W ? SAVE.weekly.list : SAVE.daily.list;
   for (const b of document.querySelectorAll('[data-mt]')) b.setAttribute('aria-pressed', String(b.dataset.mt === missionTab));
+  const nA = achReady(); $('[data-mt="a"]').textContent = nA ? `Logros (${nA})` : 'Logros';
+  if (missionTab === 'a') { buildAchs(); return; }
   $('#mission-sub').textContent = W ? `${WEEKLY_N} misiones grandes cada semana. Cada una da ${ECON_W.gold} de oro, ${ECON_W.gems} gemas y ${PASS.xpWeekly} puntos de pase. Se renuevan en ${untilStr(true)}.` : `${DAILY_N} misiones nuevas cada día. Cada una da ${ECON.mission[0]} de oro, ${ECON.mission[1]} gemas y ${PASS.xpDaily} puntos de pase. Se renuevan en ${untilStr(false)}.`;
   const rw = W ? [ECON_W.gold, ECON_W.gems, PASS.xpWeekly] : [ECON.mission[0], ECON.mission[1], PASS.xpDaily];
   $('#mission-list').innerHTML = L.map((m, i) => {
@@ -4982,11 +5096,16 @@ function jokeClock() { const now = new Date(), end = new Date(now.getFullYear(),
 function buildShop() {
   for (const b of document.querySelectorAll('[data-st]')) b.setAttribute('aria-pressed', String(b.dataset.st === shopTab));
   const g = SHOP.gift, ready = giftReady();
-  $('#gift-row').innerHTML = `<div class="pack gift"><div class="pk-ic">${PILE(2)}</div><div><div class="pk-name ol">Regalo del becario</div><div class="pk-note">Gratis una vez al día: ${g.gold} de oro y ${g.gems} gemas. Se lo ha «encontrado» en la oficina.</div></div><button class="btn-price ol" id="btn-gift" ${ready ? '' : 'disabled'}>${ready ? 'GRATIS' : 'MAÑANA'}</button></div>`;
+  $('#gift-row').innerHTML = `<div class="pack gift"><div class="pk-ic">${PILE(2)}</div><div><div class="pk-name ol">Regalo del becario</div><div class="pk-note">Gratis una vez al día: ${g.gold} de oro y ${g.gems} gemas. Se lo ha «encontrado» en la oficina de Microblizz.</div></div><button class="btn-price ol" id="btn-gift" ${ready ? '' : 'disabled'}>${ready ? 'GRATIS' : 'MAÑANA'}</button></div>`;
   $('#btn-gift').onclick = () => {
     if (!giftReady()) return;
     SAVE.giftDay = todayStr(); SAVE.gold += g.gold; SAVE.gems += g.gems; missionEvent('gift', 1); saveGame(); play('crown'); updateWallets(); buildShop(); toast(`+${g.gold} de oro y +${g.gems} gemas`);
   };
+  if (!SAVE.starter) {
+    const P = SHOP.starter;
+    $('#gift-row').insertAdjacentHTML('beforeend', `<div class="pack starter"><span class="joke-flag">1 VEZ</span><div class="pk-ic">${PILE(5, true)}</div><div><div class="pk-name ol">Pack de bienvenida</div><div class="pk-amt ol">${GEM_SVG}${fmt(P.gems)} <span class="pk-plus">+</span> ${COIN_SVG}${fmt(P.gold)}</div><div class="pk-note">Y un objeto épico de equipo con calidad Excelente o mejor. Vale casi el doble que comprarlo por separado. Microblizz lo llama «regalo».</div></div><button class="btn-price ol" id="btn-starter">${eur(P.eur)}</button></div>`);
+    $('#btn-starter').onclick = () => { play('select'); confirmBox('¿COMPRAR?', `Pack de bienvenida<span class="big">${GEM_SVG} ${fmt(P.gems)} · ${COIN_SVG} ${fmt(P.gold)}</span>y un objeto épico de calidad Excelente o mejor, por <b>${eur(P.eur)}</b><small>Versión de prueba: no se cobra nada y te lo llevas gratis. Solo se puede comprar una vez.</small>`, 'COMPRAR', buyStarter); };
+  }
   const L = SHOP[shopTab], gem = shopTab === 'gems';
   let h = '';
   if (!gem) { const J = SHOP.joke; h += `<div class="pack joke"><span class="joke-flag">¡OFERTA!</span><div class="pk-ic">${PILE(6)}</div><div><div class="pk-name ol">${J.name}</div><div class="pk-amt ol">${COIN_SVG}${fmt(J.amt)}</div><div class="pk-note">¡Oferta irrepetible! (se repite cada día) · Termina en <span class="countdown" id="joke-clock">${jokeClock()}</span></div></div><button class="btn-price ol" id="btn-joke"><small>${eur(J.was)}</small>${eur(J.eur)}</button></div>`; }
@@ -5000,14 +5119,14 @@ function buildShop() {
       saveGame(); play('win'); updateWallets(); toast(`+${fmt(p.amt)} ${gem ? 'gemas' : 'de oro'} · Microblizz te da las gracias`);
     });
   }; });
-  const jb = $('#btn-joke'); if (jb) jb.onclick = () => { play('deny'); confirmBox('AGOTADO', `Lo ha comprado el CEO con el dinero de tu bonus.<small>El precio tachado nunca existió. Así lo hacen ellos. Aquí, no.</small>`, null); };
+  const jb = $('#btn-joke'); if (jb) jb.onclick = () => { play('deny'); confirmBox('AGOTADO', `Se lo ha quedado el CEO de Microblizz.<small>Además, el precio tachado nunca existió: es un truco para que parezca una ganga. Así lo hacen ellos. Aquí, no.</small>`, null); };
   clearInterval(jokeT); jokeT = setInterval(() => { const c = $('#joke-clock'); if (!c || $('#scr-shop').hidden) { clearInterval(jokeT); return; } c.textContent = jokeClock(); }, 1000);
 }
 function openShop(tab) { if (tab) shopTab = tab; updateWallets(); show('scr-shop'); buildShop(); }
 /* ---------- ventana de confirmación ---------- */
-function confirmBox(title, html, okTxt, onOk) {
+function confirmBox(title, html, okTxt, onOk, noTxt) {
   $('#cf-title').textContent = title; $('#cf-body').innerHTML = html;
-  $('#cf-btns').innerHTML = okTxt ? `<button class="btn-ghost ol btn-ok" id="cf-ok">${okTxt}</button><button class="btn-ghost ol" id="cf-no">MEJOR NO</button>` : '<button class="btn-ghost ol" id="cf-no">VAYA</button>';
+  $('#cf-btns').innerHTML = okTxt ? `<button class="btn-ghost ol btn-ok" id="cf-ok">${okTxt}</button><button class="btn-ghost ol" id="cf-no">MEJOR NO</button>` : `<button class="btn-ghost ol" id="cf-no">${noTxt || 'VAYA'}</button>`;
   $('#scr-confirm').hidden = false;
   const close = () => { $('#scr-confirm').hidden = true; };
   $('#cf-no').onclick = () => { play('select'); close(); };
@@ -5016,13 +5135,13 @@ function confirmBox(title, html, okTxt, onOk) {
 function updateBadges() {
   ensureDaily(); ensureWeekly();
   const ready = (L, W) => L.some(m => !m.claimed && m.prog >= mDef(m, W).goal);
-  $('#mission-badge').hidden = !(ready(SAVE.daily.list, false) || ready(SAVE.weekly.list, true));
+  $('#mission-badge').hidden = !(ready(SAVE.daily.list, false) || ready(SAVE.weekly.list, true) || achReady() > 0);
   $('#coll-badge').hidden = !FACTION_ORDER.some(f => isUnlocked(f) && [FACTIONS[f].leader, ...FACTIONS[f].units].some(k => canLevel(k) && SAVE.gold >= upCost(uSave(k).lvl)));
   $('#pass-badge').hidden = !passClaimable();
   $('#shop-badge').hidden = !giftReady();
   const t = SAVE.tickets || 0; $('#gacha-badge').hidden = !t;
   $('#feat-gacha').textContent = t ? `¡${t} ${t > 1 ? 'tiradas gratis' : 'tirada gratis'}!` : 'Tira x1, x10 o x50';
-  $('#feat-shop').textContent = giftReady() ? '¡Regalo diario gratis!' : 'Oro, gemas y ofertas';
+  $('#feat-shop').textContent = giftReady() ? '¡Regalo diario gratis!' : !SAVE.starter ? '¡Pack de bienvenida!' : 'Oro, gemas y ofertas';
 }
 /* ---------- sátira: chat falso en directo ---------- */
 const chatSt = { t: 6 };
@@ -5176,10 +5295,11 @@ function grantRewards() {
       SAVE.camp[L.id] = Math.max(prev, R.stars);
       const Wd = WORLDS[L.wi];
       if (L.boss && Wd.unlock && !isUnlocked(Wd.unlock)) {   // la facción liberada llega con algo de nivel para no empezar de cero
-        SAVE.unlocked.push(Wd.unlock); R.unlock = Wd.unlock;
+        SAVE.unlocked.push(Wd.unlock); R.unlock = Wd.unlock; stat('unlock', 1);
         const UF = FACTIONS[Wd.unlock]; for (const k of [UF.leader, ...UF.units]) { const us = uSave(k); us.lvl = Math.max(us.lvl, L.elvl - 1); }
       }
       missionEvent('star', R.stars);
+      if (L.boss && L.wi === WORLDS.length - 1) stat('ceo', 1);
     } else R.gold += ECON.camp.lose;
   } else if (G.mode === 'boss') {
     const sc = Math.round(S.p.bossDmg); R.score = sc; R.gold = Math.floor(sc / 40);
@@ -5195,6 +5315,7 @@ function grantRewards() {
   if (win) missionEvent('facwin', 1, G.faction);
   R.passXp = win ? PASS.xpWin : PASS.xpLose; R.passUp = addPassXp(R.passXp);
   missionEvent('card', S.p.deployed); missionEvent('kill', S.p.kills); missionEvent('tower', Math.min(S.p.crowns, 2 + (G.endReason === 'base' ? 1 : 0)));
+  if (win && !SAVE.tut.done && SAVE.tut.step === 0) tutStep(1);   // partida guiada: primera victoria
   SAVE.gold += R.gold; SAVE.gems += R.gems; saveGame(); return R;
 }
 
@@ -5217,7 +5338,7 @@ function fit() {
 function toLogical(e) { const r = stage.getBoundingClientRect(); return { x: ((e.clientX - r.left) / r.width) * W, y: ((e.clientY - r.top) / r.height) * VIEW.LH - VIEW.top }; }
 
 let toastTimer = null;
-function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400); }
+function toast(msg, good) { const t = $('#toast'); t.textContent = msg; t.classList.toggle('good', !!good); t.classList.toggle('menu', !['play', 'countdown', 'paused', 'ending'].includes(G.state)); t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400); }
 let bannerTimer = null;
 // v0.9.9: cada cartel se queda el tiempo justo para leerlo (más si es largo) y los siguientes esperan su turno
 const bannerQ = []; let bannerOn = false;
@@ -5236,7 +5357,7 @@ function nextBanner() {
   clearTimeout(bannerTimer); bannerTimer = setTimeout(() => { b.className = B.kind || ''; bannerTimer = setTimeout(nextBanner, 300); }, dur);
 }
 function bannerClear() { bannerQ.length = 0; clearTimeout(bannerTimer); bannerOn = false; const b = $('#banner'); if (b) b.className = ''; }
-function showTut() { if (G.tutSeen || G.autoplay) return; $('#tut').hidden = false; setTimeout(hideTut, 14000); }
+function showTut(force) { if ((G.tutSeen && !force) || G.autoplay) return; $('#tut').hidden = false; if (!G.tutMatch) setTimeout(hideTut, 14000); }
 function hideTut() { $('#tut').hidden = true; G.tutSeen = true; }
 
 const hud = {
@@ -5285,6 +5406,7 @@ function roleOf(k) {
   return r;
 }
 function showCardTip(k) {
+  G.tutTipSeen = true;
   const c = CFG.cards[k], u = CFG.units[k], lv = uSave(k).lvl, m = 1 + (lv - 1) * ECON.lvlStep, tip = $('#card-tip');
   const stats = u.healer ? `Vida ${fmt(u.hp * m)} · Cura ${u.heal} cada ${fmtV(u.healCd)} s a los que tiene cerca` : `Vida ${fmt(u.hp * m)}${c.count > 1 ? ' cada una' : ''} · Daño ${fmt(u.dmg * m)}${u.buildings ? ' a edificios' : ''}`;
   const ab = invGet(SAVE.abEquip[k]);
@@ -5315,7 +5437,7 @@ for (const el of elCards) {
 window.addEventListener('pointermove', e => {
   if (input.card && e.pointerId === input.pointerId) {
     if (!input.dragging && Math.hypot(e.clientX - input.startX, e.clientY - input.startY) > 10) { input.dragging = true; input.selected = null; input.selSlot = null; clearTimeout(input.tipT); if (input.tipShown) { input.tipShown = false; hideCardTip(); } }
-    if (input.dragging) { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - (input.touch ? 40 : 0), fy: p.y }; }
+    if (input.dragging) { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - (input.touch ? 40 : 0) - FIELD_DY, fy: p.y }; }
   }
 });
 function endPointer(e, cancelled) {
@@ -5325,7 +5447,7 @@ function endPointer(e, cancelled) {
   const k = input.card;
   if (!cancelled) {
     if (!input.dragging && Math.hypot(e.clientX - input.startX, e.clientY - input.startY) > 10) input.dragging = true;
-    if (input.dragging) { const p = toLogical(e); const y = p.y - (input.touch ? 40 : 0); if (p.y < TRAY_Y - 4) tryPlayerDeploy(input.slot, k, p.x, y); }
+    if (input.dragging) { const p = toLogical(e); const y = p.y - (input.touch ? 40 : 0) - FIELD_DY; if (p.y < TRAY_Y - 4) tryPlayerDeploy(input.slot, k, p.x, y); }
     else selectCard(input.slot);
   }
   input.card = null; input.slot = null; input.dragging = false; input.pointerId = null; if (input.selected === null) input.ghost = null;
@@ -5335,9 +5457,9 @@ window.addEventListener('pointercancel', e => endPointer(e, true));
 cv.addEventListener('pointerdown', e => {
   if (G.state !== 'play' || input.selected === null) return;
   audioInit(); const p = toLogical(e); if (p.y >= TRAY_Y) return;
-  if (tryPlayerDeploy(input.selSlot, slotKey(input.selSlot), p.x, p.y)) { input.selected = null; input.selSlot = null; input.ghost = null; }
+  if (tryPlayerDeploy(input.selSlot, slotKey(input.selSlot), p.x, p.y - FIELD_DY)) { input.selected = null; input.selSlot = null; input.ghost = null; }
 });
-cv.addEventListener('pointermove', e => { if (input.selected && !input.card && e.pointerType === 'mouse') input.ghost = toLogical(e); });
+cv.addEventListener('pointermove', e => { if (input.selected && !input.card && e.pointerType === 'mouse') { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - FIELD_DY, fy: p.y }; } });
 cv.addEventListener('pointerleave', () => { if (!input.card) input.ghost = null; });
 window.addEventListener('keydown', e => {
   if (G.state === 'play' && ['1', '2', '3', '4', '5'].includes(e.key)) { input.touch = false; selectCard(+e.key - 2); }
@@ -5345,40 +5467,41 @@ window.addEventListener('keydown', e => {
 });
 
 /* ---------- screens ---------- */
-function show(id) { for (const s of document.querySelectorAll('.screen')) s.hidden = s.id !== id; }
+function show(id) { for (const s of document.querySelectorAll('.screen')) s.hidden = s.id !== id; const h = document.querySelector('#' + id + ' .scr-head .h2'); if (h) fitText(h, 38, 20); }
 function hideScreens() { for (const s of document.querySelectorAll('.screen')) s.hidden = true; }
 function startMatch() {
   audioInit(); hideScreens(); resetMatch(); chatClear(); G.state = 'countdown';
+  G.tutMatch = !G.autoplay && !SAVE.tut.done && SAVE.tut.step === 0; tutBattleStart(); applySpeed();
   const F = FACTIONS[G.faction];
   banner('PASIVA: ' + F.passive, F.banner, F.kind);
   const L = G.level;
-  const intro = G.mode === 'boss' ? [BOSS_MODE.name, '«Este trimestre toca recortar… vuestra vida.»']
-    : L && L.boss ? [L.boss, G.efac === 'microblizz' ? '«Vuestro juego ha sido… reestructurado.»' : '«Microblizz me ha ascendido. Ahora despido yo.»']
+  const intro = G.mode === 'boss' ? [BOSS_MODE.name, '«Os he comprado. Ahora os cierro.»']
+    : L && L.boss ? [L.boss, G.efac === 'microblizz' ? (L.wi ? '«Os he comprado. Ahora os cierro.»' : '«Hemos comprado vuestro juego… y lo vamos a cerrar.»') : '«Microblizz me ha ascendido. Ahora despido yo.»']
     : L ? [L.name, G.efac === 'microblizz' ? `Mundo ${L.wi + 1}: ${WORLDS[L.wi].name}` : `${FACTIONS[G.efac].name} corrompidos por Microblizz`]
-    : ['SurvivalBot', '«Vuestro juego ha sido… reestructurado.»'];
+    : ['SurvivalBot', '«Hemos comprado vuestro juego… y lo vamos a cerrar.»'];
   setTimeout(() => { if (G.state === 'countdown' || G.state === 'play') banner(intro[0], intro[1], 'enemy'); }, 2400);
   const seq = ['3', '2', '1', '¡CAOS!']; let i = 0; const el = $('#count');
   const tick = () => {
     if (G.state !== 'countdown') return;
     el.textContent = seq[i]; el.className = 'ol-big' + (i === 3 ? ' go' : ''); void el.offsetWidth; el.classList.add('pop');
     play(i < 3 ? 'tick' : 'go'); i++;
-    if (i < seq.length) setTimeout(tick, 800); else setTimeout(() => { if (G.state === 'countdown') { G.state = 'play'; if (!G.tutSeen) showTut(); chatBurst('start', 2); } }, 500);
+    if (i < seq.length) setTimeout(tick, 800); else setTimeout(() => { if (G.state === 'countdown') { G.state = 'play'; if (G.tutMatch) showTut(true); else if (!(SAVE.stats.card > 0)) showTut(); chatBurst('start', 2); } }, 500);
   };
   setTimeout(tick, 900);
 }
 function pauseGame() { if (G.state !== 'play') return; G.state = 'paused'; input.card = null; input.dragging = false; show('scr-pause'); }
 function resumeGame() { if (G.state !== 'paused') return; hideScreens(); G.state = 'play'; }
-function goHome() { G.state = 'title'; chatClear(); resetMatch(); hud.update(); drawTitleArt(); updateWallets(); show('scr-title'); }
+function goHome() { G.state = 'title'; chatClear(); resetMatch(); hud.update(); drawTitleArt(); updateWallets(); show('scr-title'); titlePopups(); }
 function toMenu() { chatClear(); if (G.mode === 'camp') { G.state = 'title'; resetMatch(); hud.update(); openCamp(); } else goHome(); }
 const CROWN_SVG = '<svg viewBox="0 0 24 20"><path d="M2 17 L3 5 L8.5 10 L12 2 L15.5 10 L21 5 L22 17 Z" fill="currentColor" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 const STAR_SVG = '<svg viewBox="0 0 24 22"><path d="M12 1.5l3.1 6.4 7 1-5.1 4.9 1.2 7L12 17.5l-6.2 3.3 1.2-7L1.9 8.9l7-1z" fill="currentColor" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/></svg>';
 const QUOTES = {
-  p: ['Microblizz ha anunciado una «reorganización estratégica».', 'SurvivalBot ha sido cancelado. Otra vez.', 'Tu victoria se añade a la hoja de ruta de Microblizz… para 2031.'],
-  e: ['Tu facción pasa a «modo mantenimiento».', 'Microblizz agradece tus servicios. Tus cosas están en esa caja.', 'Error 37: no se pudo conectar con la victoria.'],
-  d: ['Empate. Microblizz lo llamará «resultados en línea con lo esperado».'],
+  p: ['Microblizz anuncia que cerrará otro juego para recuperar el dinero.', 'SurvivalBot ha sido cancelado. Otra vez.', 'Microblizz promete arreglar su robot… dentro de diez años.'],
+  e: ['Microblizz ha cerrado tu facción. Tus cosas están en esa caja.', 'Microblizz te da las gracias por tu dinero.', 'Error 37: no se pudo conectar con la victoria.'],
+  d: ['Empate. Microblizz dirá que ha ganado.'],
 };
 function showEnd() {
-  chatClear();
+  chatClear(); bannerClear();   // v0.9.11: sin carteles de la partida encima de la pantalla final
   const w = G.winner, R = G.rewards = grantRewards(), t = $('#end-title');
   if (G.mode === 'boss') { t.textContent = w === 'e' ? 'DERROTA' : bases.e.alive ? '¡FIN DEL TURNO!' : '¡CEO DESPEDIDO!'; t.className = 'end-title ol-big ' + (w === 'e' ? 'lose' : 'win'); }
   else { t.textContent = w === 'p' ? '¡VICTORIA!' : w === 'e' ? 'DERROTA' : 'EMPATE'; t.className = 'end-title ol-big ' + (w === 'p' ? 'win' : w === 'e' ? 'lose' : ''); }
@@ -5404,6 +5527,206 @@ function showEnd() {
   $('#btn-again').className = nx ? 'btn-ghost ol' : 'btn-big ol';
   updateWallets(); show('scr-end');
 }
+/* =========================================================
+   v0.9.11: logros, premio diario, novedades, velocidad x2, partida guiada e instalar como app
+   ========================================================= */
+// ---- estadísticas y logros (premio en gemas, una sola vez cada uno)
+const ACHS = [
+  { id: 'win1', name: 'Primera victoria', txt: 'Gana tu primera partida.', joke: 'Microblizz ya está nerviosa.', ev: 'win', goal: 1, gems: 20 },
+  { id: 'win50', name: 'Pesadilla de Microblizz', txt: 'Gana 50 partidas.', joke: 'El CEO ya no duerme bien.', ev: 'win', goal: 50, gems: 100 },
+  { id: 'kill500', name: 'Adiós, robots', txt: 'Derrota a 500 enemigos.', joke: 'Microblizz tendrá que comprar más.', ev: 'kill', goal: 500, gems: 50 },
+  { id: 'tower30', name: 'Torres fuera', txt: 'Derriba 30 torres.', joke: 'Según Microblizz, sobraban.', ev: 'tower', goal: 30, gems: 50 },
+  { id: 'base10', name: 'Juego salvado', txt: 'Tira 10 bases enemigas.', joke: 'Diez juegos que no se cierran.', ev: 'base', goal: 10, gems: 60 },
+  { id: 'unlock1', name: 'La rebelión crece', txt: 'Libera una facción en la campaña.', joke: 'Se van de Microblizz sin avisar.', ev: 'unlock', goal: 1, gems: 50 },
+  { id: 'ceo', name: 'Compra cancelada', txt: 'Gana al jefe final de la campaña.', joke: 'El CEO tendrá que vender su yate.', ev: 'ceo', goal: 1, gems: 150 },
+  { id: 'boss4k', name: 'Golpe al bolsillo', txt: 'Haz 4.000 de daño en el Modo Jefe.', joke: 'Le duele más que perder dinero.', prog: () => SAVE.bestBoss || 0, goal: 4000, gems: 60 },
+  { id: 'pull100', name: 'Adicto a las cápsulas', txt: 'Gira 100 veces el gashapón.', joke: 'Microblizz te manda una postal.', ev: 'pull', goal: 100, gems: 50 },
+  { id: 'x50', name: 'Modo ballena', txt: 'Haz una tirada x50.', joke: 'El CEO le ha puesto tu nombre a su yate.', ev: 'x50', goal: 1, gems: 30 },
+  { id: 'perfect', name: 'Perfeccionista', txt: 'Consigue una copia de calidad Perfecta.', joke: 'Sale una vez de cada cien.', ev: 'perfect', goal: 1, gems: 100 },
+  { id: 'scrap50', name: 'Despido masivo', txt: 'Despide 50 copias en el inventario.', joke: 'Como Microblizz, pero con cosas.', ev: 'scrap', goal: 50, gems: 40 },
+  { id: 'reroll5', name: 'Segunda oportunidad', txt: 'Vuelve a tirar los números de una copia 5 veces.', joke: 'Más oportunidades de las que da Microblizz.', ev: 'reroll', goal: 5, gems: 30 },
+  { id: 'lvl25', name: 'Subida de sueldo', txt: 'Sube 25 niveles a tus cartas.', joke: 'A ti sí te suben el sueldo.', ev: 'lvlup', goal: 25, gems: 50 },
+  { id: 'flaw10', name: 'Sin un rasguño', txt: 'Gana 10 partidas sin perder ninguna torre.', joke: 'Ni una torre para Microblizz.', ev: 'flawless', goal: 10, gems: 60 },
+  { id: 'streak7', name: 'Fan de verdad', txt: 'Entra 7 días seguidos.', joke: 'Microblizz no consigue echarte.', prog: () => (SAVE.login && SAVE.login.best) || 0, goal: 7, gems: 50 },
+];
+const achProg = a => Math.min(a.goal, a.prog ? a.prog() : (SAVE.stats[a.ev] || 0));
+const achReady = () => ACHS.filter(a => achProg(a) >= a.goal && !SAVE.achDone.includes(a.id)).length;
+function stat(ev, n) { if (!n) return; SAVE.stats[ev] = (SAVE.stats[ev] || 0) + n; achScan(); }
+let achQ = [], achBusy = false;
+function achScan() {   // avisa una vez de cada logro nuevo
+  for (const a of ACHS) if (achProg(a) >= a.goal && !SAVE.achSeen.includes(a.id)) { SAVE.achSeen.push(a.id); if (!SAVE.achDone.includes(a.id)) achQ.push(a); }
+  if (!achBusy && achQ.length) achNext();
+}
+function achNext() {
+  const a = achQ.shift(); if (!a) { achBusy = false; return; }
+  achBusy = true; toast(`¡Logro: ${a.name}! Cobra ${a.gems} gemas en Misiones`, true); play('crown'); setTimeout(achNext, 2700);
+}
+function buildAchs() {
+  const rank = x => (x.p >= x.a.goal && !x.done ? 0 : x.done ? 2 : 1);
+  const L = ACHS.map(a => ({ a, p: achProg(a), done: SAVE.achDone.includes(a.id) })).sort((x, y) => rank(x) - rank(y));
+  $('#mission-sub').textContent = `Retos para siempre: cada uno da gemas una sola vez. Llevas ${SAVE.achDone.length} de ${ACHS.length}.`;
+  $('#mission-list').innerHTML = L.map(({ a, p, done }) => `<div class="mission${done ? ' done' : ''}"><div><b>${a.name}</b><span class="ach-txt">${a.txt} <i>${a.joke}</i></span><div class="xpbar"><i style="width:${(p / a.goal) * 100}%"></i><span>${fmt(p)} / ${fmt(a.goal)}</span></div></div><button class="btn-up" data-ach="${a.id}" ${p >= a.goal && !done ? '' : 'disabled'}>${done ? 'HECHO' : 'COBRAR'}<small>${GEM_SVG}${a.gems}</small></button></div>`).join('');
+  for (const b of document.querySelectorAll('[data-ach]')) b.onclick = () => {
+    const a = ACHS.find(x => x.id === b.dataset.ach); if (!a || SAVE.achDone.includes(a.id) || achProg(a) < a.goal) return;
+    SAVE.achDone.push(a.id); SAVE.gems += a.gems; saveGame(); play('crown'); updateWallets(); buildMissions(); toast(`+${a.gems} gemas por «${a.name}»`, true);
+  };
+}
+// ---- premio por entrar días seguidos (si fallas un día, vuelves al día 1)
+const LOGIN = [{ gold: 150 }, { gems: 20 }, { gold: 300 }, { tickets: 1 }, { gold: 500 }, { gems: 40 }, { tickets: 10 }];
+function dayDiff(a, b) { const d = t => { const [y, m, dd] = t.split('-').map(Number); return new Date(y, m - 1, dd); }; return Math.round((d(b) - d(a)) / 86400000); }
+function loginState() {
+  const L = SAVE.login, today = todayStr();
+  if (L.last === today) return { ready: false, day: L.day, lost: false };
+  const gap = L.last ? dayDiff(L.last, today) : 0, cont = gap === 1 && L.day < 7;
+  return { ready: true, day: cont ? L.day + 1 : 1, lost: !!L.last && gap > 1 && L.day > 0 && L.day < 7 };
+}
+const loginRw = (r, big) => (r.gold ? `${COIN_SVG}${fmt(r.gold)}` : r.gems ? `${GEM_SVG}${r.gems}` : `${TICKET_SVG}${big ? '¡x10 GRATIS!' : r.tickets + (r.tickets > 1 ? ' tiradas' : ' tirada')}`);
+function openLogin() {
+  const st = loginState(); if (!st.ready) return;
+  $('#login-sub').innerHTML = (st.lost ? '<b>Un día sin entrar y vuelves al día 1.</b> Microblizz no perdona. ' : '') + 'Microblizz te premia por entrar cada día (así no te vas a otro juego). Si un día no entras, vuelves a empezar. El día 7: ¡10 tiradas gratis!';
+  $('#login-grid').innerHTML = LOGIN.map((r, i) => `<div class="lg-day${i === 6 ? ' big' : ''}${i < st.day - 1 ? ' done' : ''}${i === st.day - 1 ? ' today' : ''}"><span class="lg-n">DÍA ${i + 1}</span><span class="lg-r">${loginRw(r, i === 6)}</span></div>`).join('');
+  $('#btn-login').textContent = `¡COBRAR DÍA ${st.day}!`;
+  $('#scr-login').hidden = false; fitText($('#btn-login'), 36, 20);
+}
+function claimLogin() {
+  const st = loginState(); $('#scr-login').hidden = true; if (!st.ready) return;
+  const r = LOGIN[st.day - 1]; giveReward(r);
+  SAVE.login = { last: todayStr(), day: st.day, best: Math.max(SAVE.login.best || 0, st.day) };
+  achScan(); saveGame(); updateWallets(); play('win'); toast(`Día ${st.day}: ${rewardTxt(r)}`, true);
+}
+$('#btn-login').addEventListener('click', claimLogin);
+// ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
+const NEWS = {
+  real: ['Primera partida guiada: Lola, una antigua trabajadora despedida por Microblizz, te enseña a jugar.', 'Premio por entrar días seguidos. El día 7: ¡10 tiradas gratis!', 'Pack de bienvenida en la tienda (solo se puede comprar una vez).', 'Las tiradas x10 y x50 traen al menos una épica por cada 10.', 'Botón de velocidad x2 en las partidas, arriba a la derecha.', 'Logros con premio en gemas, en Misiones.', 'Se puede instalar en el móvil como una app, desde Opciones.', 'Chat más grande, campo de batalla más abajo y textos más fáciles de entender.'],
+  joke: ['Hemos cerrado tres juegos para pagar esta actualización.', 'Hemos despedido al equipo que arreglaba los fallos. Ahora los fallos se llaman «sorpresas».', 'El pase de batalla cuesta lo mismo. De momento.'],
+};
+function openNews() {
+  $('#news-title').textContent = 'NOVEDADES · ' + VERSION;
+  $('#news-body').innerHTML = `<h4>LO NUEVO</h4><ul>${NEWS.real.map(t => `<li>${t}</li>`).join('')}</ul><h4>NOTAS DE MICROBLIZZ</h4><ul class="joke">${NEWS.joke.map(t => `<li>${t}</li>`).join('')}</ul>`;
+  $('#scr-news').hidden = false; $('#news-body').scrollTop = 0;
+}
+$('#btn-news-ok').addEventListener('click', () => { $('#scr-news').hidden = true; play('select'); if (SAVE.seenVer !== VERSION) { SAVE.seenVer = VERSION; saveGame(); } titlePopups(); });
+// al volver al menú principal: primero las novedades y luego el premio diario (nunca durante la partida guiada)
+function titlePopups() {
+  if (!SAVE.tut.done || G.autoplay || $('#scr-title').hidden || !$('#scr-news').hidden || !$('#scr-login').hidden) return;
+  if (SAVE.seenVer !== VERSION) { openNews(); return; }
+  if (loginState().ready) openLogin();
+}
+// ---- velocidad x2 (se guarda; en la partida guiada siempre va a x1)
+function applySpeed() {
+  const on = !!SAVE.speed2 && !G.tutMatch, b = $('#btn-speed'); G.timeScale = on ? 2 : 1;
+  b.hidden = !!G.tutMatch; b.setAttribute('aria-pressed', String(on)); $('#speed-txt').textContent = on ? 'x2' : 'x1';
+  b.setAttribute('aria-label', on ? 'Velocidad x2. Pulsa para volver a la normal' : 'Velocidad normal. Pulsa para ir el doble de rápido');
+}
+$('#btn-speed').addEventListener('click', () => { if (G.tutMatch) return; SAVE.speed2 = !SAVE.speed2; saveGame(); applySpeed(); play('select'); toast(SAVE.speed2 ? 'Velocidad x2: todo va el doble de rápido' : 'Velocidad normal', true); });
+// ---- pack de bienvenida
+function buyStarter() {
+  if (SAVE.starter) return;
+  const P = SHOP.starter, pool = Object.keys(ITEMS).filter(k => ITEMS[k].rar === 'epic' && !ITEMS[k].pass);
+  SAVE.starter = true; SAVE.gems += P.gems; SAVE.gold += P.gold;
+  const it = newCopy('eq', pick(pool), 3);
+  saveGame(); play('win'); updateWallets(); buildShop(); toast('¡Pack de bienvenida! Microblizz te da las gracias', true);
+  setTimeout(() => openItem(it.u), 450);
+}
+// ---- partida guiada. Pasos: 0 = ganar una partida · 1 = ponerle una habilidad a una carta · 2 = girar el gashapón
+const COACH_WHO = 'LOLA · DESPEDIDA POR MICROBLIZZ';
+function curScreen() { let top = null; for (const sc of document.querySelectorAll('.screen')) if (!sc.hidden && (!top || sc.classList.contains('modal'))) top = sc; return top ? top.id : ''; }
+function tutStep(n) {
+  const T = SAVE.tut; if (T.done || T.step >= n) return;
+  T.step = n;
+  if (n === 1) {
+    if (!SAVE.tutGift.cafe) { SAVE.tutGift.cafe = 1; T.cafeU = addCopy('ab', 'cafeina', [0.75]).u; G.tutJust = true; }
+    if (!SAVE.inv.some(x => x.k === 'ab')) { tutStep(2); return; }
+  }
+  if (n === 2 && !SAVE.tutGift.tix) { SAVE.tutGift.tix = 1; SAVE.tickets = (SAVE.tickets || 0) + 3; G.tutJust2 = true; updateWallets(); }
+  saveGame();
+}
+function tutFinish() {
+  const T = SAVE.tut; if (T.done) return;
+  T.done = true; T.step = 3; delete T.sawG; if (SAVE.seenVer !== VERSION) SAVE.seenVer = VERSION;
+  G.tutMatch = false; saveGame(); tutTick(); setTimeout(titlePopups, 60);
+}
+function tutSkip() { play('select'); tutFinish(); $('#tut').hidden = true; $('#tut-tip').hidden = true; toast('Tutorial saltado. Puedes repetirlo en Opciones', true); }
+function tutWant() {
+  const T = SAVE.tut; if (!T || T.done || G.autoplay) return null;
+  const sc = curScreen();
+  if (T.step === 0) {
+    if (sc === 'scr-title') return { sel: '#btn-camp', text: '¡Hola! Soy Lola. Microblizz, una empresa millonaria, compró el estudio donde yo trabajaba, nos despidió a todos y ahora quiere cerrar tus juegos favoritos. ¡Vamos a impedirlo! Toca <b>CAMPAÑA</b>.' };
+    if (sc === 'scr-camp') return { sel: '[data-lv="1-1"]', text: 'Empieza por el primer nivel: <b>La compra</b>.' };
+    if (sc === 'scr-prep') return { sel: '#btn-play', text: 'Aquí eliges con qué facción juegas. Por ahora tienes a los <b>Animales Locos</b>. Toca <b>JUGAR</b>.' };
+    if (sc === 'scr-end') return { sel: '#btn-again', text: `¡Casi! Esta vez ha ganado Microblizz. Toca <b>${$('#btn-again').textContent}</b> y vuelve a intentarlo.` };
+    return null;
+  }
+  if (T.step === 1) {
+    if (sc === 'scr-end') return { sel: '#btn-menu', text: G.tutJust ? '¡Victoria! Te regalo una habilidad: <b>Cafeína</b>, que hace que una carta corra más. Toca <b>MENÚ</b> y vamos a ponérsela.' : 'Toca <b>MENÚ</b> y vamos a ponerle una habilidad a una carta.' };
+    if (sc === 'scr-camp') return { sel: '#scr-camp .back', text: 'Vuelve al menú principal con la flecha.' };
+    if (sc === 'scr-title') return { sel: '#btn-coll', text: 'Toca <b>COLECCIÓN</b>: ahí están tus cartas y lo que llevan puesto.' };
+    if (sc === 'scr-coll') return { sel: '#coll-list [data-ab]', text: 'Cada carta tiene una <b>ranura de HABILIDAD</b>. Toca la de tu líder.' };
+    if (sc === 'scr-pick') { const cafe = T.cafeU && invGet(T.cafeU); return { sel: cafe ? `#pick-list .pick-opt[data-id="${T.cafeU}"]` : '#pick-list .pick-opt[data-id]:not([data-id=""])', text: cafe ? 'Elige <b>Cafeína</b>.' : 'Elige una habilidad.' }; }
+    return null;
+  }
+  if (T.step === 2) {
+    const done = G.tutJust2 ? '¡Hecho! Tu carta ya lleva su habilidad. Y te regalo <b>3 tiradas gratis</b> del gashapón. ' : '¡Hecho! ';
+    if (sc === 'scr-coll') return { sel: '#scr-coll .back', text: done + 'Vuelve al menú con la flecha.' };
+    if (sc === 'scr-inv') return { sel: '#scr-inv .back', text: done + 'Vuelve al menú con la flecha.' };
+    if (sc === 'scr-title') return { sel: '#btn-gacha', text: 'Toca <b>GASHAPÓN</b>: ahí salen habilidades y equipo para tus cartas.' };
+    if (sc === 'scr-gacha') return { sel: '#btn-pull', text: 'Gira <b>x1</b>: es gratis. Lo que te toque, póntelo en Colección como antes.' };
+    return null;
+  }
+  return null;
+}
+let coachKey = '';
+function coachPlace(t) {
+  const co = $('#coach'), sr = stage.getBoundingClientRect(), k = W / sr.width, r = t.getBoundingClientRect();
+  const cx = (r.left + r.width / 2 - sr.left) * k, top = (r.top - sr.top) * k, bot = (r.bottom - sr.top) * k, h = co.offsetHeight;
+  let up = bot + 20 + h > VIEW.LH - 6, y = up ? top - h - 20 : bot + 20;
+  if (up && y < 6) { up = false; y = bot + 20; }
+  co.style.top = Math.round(y) + 'px'; co.classList.toggle('up', up); co.classList.toggle('down', !up);
+  co.style.setProperty('--ax', Math.round(clamp(cx - 24 - 12, 18, 492 - 46)) + 'px');
+}
+function tutTick() {
+  const T = SAVE.tut;
+  if (!T.done && T.step === 2 && T.sawG && curScreen() !== 'scr-gacha') { tutFinish(); return; }   // vio el gashapón y se fue: listo
+  const want = tutWant(), key = want ? want.sel + '|' + want.text : '', co = $('#coach');
+  if (key !== coachKey) {
+    coachKey = key;
+    for (const e of document.querySelectorAll('.coach-glow')) e.classList.remove('coach-glow');
+    if (!want) { co.hidden = true; return; }
+    co.innerHTML = `<span class="coach-who">${COACH_WHO}</span>${want.text}<button class="coach-skip" id="coach-skip">Saltar tutorial</button>`;
+    co.hidden = false; $('#coach-skip').onclick = tutSkip;
+  }
+  if (!want) return;
+  const t = document.querySelector(want.sel);
+  if (!t || !t.getClientRects().length) { co.style.visibility = 'hidden'; return; }
+  co.style.visibility = '';
+  if (!t.classList.contains('coach-glow')) { t.classList.add('coach-glow'); try { t.scrollIntoView({ block: 'nearest' }); } catch (e) { /* sin scroll */ } }
+  coachPlace(t);
+}
+// pistas durante la primera partida (no paran el juego)
+function tutBattleStart() { G.tutB = 0; G.tutT = 0; G.tutAt = 0; G.tutTipSeen = false; G.tutJust = false; G.tutJust2 = false; $('#tut-tip').hidden = true; }
+function tipBattle(html, secs) { const t = $('#tut-tip'); t.innerHTML = html; t.hidden = false; clearTimeout(tipBattle.tm); tipBattle.tm = setTimeout(() => { t.hidden = true; }, secs * 1000); }
+function tutBattle(dt) {
+  if (!G.tutMatch) return;
+  G.tutT += dt;
+  if (G.tutB === 1 && G.tutT > G.tutAt + 9) { G.tutB = 2; G.tutAt = G.tutT; if (!G.tutTipSeen) tipBattle('Truco: <b>mantén pulsada</b> una carta para ver qué hace.', 7); }
+  else if (G.tutB === 2 && G.tutT > G.tutAt + (G.tutTipSeen ? 1 : 10)) { G.tutB = 3; tipBattle('Tu objetivo: tira sus <b>torres</b> y la <b>sede de Microblizz</b>. ¡Tú puedes!', 7); }
+}
+// ---- instalar en el móvil como una app
+let installEvt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; });
+window.addEventListener('appinstalled', () => { installEvt = null; toast('¡Instalado! Ya lo tienes en tu pantalla de inicio', true); });
+const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+function installApp() {
+  play('select');
+  if (isStandalone()) { toast('Ya lo estás usando como app', true); return; }
+  if (installEvt) { const e = installEvt; installEvt = null; e.prompt(); return; }
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const web = location.protocol === 'https:';
+  confirmBox('INSTALAR EN EL MÓVIL', (web ? '' : '<b>Ábrelo desde la web del juego</b> (no desde un archivo) para poder instalarlo.<br><br>') + (ios ? 'En iPhone, con <b>Safari</b>: toca el botón <b>Compartir</b> (el cuadrado con la flecha hacia arriba) y luego <b>«Añadir a pantalla de inicio»</b>.' : 'En Android, con <b>Chrome</b>: toca el menú <b>⋮</b> (arriba a la derecha) y luego <b>«Instalar aplicación»</b> o <b>«Añadir a pantalla de inicio»</b>.') + '<small>Se abre como una app, a pantalla completa, y también funciona sin internet.</small>', null, null, 'ENTENDIDO');
+}
+$('#btn-install').addEventListener('click', installApp);
+$('#btn-news').addEventListener('click', () => { play('select'); openNews(); });
+$('#btn-tut').addEventListener('click', () => { play('select'); SAVE.tut = { done: false, step: 0 }; saveGame(); goHome(); toast('Tutorial reiniciado: sigue a Lola', true); });
 $('#btn-play').addEventListener('click', startGame);
 $('#btn-camp').addEventListener('click', () => { play('select'); openCamp(); });
 $('#btn-quick').addEventListener('click', () => { play('select'); openPrep('quick'); });
@@ -5454,7 +5777,7 @@ $('#btn-export').addEventListener('click', () => {
 });
 $('#btn-import').addEventListener('click', () => {
   try { const o = JSON.parse(decodeURIComponent(escape(atob($('#save-code').value.trim())))); if (!o || o.v !== 1) throw new Error('bad');
-    SAVE = migrateSave(Object.assign(newSave(), o)); saveGame(); if (!isUnlocked(G.faction)) G.faction = SAVE.unlocked[0]; setFaction(G.faction); updateWallets(); toast('Progreso cargado'); play('crown');
+    SAVE = migrateSave(Object.assign(newSave(), o), o); saveGame(); if (!isUnlocked(G.faction)) G.faction = SAVE.unlocked[0]; setFaction(G.faction); updateWallets(); toast('Progreso cargado'); play('crown');
   } catch (e) { toast('Ese código no es válido'); play('deny'); }
 });
 let resetArm = 0;
@@ -5528,12 +5851,13 @@ function drawTitleArt() {
 let last = performance.now();
 function frame(now) {
   const real = Math.min(0.05, (now - last) / 1000); last = now;
-  const steps = Math.max(1, Math.round(G.timeScale));
+  const steps = G.state === 'play' || G.state === 'ending' ? Math.max(1, Math.round(G.timeScale)) : 1;   // v0.9.11: el x2 solo acelera la partida
   for (let i = 0; i < steps; i++) {
     const dt = real * G.slowmo;
     if (G.state !== 'title') G.t += dt;   // v0.9.9: en los menús el fondo no se mueve
     if (G.shake > 0) G.shake = Math.max(0, G.shake - dt * 32);
     if (G.state === 'play' || G.state === 'ending') updateGame(dt);
+    if (G.state === 'play') tutBattle(dt);
     updateParts(dt);
     if (G.state === 'ending') { G.endT -= real; if (G.endT <= 0) { G.state = 'end'; G.slowmo = 1; showEnd(); } }
   }
@@ -5547,8 +5871,15 @@ async function boot() {
   try { await Promise.race([Promise.all([document.fonts.load('40px "Luckiest Guy"'), document.fonts.load('700 16px "Baloo 2"')]), new Promise(r => setTimeout(r, 1800))]); } catch (e) { /* fonts optional */ }
   buildSprites(); BRIDGE_LAYER = buildBridges(); setFaction(G.faction); updateWallets(); READY = true;
   requestAnimationFrame(t => { last = t; frame(t); });
+  setInterval(tutTick, 250); titlePopups();
+  // app instalable: solo en la web del juego (https), no en un archivo ni dentro de otra página
+  let top = true; try { top = window.self === window.top; } catch (e) { top = false; }
+  if (top && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    const l = document.createElement('link'); l.rel = 'manifest'; l.href = 'manifest.webmanifest'; document.head.appendChild(l);
+    try { if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { /* sin modo sin conexión */ }); } catch (e) { /* el navegador no lo permite aquí */ }
+  }
 }
-window.__FOR = { get music() { return M; }, updateWallets, pull, pullCost, showCardTip, hideCardTip, roleOf, fitText, migrateSave, newCopy, addCopy, valsOf, avgQ, tierOf, rollQ, invGet, openInv, buildInv, openItem, massList, scrapValue, snapSpot, wornSet, QTIERS, G, get S() { return S; }, get units() { return units; }, get structs() { return structs; }, get parts() { return parts; }, get revives() { return revives; }, tryPlayerDeploy, playerPlay, spawnUnit, startMatch, setFaction, CFG, SPR, ART, BOX, TYPES, TOPS, drawVector, FACTIONS, get SAVE() { return SAVE; }, set SAVE(v) { SAVE = v; }, saveGame, setupMatch, startGame, openPrep, WORLDS, ECON, ABILITIES, ITEMS, findLevel, levelUp, pull, openCamp, buildColl, goHome, PASS, SHOP, passLevel, addPassXp, buildPass, openShop, buildMissions, makeShareImage, chatSay, missionEvent, get missionTab() { return missionTab; }, set missionTab(v) { missionTab = v; } };
+window.__FOR = { stat, ACHS, achProg, achReady, LOGIN, loginState, openLogin, claimLogin, openNews, titlePopups, tutWant, tutTick, tutStep, tutFinish, curScreen, applySpeed, VERSION, buyStarter, get music() { return M; }, updateWallets, pull, pullCost, showCardTip, hideCardTip, roleOf, fitText, migrateSave, newCopy, addCopy, valsOf, avgQ, tierOf, rollQ, invGet, openInv, buildInv, openItem, massList, scrapValue, snapSpot, wornSet, QTIERS, G, get S() { return S; }, get units() { return units; }, get structs() { return structs; }, get parts() { return parts; }, get revives() { return revives; }, tryPlayerDeploy, playerPlay, spawnUnit, startMatch, setFaction, CFG, SPR, ART, BOX, TYPES, TOPS, drawVector, FACTIONS, get SAVE() { return SAVE; }, set SAVE(v) { SAVE = v; }, saveGame, setupMatch, startGame, openPrep, WORLDS, ECON, ABILITIES, ITEMS, findLevel, levelUp, pull, openCamp, buildColl, goHome, PASS, SHOP, passLevel, addPassXp, buildPass, openShop, buildMissions, makeShareImage, chatSay, missionEvent, get missionTab() { return missionTab; }, set missionTab(v) { missionTab = v; } };
 boot();
 })();
 </script>
