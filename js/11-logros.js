@@ -252,14 +252,12 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>Gashapón de CARTAS</b> (la 3.ª máquina): 27 hechizos y 9 mata-sanadores, 4 por facción. Las repetidas le dan estrellas a la carta: +5 % cada una, hasta 5.',
-    '<b>Hechizos</b>: se lanzan en cualquier sitio del campo, en el lado rival o en el tuyo. De daño (a los sanadores, un 50 % más), de cura y locos: pulgas, baneo, remake, confusión… Los mata-sanadores <b>saltan por encima</b> de la primera línea y pegan doble al sanador.',
-    '<b>Tu mazo</b>: líder + 6 cartas de su facción (como mucho 2 hechizos). Se edita en la Colección o antes de jugar, con EDITAR.',
-    '<b>Sanadores</b> más lentos (andan un 25 % menos y curan cada 1,7 s). Y la CPU también lanza hechizos: va a por los tuyos.',
-    '<b>Modo Jefe</b>: los 12 jefes de la campaña (se abren al ganarles allí), en Normal, Difícil y Mítica, con 4 minutos y premio extra si lo derrotas.',
-    '<b>Equipo compartido</b>: un objeto lo pueden llevar todos tus líderes a la vez, y hay un botón para ponérselo a todos. Además, 9 <b>objetos de facción</b> más fuertes: los da el jefe de cada mundo en Difícil (y salen en el gashapón).',
-    'Las unidades ya no se van lejísimos persiguiendo a un sanador. Animaciones nuevas al andar, pegar, recibir golpes y caer, y las armas del líder van en la mano libre (adiós a la zanahoria con martillo).'],
-  joke: ['Microblizz lanza su propio hechizo: «Despido fulminante». Es el único que funciona en su juego.', 'Phony cobra 9,99 € por cada estrella de tus cartas. Aquí son gratis.', 'El CEO de Microblizz ya tiene retrato. Ha pedido que le quiten las gafas de sol de la factura.'],
+  real: ['<b>Pantalla de mazo nueva</b>: tu líder en grande y tus 6 cartas en un expositor, con el nivel y el coste a la vista. Abajo están tus tropas: toca una para ponerla y, si el mazo está lleno, toca después la carta que quieres cambiar.',
+    '<b>Anuncios con premio</b> (de prueba): solo si tú quieres. Recoger x2 y turbo en HORAS EXTRA, premio x2 al acabar una partida, una tirada gratis al día, regalo diario x2 y cambiar una misión. Como mucho 12 al día.',
+    '<b>Sin anuncios</b> en la tienda: los premios de los anuncios te llegan al momento, sin ver nada.',
+    '<b>Modo pruebas</b>: ahora da toda la experiencia hasta el nivel 10 y 3.000.000 de oro. Subir de nivel lo haces tú, en la Colección.',
+    'El juego está dividido en archivos por dentro: carga igual y a partir de ahora es más fácil de mejorar.'],
+  joke: ['Microblizz descubre los anuncios y pone uno de sí misma. Le ha gustado tanto que se ha comprado.', 'Phony ofrece «Sin anuncios» por 9,99 € al mes. Los anuncios siguen saliendo.', 'El CEO de Microblizz ha visto tu mazo nuevo y ha pedido 300 diapositivas para copiarlo.'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;

@@ -28,9 +28,11 @@ function idleRates(fac) { const pw = idlePower(fac); return { pw, gold: IDLE.gol
 // suma lo ganado desde la última vez, hasta el tope de 12 h (si el reloj va hacia atrás no se suma nada)
 function idleTick(now) {
   const I = idleState(); now = now || Date.now();
-  const dh = Math.min((now - I.last) / 3600000, IDLE.cap - I.h); I.last = now;
+  const dh = Math.min((now - I.last) / 3600000, IDLE.cap - I.h), from = I.last; I.last = now;
   idleR = idleRates(I.fac);
-  if (dh > 0) { I.h = Math.min(IDLE.cap, I.h + dh); I.gold += idleR.gold * dh; I.gems += idleR.gems * dh; I.items += idleR.item * dh; }
+  // v0.9.16: con el turbo (anuncio) gana el doble mientras dura
+  const td = dh > 0 && I.turbo > from ? Math.min(dh, (Math.min(now, I.turbo) - from) / 3600000) : 0, x = dh + Math.max(0, td);
+  if (dh > 0) { I.h = Math.min(IDLE.cap, I.h + dh); I.gold += idleR.gold * x; I.gems += idleR.gems * x; I.items += idleR.item * x; }
   return I;
 }
 const idleFull = () => idleState().h >= IDLE.cap - 1e-6;
@@ -40,14 +42,14 @@ function idleItem() {   // un objeto o una habilidad al azar con las probabilida
   const pool = Object.keys(DB).filter(id => DB[id].rar === rar && !DB[id].pass && (kind === 'ab' || !DB[id].fac || isUnlocked(DB[id].fac)));
   return newCopy(kind, pick(pool), 0);
 }
-function idleCollect() {
-  const I = idleTick(), g = Math.floor(I.gold), gm = Math.floor(I.gems), ni = Math.floor(I.items), h = I.h, full = h >= IDLE.cap - 1e-6;
+function idleCollect(x2) {   // v0.9.16: x2 = premio doble por anuncio
+  const I = idleTick(), m = x2 ? 2 : 1, g = Math.floor(I.gold), gm = Math.floor(I.gems), ni = Math.floor(I.items), h = I.h, full = h >= IDLE.cap - 1e-6;
   if (g < 1 && gm < 1 && ni < 1) { play('deny'); toast('Todavía no hay nada. ¡Dale un rato a tu líder!'); return; }
-  I.gold -= g; I.gems -= gm; I.items -= ni; I.h = 0; SAVE.gold += g; SAVE.gems += gm;
-  const got = []; for (let i = 0; i < ni; i++) got.push(idleItem());
+  I.gold -= g; I.gems -= gm; I.items -= ni; I.h = 0; SAVE.gold += g * m; SAVE.gems += gm * m;
+  const got = []; for (let i = 0; i < ni * m; i++) got.push(idleItem());
   stat('idle', 1, true); stat('idleh', h, true); stat('idleg', g, true); stat('idlem', gm, true); if (ni) stat('idlei', ni, true); if (full) stat('idlefull', 1, true);
   achScan(); saveGame(); updateWallets(); play('crown'); idleBurst(); idleUI(true);
-  toast(`Horas extra: +${fmt(g)} de oro${gm ? ` y +${fmt(gm)} ${gm > 1 ? 'gemas' : 'gema'}` : ''}`, true);
+  toast(`Horas extra${x2 ? ' x2' : ''}: +${fmt(g * m)} de oro${gm ? ` y +${fmt(gm * m)} ${gm * m > 1 ? 'gemas' : 'gema'}` : ''}`, true);
   if (got.length) setTimeout(() => confirmBox(got.length > 1 ? `¡${got.length} OBJETOS!` : '¡HA ENCONTRADO ALGO!', got.map(it => { const D = defOf(it); return `<b>${D.name}</b> · ${RARITY[D.rar][0]}, calidad ${QTIERS[tierOf(avgQ(it))].name}`; }).join('<br>') + '<small>Tu líder lo ha encontrado haciendo horas extra. Ya lo tienes en el inventario.</small>', null, null, '¡GENIAL!'), 650);
 }
 function idleSetHero(f) {
@@ -82,6 +84,7 @@ function idleUI(force) {
   $('#idle-get').setAttribute('aria-label', `Recoger ${fmt(I.gold)} de oro y ${fmt(I.gems)} gemas`);
   if (idleFaceKey !== k) { idleFaceKey = k; drawArt($('#idle-face'), k, 38, 38); }
   fitText($('#idle-name'), 15, 11);
+  adIdleUI();   // v0.9.16
 }
 // ---- la escena: scroll lateral con parallax; el líder pega a los bots de Microblizz y Phony que van llegando
 const idleSc = { t: 0, off: 0, walk: 0, mobs: [], fx: [], cw: 0, ch: 0, R: 0, L: null, lfac: '', tick: 0, atkT: 0.6, lunge: 0, jump: 0, jumpHit: true, hit: 0, hp: 1, spec: 5, spawn: 0.3, wave: 0, sayT: 6, eu: null, pend: null, pendT: 0 };

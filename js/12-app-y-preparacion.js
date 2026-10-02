@@ -56,9 +56,13 @@ $('#btn-menu').addEventListener('click', toMenu);
 /* opciones */
 $('#opt-vol').addEventListener('input', e => { SAVE.vol = +e.target.value; applyVolume(); saveGame(); });
 $('#opt-mus').addEventListener('input', e => { SAVE.mus = +e.target.value; applyVolume(); saveGame(); });
+const TEST_GOLD = 3000000;   // v0.9.16: para poder subir todas las cartas al nivel 10
 $('#btn-test').addEventListener('click', () => {
-  SAVE.testAll = true; SAVE.unlocked = FACTION_ORDER.slice(); SAVE.gold += 50000; SAVE.gems += 5000; saveGame(); updateWallets(); syncMenu();
-  $('#btn-test').textContent = 'ACTIVADO'; toast('Modo pruebas: todo desbloqueado'); play('crown');
+  SAVE.testAll = true; SAVE.unlocked = FACTION_ORDER.slice(); SAVE.gold += TEST_GOLD; SAVE.gems += 5000;
+  // v0.9.16: toda la experiencia hasta el nivel 10 (subir de nivel lo haces tú, pagando oro en la Colección)
+  for (const k of Object.keys(CFG.cards)) { const us = uSave(k); let need = 0; for (let l = us.lvl; l < ECON.maxLvl; l++) need += needXp(l); us.xp = Math.max(us.xp, need); }
+  saveGame(); updateWallets(); syncMenu();
+  $('#btn-test').textContent = 'ACTIVADO'; toast('Modo pruebas: todo desbloqueado y toda la experiencia hasta el nivel 10'); play('crown');
 });
 $('#btn-export').addEventListener('click', () => {
   stat('export', 1); const code = btoa(unescape(encodeURIComponent(JSON.stringify(SAVE)))); const ta = $('#save-code'); ta.value = code; ta.select();

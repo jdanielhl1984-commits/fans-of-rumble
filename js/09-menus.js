@@ -210,6 +210,7 @@ function buildGachaText() {
   const P = SAVE.pity, O = ECON.odds;
   $('#gacha-odds').textContent = `Probabilidades: común ${O.common} %, rara ${O.rare} %, épica ${O.epic} %, legendaria ${O.legendary} %. Calidad de cada efecto (del 50 % al 150 % de su valor): ${QTIERS.map(t => t.name + ' ' + t.p + ' %').join(', ')}. Garantías: épica o mejor como mucho cada ${ECON.pityEpic} tiradas (llevas ${P[gachaTab] || 0}), legendaria a las ${ECON.pityLeg} (llevas ${P[gachaTab + 'L'] || 0}) y calidad Excelente o mejor cada ${ECON.pityQ} (llevas ${P['q' + gachaTab] || 0}). Las tiradas x10 y x50 traen al menos una épica o legendaria por cada 10. Cada tirada cuesta ${ECON.pull} gemas (unos 0,50 € si compras el pack pequeño de gemas). Microblizz no se hace responsable de tu afición a las cápsulas.`;
   if (gachaTab === 'cd') buildCardGachaText();   // v0.9.15: la máquina de cartas cambia los textos
+  adGachaOffer();   // v0.9.16: tirada gratis con anuncio
 }
 function drawGacha() {
   const cv = $('#gacha-cv'); if (!cv || $('#scr-gacha').hidden) { gachaRAF = 0; return; }
@@ -376,6 +377,7 @@ function buildMissions() {
     const M = mDef(m, W), done = m.prog >= M.goal;
     return `<div class="mission${m.claimed ? ' done' : ''}"><div><b>${mText(m, M)}</b><div class="xpbar"><i style="width:${(m.prog / M.goal) * 100}%"></i><span>${fmt(m.prog)} / ${fmt(M.goal)}</span></div></div><button class="btn-up" data-claim="${i}" ${done && !m.claimed ? '' : 'disabled'}>${m.claimed ? 'HECHA' : 'COBRAR'}<small>${COIN_SVG}${rw[0]} ${GEM_SVG}${rw[1]}</small><small>+${rw[2]} pase</small></button></div>`;
   }).join('');
+  if (!W) adMissionOffer(L);   // v0.9.16: cambiar una misión con anuncio
   for (const b of document.querySelectorAll('[data-claim]')) b.onclick = () => {
     const m = L[+b.dataset.claim]; if (m.claimed || m.prog < mDef(m, W).goal) return;
     m.claimed = true; SAVE.gold += rw[0]; SAVE.gems += rw[1];
@@ -467,6 +469,7 @@ function buildShop() {
     $('#gift-row').insertAdjacentHTML('beforeend', `<div class="pack starter"><span class="joke-flag">1 VEZ</span><div class="pk-ic">${PILE(5, true)}</div><div><div class="pk-name ol">Pack de bienvenida</div><div class="pk-amt ol">${GEM_SVG}${fmt(P.gems)} <span class="pk-plus">+</span> ${COIN_SVG}${fmt(P.gold)}</div><div class="pk-note">Y un objeto épico de equipo con calidad Excelente o mejor. Vale casi el doble que comprarlo por separado. Microblizz lo llama «regalo».</div></div><button class="btn-price ol" id="btn-starter">${eur(P.eur)}</button></div>`);
     $('#btn-starter').onclick = () => { play('select'); confirmBox('¿COMPRAR?', `Pack de bienvenida<span class="big">${GEM_SVG} ${fmt(P.gems)} · ${COIN_SVG} ${fmt(P.gold)}</span>y un objeto épico de calidad Excelente o mejor, por <b>${eur(P.eur)}</b><small>Versión de prueba: no se cobra nada y te lo llevas gratis. Solo se puede comprar una vez.</small>`, 'COMPRAR', buyStarter); };
   }
+  adShopOffer();   // v0.9.16: regalo x2 y «Sin anuncios»
   const L = SHOP[shopTab], gem = shopTab === 'gems';
   let h = '';
   if (!gem) { const J = SHOP.joke; h += `<div class="pack joke"><span class="joke-flag">¡OFERTA!</span><div class="pk-ic">${PILE(6)}</div><div><div class="pk-name ol">${J.name}</div><div class="pk-amt ol">${COIN_SVG}${fmt(J.amt)}</div><div class="pk-note">¡Oferta irrepetible! (se repite cada día) · Termina en <span class="countdown" id="joke-clock">${jokeClock()}</span></div></div><button class="btn-price ol" id="btn-joke"><small>${eur(J.was)}</small>${eur(J.eur)}</button></div>`; }
@@ -977,7 +980,7 @@ function showEnd() {
   if (R.gems) rw += `<span class="rw-chip ol">${GEM_SVG}+${fmt(R.gems)}</span>`;
   if (R.xp.length) rw += `<div class="rw-xp">Experiencia: ${R.xp.map(([k, x]) => `${CFG.cards[k].name} +${x}`).join(' · ')}</div>`;
   if (R.ready.length) rw += `<div class="rw-xp" style="color:#9ef07a">¡Listas para subir de nivel en la Colección: ${R.ready.map(k => CFG.cards[k].name).join(', ')}!</div>`;
-  $('#end-rewards').innerHTML = rw;
+  $('#end-rewards').innerHTML = rw; adEndOffer(R);   // v0.9.16: premio x2 con anuncio
   $('#end-pass').innerHTML = passLevel() >= PASS.levels && !R.passUp ? 'Pase de batalla completado' : `Pase de batalla: +${R.passXp} puntos${R.passUp ? ` · <b style="color:#ffe14d">¡NIVEL ${passLevel()}!</b>` : ` · ${SAVE.pass.xp - passLevel() * PASS.xpPer}/${PASS.xpPer} para el nivel ${passLevel() + 1}`}`;
   $('#end-quote').textContent = R.unlock ? `${capFirst(losOf(R.unlock))} se libran de ${ownerName()} y se unen a la rebelión.` : pick((ownerOf() === 'phony' ? QUOTES_PH : QUOTES)[w || 'd']);
   $('#st-cards').textContent = S.p.deployed; $('#st-kills').textContent = S.p.kills; $('#st-chaos').textContent = Math.round(S.p.spent);

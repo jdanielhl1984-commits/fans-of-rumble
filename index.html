@@ -90,6 +90,7 @@
         <div class="idle-scene"><canvas id="idle-cv" aria-hidden="true"></canvas>
           <div class="idle-tag"><b class="ol">HORAS EXTRA</b><small id="idle-sub">Tu líder sigue luchando aunque no juegues</small></div>
           <div class="idle-clock" id="idle-clock" role="status">0 h / 12 h</div>
+          <div class="idle-ads" id="idle-ads"></div>
           <div class="idle-full" id="idle-full" hidden><b class="ol">¡ALMACÉN LLENO!</b><small>Recoge para que vuelva al trabajo</small></div>
         </div>
         <div class="idle-bar">
@@ -159,6 +160,7 @@
       <p class="deck-sub" id="gacha-sub"></p>
       <div class="gacha-wrap"><canvas id="gacha-cv" aria-hidden="true"></canvas></div>
       <div class="pull-row"><button class="btn-pull ol" id="btn-pull" data-pull="1"></button><button class="btn-pull x10 ol" data-pull="10"></button><button class="btn-pull x50 ol" data-pull="50"></button></div>
+      <div class="ad-row" id="gacha-ad"></div>
       <p class="small-print" id="gacha-odds"></p>
       <div class="gacha-result" id="gacha-result" hidden><div class="gr-card" id="gr-card"></div><button class="btn-big ol" id="btn-gr-ok">¡VALE!</button><button class="btn-link" id="btn-gr-inv">Ver en el inventario</button></div>
     </section>
@@ -203,10 +205,22 @@
     </section>
 
     <section id="scr-deck" class="screen modal" hidden>
-      <div class="modal-card deck-card"><h3 class="ol" id="deck-title">MAZO</h3>
-        <p class="deck-note" id="deck-note"></p>
-        <div class="deck-grid" id="deck-grid"></div>
-        <div class="row"><button class="btn-ghost ol" id="btn-deck-reset">POR DEFECTO</button><button class="btn-ghost ol btn-ok" id="btn-deck-ok">LISTO</button></div>
+      <div class="dk2">
+        <h3 class="dk2-title ol" id="deck-title">TU MAZO</h3>
+        <div class="dk2-frame">
+          <div class="dk2-board" id="deck-board"></div>
+        </div>
+        <div class="dk2-stats">
+          <span class="dk2-chip" id="deck-lvl">Nivel medio 1</span>
+          <span class="dk2-chip" id="deck-sp">Hechizos 0/2</span>
+          <span class="dk2-chip" id="deck-cost">Coste medio 3</span>
+        </div>
+        <p class="dk2-hint" id="deck-note"></p>
+        <div class="dk2-pool">
+          <div class="dk2-pool-h"><b class="ol">TUS TROPAS</b><small id="deck-count"></small></div>
+          <div class="dk2-grid" id="deck-grid"></div>
+        </div>
+        <div class="row"><button class="btn-ghost ol" id="btn-deck-reset">POR DEFECTO</button><button class="btn-big ol btn-ok" id="btn-deck-ok">LISTO</button></div>
       </div>
     </section>
 
@@ -228,13 +242,13 @@
         <label class="opt-row"><span>Volumen</span><input type="range" id="opt-vol" min="0" max="100" step="5"></label>
         <label class="opt-row"><span><b>Música</b><br>Al mínimo, se quita.</span><input type="range" id="opt-mus" min="0" max="100" step="5"></label>
         <div class="opt-row"><span><b>Chat en directo</b><br>Los comentarios falsos durante la partida.</span><button class="btn-ghost ol" id="btn-chat">SÍ</button></div>
-        <div class="opt-row"><span><b>Modo pruebas</b><br>Desbloquea todas las facciones y mundos, y da 50.000 de oro y 5.000 gemas.</span><button class="btn-ghost ol" id="btn-test">ACTIVAR</button></div>
+        <div class="opt-row"><span><b>Modo pruebas</b><br>Desbloquea todas las facciones y mundos, da toda la experiencia hasta el nivel 10 (subir lo haces tú en la Colección), 3.000.000 de oro y 5.000 gemas.</span><button class="btn-ghost ol" id="btn-test">ACTIVAR</button></div>
         <div class="opt-row col"><span><b>Tu progreso</b> se guarda en este navegador. Para pasarlo a otro móvil o PC, copia el código y pégalo allí.</span><div class="row"><button class="btn-ghost ol" id="btn-export">COPIAR CÓDIGO</button><button class="btn-ghost ol" id="btn-import">CARGAR CÓDIGO</button></div><textarea id="save-code" rows="3" aria-label="Código de progreso" placeholder="Aquí aparece o se pega el código"></textarea></div>
         <div class="opt-row col"><span><b>Ayuda</b><br>Mira lo nuevo de esta versión o vuelve a hacer la partida guiada.</span><div class="row"><button class="btn-ghost ol" id="btn-news">NOVEDADES</button><button class="btn-ghost ol" id="btn-tut">TUTORIAL</button></div></div>
         <div class="opt-row"><span><b>Instalar en el móvil</b><br>Ábrelo como una app: a pantalla completa y sin la barra del navegador.</span><button class="btn-ghost ol" id="btn-install">INSTALAR</button></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.15</p>
+      <p class="ver">Fans of Rumble · versión 0.9.16</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
@@ -297,7 +311,8 @@
 <script src="js/12-app-y-preparacion.js"></script>
 <script src="js/13-horas-extra.js"></script>
 <script src="js/14-cartas-y-jefes.js"></script>
-<script src="js/15-arranque.js"></script>
+<script src="js/15-anuncios.js"></script>
+<script src="js/16-arranque.js"></script>
 
 </body>
 </html>
