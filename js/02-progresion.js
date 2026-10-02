@@ -513,7 +513,7 @@ const GAME_URL = 'jdanielhl1984-commits.github.io/fans-of-rumble';
 
 /* ---------- guardado (en el navegador; se puede exportar e importar) ---------- */
 const SAVE_KEY = 'for-save-1';
-const VERSION = '0.9.21';
+const VERSION = '0.9.22';
 function newSave() { return { v: 1, gold: ECON.start.gold, gems: ECON.start.gems, units: {}, unlocked: ['animales'], camp: {}, inv: [], invSeq: 0, abEquip: {}, equip: {}, pity: { ab: 0, abL: 0, eq: 0, eqL: 0, qab: 0, qeq: 0, cd: 0, cdL: 0 }, cards: {}, decks: {}, bossRec: {}, bossPay: {}, bossSel: { wi: 6, d: 'n' }, daily: null, weekly: null, tickets: 0, pass: { xp: 0, prem: false, free: [], paid: [] }, giftDay: '', chatOff: false, bestBoss: 0, lastFac: 'animales', tut: { done: false, step: 0 }, tutGift: {}, login: { last: '', day: 0, best: 0 }, stats: {}, achDone: [], achSeen: [], starter: false, speed2: false, seenVer: '', campH: {}, campM: {}, rlWeek: '', mythPrize: {}, facItem: {} }; }
 // v0.9.9: antes se guardaba «tengo esta habilidad (rango 1-3)» y «tengo este objeto»; ahora cada copia tiene su calidad.
 // Las partidas antiguas se convierten sin perder nada: la habilidad conserva su valor exacto y los objetos quedan como estaban.

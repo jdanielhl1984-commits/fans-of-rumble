@@ -393,9 +393,9 @@ function drawBars(e) {
   if (u.markT > 0) { const mx = u.x + bw / 2 + 8, my = y - 6; ctx.save(); ctx.lineWidth = 3.4; ctx.strokeStyle = OL; ctx.beginPath(); ctx.arc(mx, my, 4, 0, Math.PI * 2); ctx.moveTo(mx + 3, my + 3); ctx.lineTo(mx + 6.5, my + 6.5); ctx.stroke(); ctx.lineWidth = 1.6; ctx.strokeStyle = '#ffe14d'; ctx.stroke(); ctx.restore(); }   // marcado por el Detective
   if (u.olvT > 0 && u.olvOn) text('?', u.x - bw / 2 - 8, y + 2, 13, '#ecc98f');   // las torres aún no se acuerdan
   if (u.d.life && u.d.life - (u.lifeT || 0) < 6) { const rem = Math.ceil(u.d.life - (u.lifeT || 0)); text(rem + ' s', u.x, y - 10, 11, '#ff8a8a'); }   // licencia a punto de caducar
-  if (u.rage > 0 && !u.jump) { const fx = u.x + bw / 2 + 7, fy = y + 1; flame(fx, fy, 1 + u.rage * 0.06); text(String(u.rage), fx + 8, fy + 2, 10, '#ffcb3d'); }
-  if (facOf(u.team) === 'heroes' && S[u.team].xpLvl > 0) { const fx = u.x + bw / 2 + 7, fy = y + 2; ctx.beginPath(); starPath(ctx, fx, fy, 5.4, 2.5); ctx.fillStyle = '#ffcb3d'; ctx.fill(); ctx.lineWidth = 1.3; ctx.strokeStyle = OL; ctx.stroke(); text(String(S[u.team].xpLvl), fx + 8, fy + 1, 10, '#ffe9a8'); }
-  if (u.ab) {   // habilidad del gashapón: chapita con su color de rareza
+  if (u.rage > 0 && !u.jump && !SAVE.noBadges) { const fx = u.x + bw / 2 + 7, fy = y + 1; flame(fx, fy, 1 + u.rage * 0.06); text(String(u.rage), fx + 8, fy + 2, 10, '#ffcb3d'); }
+  if (facOf(u.team) === 'heroes' && S[u.team].xpLvl > 0 && !SAVE.noBadges) { const fx = u.x + bw / 2 + 7, fy = y + 2; ctx.beginPath(); starPath(ctx, fx, fy, 5.4, 2.5); ctx.fillStyle = '#ffcb3d'; ctx.fill(); ctx.lineWidth = 1.3; ctx.strokeStyle = OL; ctx.stroke(); text(String(S[u.team].xpLvl), fx + 8, fy + 1, 10, '#ffe9a8'); }
+  if (u.ab && !SAVE.noBadges) {   // habilidad del gashapón: chapita con su color de rareza (v0.9.22: se puede quitar en Opciones)
     const A = ABILITIES[u.ab], R = RARITY[A.rar], fx = u.x - bw / 2 - 8, fy = y + 2;
     ctx.beginPath(); ctx.arc(fx, fy, 6.4, 0, Math.PI * 2); ctx.fillStyle = R[2]; ctx.fill(); ctx.lineWidth = 1.6; ctx.strokeStyle = OL; ctx.stroke();
     ctx.beginPath(); ctx.arc(fx, fy, 4.4, 0, Math.PI * 2); ctx.fillStyle = R[1]; ctx.fill();

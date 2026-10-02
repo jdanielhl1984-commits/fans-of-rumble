@@ -489,7 +489,7 @@ function musicPump(limitOverride) {
     M.rush = M.tmT > 1;
     musicStep(T, M.out, M.step, M.bar, loop, M.next + (M.step % 2 === 1 ? (T.swing || 0) * sd : 0), sd);
     M.next += sd; M.step++; M.tm += (M.tmT - M.tm) * 0.06;
-    if (M.step >= 16) { M.step = 0; M.bar++; if (T.once && M.bar >= T.prog.length) { musicSet(T.next || null, M.next + 0.6); return; } }
+    if (M.step >= 16) { M.step = 0; M.bar++; if (T.once && M.bar >= T.prog.length) { musicSet(T.next === 'menu' && SAVE.menuMus && TRACKS[SAVE.menuMus] ? SAVE.menuMus : T.next || null, M.next + 0.6); return; } }
   }
 }
 // decide qué suena según lo que pasa en el juego (se llama en cada frame; es barato)
@@ -497,7 +497,7 @@ function musicUpdate() {
   if (!AC || !M.bus) return;
   const st = G.state, boss = G.mode === 'boss' || (G.mode === 'camp' && G.level && G.level.boss);
   let want;
-  if (st === 'title') want = 'menu';
+  if (st === 'title') want = SAVE.menuMus && TRACKS[SAVE.menuMus] ? SAVE.menuMus : 'menu';   // v0.9.22: la elige el jugador en Opciones
   else if (st === 'play' || st === 'paused') { want = !boss ? G.faction : G.mode === 'boss' ? 'boss' + (G.bossWi == null ? CEO_WI : G.bossWi) : 'boss' + G.level.wi; if (!TRACKS[want]) want = boss ? 'boss' : 'menu'; }
   else if (st === 'end') want = G.winner === 'p' ? 'win' : G.winner === 'e' ? 'lose' : 'menu';
   else want = null;                                  // cuenta atrás y final de la partida: silencio

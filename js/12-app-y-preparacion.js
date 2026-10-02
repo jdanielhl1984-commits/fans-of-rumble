@@ -39,7 +39,13 @@ $('#btn-share-close').addEventListener('click', () => { $('#scr-share').hidden =
 // v0.9.17 probó un modo claro y uno pixel art; Daniel los descartó en la v0.9.18: el juego va siempre oscuro y sin pixelar
 function applyLook() { delete SAVE.theme; delete SAVE.pixel; document.documentElement.dataset.theme = 'dark'; document.body.classList.remove('pixel'); fit(); }
 // v0.9.19: números de daño y sangre
-function optLabels() { $('#btn-feed').textContent = SAVE.feed ? 'EN LA CAJA' : 'ENCIMA'; $('#btn-nums').textContent = SAVE.noNums ? 'NO' : 'SÍ'; $('#btn-blood').textContent = SAVE.blood ? 'SÍ' : 'NO'; }
+// v0.9.22: música del menú (cualquier tema del juego) y chapas sobre las unidades
+const MENU_TRACKS = [['menu', 'Espera de Microblizz'], ['animales', 'Animales Locos'], ['nomuertos', 'No-Muertos'], ['streamers', 'Streamers'], ['heroes', 'Héroes'], ['ciber', 'Ciberpunks'], ['memes', 'Memes'], ['gamer', 'Comunidad Gamer'], ['olvidados', 'Olvidados'], ['pop', 'Cultura Pop'],
+  ['boss0', 'Jefe: SurvivalBot'], ['boss1', 'Jefe: NecroLord'], ['boss2', 'Jefe: TwitchKing'], ['boss3', 'Jefe: EpicChampion'], ['boss4', 'Jefe: CyberMarine'], ['boss5', 'Jefe: MemeLord'], ['boss6', 'Jefe: el CEO'], ['boss7', 'Jefe: Vikingo'], ['boss8', 'Jefe: PayStation'], ['boss9', 'Jefe: ProGamer'], ['boss10', 'Jefe: LaDirectora'], ['boss11', 'Jefe: Presidente de Phony']].filter(t => TRACKS[t[0]]);
+const menuTrack = () => (MENU_TRACKS.find(t => t[0] === SAVE.menuMus) || MENU_TRACKS[0]);
+$('#btn-menumus').addEventListener('click', () => { const i = MENU_TRACKS.indexOf(menuTrack()); SAVE.menuMus = MENU_TRACKS[(i + 1) % MENU_TRACKS.length][0]; saveGame(); play('select'); optLabels(); });
+$('#btn-badges').addEventListener('click', () => { SAVE.noBadges = !SAVE.noBadges; saveGame(); play('select'); optLabels(); });
+function optLabels() { $('#btn-menumus').textContent = menuTrack()[1].toUpperCase() + ' ▸'; $('#btn-badges').textContent = SAVE.noBadges ? 'NO' : 'SÍ'; $('#btn-feed').textContent = SAVE.feed ? 'EN LA CAJA' : 'ENCIMA'; $('#btn-nums').textContent = SAVE.noNums ? 'NO' : 'SÍ'; $('#btn-blood').textContent = SAVE.blood ? 'SÍ' : 'NO'; }
 $('#btn-nums').addEventListener('click', () => { SAVE.noNums = !SAVE.noNums; saveGame(); play('select'); optLabels(); });
 $('#btn-feed').addEventListener('click', () => { SAVE.feed = !SAVE.feed; saveGame(); play('select'); optLabels(); });
 $('#btn-blood').addEventListener('click', () => { SAVE.blood = !SAVE.blood; saveGame(); play('select'); optLabels(); });

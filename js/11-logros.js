@@ -253,7 +253,9 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>Opciones → Avisos de las unidades</b>: «¡Rabia máxima!», «¡Tropiezo!», «Equipado»… pueden ir encima de las unidades o en una caja abajo a la derecha (con un punto naranja si es tuyo y azul si es del rival, y x2, x3… si se repiten). Así el campo queda más limpio.',
+  real: ['<b>ARENA</b> y <b>PRUEBAS</b> ahora son botones a los lados de CAMPAÑA, y el título es más grande.',
+    '<b>Opciones</b>: elige la <b>música del menú</b> (cualquier tema del juego, también los de los jefes) y quita las <b>chapas sobre las unidades</b> (siglas de la habilidad, llama de Rabia y estrella de los Héroes) para ver el campo más limpio.',
+    '<b>Opciones → Avisos de las unidades</b>: «¡Rabia máxima!», «¡Tropiezo!», «Equipado»… pueden ir encima de las unidades o en una caja abajo a la derecha (con un punto naranja si es tuyo y azul si es del rival, y x2, x3… si se repiten). Así el campo queda más limpio.',
     '<b>Equilibrio de facciones</b>: medido con miles de partidas automáticas. Antes una facción ganaba el 94 % y otra el 6 %; ahora todas quedan entre el 47 % y el 54 %. Animales Locos y Comunidad Gamer, más fuertes; No-Muertos y Memes, algo menos.',
     '<b>Sala de pruebas</b> (abajo en el menú): CAOS infinito, el tiempo no corre y nada se cae. Saca grupos, tanques, sanadores, tiradores o líderes de cualquier rival, enciende su IA, cambia al campo de cualquier jefe y mira el daño por segundo. Sin premios.',
     '<b>Arena</b> (abajo en el menú): elige uno de 3 «jugadores» inventados, gana copas y sube de liga: Becario, Junior, Senior, Director y CEO.',

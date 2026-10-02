@@ -73,7 +73,11 @@
       <h1 class="logo"><span class="l1 ol">FANS OF</span><span class="l2 ol-big">RUMBLE</span></h1>
       <p class="tagline" id="tagline"><b>Animales Locos</b> contra <i>Microblizz</i></p>
       <canvas id="title-art" aria-hidden="true"></canvas>
-      <button class="btn-big ol" id="btn-camp">CAMPAÑA</button>
+      <div class="camp-row">
+        <button class="side-mode ol" id="btn-arena"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v4a5 5 0 0 1-10 0z" fill="#ffcb3d" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 5H4v1.5A3.5 3.5 0 0 0 7.5 10M17 5h3v1.5A3.5 3.5 0 0 1 16.5 10" fill="none" stroke="#20102c" stroke-width="1.8"/><path d="M10 12h4l.8 5h-5.6z" fill="#e09a12" style="stroke: var(--outline)" stroke-width="1.6"/><rect x="7" y="17" width="10" height="4" rx="1" fill="#7a4a22" style="stroke: var(--outline)" stroke-width="1.6"/></svg><span>ARENA</span></button>
+        <button class="btn-big ol" id="btn-camp">CAMPAÑA</button>
+        <button class="side-mode test ol" id="btn-sandbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9.5A2 2 0 0 0 6.8 21h10.4a2 2 0 0 0 1.8-2.5L14 9V3" fill="#bfe6ff" style="stroke: var(--outline)" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.2 15h9.6l1.4 3.2A1.4 1.4 0 0 1 17 20H7a1.4 1.4 0 0 1-1.2-1.8z" fill="#7be04a"/><circle cx="11" cy="17" r="1" fill="#fff"/><circle cx="14" cy="16" r="0.8" fill="#fff"/></svg><span>PRUEBAS</span></button>
+      </div>
       <div class="row"><button class="btn-mode ol" id="btn-quick">PARTIDA RÁPIDA</button><button class="btn-mode ol" id="btn-bossmode">MODO JEFE</button></div>
       <div class="home-feature">
         <button class="feat" id="btn-gacha"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="7" fill="#bfe6ff" style="stroke: var(--outline)" stroke-width="1.8"/><circle cx="9.5" cy="9" r="2.4" fill="#ff5fa8"/><circle cx="14" cy="7.5" r="2.2" fill="#ffe14d"/><circle cx="13" cy="11.5" r="2.2" fill="#7be04a"/><rect x="6" y="15" width="12" height="7" rx="2" fill="#2e8bff" style="stroke: var(--outline)" stroke-width="1.8"/></svg><span><b class="ol">GASHAPÓN</b><small class="ol" id="feat-gacha">Tira x1, x10 o x50</small></span><i class="dotbadge" id="gacha-badge" hidden></i></button>
@@ -87,7 +91,7 @@
         <button class="home-tile" id="btn-missions"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="#fff6ea" style="stroke: var(--outline)" stroke-width="1.8"/><path d="M8 8l1.6 1.6L12 7M8 13l1.6 1.6L12 12" stroke="#16a34a" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M14 8h3M14 13h3M8 17.5h9" stroke="#a08ab8" stroke-width="1.6" stroke-linecap="round"/></svg><span class="ol">Misiones</span><i class="dotbadge" id="mission-badge" hidden></i></button>
         <button class="home-tile" id="btn-options"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="#cdb9ea" style="stroke: var(--outline)" stroke-width="1.8"/><circle cx="12" cy="12" r="2.4" fill="#20102c"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="#20102c" stroke-width="2.4" stroke-linecap="round"/></svg><span class="ol">Opciones</span></button>
       </div>
-      <div class="links"><button class="btn-link" id="btn-howto">Cómo se juega</button><button class="btn-link" id="btn-sandbox">Sala de pruebas</button><button class="btn-link" id="btn-arena">Arena</button></div>
+      <div class="links"><button class="btn-link" id="btn-howto">Cómo se juega</button></div>
       <div class="idle" id="idle">
         <div class="idle-scene"><canvas id="idle-cv" aria-hidden="true"></canvas>
           <div class="idle-tag"><b class="ol">HORAS EXTRA</b><small id="idle-sub">Tu líder sigue luchando aunque no juegues</small></div>
@@ -252,8 +256,10 @@
       <div class="opt-list">
         <label class="opt-row"><span>Volumen</span><input type="range" id="opt-vol" min="0" max="100" step="5"></label>
         <label class="opt-row"><span><b>Música</b><br>Al mínimo, se quita.</span><input type="range" id="opt-mus" min="0" max="100" step="5"></label>
+        <div class="opt-row"><span><b>Música del menú</b><br>La canción que suena en la pantalla principal.</span><button class="btn-ghost ol" id="btn-menumus">ESPERA</button></div>
         <div class="opt-row"><span><b>Números de daño</b><br>Si los quitas, solo verás bajar las barras de vida.</span><button class="btn-ghost ol" id="btn-nums">SÍ</button></div>
         <div class="opt-row"><span><b>Avisos de las unidades</b><br>«¡Rabia máxima!», «¡Tropiezo!», «Equipado»…: encima de su cabeza o en una caja abajo a la derecha.</span><button class="btn-ghost ol" id="btn-feed">ENCIMA</button></div>
+        <div class="opt-row"><span><b>Chapas sobre las unidades</b><br>Las siglas de la habilidad, la llama de Rabia y la estrella de los Héroes.</span><button class="btn-ghost ol" id="btn-badges">SÍ</button></div>
         <div class="opt-row"><span><b>Sangre</b><br>Al pegar sale una pequeña niebla roja (sin charcos).</span><button class="btn-ghost ol" id="btn-blood">NO</button></div>
         <div class="opt-row"><span><b>Chat en directo</b><br>Los comentarios falsos durante la partida.</span><button class="btn-ghost ol" id="btn-chat">SÍ</button></div>
         <div class="opt-row"><span><b>Modo pruebas</b><br>Desbloquea todas las facciones y mundos, da toda la experiencia hasta el nivel 10 (subir lo haces tú en la Colección), 3.000.000 de oro y 5.000 gemas.</span><button class="btn-ghost ol" id="btn-test">ACTIVAR</button></div>
@@ -262,7 +268,7 @@
         <div class="opt-row"><span><b>Instalar en el móvil</b><br>Ábrelo como una app: a pantalla completa y sin la barra del navegador.</span><button class="btn-ghost ol" id="btn-install">INSTALAR</button></div>
         <div class="opt-row"><span><b>Empezar de cero</b><br>Borra todo tu progreso.</span><button class="btn-ghost ol danger" id="btn-reset">BORRAR</button></div>
       </div>
-      <p class="ver">Fans of Rumble · versión 0.9.21</p>
+      <p class="ver">Fans of Rumble · versión 0.9.22</p>
     </section>
 
     <section id="scr-howto" class="screen" hidden>
