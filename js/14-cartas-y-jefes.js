@@ -302,11 +302,25 @@ function buildDeck() {
   $('#deck-sp').textContent = `Hechizos ${nsp}/${DECK_SPELLS}`; $('#deck-sp').classList.toggle('full', nsp >= DECK_SPELLS);
   $('#deck-cost').textContent = 'Coste medio ' + fmtV(rnd(deckCost(sel), 1));
   $('#deck-count').textContent = `Tienes ${pool.length} de ${all}`;
-  $('#deck-note').innerHTML = D.pick ? `Toca la carta de tu mazo que quieres cambiar por <b>${CFG.cards[D.pick].name}</b>${spFull ? ' (tiene que ser un hechizo: como mucho ' + DECK_SPELLS + ')' : ''}. Toca otra vez para cancelar.`
+  $('#deck-note').innerHTML = (D.pick ? '' : '<b>Mantén pulsada</b> una carta para ver qué hace. ') + (D.pick ? `Toca la carta de tu mazo que quieres cambiar por <b>${CFG.cards[D.pick].name}</b>${spFull ? ' (tiene que ser un hechizo: como mucho ' + DECK_SPELLS + ')' : ''}. Toca otra vez para cancelar.`
     : sel.length < 6 ? `Te faltan <b>${6 - sel.length}</b> ${6 - sel.length === 1 ? 'carta' : 'cartas'}: toca una de tus tropas para ponerla.`
-    : 'Toca una de tus tropas y luego la carta del mazo que quieres cambiar. Si tocas una carta del mazo, la quitas.';
-  for (const b of document.querySelectorAll('#deck-grid [data-dkp]')) b.onclick = () => deckPoolTap(b.dataset.dkp);
-  for (const b of document.querySelectorAll('#deck-board [data-dks]')) b.onclick = () => deckSlotTap(+b.dataset.dks);
+    : 'Toca una de tus tropas y luego la carta del mazo que quieres cambiar.');
+  for (const b of document.querySelectorAll('#deck-grid [data-dkp]')) { deckHold(b, b.dataset.dkp); b.onclick = () => { if (!deckHeld()) deckPoolTap(b.dataset.dkp); }; }
+  for (const b of document.querySelectorAll('#deck-board [data-dks]')) { const k = sel[+b.dataset.dks]; if (k) deckHold(b, k); b.onclick = () => { if (!deckHeld()) deckSlotTap(+b.dataset.dks); }; }
+  for (const b of document.querySelectorAll('#deck-board .dk2c[data-rarity="leader"]')) { b.disabled = false; deckHold(b, F.leader); }
+}
+// v0.9.18: mantener pulsada una carta enseña su ficha (qué hace); al soltar se cierra y no se pone ni se quita
+let deckHoldT = null, deckHoldOn = false, deckHoldAt = 0;
+const deckHeld = () => { const h = deckHoldOn || performance.now() - deckHoldAt < 350; deckHoldOn = false; return h; };
+function deckHold(b, k) {
+  b.addEventListener('contextmenu', e => e.preventDefault());
+  b.addEventListener('pointerdown', e => {
+    clearTimeout(deckHoldT); const x0 = e.clientX, y0 = e.clientY;
+    deckHoldT = setTimeout(() => { const keep = G.faction; G.faction = deckEdit.f; showCardTip(k); G.faction = keep; $('#card-tip').classList.add('deck'); deckHoldOn = true; play('select'); }, 420);
+    const mv = ev => { if (Math.hypot(ev.clientX - x0, ev.clientY - y0) > 10) clearTimeout(deckHoldT); };
+    const up = () => { clearTimeout(deckHoldT); window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); if (deckHoldOn) { deckHoldAt = performance.now(); hideCardTip(); $('#card-tip').classList.remove('deck'); } };
+    window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+  });
 }
 function deckSave() { SAVE.decks[deckEdit.f] = deckEdit.sel.slice(); saveGame(); buildDeck(); }
 function deckPoolTap(k) {
@@ -366,3 +380,5 @@ function facItemsRetro() {   // a quien ya ganó a un jefe en Difícil antes de 
   if (got.length) setTimeout(() => toast(`¡Objetos de facción nuevos en tu inventario: ${got.join(', ')}!`, true), 2500);
 }
 
+// v0.9.18: botón «Mazo» en el menú principal: edita el mazo de la facción que tienes elegida
+$('#btn-deck-menu').addEventListener('click', () => { play('select'); openDeck(isUnlocked(G.faction) ? G.faction : SAVE.unlocked[0]); });

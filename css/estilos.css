@@ -444,7 +444,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 #btn-gacha.feat { background: linear-gradient(to bottom, #ff8ad8, #b0249a); }
 #btn-shop.feat { background: linear-gradient(to bottom, #ffd84a, #e07d00); }
 .feat .dotbadge { right: 8px; top: 8px; }
-.home-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; max-width: 480px; }
+.home-grid { grid-template-columns: repeat(6, 1fr); gap: 5px; max-width: 500px; }
 .home-tile { padding: 7px 2px 5px; }
 .home-tile span { font-size: 12.5px; }
 @media (hover: hover) { .feat:hover { filter: brightness(1.07); } }
@@ -763,7 +763,7 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .prep-deck .deck-mini span { width: 34px; height: 31px; border-radius: 7px; flex: none; }
 .prep-deck .deck-mini span.ld { background: rgba(196, 127, 16, 0.55); }
 .prep-deck .deck-mini canvas { width: 30px; height: 27px; }
-.prep-deck .pd-edit { flex: none; font-size: 15px; padding: 8px 9px 4px; border-radius: 11px; box-shadow: 0 3px 0 var(--outline); }
+.prep-deck .pd-edit { flex: none; font-size: 17px; padding: 10px 14px 6px; border-radius: 12px; box-shadow: 0 3px 0 var(--outline); background: linear-gradient(to bottom, #ffe06a, #e09a12); color: #fff6ea; }
 
 .coll-row[data-rarity="legendary"] { --card-lo: #b0217f; }
 .coll-row.locked { filter: grayscale(0.85) brightness(0.7); }
@@ -857,24 +857,14 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .ad-bar i { display: block; height: 100%; width: var(--p, 0%); background: linear-gradient(90deg, #7df3ff, #ffcb3d); transition: width 1s linear; }
 .ad-note { margin: 0; font-size: 12px; font-weight: 700; color: var(--ink-dim); }
 
-/* v0.9.16: modo claro (Opciones → Aspecto). El campo de batalla no cambia; los menús, sí */
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #e9dcff; --bg-2: #ffffff; --tray: #fff6ea; --tray-hi: #e7d3ff;
-  --ink: #2a1640; --ink-dim: #6a5688; --scrim: rgba(248, 242, 255, 0.9);
-  --panel: rgba(255, 255, 255, 0.94); --panel-2: rgba(255, 250, 242, 0.92); --off: #d9cfe6; --modal: rgba(240, 232, 255, 0.86);
-}
-:root[data-theme="light"] .screen { background: radial-gradient(ellipse at 50% 32%, rgba(255, 255, 255, 0.7), var(--scrim) 72%); }
-:root[data-theme="light"] #scr-deck.modal { background: radial-gradient(120% 70% at 50% 0%, #ffffff, var(--bg) 70%); }
-/* v0.9.16: modo pixel art: el juego se dibuja con menos píxeles y se amplía sin suavizar */
-body.pixel #cv, body.pixel canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
-:where(:root[data-theme="light"]) .ol, :where(:root[data-theme="light"]) .ol-big { color: #fff6ea; }
-:where(:root[data-theme="light"]) .dk2-title { color: var(--gold); }
-/* en modo claro, la partida, las cartas y HORAS EXTRA siguen con sus colores oscuros */
-:root[data-theme="light"] :is(#hud, #tray, #chat, #toast, #banner, #card-tip, #hud-mods, #tut-tip, #idle, .dk2c, .ad-screen, .gacha-result) {
-  --ink: #fff6ea; --ink-dim: #cdb9ea; --tray: #26143c; --tray-hi: #3e2363; --panel: rgba(38, 20, 60, 0.9); --panel-2: rgba(20, 10, 34, 0.8); --off: #3a2b52;
-  color: var(--ink);
-}
-:where(:root[data-theme="light"]) .ol, :where(:root[data-theme="light"]) .ol-big { --ink: #fff6ea; --ink-dim: #e8dcff; }
-:root[data-theme="light"] :is(.node, .feat, .btn-ghost, .btn-up, .btn-price, .chip-btn) { --ink: #fff6ea; --ink-dim: #e8dcff; color: var(--ink); }
-:root[data-theme="light"] .xpbar { background: var(--off); }
+/* v0.9.18: botón para volver de la vista con zoom */
+.cam-btn { position: absolute; right: 10px; top: calc(var(--top) + 104px); z-index: 12; pointer-events: auto; display: flex; align-items: center; gap: 5px; font-family: var(--font-display); font-size: 15px; padding: 7px 11px 5px; border-radius: 12px; border: 3px solid var(--outline); background: linear-gradient(to bottom, #ffe06a, #e09a12); color: #fff6ea; box-shadow: 0 3px 0 var(--outline); cursor: pointer; }
+.cam-btn svg { width: 18px; height: 18px; color: var(--outline); }
+#card-tip.deck { top: calc(var(--top) + 70px); transform: none; z-index: 50; }
+/* v0.9.18: ventana de RECOGER en HORAS EXTRA */
+.idlebox-card { max-width: 420px; }
+.ib-loot { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.ib-loot .rw-chip { font-size: 24px; padding: 8px 14px 5px; }
+.ib-loot .rw-chip svg { width: 26px; height: 26px; }
+.ib-row { display: flex; gap: 10px; align-items: stretch; justify-content: center; flex-wrap: wrap; }
+.ib-row .ad-btn span { font-size: 18px; }

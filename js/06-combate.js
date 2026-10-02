@@ -719,8 +719,9 @@ function healPulse(u, dt) {
     if (amt >= 1) addNum(a.x + rand(-5, 5), a.y, topOf(a) * 0.75 + 4, '+' + Math.round(amt), '#8cf05a', 16);
   }
   if (!any) return;
+  u.healGlowT = G.t;   // v0.9.18: enciende el cono un momento
   if (u.team === 'p') chatEv('heal', null, null, 0.18, 15);
-  parts.push({ type: 'cone', x: u.x, y: u.y, z: 0, a: u.healAng === undefined ? healFwd(u) : u.healAng, r0: 14, r1: u.d.healR, color: 'rgba(123,224,74,.85)', life: 0.5, max: 0.5, lw: 4, ground: true });
+  parts.push({ type: 'cone', x: u.x, y: u.y, z: 0, a: u.healAng === undefined ? healFwd(u) : u.healAng, r0: 14, r1: u.d.healR, color: 'rgba(150,245,120,.4)', life: 0.6, max: 0.6, lw: 2, ground: true });
   for (let i = 0; i < 4; i++) parts.push({ type: 'plus', x: u.x + rand(-22, 22), y: u.y + rand(-6, 6), z: rand(10, 30), vx: 0, vy: 0, vz: 26, g: 0, life: 0.8, max: 0.8 });
   flashAt(u.x, u.y, 12, 40, '120,255,140', 0.3);
   play('heal');
@@ -945,6 +946,7 @@ function updateGame(dt) {
     S.e.chaos = Math.min(CFG.chaosMax, S.e.chaos + dt * rate * G.diffCfg.aiIncome);
     for (const t of ['p', 'e']) if (S[t].leaderCd > 0) S[t].leaderCd = Math.max(0, S[t].leaderCd - dt);
     if (G.classicAI) aiUpdate('e', dt); else aiGeneric('e', dt);
+    terrainUpdate(dt);   // v0.9.18
     if (G.efac === 'phony') {   // v0.9.13: cada 20 s Phony te cobra la suscripción
       const PS = CFG.passives.phony; if (S.e.subT == null) S.e.subT = PS.every;
       S.e.subT -= dt;

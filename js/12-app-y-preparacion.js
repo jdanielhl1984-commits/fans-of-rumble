@@ -36,17 +36,8 @@ for (const b of document.querySelectorAll('[data-st]')) b.addEventListener('clic
 for (const b of document.querySelectorAll('[data-mt]')) b.addEventListener('click', () => { missionTab = b.dataset.mt; play('select'); buildMissions(); });
 $('#btn-share').addEventListener('click', () => { shareResult(); stat('share', 1); });
 $('#btn-share-close').addEventListener('click', () => { $('#scr-share').hidden = true; });
-// v0.9.16: aspecto claro u oscuro y modo pixel art
-function applyLook() {
-  document.documentElement.dataset.theme = SAVE.theme === 'light' ? 'light' : 'dark';
-  document.body.classList.toggle('pixel', !!SAVE.pixel);
-  const meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.content = SAVE.theme === 'light' ? '#e9dcff' : '#150b21';
-  if ($('#btn-theme')) { $('#btn-theme').textContent = SAVE.theme === 'light' ? 'CLARO' : 'OSCURO'; $('#btn-pixel').textContent = SAVE.pixel ? 'SÍ' : 'NO'; }
-  fit();
-}
-function lookRedraw() { applyLook(); syncMenu(); updateWallets(); idleUI(true); }
-$('#btn-theme').addEventListener('click', () => { SAVE.theme = SAVE.theme === 'light' ? 'dark' : 'light'; saveGame(); play('select'); lookRedraw(); });
-$('#btn-pixel').addEventListener('click', () => { SAVE.pixel = !SAVE.pixel; saveGame(); play('select'); lookRedraw(); });
+// v0.9.17 probó un modo claro y uno pixel art; Daniel los descartó en la v0.9.18: el juego va siempre oscuro y sin pixelar
+function applyLook() { delete SAVE.theme; delete SAVE.pixel; document.documentElement.dataset.theme = 'dark'; document.body.classList.remove('pixel'); fit(); }
 $('#btn-chat').addEventListener('click', () => { SAVE.chatOff = !SAVE.chatOff; saveGame(); $('#btn-chat').textContent = SAVE.chatOff ? 'NO' : 'SÍ'; play('select'); });
 for (const b of document.querySelectorAll('[data-back]')) b.addEventListener('click', () => { play('select'); goHome(); });
 $('#btn-prep-back').addEventListener('click', () => { if (G.prep && G.prep.mode === 'camp') openCamp(); else goHome(); });

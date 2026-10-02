@@ -677,6 +677,7 @@ function setupMatch(mode, lvl, cd) {
   G.eextra = enemyExtras(mode, lvl);   // v0.9.15: hechizos y mata-sanadores de la CPU
   if (mode === 'boss' && BDIFF[G.bossDiff].gear) { const BD = BDIFF[G.bossDiff]; G.egear = ENEMY_GEAR[BD.gear][G.bossWi]; G.egearQ = BD.q; if (isCorp(G.efac)) G.egearOn = G.efac === 'phony' ? PH_GEAR_ON : MB_GEAR_ON; }
   if (G.cdiff !== 'n') setupHardMode(lvl);
+  G.terrain = terrainFor(mode, lvl);   // v0.9.18: campo especial de algunos jefes
 }
 // v0.9.15: la CPU también lanza hechizos (y en Difícil y Mítica saca a su mata-sanadores)
 function enemyExtras(mode, lvl) {
@@ -762,7 +763,6 @@ function grantRewards() {
   SAVE.gold += R.gold; SAVE.gems += R.gems; saveGame(); return R;
 }
 
-const PIXEL_K = 0.4;   // v0.9.16: en modo pixel art, el campo se dibuja a la mitad de resolución
 function fit() {
   const bw = document.body.clientWidth, bh = document.body.clientHeight;
   const narrow = bw < 600, pad = narrow ? 0 : 24;
@@ -775,11 +775,14 @@ function fit() {
   const extra = LH - H; VIEW.LH = LH; VIEW.top = Math.round(extra * 0.45); VIEW.bot = extra - VIEW.top;
   ui.style.height = LH + 'px'; ui.style.setProperty('--top', VIEW.top + 'px'); ui.style.setProperty('--bot', VIEW.bot + 'px');
   ui.style.transform = `scale(${w / W})`; VIEW.sc = w / W;
-  const dpr = typeof SAVE !== 'undefined' && SAVE && SAVE.pixel ? (W * PIXEL_K) / w : Math.min(window.devicePixelRatio || 1, 3);   // v0.9.16: pixel art = menos píxeles
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
   cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
   VIEW.k = cv.width / W;
 }
-function toLogical(e) { const r = stage.getBoundingClientRect(); return { x: ((e.clientX - r.left) / r.width) * W, y: ((e.clientY - r.top) / r.height) * VIEW.LH - VIEW.top }; }
+function toLogical(e) {   // v0.9.18: x, y = punto del campo (con el zoom); sy = altura en la pantalla (para saber si el dedo está sobre las cartas)
+  const r = stage.getBoundingClientRect(), sx = ((e.clientX - r.left) / r.width) * W, sy = ((e.clientY - r.top) / r.height) * VIEW.LH;
+  return { x: (sx - CAM.ox) / CAM.z, y: (sy - CAM.oy) / CAM.z - VIEW.top, sy: sy - VIEW.top };
+}
 
 let toastTimer = null;
 function toast(msg, good) { const t = $('#toast'); t.textContent = msg; t.classList.toggle('good', !!good); t.classList.toggle('menu', !['play', 'countdown', 'paused', 'ending'].includes(G.state)); t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400); }
@@ -886,7 +889,7 @@ for (const el of elCards) {
 window.addEventListener('pointermove', e => {
   if (input.card && e.pointerId === input.pointerId) {
     if (!input.dragging && Math.hypot(e.clientX - input.startX, e.clientY - input.startY) > 10) { input.dragging = true; input.selected = null; input.selSlot = null; clearTimeout(input.tipT); if (input.tipShown) { input.tipShown = false; hideCardTip(); } }
-    if (input.dragging) { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - (input.touch ? 40 : 0) - FIELD_DY, fy: p.y }; }
+    if (input.dragging) { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - (input.touch ? 40 / CAM.z : 0) - FIELD_DY, fy: p.sy }; }
   }
 });
 function endPointer(e, cancelled) {
@@ -896,19 +899,20 @@ function endPointer(e, cancelled) {
   const k = input.card;
   if (!cancelled) {
     if (!input.dragging && Math.hypot(e.clientX - input.startX, e.clientY - input.startY) > 10) input.dragging = true;
-    if (input.dragging) { const p = toLogical(e); const y = p.y - (input.touch ? 40 : 0) - FIELD_DY; if (p.y < TRAY_Y - 4) tryPlayerDeploy(input.slot, k, p.x, y); }
+    if (input.dragging) { const p = toLogical(e); const y = p.y - (input.touch ? 40 / CAM.z : 0) - FIELD_DY; if (p.sy < TRAY_Y - 4) tryPlayerDeploy(input.slot, k, p.x, y); }
     else selectCard(input.slot);
   }
   input.card = null; input.slot = null; input.dragging = false; input.pointerId = null; if (input.selected === null) input.ghost = null;
 }
 window.addEventListener('pointerup', e => endPointer(e, false));
 window.addEventListener('pointercancel', e => endPointer(e, true));
-cv.addEventListener('pointerdown', e => {
+function fieldTap(e) {
   if (G.state !== 'play' || input.selected === null) return;
-  audioInit(); const p = toLogical(e); if (p.y >= TRAY_Y) return;
+  audioInit(); const p = toLogical(e); if (p.sy >= TRAY_Y) return;
   if (tryPlayerDeploy(input.selSlot, slotKey(input.selSlot), p.x, p.y - FIELD_DY)) { input.selected = null; input.selSlot = null; input.ghost = null; }
-});
-cv.addEventListener('pointermove', e => { if (input.selected && !input.card && e.pointerType === 'mouse') { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - FIELD_DY, fy: p.y }; } });
+}
+cv.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') fieldTap(e); });   // con el dedo va en camTouchEnd (v0.9.18: por si es un pellizco)
+cv.addEventListener('pointermove', e => { if (input.selected && !input.card && e.pointerType === 'mouse') { const p = toLogical(e); input.ghost = { x: p.x, y: p.y - FIELD_DY, fy: p.sy }; } });
 cv.addEventListener('pointerleave', () => { if (!input.card) input.ghost = null; });
 window.addEventListener('keydown', e => {
   if (G.state === 'play' && ['1', '2', '3', '4', '5'].includes(e.key)) { input.touch = false; selectCard(+e.key - 2); }
@@ -923,7 +927,7 @@ let BG_KEY = '';
 function ensureBG(plaza) { const key = G.faction + '|' + plaza; if (BG_KEY !== key) { BG = buildBG(G.faction, plaza); BG_KEY = key; } }
 function startMatch() {
   ensureBG(ownerOf() === 'phony' ? 'ph' : 'mb');
-  audioInit(); hideScreens(); resetMatch(); chatClear(); G.state = 'countdown';
+  audioInit(); hideScreens(); resetMatch(); chatClear(); G.state = 'countdown'; camReset(); terrainStart();
   G.tutMatch = !G.autoplay && !SAVE.tut.done && SAVE.tut.step === 0; tutBattleStart(); applySpeed(); applyMatchMods(); hudMods();
   const F = FACTIONS[G.faction];
   banner('PASIVA: ' + F.passive, F.banner, F.kind);

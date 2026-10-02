@@ -13,10 +13,11 @@ function render() {
   ctx.setTransform(VIEW.k, 0, 0, VIEW.k, 0, 0);
   ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   ctx.fillStyle = '#24133a'; ctx.fillRect(0, 0, W, VIEW.LH);
+  camApply();   // v0.9.18: zoom
   ctx.translate(0, VIEW.top + FIELD_DY);
   if (G.shake > 0.15) ctx.translate(rand(-1, 1) * G.shake, rand(-1, 1) * G.shake);
   ctx.drawImage(BG, 0, 0, W, H);
-  drawWater();
+  if (!terrainGround()) drawWater();   // v0.9.18: el terreno del jefe puede cambiar el río
   ctx.drawImage(BRIDGE_LAYER, 0, 0, W, H);
   drawClouds();
   if (G.faction === 'nomuertos') drawFog();
@@ -38,6 +39,7 @@ function render() {
   for (const p of projs) drawProj(p);
   for (const p of parts) if (!p.ground) drawPart(p);
   drawSpellsAir();
+  terrainAir();
   if (G.state !== 'title') drawAmbient(rdt); else G.flash = 0;
   for (const e of list) drawBars(e);
   for (const n of nums) drawNum(n);
@@ -184,11 +186,13 @@ function drawUnitShadow(u) {
     const g = ctx.createRadialGradient(u.x, u.y, 0, u.x, u.y, u.r * (1.4 + k * 0.6)); g.addColorStop(0, `rgba(${col},${(0.22 + 0.33 * k) * pulse})`); g.addColorStop(1, `rgba(${col},0)`);
     ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(u.x, u.y, u.r * (1.4 + k * 0.6), u.r * (0.6 + k * 0.25), 0, 0, Math.PI * 2); ctx.fill();
   }
-  if (u.d.healer && u.deployT <= 0) {   // v0.9.14: cono de curación de 90° hacia delante (cura a lo que está dentro)
-    const ha = u.healAng === undefined ? healFwd(u) : u.healAng;
-    ctx.beginPath(); ctx.moveTo(u.x, u.y); ctx.arc(u.x, u.y, u.d.healR, ha - HEAL_CONE / 2, ha + HEAL_CONE / 2); ctx.closePath(); ctx.globalAlpha = 0.14; ctx.fillStyle = '#b6ff8a'; ctx.fill();
-    ctx.globalAlpha = 0.45; ctx.strokeStyle = '#14532d'; ctx.lineWidth = 4; ctx.stroke();
-    ctx.globalAlpha = 0.95; ctx.strokeStyle = '#c8ff9e'; ctx.lineWidth = 2; ctx.setLineDash([7, 5]); ctx.lineDashOffset = -G.t * 10; ctx.stroke(); ctx.setLineDash([]); ctx.lineDashOffset = 0; ctx.globalAlpha = 1;
+  if (u.d.healer && u.deployT <= 0 && u.healGlowT != null) {   // v0.9.18: el cono solo se ve al curar: verde tenue que aparece y se va
+    const e = G.t - u.healGlowT, a = e < 0.15 ? e / 0.15 : e < 0.45 ? 1 : Math.max(0, 1 - (e - 0.45) / 0.65);
+    if (a > 0.01) {
+      const ha = u.healAng === undefined ? healFwd(u) : u.healAng, R = u.d.healR, g = ctx.createRadialGradient(u.x, u.y, 4, u.x, u.y, R);
+      g.addColorStop(0, `rgba(170,255,140,${0.26 * a})`); g.addColorStop(0.75, `rgba(140,240,110,${0.14 * a})`); g.addColorStop(1, 'rgba(140,240,110,0)');
+      ctx.beginPath(); ctx.moveTo(u.x, u.y); ctx.arc(u.x, u.y, R, ha - HEAL_CONE / 2, ha + HEAL_CONE / 2); ctx.closePath(); ctx.fillStyle = g; ctx.fill();
+    }
   }
   if (u.d.aura && u.deployT <= 0) { ctx.globalAlpha = 0.35 + 0.1 * Math.sin(G.t * 3); ctx.strokeStyle = u.team === 'p' ? '#c084fc' : '#8fc2ff'; ctx.lineWidth = 2; ctx.setLineDash([6, 6]); ctx.lineDashOffset = -G.t * 12; ctx.beginPath(); ctx.arc(u.x, u.y, u.d.aura.r, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]); ctx.lineDashOffset = 0; ctx.globalAlpha = 1; }
   ctx.globalAlpha = 0.3 * sc; ctx.fillStyle = '#140a1e'; ctx.beginPath(); ctx.ellipse(u.x, u.y + 1, u.r * 1.05 * sc, u.r * 0.42 * sc, 0, 0, Math.PI * 2); ctx.fill();

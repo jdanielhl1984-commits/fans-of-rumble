@@ -8,9 +8,11 @@ const ADS = {
   dayMax: 12,     // anuncios al día en total (entre todos los sitios)
   secs: 5,        // lo que dura el anuncio de prueba
   turboH: 2,      // horas que dura el turbo de HORAS EXTRA
+  idleH: 4,       // horas de ganancias que da el anuncio de HORAS EXTRA
   noAdsEur: 6.99,
   slots: {        // cuántas veces al día en cada sitio
     idle2: { max: 3, name: 'Recoger x2 en HORAS EXTRA' },
+    idle4: { max: 2, name: 'Ganancias de 4 h en HORAS EXTRA' },
     turbo: { max: 2, name: 'Turbo de HORAS EXTRA' },
     end2:  { max: 5, name: 'Premio x2 al acabar una partida' },
     pull:  { max: 1, name: 'Tirada gratis del gashapón' },
@@ -72,19 +74,38 @@ function adOverlay() {
       <p class="ad-note">Anuncio de prueba. En la app de Google Play aquí saldrá un anuncio de verdad.</p></div></section>`);
 }
 // ---- sitios donde se ofrece
-function adIdleUI() {   // HORAS EXTRA: recoger x2 y turbo
+function adIdleUI() {   // HORAS EXTRA: turbo y ganancias de 4 h al momento (v0.9.18: el x2 va en la ventana de RECOGER)
   const box = $('#idle-ads'); if (!box) return;
-  const I = idleState(), now = Date.now(), on = (I.turbo || 0) > now, has = I.gold >= 1 || I.gems >= 1 || I.items >= 1;
-  const key = [on ? Math.ceil((I.turbo - now) / 60000) : 0, adLeft('idle2'), adLeft('turbo'), has, adsFree()].join('|');
+  const I = idleState(), now = Date.now(), on = (I.turbo || 0) > now;
+  const key = [on ? Math.ceil((I.turbo - now) / 60000) : 0, adLeft('idle4'), adLeft('turbo'), adsFree()].join('|');
   if (box.dataset.k === key) return; box.dataset.k = key;
   const mins = on ? Math.ceil((I.turbo - now) / 60000) : 0;
   box.innerHTML = (on ? `<span class="ad-turbo ol">TURBO x2 · ${Math.floor(mins / 60)}:${String(mins % 60).padStart(2, '0')}</span>` : adBtn('turbo', `TURBO ${ADS.turboH} h`))
-    + adBtn('idle2', 'RECOGER x2', has ? '' : 'disabled');
+    + adBtn('idle4', `GANANCIAS DE ${ADS.idleH} h`);
   for (const b of box.querySelectorAll('[data-ad]')) b.onclick = () => {
     if (b.dataset.ad === 'turbo') watchAd('turbo', () => { const J = idleTick(); J.turbo = Math.max(Date.now(), J.turbo || 0) + ADS.turboH * 3600000; idleR = idleRates(J.fac); toast(`¡Turbo! ${ADS.turboH} horas ganando el doble`, true); box.dataset.k = ''; adIdleUI(); idleUI(true); });
-    else watchAd('idle2', () => { idleCollect(true); box.dataset.k = ''; adIdleUI(); });
+    else watchAd('idle4', () => { idleGrantHours(ADS.idleH); box.dataset.k = ''; adIdleUI(); });
   };
 }
+// cobrar al momento lo que el líder gana en N horas (no toca lo que ya lleva acumulado)
+function idleGrantHours(h) {
+  const I = idleTick(), R = idleRates(I.fac), g = Math.round(R.gold * h), gm = Math.floor(R.gems * h), it = R.item * h, ni = Math.floor(it) + (Math.random() < it % 1 ? 1 : 0);
+  SAVE.gold += g; SAVE.gems += gm; const got = []; for (let i = 0; i < ni; i++) got.push(idleItem());
+  stat('idleg', g, true); stat('idlem', gm, true); achScan(); saveGame(); updateWallets(); play('crown'); idleBurst();
+  toast(`${h} horas de golpe: +${fmt(g)} de oro${gm ? ` y +${fmt(gm)} ${gm > 1 ? 'gemas' : 'gema'}` : ''}${got.length ? ` y ${got.length > 1 ? got.length + ' objetos' : 'un objeto'}` : ''}`, true);
+}
+// v0.9.18: al pulsar RECOGER sale una ventana con lo que vas a cobrar, y la opción de doblarlo con un anuncio
+function idleCollectBox() {
+  const I = idleTick(), g = Math.floor(I.gold), gm = Math.floor(I.gems), ni = Math.floor(I.items);
+  if (g < 1 && gm < 1 && ni < 1) { play('deny'); toast('Todavía no hay nada. ¡Dale un rato a tu líder!'); return; }
+  $('#ib-sub').textContent = `${CFG.cards[FACTIONS[I.fac].leader].name} ha trabajado ${fmtV(Math.floor(I.h * 10) / 10)} h. Esto es lo que ha ganado:`;
+  $('#ib-loot').innerHTML = `<span class="rw-chip big ol">${COIN_SVG}${fmt(g)}</span>${gm ? `<span class="rw-chip big ol">${GEM_SVG}${fmt(gm)}</span>` : ''}${ni ? `<span class="rw-chip big ol">${CHEST_SVG}x${ni}</span>` : ''}`;
+  $('#ib-row').innerHTML = `<button class="btn-big ol" id="btn-ib-get">RECOGER</button>${adBtn('idle2', 'RECOGER x2')}`;
+  $('#scr-idlebox').hidden = false; play('select');
+  $('#btn-ib-get').onclick = () => { $('#scr-idlebox').hidden = true; idleCollect(); };
+  $('#ib-row [data-ad]').onclick = () => watchAd('idle2', () => { $('#scr-idlebox').hidden = true; idleCollect(true); });
+}
+$('#btn-ib-close').addEventListener('click', () => { $('#scr-idlebox').hidden = true; play('select'); });
 function adEndOffer(R) {   // pantalla final: premio x2 (oro y gemas; la experiencia no)
   if (!(R.gold > 0 || R.gems > 0)) return;
   const box = $('#end-rewards'); box.insertAdjacentHTML('beforeend', `<div class="ad-end">${adBtn('end2', 'PREMIO x2')}</div>`);

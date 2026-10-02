@@ -23,7 +23,7 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
 - Tienda de prueba (no se cobra nada) y botón para compartir tu resultado como portada de periódico.
 - Música propia para el menú, cada facción, cada jefe de mundo y el final de partida (se ajusta o se quita en Opciones).
 - Chat falso en directo que comenta lo que pasa en la partida: tus cartas, las torres, los jefes, las remontadas…
-- Modo claro u oscuro y opción de pixel art (en Opciones).
+- Zoom con dos dedos en combate y campos especiales en algunos jefes (el primero: un río de lava).
 - Anuncios con premio (de prueba, solo si quieres) y «Sin anuncios» en la tienda.
 - Funciona en el móvil y en el PC. **Se puede instalar como una app** (Opciones → Instalar) y funciona sin internet. El progreso se guarda en el navegador.
 
@@ -39,4 +39,4 @@ Abre el juego en el navegador, elige tu facción y arrastra cartas a tu lado del
   - `09-menus.js`, `10-dificultad.js` (Difícil, Mítica y ruleta), `11-logros.js`, `12-app-y-preparacion.js`, `13-horas-extra.js`, `14-cartas-y-jefes.js` (hechizos, mazo, Modo Jefe) y `15-arranque.js` (va el último).
 - `manifest.webmanifest`, `sw.js` e iconos (`icon-192.png`, `icon-512.png`, `icon-maskable.png`): para instalarlo como app y jugar sin conexión.
 
-Prototipo en desarrollo (versión 0.9.17). Todo el arte, el sonido y la música están hechos con código.
+Prototipo en desarrollo (versión 0.9.18). Todo el arte, el sonido y la música están hechos con código.

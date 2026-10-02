@@ -252,11 +252,14 @@ function claimLogin() {
 $('#btn-login').addEventListener('click', claimLogin);
 // ---- novedades: lo nuevo de verdad y las «notas» de Microblizz
 const NEWS = {
-  real: ['<b>Modo claro</b>: en Opciones → Aspecto puedes poner los menús claros u oscuros. El campo de batalla y las cartas no cambian.',
-    '<b>Pixel art</b>: en Opciones, todo el juego con aspecto retro, de píxeles grandes.',
-    '<b>Música más larga</b>: cada tema es ahora una canción de 32 compases antes de repetirse. Sube de tono, añade una segunda voz, se da la vuelta y respira con un redoble antes de volver.',
-    'De la versión anterior: pantalla de mazo nueva, anuncios con premio (de prueba), «Sin anuncios» en la tienda y modo pruebas con toda la experiencia.'],
-  joke: ['Microblizz cobra el modo claro como DLC. Aquí es gratis (y el oscuro también).', 'Phony ha patentado los píxeles grandes. Pagaremos la multa en CAOS.', 'El CEO ha escuchado la música nueva y ha pedido quitarle la segunda voz para ahorrar.'],
+  real: ['<b>Botón MAZO</b> en el menú principal, y el botón EDITAR de antes de jugar, más grande.',
+    '<b>Mantén pulsada</b> una carta en la pantalla del mazo para ver qué hace.',
+    '<b>Zoom en combate</b>: pellizca con dos dedos para acercarte (con zoom, un dedo mueve la vista). «VISTA NORMAL» o doble toque para volver. En el PC, con la rueda del ratón.',
+    '<b>Campo de jefe: RÍO DE LAVA</b>. El jefe del Sector Neón (y en el Modo Jefe) pelea sobre lava: las grietas queman a los dos bandos y, de vez en cuando, una entra en erupción. Los que vuelan no se queman.',
+    'El cono de los sanadores ya no se ve todo el rato: solo cuando curan, en verde suave.',
+    '<b>HORAS EXTRA</b>: al pulsar RECOGER ves lo que vas a cobrar y puedes doblarlo con un anuncio. Y un anuncio nuevo: cobra al momento las ganancias de 4 horas.',
+    'Fuera el modo claro y el pixel art: no estaban a la altura.'],
+  joke: ['Microblizz ha vendido la lava como «suelo con calefacción premium».', 'Phony cobra el zoom por separado: 4,99 € por cada dedo.', 'El CEO de Microblizz se acercó demasiado a la lava para la foto. Está bien. Su bonus no.'],
 };
 function openNews() {
   $('#news-title').textContent = 'NOVEDADES · ' + VERSION;
