@@ -306,7 +306,7 @@ function zapChain(u, t, dmg) {
   parts.push({ type: 'zap', pts, life: 0.3, max: 0.3, seed: Math.random() * 1000 });
   sparks(t.x, t.y, topOf(t) * 0.5, 5, '#ffe14d'); play('zap');
 }
-// cada frame: aura de TwitchKing y Rabia de los Animales Locos
+// cada frame: aura de StreamKing y Rabia de los Animales Locos
 function updatePassives() {
   const R = CFG.passives.animales;
   if (S) for (const tm of ['p', 'e']) if (facOf(tm) === 'gamer') {   // v0.9.13: Comunidad

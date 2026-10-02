@@ -17,7 +17,7 @@ AMB_KIND.creadores = 'pixel';
 FAC_COLOR.creadores = '#ff9a3c';
 EQ_HEAD.indie = -52; EQ_HAND.indie = [-14, -20]; EQ_BACK.indie = [-10, -30, -0.4];
 MENU_TRACKS.splice(10, 0, ['creadores', 'Los Creadores']);
-MENU_TRACKS.push(['boss12', 'Jefe: Generador de Clones'], ['boss13', 'Jefe: CyberMarine entrenado'], ['boss14', 'Jefe: TwitchKing generado'], ['boss15', 'Jefe: IAhorro']);
+MENU_TRACKS.push(['boss12', 'Jefe: Generador de Clones'], ['boss13', 'Jefe: CyberMarine entrenado'], ['boss14', 'Jefe: StreamKing generado'], ['boss15', 'Jefe: IAhorro']);
 
 // ---- campos de los 4 jefes nuevos
 Object.assign(TERRAINS, {

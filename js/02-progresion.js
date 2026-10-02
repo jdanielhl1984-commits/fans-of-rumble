@@ -125,7 +125,7 @@ const WORLDS = [
   { name: 'Cementerio de juegos', efac: 'nomuertos', unlock: 'nomuertos', story: 'Aquí entierra Microblizz los juegos que cierra. Los No-Muertos trabajan para ellos… sin cobrar.', levels: [
     { name: 'Tumbas sin nombre', elvl: 2, income: 0.5 }, { name: 'Fosa de las horas extra', elvl: 2, income: 0.53 }, { name: 'Mausoleo de juegos cerrados', elvl: 3, income: 0.56 }, { name: 'NecroLord corrupto', elvl: 3, income: 0.55, boss: 'NecroLord corrupto' }] },
   { name: 'Plató Abandonado', efac: 'streamers', unlock: 'streamers', story: 'Un plató vacío. Microblizz compró el canal, echó al público y ahora solo pone anuncios.', levels: [
-    { name: 'Directo sin audio', elvl: 3, income: 0.55 }, { name: 'Caída del chat', elvl: 3, income: 0.58 }, { name: 'Oleada de baneos', elvl: 4, income: 0.6 }, { name: 'TwitchKing corrupto', elvl: 4, income: 0.6, boss: 'TwitchKing corrupto' }] },
+    { name: 'Directo sin audio', elvl: 3, income: 0.55 }, { name: 'Caída del chat', elvl: 3, income: 0.58 }, { name: 'Oleada de baneos', elvl: 4, income: 0.6 }, { name: 'StreamKing corrupto', elvl: 4, income: 0.6, boss: 'StreamKing corrupto' }] },
   { name: 'Olimpo Abandonado', efac: 'heroes', unlock: 'heroes', story: 'Desde que Microblizz compró a los dioses, nadie arregla su juego. Están de muy mal humor.', levels: [
     { name: 'Templo en obras', elvl: 4, income: 0.58 }, { name: 'Laberinto de quejas', elvl: 4, income: 0.6 }, { name: 'Monte olvidado', elvl: 5, income: 0.62 }, { name: 'EpicChampion corrupto', elvl: 5, income: 0.62, boss: 'EpicChampion corrupto' }] },
   { name: 'Sector Neón', efac: 'ciber', unlock: 'ciber', story: 'Una ciudad de neón que Microblizz compró entera. Ahora todo es de pago, hasta las farolas.', levels: [
@@ -192,7 +192,7 @@ const BOSS_MODE = { name: 'El CEO de Microblizz', hp: 12000, time: 240, income: 
 // v0.9.15: los 12 jefes de la campaña (se abren al ganarles allí; el CEO, siempre), 3 dificultades y 4 minutos
 const BOSS_HP = [5000, 6000, 7000, 8000, 9000, 10000, 12000, 12500, 11000, 12500, 13500, 14000];
 const BOSS_ART = ['e_base', 'necrolord', 'twitchking', 'epicchampion', 'cybermarine', 'memelord', 'ceo', 'vikingo', 'y_base', 'progamer', 'directora', 'presi'];
-const BOSS_SHORT = ['SurvivalBot', 'NecroLord', 'TwitchKing', 'EpicChampion', 'CyberMarine', 'MemeLord', 'El CEO', 'Vikingo', 'PayStation', 'ProGamer', 'Directora', 'Presidente'];
+const BOSS_SHORT = ['SurvivalBot', 'NecroLord', 'StreamKing', 'EpicChampion', 'CyberMarine', 'MemeLord', 'El CEO', 'Vikingo', 'PayStation', 'ProGamer', 'Directora', 'Presidente'];
 const BDIFF = {
   n: { name: 'Normal', lvl: 0, inc: 1, hp: 1, elite: 1, pay: 1, cd: 14, stun: 2, think: [0.7, 1.3] },
   h: { name: 'Difícil', lvl: 2, inc: 1.2, hp: 1.5, elite: 1.1, pay: 2, gear: 'h', q: 0.6, cd: 12, stun: 2.3, think: [0.5, 1] },
@@ -320,8 +320,8 @@ const CHAT_FAC = {
     lose: ['vuelta a la tumba… hasta la próxima', 'ni Renacer arregla esto'],
   },
   streamers: {
-    idle: ['TwitchKing, ¿me saludas?', 'SUB HYPE', 'cuidado, que el moderador es el BanHammer', 'la madre del streamer cura más que mi seguro', 'ese HypeBeast va con 3 bebidas energéticas', '¡que suene el Hype Train! 🚂', 'dono 5 € si tiras la torre', 'pon la cámara, que no se ve', 'ViralBot me está grabando sin permiso', 'más viewers = más daño, es ciencia'],
-    leader: ['¡EN DIRECTO!', 'ha llegado el rey del streaming', 'TwitchKing modo hype ON'],
+    idle: ['StreamKing, ¿me saludas?', 'SUB HYPE', 'cuidado, que el moderador es el BanHammer', 'la madre del streamer cura más que mi seguro', 'ese HypeBeast va con 3 bebidas energéticas', '¡que suene el Hype Train! 🚂', 'dono 5 € si tiras la torre', 'pon la cámara, que no se ve', 'ViralBot me está grabando sin permiso', 'más viewers = más daño, es ciencia'],
+    leader: ['¡EN DIRECTO!', 'ha llegado el rey del streaming', 'StreamKing modo hype ON'],
     towerP: ['¡RAID A LA TORRE!', 'eso va directo a los destacados', 'clip, clip, CLIP'],
     win: ['récord de viewers', 'clip del año', 'el chat ha ganado esta partida'],
     lose: ['se ha caído el directo', 'el chat se va a otro canal 😢'],
@@ -374,7 +374,7 @@ const CHAT_FAC = {
 const CHAT_VS = {
   microblizz: ['los becarios de Microblizz trabajan gratis', 'SurvivalBot, ¿quién te ha diseñado?', 'esos servidores gastan más luz que mi pueblo', 'Microblizz despide gente para pagar el yate del CEO', '¿la CajaBotín da algo bueno? (no)', 'el Parche Día 1 pesa 80 GB', 'SoporteBot: «¿ha probado a apagar y encender?»'],
   nomuertos: ['¡libéralos!', 'Microblizz les hace trabajar hasta muertos (literal)', 'ojos rojos = ahora son de Microblizz', 'Microblizz les cobra el alquiler de la tumba'],
-  streamers: ['¡libéralos!', 'esos streamers corrompidos solo hacen directos de anuncios', 'el TwitchKing corrupto: «usa mi código de descuento»', 'el chat de ese lado son todo bots'],
+  streamers: ['¡libéralos!', 'esos streamers corrompidos solo hacen directos de anuncios', 'el StreamKing corrupto: «usa mi código de descuento»', 'el chat de ese lado son todo bots'],
   heroes: ['¡libéralos!', 'Microblizz compró a los dioses y dejó de arreglar su juego', 'el Minotauro corrupto se ha perdido en su propio laberinto', 'esa Medusa petrifica con cartas de despido'],
   ciber: ['¡libéralos!', 'Microblizz les ha metido anuncios en el cerebro', 'ese HackerKid ahora trabaja para la empresa', 'la NeonSniper corrupta cobra por disparo'],
   memes: ['¡libéralos!', 'los Memes corrompidos ya no hacen gracia: son anuncios', 'el Stonks corrupto solo sube para el CEO', 'MemeLord corrupto: «este meme es de pago»'],
@@ -388,7 +388,7 @@ const CHAT_VS = {
 const CHAT_BOSS = [
   ['SurvivalBot sobrevive a todo menos a las críticas', 'congelar unidades: la única actualización de SurvivalBot en 5 años'],
   ['el NecroLord corrupto despide a los muertos… otra vez', 'eso de congelar es muy de rey exánime'],
-  ['TwitchKing corrupto banea a todo el chat', 'ese jefe tiene 3 viewers y son bots'],
+  ['StreamKing corrupto banea a todo el chat', 'ese jefe tiene 3 viewers y son bots'],
   ['EpicChampion corrupto: ahora cobra por pelear', 'el campeón se ha vendido a Microblizz'],
   ['CyberMarine corrupto lleva anuncios en el casco', 'drones de Microblizz con anuncios'],
   ['MemeLord corrupto solo publica memes de empresa', 'el meme del jefe lleva marca de agua'],

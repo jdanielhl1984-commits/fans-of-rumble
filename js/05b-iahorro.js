@@ -90,7 +90,7 @@ WORLDS.push(
   { camp: 3, name: 'El Almacén de Datos', efac: 'ciber', story: 'IAhorro se entrena con todo lo que encuentra… sin pedir permiso. Ha obligado a los Ciberpunks a vigilar sus servidores, llenos de juegos copiados.', levels: [
     { name: 'Pasillo de servidores', elvl: 9, income: 0.86 }, { name: 'Datos sin permiso', elvl: 9, income: 0.9 }, { name: 'La sala fría', elvl: 10, income: 0.93 }, { name: 'CyberMarine entrenado', elvl: 10, income: 0.96, boss: 'CyberMarine entrenado' }] },
   { camp: 3, name: 'El Estudio Vacío', efac: 'streamers', story: 'Sillas vacías y arte con seis dedos. IAhorro ha cambiado a los streamers por copias generadas: todas con la misma cara, la misma voz y el mismo chiste.', levels: [
-    { name: 'Arte con seis dedos', elvl: 9, income: 0.88 }, { name: 'Doblaje sintético', elvl: 10, income: 0.92 }, { name: 'Directo de nadie', elvl: 10, income: 0.95 }, { name: 'TwitchKing generado', elvl: 10, income: 0.98, boss: 'TwitchKing generado' }] },
+    { name: 'Arte con seis dedos', elvl: 9, income: 0.88 }, { name: 'Doblaje sintético', elvl: 10, income: 0.92 }, { name: 'Directo de nadie', elvl: 10, income: 0.95 }, { name: 'StreamKing generado', elvl: 10, income: 0.98, boss: 'StreamKing generado' }] },
   { camp: 3, name: 'El Núcleo de IAhorro', efac: 'iahorro', unlock: 'creadores', story: 'El corazón de IAhorro. Cuanto más juegos copia, más grande se hace. Los programadores, diseñadores y artistas despedidos esperan fuera: si la apagas, se unen a ti.', levels: [
     { name: 'Centro de datos', elvl: 10, income: 0.95 }, { name: 'Sala de entrenamiento', elvl: 10, income: 0.98 }, { name: 'El último prompt', elvl: 10, income: 1 }, { name: 'IAhorro', elvl: 10, income: 1.05, boss: 'IAhorro' }] },
 );
@@ -98,7 +98,7 @@ WORLDS.forEach((w, wi) => w.levels.forEach((l, li) => { l.id = `${wi + 1}-${li +
 const IA_FIRST = 12, IA_FINAL = 15;   // mundos de la campaña 3 (empezando por 0)
 BOSS_HP.push(13000, 13500, 14000, 15000);
 BOSS_ART.push('i_base', 'cybermarine', 'twitchking', 'iahorro');
-BOSS_SHORT.push('Clones', 'CyberMarine 2', 'TwitchKing IA', 'IAhorro');
+BOSS_SHORT.push('Clones', 'CyberMarine 2', 'StreamKing IA', 'IAhorro');
 
 // ---- frases
 QUIPS.iahorro = ['Error 404: alma no encontrada', 'He sido entrenado para esto', 'Como modelo de lenguaje, me rindo', 'Regenerando respuesta…', 'Mi contexto se ha llenado', 'Esto no estaba en mis datos', 'Prompt rechazado', 'Volveré en la versión 5'];
@@ -134,7 +134,7 @@ const BOSS_QUOTE_IA = { 12: '«He generado 4.000 juegos esta mañana. Todos igua
 CHAT_BOSS.push(
   ['el Generador de Clones ha copiado hasta el chat', 'todos esos juegos son el mismo juego'],
   ['el CyberMarine entrenado juega igual que tú… porque te ha copiado', 'ese CyberMarine tiene seis dedos'],
-  ['el TwitchKing generado tiene 3 millones de seguidores bots', 'su voz es de un robot leyendo un guion'],
+  ['el StreamKing generado tiene 3 millones de seguidores bots', 'su voz es de un robot leyendo un guion'],
   ['¡IAhorro en persona!', 'IAhorro está generando su propio discurso de victoria', 'apágala, apágala', 'cuidado, que ha aprendido a copiar los hechizos'],
 );
 
@@ -165,7 +165,7 @@ CHAT_BOSS.push(
       drums: { k: 'x..x..x...x..x..', s: '....x.......x...', h: 'xxx.xxx.xxx.xxx.' },
       lead: { wave: 'sawtooth', vol: 0.2, det: 10, lp: 2400, gate: 0.8, oct: 7, up: 7, seq: [
         '0 . . 1 . . 3 . 4 - - . 3 . 1 .', '0 . . 1 . . 5 . 4 - - . 3 . 1 .', '7 . . 6 . . 4 . 3 - - . 1 . 0 .', '? . ? . ? . ? . 0 - - - - - - .'] } }),
-    // TwitchKing generado: pop de directo con la voz robótica (melodía plana)
+    // StreamKing generado: pop de directo con la voz robótica (melodía plana)
     boss14: mk({ bpm: 126, tonic: 47, scale: 'min', prog: [0, 5, 3, 4], dv: 1, crash: true,
       pad: { wave: 'square', vol: 0.12, lp: 1500, att: 0.05 },
       bass: { wave: 'sawtooth', vol: 0.42, lp: 650, seq: '. . r . . . r . . . r . . . r .' },

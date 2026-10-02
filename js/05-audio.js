@@ -212,7 +212,7 @@ const TRACKS = (() => {
         '5 - - - 7 - 9 - 12 - - - 9 - 7 -',
         '3 - - - 5 - 7 - 10 - - - 8 - 7 -',
         '4 - - - 6 - 8 - 11 - - - 10 - 8 -'] } }),
-    // Mundo 3, TwitchKing corrupto: EDM de directo patrocinado con fallos (notas al azar)
+    // Mundo 3, StreamKing corrupto: EDM de directo patrocinado con fallos (notas al azar)
     boss2: mk({
       bpm: 128, tonic: 47, scale: 'min', prog: [0, 5, 2, 6], dv: 1, crash: true,
       pad: { wave: 'sawtooth', vol: 0.14, lp: 1800, att: 0.02 },

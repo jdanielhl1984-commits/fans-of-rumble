@@ -71,7 +71,7 @@ const CFG = {
     banshee:     { name: 'Banshee',      cost: 4, count: 1, rarity: 'rare',   rar: 'Rara',  tag: 'Grito aturde', desc: 'Grita cada 7 s y aturde a los enemigos cercanos. Entre grito y grito, lanza ondas que golpean en área.' },
     skullknight: { name: 'SkullKnight',  cost: 4, count: 1, rarity: 'rare',   rar: 'Rara',  tag: 'Ralentiza', desc: 'Caballero esqueleto con espada rúnica de hielo: cada golpe frena al enemigo.' },
     // Streamers
-    twitchking:  { name: 'TwitchKing',   cost: 5, count: 1, respawn: 12, rarity: 'leader', rar: 'Líder', tag: 'En directo', desc: 'El rey del directo. Mientras siga en pie, los aliados que tiene cerca pegan un 30 % más.' },
+    twitchking:  { name: 'StreamKing',   cost: 5, count: 1, respawn: 12, rarity: 'leader', rar: 'Líder', tag: 'En directo', desc: 'El rey del directo. Mientras siga en pie, los aliados que tiene cerca pegan un 30 % más.' },
     subswarm:    { name: 'SubSwarm',     cost: 2, count: 3, rarity: 'common', rar: 'Común', tag: 'Salen 3', desc: 'Tres suscriptores con dedo de espuma. Frágiles, rápidos y muy entregados.' },
     hypebeast:   { name: 'HypeBeast',    cost: 3, count: 1, rarity: 'common', rar: 'Común', tag: 'Rápido', desc: 'Fan con ropa de marca y hasta arriba de bebida energética. Pega rapidísimo.' },
     viralbot:    { name: 'ViralBot',     cost: 3, count: 1, rarity: 'rare',   rar: 'Rara',  tag: 'Aturde', desc: 'Cámara voladora que graba clips: cada disparo aturde un instante al objetivo.' },
