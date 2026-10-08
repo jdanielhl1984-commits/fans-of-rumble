@@ -171,8 +171,18 @@ const MISSIONS = [
   { id: 'base1', txt: 'Tira una base enemiga', goal: 1, ev: 'base' },
   { id: 'facwin', txt: 'Gana una partida con {F}', goal: 1, ev: 'facwin' },
   { id: 'gift', txt: 'Recoge el regalo diario de la tienda', goal: 1, ev: 'gift' },
+  { id: 'arena2', txt: 'Juega 2 partidas en la Arena', goal: 2, ev: 'arena' },
+  { id: 'arenawin1', txt: 'Gana 1 partida en la Arena', goal: 1, ev: 'arenawin', r: [120, 15, 30] },
+  { id: 'camp5', txt: 'Juega 5 partidas de la campaña', goal: 5, ev: 'camp' },
+  { id: 'kills100', txt: 'Derrota a 100 enemigos', goal: 100, ev: 'kill' },
+  { id: 'cards40', txt: 'Juega 40 cartas', goal: 40, ev: 'card' },
+  { id: 'facwin2', txt: 'Gana 2 partidas con {F}', goal: 2, ev: 'facwin' },
+  { id: 'caos200', txt: 'Gasta 200 de CAOS', goal: 200, ev: 'caos' },
+  { id: 'quick3', txt: 'Juega 3 partidas rápidas', goal: 3, ev: 'quick' },
 ];
-const DAILY_N = 4;
+// v0.9.27: «Completa 5 misiones diarias» va siempre en el primer hueco y da mejor premio (r: oro, gemas, pase)
+const META_DAILY = { id: 'dmeta5', txt: 'Completa 5 misiones diarias', goal: 5, ev: 'dailydone', r: [150, 25, 40] };
+const DAILY_N = 6;   // la de «5 diarias» + 5 al azar (con 4 no se podían completar 5)
 // misiones semanales: se renuevan cada lunes
 const WEEKLY = [
   { id: 'wwin', txt: 'Gana 15 partidas', goal: 15, ev: 'win' },
@@ -185,6 +195,8 @@ const WEEKLY = [
   { id: 'wpull', txt: 'Gira 5 veces el gashapón', goal: 5, ev: 'pull' },
   { id: 'wdaily', txt: 'Completa 12 misiones diarias', goal: 12, ev: 'dailydone' },
   { id: 'wflaw', txt: 'Gana 5 partidas sin perder torres', goal: 5, ev: 'flawless' },
+  { id: 'wmeta7', txt: 'Completa 7 veces «Completa 5 misiones diarias»', goal: 7, ev: 'meta5' },
+  { id: 'warena', txt: 'Gana 10 partidas en la Arena', goal: 10, ev: 'arenawin' },
 ];
 const WEEKLY_N = 4;
 // Modo Jefe: el CEO de Microblizz, sin torres, 3 minutos para hacerle todo el daño posible

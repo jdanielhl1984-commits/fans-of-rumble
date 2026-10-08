@@ -51,7 +51,7 @@ function arenaReward(R, w) {
   A.cups = Math.max(0, A.cups + d); A.best = Math.max(A.best, A.cups); if (win) A.w++; else if (w === 'e') A.l++;
   R.gold = win ? arenaGold(lg) : 10; if (win) R.gems = ARENA.gems;
   R.arena = { d, cups: A.cups, league: arenaLeague(A.cups) };
-  if (win) stat('arenawin', 1); stat('arena', 1);
+  if (win) missionEvent('arenawin', 1); missionEvent('arena', 1);
   A.rivals = arenaRoll(A.cups); A.sel = 0;
 }
 $('#btn-arena').addEventListener('click', () => { play('select'); openPrep('arena'); });

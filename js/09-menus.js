@@ -338,11 +338,11 @@ function massScrap() {
 function todayStr() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
 function weekStr() { const d = new Date(), back = (d.getDay() + 6) % 7, m = new Date(d.getFullYear(), d.getMonth(), d.getDate() - back); return `${m.getFullYear()}-${m.getMonth() + 1}-${m.getDate()}`; }
 const seedOf = str => { let h = 7; for (const ch of str) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
-const mDef = (m, weekly) => (weekly ? WEEKLY : MISSIONS).find(x => x.id === m.id);
+const mDef = (m, weekly) => (weekly ? WEEKLY : [META_DAILY, ...MISSIONS]).find(x => x.id === m.id);
 const mText = (m, M) => M.txt.replace('{F}', m.fac ? FACTIONS[m.fac].name : '');
 function ensureDaily() {
   const day = todayStr(); if (SAVE.daily && SAVE.daily.day === day && SAVE.daily.list.length === DAILY_N) return;
-  const R = mulberry32(seedOf(day)), pool = MISSIONS.slice(), list = [];
+  const R = mulberry32(seedOf(day)), pool = MISSIONS.slice(), list = [META_DAILY];
   while (list.length < DAILY_N) list.push(pool.splice(Math.floor(R() * pool.length), 1)[0]);
   const facs = FACTION_ORDER.filter(isUnlocked);
   SAVE.daily = { day, list: list.map(m => ({ id: m.id, prog: 0, claimed: false, fac: m.ev === 'facwin' ? facs[Math.floor(R() * facs.length)] : undefined })) }; saveGame();
@@ -377,16 +377,18 @@ function buildMissions() {
   $('#mission-sub').textContent = W ? `${WEEKLY_N} misiones grandes cada semana. Cada una da ${ECON_W.gold} de oro, ${ECON_W.gems} gemas y ${PASS.xpWeekly} puntos de pase. Se renuevan en ${untilStr(true)}.` : `${DAILY_N} misiones nuevas cada día. Cada una da ${ECON.mission[0]} de oro, ${ECON.mission[1]} gemas y ${PASS.xpDaily} puntos de pase. Se renuevan en ${untilStr(false)}.`;
   const rw = W ? [ECON_W.gold, ECON_W.gems, PASS.xpWeekly] : [ECON.mission[0], ECON.mission[1], PASS.xpDaily];
   $('#mission-list').innerHTML = L.map((m, i) => {
-    const M = mDef(m, W), done = m.prog >= M.goal;
-    return `<div class="mission${m.claimed ? ' done' : ''}"><div><b>${mText(m, M)}</b><div class="xpbar"><i style="width:${(m.prog / M.goal) * 100}%"></i><span>${fmt(m.prog)} / ${fmt(M.goal)}</span></div></div><button class="btn-up" data-claim="${i}" ${done && !m.claimed ? '' : 'disabled'}>${m.claimed ? 'HECHA' : 'COBRAR'}<small>${COIN_SVG}${rw[0]} ${GEM_SVG}${rw[1]}</small><small>+${rw[2]} pase</small></button></div>`;
+    const M = mDef(m, W), done = m.prog >= M.goal, RR = (!W && M.r) || rw;
+    return `<div class="mission${m.claimed ? ' done' : ''}"><div><b>${mText(m, M)}</b><div class="xpbar"><i style="width:${(m.prog / M.goal) * 100}%"></i><span>${fmt(m.prog)} / ${fmt(M.goal)}</span></div></div><button class="btn-up" data-claim="${i}" ${done && !m.claimed ? '' : 'disabled'}>${m.claimed ? 'HECHA' : 'COBRAR'}<small>${COIN_SVG}${RR[0]} ${GEM_SVG}${RR[1]}</small><small>+${RR[2]} pase</small></button></div>`;
   }).join('');
   if (!W) adMissionOffer(L);   // v0.9.16: cambiar una misión con anuncio
   for (const b of document.querySelectorAll('[data-claim]')) b.onclick = () => {
-    const m = L[+b.dataset.claim]; if (m.claimed || m.prog < mDef(m, W).goal) return;
-    m.claimed = true; SAVE.gold += rw[0]; SAVE.gems += rw[1];
-    const up = addPassXp(rw[2]); if (!W) missionEvent('dailydone', 1); else stat('weekdone', 1);
+    const m = L[+b.dataset.claim], Mx = mDef(m, W); if (m.claimed || m.prog < Mx.goal) return;
+    const RR = (!W && Mx.r) || rw;
+    m.claimed = true; SAVE.gold += RR[0]; SAVE.gems += RR[1];
+    const up = addPassXp(RR[2]);
+    if (!W) { missionEvent('dailydone', 1); if (Mx.id === 'dmeta5') missionEvent('meta5', 1); } else stat('weekdone', 1);
     saveGame(); play('crown'); updateWallets(); buildMissions();
-    toast(up ? `¡Pase de batalla: nivel ${passLevel()}!` : `+${rw[2]} puntos de pase`);
+    toast(up ? `¡Pase de batalla: nivel ${passLevel()}!` : `+${RR[2]} puntos de pase`);
   };
 }
 /* ---------- pase de batalla ---------- */
